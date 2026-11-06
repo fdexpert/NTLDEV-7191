@@ -365,6 +365,13 @@
   #wsTab select{padding:2px 4px;}
   @media (max-width:860px){ .lab .grid2,.lab .grid3{grid-template-columns:1fr;} }
 </style>
+<style id="series-revsync-css">
+.sp-goto{display:flex;align-items:center;gap:6px;margin:4px 0 6px;font-size:.82rem;flex-wrap:wrap;}
+.sp-goto input{width:5.2em;padding:4px 6px;border-radius:8px;border:1px solid var(--border,#3a4456);background:transparent;color:inherit;font:inherit;}
+.sp-goto .btn{padding:3px 10px;}
+.sp-hit{animation:spHit 2.2s ease-out 1;border-radius:6px;}
+@keyframes spHit{0%,35%{background:rgba(255,196,0,.32);box-shadow:0 0 0 4px rgba(255,196,0,.32);}100%{background:transparent;box-shadow:0 0 0 4px transparent;}}
+</style>
 <style id="series-css">
 .topbar .homebtn,.topbar .langbtn{text-decoration:none;display:inline-flex;align-items:center;}
 .topbar .langbtn{font-weight:600;}
@@ -375,7 +382,9 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 #ttPop{position:fixed;z-index:9999;max-width:min(340px,calc(100vw - 24px));padding:10px 12px;border-radius:10px;
   background:var(--surface-2,#1d2330);color:var(--text,#e8ecf3);border:1px solid var(--border,#3a4456);box-shadow:0 8px 28px rgba(0,0,0,.35);
   font-size:.86rem;line-height:1.55;display:none;pointer-events:none;word-wrap:break-word;overflow-wrap:anywhere;}
-#ttPop b{display:block;margin-bottom:3px;color:var(--accent,#6aa9ff);}
+#ttPop b{display:block;margin-bottom:1px;color:var(--accent,#6aa9ff);}
+#ttPop i.full{display:block;font-style:normal;font-weight:600;margin-bottom:5px;opacity:.95;}
+#ttPop b+span{display:block;margin-top:3px;}
 </style>
 </head>
 <body>
@@ -433,7 +442,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 <section class="chapter" id="ch00" data-slides="1,8,11,12">
   <div class="crumb">00 · 本週導覽</div>
   <h1 class="ch">W7：政治文本的縮放（Scaling Political Texts）</h1>
-  <p class="lead">W6 問的是「這段文本屬於哪一類？」；W7 換一個問題：「這段文本在一條<strong>連續的尺度</strong>上落在哪裡？」本週介紹四種方法——<strong><abbr class="tt" tabindex="0" data-term="Wordscores" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr>、<abbr class="tt" tabindex="0" data-term="Wordfish" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr>、<abbr class="tt" tabindex="0" data-term="Wordshoal" title="先在每場辯論內各擬合 Wordfish，再用跨辯論重複出現的講者把位置連成共同尺度（Lauderdale &amp; Herzog 2016）。">Wordshoal</abbr>、<abbr class="tt" tabindex="0" data-term="LSS" title="以種子詞定義兩端，依 SVD 語意空間中與種子的相似度替字詞與文件打分的半監督方法（Watanabe 2021）。">Latent Semantic Scaling</abbr>（LSS）</strong>——並用 2010 年愛爾蘭預算辯論的 14 篇演講實際跑 Wordscores 與 Wordfish。</p>
+  <p class="lead">W6 問的是「這段文本屬於哪一類？」；W7 換一個問題：「這段文本在一條<strong>連續的尺度</strong>上落在哪裡？」本週介紹四種方法——<strong><abbr class="tt" tabindex="0" data-term="Wordscores" data-tip="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr>、<abbr class="tt" tabindex="0" data-term="Wordfish" data-tip="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr>、<abbr class="tt" tabindex="0" data-term="Wordshoal" data-tip="先在每場辯論內各擬合 Wordfish，再用跨辯論重複出現的講者把位置連成共同尺度（Lauderdale &amp; Herzog 2016）。" title="先在每場辯論內各擬合 Wordfish，再用跨辯論重複出現的講者把位置連成共同尺度（Lauderdale &amp; Herzog 2016）。">Wordshoal</abbr>、<abbr class="tt" tabindex="0" data-term="LSS" data-full="Latent Semantic Scaling" data-tip="以種子詞定義兩端，依 SVD 語意空間中與種子的相似度替字詞與文件打分的半監督方法（Watanabe 2021）。" title="Latent Semantic Scaling — 以種子詞定義兩端，依 SVD 語意空間中與種子的相似度替字詞與文件打分的半監督方法（Watanabe 2021）。">Latent Semantic Scaling</abbr>（LSS）</strong>——並用 2010 年愛爾蘭預算辯論的 14 篇演講實際跑 Wordscores 與 Wordfish。</p>
 
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c0-w6">從 W6 到 W7</a><a href="#c0-obj">學習目標</a><a href="#c0-cases">六個研究案例</a><a href="#c0-data">本週練習資料</a><a href="#c0-how">怎麼使用本教材</a><a href="#c0-quiz">自我檢查</a>
@@ -443,18 +452,18 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <p>投影片 8 把 W6 與 W7 並排成三列研究任務：</p>
   <div class="tablewrap"><table>
     <tr><th>研究任務</th><th>W6 的連結</th><th>W7 的問題</th></tr>
-    <tr><td>指定類別（assign a category）</td><td>仇恨言論與 <abbr class="tt" tabindex="0" data-term="grandstanding" title="議員為吸引注意而做的表演式發言；W6 的分類任務，Park 原始量測是連續分數。">grandstanding</abbr></td><td>哪些文本屬於同一類？</td></tr>
+    <tr><td>指定類別（assign a category）</td><td>仇恨言論與 <abbr class="tt" tabindex="0" data-term="grandstanding" data-tip="議員為吸引注意而做的表演式發言；W6 的分類任務，Park 原始量測是連續分數。" title="議員為吸引注意而做的表演式發言；W6 的分類任務，Park 原始量測是連續分數。">grandstanding</abbr></td><td>哪些文本屬於同一類？</td></tr>
     <tr><td>量測程度（measure a degree）</td><td>Julia Park 原始的 grandstanding 分數（連續）</td><td>一段文本在尺度上的哪裡？</td></tr>
     <tr><td>詮釋量測（interpret the measure）</td><td>讀錯誤、看外部證據</td><td>是什麼讓一個位置有意義？</td></tr>
   </table></div>
-  <div class="callout tip"><div class="ct">白話翻譯（補充）</div><p>分類器回答「是／不是」；<abbr class="tt" tabindex="0" data-term="scaling" title="把文本放到一條（或多條）連續尺度上估計位置的程度差異，而不是指定類別。">縮放</abbr>模型回答「多一點／少一點」。例如：不是問「這篇演講支不支持預算」，而是把 14 位議員排在一條「支持 ↔ 反對」的線上。但模型只會給你<strong>一串數字</strong>；這條線到底代表「支持預算」、「執政／在野」、還是「談經濟／談社福」，要靠你讀文本、找外部證據來決定——這就是本週一再出現的「驗證」。</p></div>
+  <div class="callout tip"><div class="ct">白話翻譯（補充）</div><p>分類器回答「是／不是」；<abbr class="tt" tabindex="0" data-term="scaling" data-tip="把文本放到一條（或多條）連續尺度上估計位置的程度差異，而不是指定類別。" title="把文本放到一條（或多條）連續尺度上估計位置的程度差異，而不是指定類別。">縮放</abbr>模型回答「多一點／少一點」。例如：不是問「這篇演講支不支持預算」，而是把 14 位議員排在一條「支持 ↔ 反對」的線上。但模型只會給你<strong>一串數字</strong>；這條線到底代表「支持預算」、「執政／在野」、還是「談經濟／談社福」，要靠你讀文本、找外部證據來決定——這就是本週一再出現的「驗證」。</p></div>
 
   <h2 id="c0-obj">本週要能說明的事 <span class="slideref">投影片 11</span></h2>
   <p>投影片 11 的四個學習目標（順序：案例 → 方法概念 → 閱讀與驗證 → R 工具與練習）。讀完後回來勾選：</p>
   <ol class="objlist" id="objList">
     <li data-o="1"><strong>問題與假設</strong>：說明每個方法解決什麼問題、它的主要假設是什麼。</li>
     <li data-o="2"><strong>連結研究</strong>：把一篇已發表的應用連到它用的文本與量測目標。</li>
-    <li data-o="3"><strong>三種「指引」</strong>：分辨參照分數（<abbr class="tt" tabindex="0" data-term="reference scores" title="指定給參照文本的位置值；它定義尺度，不是模型的預測值。">reference scores</abbr>）、潛在位置（latent positions）與種子詞（<abbr class="tt" tabindex="0" data-term="seed words" title="研究者指定、代表概念兩端的字詞與極性（如 enemy +1、ally −1），用來定義 LSS 的方向。">seed words</abbr>）。</li>
+    <li data-o="3"><strong>三種「指引」</strong>：分辨參照分數（<abbr class="tt" tabindex="0" data-term="reference scores" data-tip="指定給參照文本的位置值；它定義尺度，不是模型的預測值。" title="指定給參照文本的位置值；它定義尺度，不是模型的預測值。">reference scores</abbr>）、潛在位置（latent positions）與種子詞（<abbr class="tt" tabindex="0" data-term="seed words" data-tip="研究者指定、代表概念兩端的字詞與極性（如 enemy +1、ally −1），用來定義 LSS 的方向。" title="研究者指定、代表概念兩端的字詞與極性（如 enemy +1、ally −1），用來定義 LSS 的方向。">seed words</abbr>）。</li>
     <li data-o="4"><strong>先讀再擬合</strong>：在擬合模型之前先讀文本，並規劃獨立的檢查。</li>
   </ol>
   <div id="objChecks" class="jsonly"></div>
@@ -462,27 +471,27 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <h2 id="c0-cases">本週六個研究案例 <span class="slideref">投影片 12</span></h2>
   <div class="tablewrap"><table>
     <tr><th>編號</th><th>文章</th><th>方法</th><th>文本</th><th>教學連結</th></tr>
-    <tr><td>Study 1</td><td>Laver, Benoit &amp; Garry (2003)</td><td>Wordscores</td><td>政黨<abbr class="tt" tabindex="0" data-term="manifestos" title="政黨在選舉前發布的政策綱領文件，是政黨位置縮放常用的文本。">宣言</abbr></td><td>Wordscores 與參照位置（第 2–3 章）</td></tr>
+    <tr><td>Study 1</td><td>Laver, Benoit &amp; Garry (2003)</td><td>Wordscores</td><td>政黨<abbr class="tt" tabindex="0" data-term="manifestos" data-tip="政黨在選舉前發布的政策綱領文件，是政黨位置縮放常用的文本。" title="政黨在選舉前發布的政策綱領文件，是政黨位置縮放常用的文本。">宣言</abbr></td><td>Wordscores 與參照位置（第 2–3 章）</td></tr>
     <tr><td>Study 2</td><td>Slapin &amp; Proksch (2008)</td><td>Wordfish</td><td>德國政黨宣言</td><td>Wordfish 與跨時變化（第 4–5 章）</td></tr>
     <tr><td>Study 6</td><td>Lowe &amp; Benoit (2013)</td><td>Wordfish</td><td>愛爾蘭預算演講</td><td>人工判斷與模型失效（第 6 章）</td></tr>
     <tr><td>Study 3</td><td>Lauderdale &amp; Herzog (2016)</td><td>Wordshoal</td><td>議會辯論</td><td>Wordshoal 與辯論結構（第 7 章）</td></tr>
     <tr><td>Study 4</td><td>Trubowitz &amp; Watanabe (2021)</td><td>LSS</td><td>新聞摘要</td><td>LSS 與地緣政治威脅（第 8 章）</td></tr>
-    <tr><td>Study 5</td><td>Hjorth et al. (2015)</td><td>兩者（Wordscores＋Wordfish）</td><td>丹麥與德國宣言</td><td><abbr class="tt" tabindex="0" data-term="external benchmark" title="文本以外的位置量測，如專家評估、選民自我定位、CMP RILE、人工判斷。">外部基準</abbr>與脈絡（第 9 章）</td></tr>
+    <tr><td>Study 5</td><td>Hjorth et al. (2015)</td><td>兩者（Wordscores＋Wordfish）</td><td>丹麥與德國宣言</td><td><abbr class="tt" tabindex="0" data-term="external benchmark" data-tip="文本以外的位置量測，如專家評估、選民自我定位、CMP RILE、人工判斷。" title="文本以外的位置量測，如專家評估、選民自我定位、CMP RILE、人工判斷。">外部基準</abbr>與脈絡（第 9 章）</td></tr>
   </table></div>
   <p class="hint">投影片 12 註：Wordshoal 在每場辯論內使用 Wordfish。</p>
 
   <h2 id="c0-data">本週練習資料：2010 愛爾蘭預算辯論 <span class="slideref">投影片 37、91</span></h2>
   <ul>
     <li><b>14 篇演講</b>，主題是 2010 年愛爾蘭預算，辯論於 <strong>2009 年 12 月</strong>。直接從 <code>quanteda.textmodels::data_corpus_irishbudget2010</code> 載入。</li>
-    <li><code>Data/irish_budget2010.csv</code> 是同一批原文與 metadata 的副本（欄位 <code>doc_id, speaker, party, budget_year, source_document, text</code>），方便閱讀與在其他程式重用；擬合時不需要它。本機檢查：CSV 的 14 篇全文與套件語料<strong>完全相同</strong>（見第 10 章）。</li>
-    <li><b>量測目標</b>：對這份預算的支持程度。S03 指定 Lenihan（財政部長，<abbr class="tt" tabindex="0" data-term="Fianna Fáil" title="愛爾蘭政黨；2009 年 12 月與 Green Party 組成執政聯盟，財政部長 Lenihan 屬此黨。">FF</abbr>）＝+1、Bruton（<abbr class="tt" tabindex="0" data-term="Fine Gael" title="愛爾蘭政黨，2009 年 12 月為在野；Bruton 是其財政發言人。">FG</abbr>）＝−1；S08 改用 Cowen＝+1 檢查<abbr class="tt" tabindex="0" data-term="sensitivity analysis" title="替換參照、種子、文本範圍或前處理，看結果如何改變；本週 S08 換參照即是。">敏感度</abbr>。</li>
+    <li><code>Data/irish_budget2010.csv</code> 是同一批原文與 metadata 的副本（欄位 <code>doc_id, speaker, party, budget_year, source_document, text</code>），方便閱讀與在其他程式重用；擬合時不需要它。本機檢查：<abbr class="tt" tabindex="0" data-term="CSV" data-full="comma-separated values" data-tip="以逗號分隔欄位的純文字表格檔。" title="comma-separated values — 以逗號分隔欄位的純文字表格檔。">CSV</abbr> 的 14 篇全文與套件語料<strong>完全相同</strong>（見第 10 章）。</li>
+    <li><b>量測目標</b>：對這份預算的支持程度。S03 指定 Lenihan（財政部長，<abbr class="tt" tabindex="0" data-term="Fianna Fáil" data-full="Fianna Fáil (FF)" data-tip="愛爾蘭政黨；2009 年 12 月與 Green Party 組成執政聯盟，財政部長 Lenihan 屬此黨。" title="Fianna Fáil (FF) — 愛爾蘭政黨；2009 年 12 月與 Green Party 組成執政聯盟，財政部長 Lenihan 屬此黨。">FF</abbr>）＝+1、Bruton（<abbr class="tt" tabindex="0" data-term="Fine Gael" data-full="Fine Gael (FG)" data-tip="愛爾蘭政黨，2009 年 12 月為在野；Bruton 是其財政發言人。" title="Fine Gael (FG) — 愛爾蘭政黨，2009 年 12 月為在野；Bruton 是其財政發言人。">FG</abbr>）＝−1；S08 改用 Cowen＝+1 檢查<abbr class="tt" tabindex="0" data-term="sensitivity analysis" data-tip="替換參照、種子、文本範圍或前處理，看結果如何改變；本週 S08 換參照即是。" title="替換參照、種子、文本範圍或前處理，看結果如何改變；本週 S08 換參照即是。">敏感度</abbr>。</li>
     <li><b>研究脈絡</b>：Lowe &amp; Benoit (2013) 用人工判斷作為基準檢驗 Wordfish（第 6 章）。</li>
   </ul>
 
   <h2 id="c0-how">怎麼使用本教材</h2>
   <ul>
     <li>右側<b>投影片對照</b>會跟著你讀到的段落切換頁面；每個標題旁的「投影片 N」就是出處。</li>
-    <li>第 10–13 章的 R 程式碼與輸出是<strong>本機實跑</strong>課堂腳本 <code>W7/classroom/W7_scaling.R</code> 的結果（R 4.5.3（aarch64-conda-linux-gnu）、<abbr class="tt" tabindex="0" data-term="quanteda" title="R 的文本分析套件，負責語料、tokens 與 DFM；本機 4.5.1、投影片 4.3.1。">quanteda</abbr> 4.5.1、<abbr class="tt" tabindex="0" data-term="quanteda.textmodels" title="quanteda 的模型擴充套件，提供 textmodel_wordscores()、textmodel_wordfish() 與本週語料。">quanteda.textmodels</abbr> 0.9.10、<abbr class="tt" tabindex="0" data-term="quanteda.textplots" title="quanteda 的繪圖擴充套件；本週用 textplot_scale1d() 畫估計位置。">quanteda.textplots</abbr> 0.96.1、ggplot2 4.0.3）。所有數字與投影片 93–129 逐一核對，<strong>全部一致</strong>；唯一差異是套件版本字串（投影片 quanteda 4.3.1，本機 4.5.1）。</li>
+    <li>第 10–13 章的 R 程式碼與輸出是<strong>本機實跑</strong>課堂腳本 <code>W7/classroom/W7_scaling.R</code> 的結果（R 4.5.3（aarch64-conda-linux-gnu）、<abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的文本分析套件，負責語料、tokens 與 DFM；本機 4.5.1、投影片 4.3.1。" title="R 的文本分析套件，負責語料、tokens 與 DFM；本機 4.5.1、投影片 4.3.1。">quanteda</abbr> 4.5.1、<abbr class="tt" tabindex="0" data-term="quanteda.textmodels" data-tip="quanteda 的模型擴充套件，提供 textmodel_wordscores()、textmodel_wordfish() 與本週語料。" title="quanteda 的模型擴充套件，提供 textmodel_wordscores()、textmodel_wordfish() 與本週語料。">quanteda.textmodels</abbr> 0.9.10、<abbr class="tt" tabindex="0" data-term="quanteda.textplots" data-tip="quanteda 的繪圖擴充套件；本週用 textplot_scale1d() 畫估計位置。" title="quanteda 的繪圖擴充套件；本週用 textplot_scale1d() 畫估計位置。">quanteda.textplots</abbr> 0.96.1、ggplot2 4.0.3）。所有數字與投影片 93–129 逐一核對，<strong>全部一致</strong>；唯一差異是套件版本字串（投影片 quanteda 4.3.1，本機 4.5.1）。</li>
     <li>互動元件分三類：<b>真實資料</b>（用本週 14 篇演講與本機模型輸出）、<b>玩具直覺</b>（標「補充（非講義內容）」）、<b>練習</b>（作答區、主張判斷、計畫填寫器）。</li>
     <li>標示「補充（非講義內容）」者為延伸說明，不是投影片內容。</li>
   </ul>
@@ -524,15 +533,15 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   </div>
 
   <h2 id="c1-analogy">一個比喻：把演講排在一條尺上（補充）</h2>
-  <div class="callout tip"><div class="ct">補充（非講義內容）</div><p>想像你要把 14 篇演講排在一條「支持 ↔ 反對預算」的尺上。<b><abbr class="tt" tabindex="0" data-term="Wordscores" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr></b>：你先告訴電腦「這篇是 +1、那篇是 −1」，電腦學每個字比較像哪一端，再替其他演講打分。<b><abbr class="tt" tabindex="0" data-term="Wordfish" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr></b>：你不給任何分數，電腦自己找出「最能解釋字詞使用差異」的一條軸，你只告訴它哪一端朝左。<b><abbr class="tt" tabindex="0" data-term="Wordshoal" title="先在每場辯論內各擬合 Wordfish，再用跨辯論重複出現的講者把位置連成共同尺度（Lauderdale &amp; Herzog 2016）。">Wordshoal</abbr></b>：議員在很多場辯論發言，先在每場內排、再把各場連起來。<b><abbr class="tt" tabindex="0" data-term="LSS" title="以種子詞定義兩端，依 SVD 語意空間中與種子的相似度替字詞與文件打分的半監督方法（Watanabe 2021）。">LSS</abbr></b>：你給一組代表兩端的「<abbr class="tt" tabindex="0" data-term="seed words" title="研究者指定、代表概念兩端的字詞與極性（如 enemy +1、ally −1），用來定義 LSS 的方向。">種子詞</abbr>」，電腦從<abbr class="tt" tabindex="0" data-term="co-occurrence" title="字詞在同一脈絡（如同一句）中一起出現；LSS 從共現規律學語意關係。">共現</abbr>關係學出其他字有多接近哪一端。</p></div>
+  <div class="callout tip"><div class="ct">補充（非講義內容）</div><p>想像你要把 14 篇演講排在一條「支持 ↔ 反對預算」的尺上。<b><abbr class="tt" tabindex="0" data-term="Wordscores" data-tip="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr></b>：你先告訴電腦「這篇是 +1、那篇是 −1」，電腦學每個字比較像哪一端，再替其他演講打分。<b><abbr class="tt" tabindex="0" data-term="Wordfish" data-tip="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr></b>：你不給任何分數，電腦自己找出「最能解釋字詞使用差異」的一條軸，你只告訴它哪一端朝左。<b><abbr class="tt" tabindex="0" data-term="Wordshoal" data-tip="先在每場辯論內各擬合 Wordfish，再用跨辯論重複出現的講者把位置連成共同尺度（Lauderdale &amp; Herzog 2016）。" title="先在每場辯論內各擬合 Wordfish，再用跨辯論重複出現的講者把位置連成共同尺度（Lauderdale &amp; Herzog 2016）。">Wordshoal</abbr></b>：議員在很多場辯論發言，先在每場內排、再把各場連起來。<b><abbr class="tt" tabindex="0" data-term="LSS" data-full="Latent Semantic Scaling" data-tip="以種子詞定義兩端，依 SVD 語意空間中與種子的相似度替字詞與文件打分的半監督方法（Watanabe 2021）。" title="Latent Semantic Scaling — 以種子詞定義兩端，依 SVD 語意空間中與種子的相似度替字詞與文件打分的半監督方法（Watanabe 2021）。">LSS</abbr></b>：你給一組代表兩端的「<abbr class="tt" tabindex="0" data-term="seed words" data-tip="研究者指定、代表概念兩端的字詞與極性（如 enemy +1、ally −1），用來定義 LSS 的方向。" title="研究者指定、代表概念兩端的字詞與極性（如 enemy +1、ally −1），用來定義 LSS 的方向。">種子詞</abbr>」，電腦從<abbr class="tt" tabindex="0" data-term="co-occurrence" data-tip="字詞在同一脈絡（如同一句）中一起出現；LSS 從共現規律學語意關係。" title="字詞在同一脈絡（如同一句）中一起出現；LSS 從共現規律學語意關係。">共現</abbr>關係學出其他字有多接近哪一端。</p></div>
 
   <h2 id="c1-map">四種方法：指引、結構、輸出 <span class="slideref">投影片 71</span></h2>
   <div class="tablewrap"><table>
     <tr><th>方法</th><th>研究者提供的指引</th><th>需要的結構</th><th>主要輸出</th></tr>
-    <tr><td>Wordscores</td><td>參照文件的分數</td><td>可比較的<abbr class="tt" tabindex="0" data-term="reference texts" title="Wordscores 中由研究者指定位置的文本，用來學字分數；本週是 Lenihan +1、Bruton −1。">參照文本</abbr>與<abbr class="tt" tabindex="0" data-term="virgin texts" title="沒有指定位置、由 Wordscores 預測位置的文本；本週有 12 篇。">新文本</abbr></td><td>新文件的位置</td></tr>
-    <tr><td>Wordfish</td><td>沒有位置標籤</td><td>一個<abbr class="tt" tabindex="0" data-term="DFM" title="文件 × 特徵（字詞）的計數矩陣；本週為 14 × 4,885。">計數矩陣</abbr></td><td>相對的文件位置</td></tr>
+    <tr><td>Wordscores</td><td>參照文件的分數</td><td>可比較的<abbr class="tt" tabindex="0" data-term="reference texts" data-tip="Wordscores 中由研究者指定位置的文本，用來學字分數；本週是 Lenihan +1、Bruton −1。" title="Wordscores 中由研究者指定位置的文本，用來學字分數；本週是 Lenihan +1、Bruton −1。">參照文本</abbr>與<abbr class="tt" tabindex="0" data-term="virgin texts" data-tip="沒有指定位置、由 Wordscores 預測位置的文本；本週有 12 篇。" title="沒有指定位置、由 Wordscores 預測位置的文本；本週有 12 篇。">新文本</abbr></td><td>新文件的位置</td></tr>
+    <tr><td>Wordfish</td><td>沒有位置標籤</td><td>一個<abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件 × 特徵（字詞）的計數矩陣；本週為 14 × 4,885。" title="document-feature matrix — 文件 × 特徵（字詞）的計數矩陣；本週為 14 × 4,885。">計數矩陣</abbr></td><td>相對的文件位置</td></tr>
     <tr><td>Wordshoal</td><td>沒有位置標籤</td><td>同一批講者跨多場辯論</td><td>共同的講者位置</td></tr>
-    <tr><td>LSS</td><td>種子詞與其<abbr class="tt" tabindex="0" data-term="polarity" title="字詞或文件靠近種子哪一端的程度；LSS 中字詞極性 g_j 是以種子極性加權的相似度平均。">極性</abbr></td><td>語料中的語意關係</td><td>字詞與文件的極性</td></tr>
+    <tr><td>LSS</td><td>種子詞與其<abbr class="tt" tabindex="0" data-term="polarity" data-tip="字詞或文件靠近種子哪一端的程度；LSS 中字詞極性 g_j 是以種子極性加權的相似度平均。" title="字詞或文件靠近種子哪一端的程度；LSS 中字詞極性 g_j 是以種子極性加權的相似度平均。">極性</abbr></td><td>語料中的語意關係</td><td>字詞與文件的極性</td></tr>
   </table></div>
 
   <h2 id="c1-anchor">錨點不等於獨立驗證 <span class="slideref">投影片 87</span></h2>
@@ -581,7 +590,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <div class="mcq" data-ans="0" data-q="c1q2">
     <div class="q">2. Wordfish 的 <code>dir</code> 參數提供了什麼？</div>
     <button class="opt">只選定尺度的方向，不說明維度的意義</button><button class="opt">兩篇文本的位置分數</button><button class="opt">一組種子詞</button><button class="opt">外部驗證</button>
-    <div class="fb">投影片 87：Wordfish <abbr class="tt" tabindex="0" data-term="dir" title="textmodel_wordfish() 的參數：指定哪篇文件在左、哪篇在右，只決定方向，不提供維度的意義。">dir</abbr> — choose an orientation；留下要檢查的是 meaning of the dimension。<span class="slideref">投影片 87</span></div>
+    <div class="fb">投影片 87：Wordfish <abbr class="tt" tabindex="0" data-term="dir" data-tip="textmodel_wordfish() 的參數：指定哪篇文件在左、哪篇在右，只決定方向，不提供維度的意義。" title="textmodel_wordfish() 的參數：指定哪篇文件在左、哪篇在右，只決定方向，不提供維度的意義。">dir</abbr> — choose an orientation；留下要檢查的是 meaning of the dimension。<span class="slideref">投影片 87</span></div>
   </div>
   <div class="mcq" data-ans="3" data-q="c1q3">
     <div class="q">3. LSS 的主要輸出是？</div>
@@ -592,17 +601,17 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 
 <!-- ===================== CH02 ===================== -->
 <section class="chapter" id="ch02" data-slides="4,7,13,14">
-  <div class="crumb">02 · <abbr class="tt" tabindex="0" data-term="Wordscores" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr></div>
+  <div class="crumb">02 · <abbr class="tt" tabindex="0" data-term="Wordscores" data-tip="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr></div>
   <h1 class="ch">Wordscores：從參照文本到新文件</h1>
-  <p class="lead">Wordscores 的起點是愛爾蘭國會：1991 年的一場<abbr class="tt" tabindex="0" data-term="confidence debate" title="國會針對是否信任政府進行的辯論與表決；Laver &amp; Benoit (2002) 分析 1991 年愛爾蘭的一場。">信任案</abbr>辯論。先替幾篇「<abbr class="tt" tabindex="0" data-term="reference texts" title="Wordscores 中由研究者指定位置的文本，用來學字分數；本週是 Lenihan +1、Bruton −1。">參照文本</abbr>」指定位置，學出每個字的分數，再用這些<abbr class="tt" tabindex="0" data-term="word scores" title="Wordscores 從參照學到的每個字的分數 S_w；反映參照中的相對用法，不是情緒。">字分數</abbr>替其他演講定位。</p>
+  <p class="lead">Wordscores 的起點是愛爾蘭國會：1991 年的一場<abbr class="tt" tabindex="0" data-term="confidence debate" data-tip="國會針對是否信任政府進行的辯論與表決；Laver &amp; Benoit (2002) 分析 1991 年愛爾蘭的一場。" title="國會針對是否信任政府進行的辯論與表決；Laver &amp; Benoit (2002) 分析 1991 年愛爾蘭的一場。">信任案</abbr>辯論。先替幾篇「<abbr class="tt" tabindex="0" data-term="reference texts" data-tip="Wordscores 中由研究者指定位置的文本，用來學字分數；本週是 Lenihan +1、Bruton −1。" title="Wordscores 中由研究者指定位置的文本，用來學字分數；本週是 Lenihan +1、Bruton −1。">參照文本</abbr>」指定位置，學出每個字的分數，再用這些<abbr class="tt" tabindex="0" data-term="word scores" data-tip="Wordscores 從參照學到的每個字的分數 S_w；反映參照中的相對用法，不是情緒。" title="Wordscores 從參照學到的每個字的分數 S_w；反映參照中的相對用法，不是情緒。">字分數</abbr>替其他演講定位。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c2-origin">議會起源：1991 年愛爾蘭</a><a href="#c2-steps">三個步驟</a><a href="#c2-idea">情境與想法</a><a href="#c2-math">計算方式（補充）</a><a href="#c2-toy">玩具計算機</a><a href="#c2-assume">假設與適用範圍</a><a href="#c2-quiz">自我檢查</a>
   </div>
 
   <h2 id="c2-origin">議會起源：愛爾蘭，1991 <span class="slideref">投影片 4–6</span></h2>
   <div class="tablewrap"><table>
-    <tr><th>研究選擇</th><th>愛爾蘭 <abbr class="tt" tabindex="0" data-term="Dáil" title="愛爾蘭國會的下議院；議員稱為 TD。">Dáil</abbr> 研究（Laver &amp; Benoit 2002）</th></tr>
-    <tr><td>政治情境</td><td>1991 年 10 月，針對 <abbr class="tt" tabindex="0" data-term="Fianna Fáil" title="愛爾蘭政黨；2009 年 12 月與 Green Party 組成執政聯盟，財政部長 Lenihan 屬此黨。">Fianna Fáil</abbr>–<abbr class="tt" tabindex="0" data-term="PD" title="Progressive Democrats，愛爾蘭政黨；1991 年與 Fianna Fáil 組成政府。">PD</abbr> 政府的信任案辯論</td></tr>
+    <tr><th>研究選擇</th><th>愛爾蘭 <abbr class="tt" tabindex="0" data-term="Dáil" data-tip="愛爾蘭國會的下議院；議員稱為 TD。" title="愛爾蘭國會的下議院；議員稱為 TD。">Dáil</abbr> 研究（Laver &amp; Benoit 2002）</th></tr>
+    <tr><td>政治情境</td><td>1991 年 10 月，針對 <abbr class="tt" tabindex="0" data-term="Fianna Fáil" data-full="Fianna Fáil (FF)" data-tip="愛爾蘭政黨；2009 年 12 月與 Green Party 組成執政聯盟，財政部長 Lenihan 屬此黨。" title="Fianna Fáil (FF) — 愛爾蘭政黨；2009 年 12 月與 Green Party 組成執政聯盟，財政部長 Lenihan 屬此黨。">Fianna Fáil</abbr>–<abbr class="tt" tabindex="0" data-term="PD" data-full="Progressive Democrats" data-tip="愛爾蘭政黨；1991 年與 Fianna Fáil 組成政府。" title="Progressive Democrats — 愛爾蘭政黨；1991 年與 Fianna Fáil 組成政府。">PD</abbr> 政府的信任案辯論</td></tr>
     <tr><td>文本</td><td>58 篇個別議員的英文演講</td></tr>
     <tr><td>量測目標</td><td>每位講者支持或反對政府的程度有多強？</td></tr>
   </table></div>
@@ -615,15 +624,15 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <tr><td>2. 替字彙打分</td><td>從這些參照演講學出字分數</td></tr>
     <tr><td>3. 定位其他講者</td><td>把每篇其餘演講裡被打分的字合併起來</td></tr>
   </table></div>
-  <p>詮釋：<strong>在這場辯論中</strong>對這個政府的支持。2002 年是議會應用；2003 年的 Wordscores 通論文章（Laver, Benoit &amp; Garry, <abbr class="tt" tabindex="0" data-term="APSR" title="American Political Science Review，政治學期刊。">APSR</abbr>）也包含這場辯論（投影片 7 引 Laver &amp; Benoit 2002, pp. 61–66；<abbr class="tt" tabindex="0" data-term="LBG" title="Laver, Benoit &amp; Garry (2003) 的縮寫；也是 Wordscores 的 rescaling = &quot;lbg&quot; 轉換。">LBG</abbr> 2003, pp. 326–328）。</p>
+  <p>詮釋：<strong>在這場辯論中</strong>對這個政府的支持。2002 年是議會應用；2003 年的 Wordscores 通論文章（Laver, Benoit &amp; Garry, <abbr class="tt" tabindex="0" data-term="APSR" data-full="American Political Science Review" data-tip="政治學期刊。" title="American Political Science Review — 政治學期刊。">APSR</abbr>）也包含這場辯論（投影片 7 引 Laver &amp; Benoit 2002, pp. 61–66；<abbr class="tt" tabindex="0" data-term="LBG" data-full="Laver, Benoit &amp; Garry (2003)" data-tip="Laver, Benoit &amp; Garry (2003) 的縮寫；也是 Wordscores 的 rescaling = &quot;lbg&quot; 轉換。" title="Laver, Benoit &amp; Garry (2003) — Laver, Benoit &amp; Garry (2003) 的縮寫；也是 Wordscores 的 rescaling = &quot;lbg&quot; 轉換。">LBG</abbr> 2003, pp. 326–328）。</p>
 
   <h2 id="c2-idea">情境：有些文本已有可信的位置 <span class="slideref">投影片 13</span></h2>
   <ul>
     <li>用這些文件當作<b>參照文本（reference texts）</b>。</li>
     <li>學出它們的字詞如何區分這些位置。</li>
-    <li>替<b>可比較的新文件</b>（W7 R 練習稱 new texts；文獻常稱 <abbr class="tt" tabindex="0" data-term="virgin texts" title="沒有指定位置、由 Wordscores 預測位置的文本；本週有 12 篇。">virgin texts</abbr>）估計位置。</li>
+    <li>替<b>可比較的新文件</b>（W7 R 練習稱 new texts；文獻常稱 <abbr class="tt" tabindex="0" data-term="virgin texts" data-tip="沒有指定位置、由 Wordscores 預測位置的文本；本週有 12 篇。" title="沒有指定位置、由 Wordscores 預測位置的文本；本週有 12 篇。">virgin texts</abbr>）估計位置。</li>
   </ul>
-  <p>例子：用較早的政黨<abbr class="tt" tabindex="0" data-term="manifestos" title="政黨在選舉前發布的政策綱領文件，是政黨位置縮放常用的文本。">宣言</abbr>當參照，定位下一次選舉的宣言（第 3 章 LBG 2003 就是這樣做）。</p>
+  <p>例子：用較早的政黨<abbr class="tt" tabindex="0" data-term="manifestos" data-tip="政黨在選舉前發布的政策綱領文件，是政黨位置縮放常用的文本。" title="政黨在選舉前發布的政策綱領文件，是政黨位置縮放常用的文本。">宣言</abbr>當參照，定位下一次選舉的宣言（第 3 章 LBG 2003 就是這樣做）。</p>
 
   <h2 id="c2-math">計算方式：三條式子（補充，並以 R 驗證）</h2>
   <div class="callout tip"><div class="ct">補充（非講義內容）：投影片沒有列公式，以下以本機 R 逐字重算 <code>textmodel_wordscores(smooth = 0)</code> 驗證</div>
@@ -631,7 +640,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <ol>
     <li><b>字在各參照中出現的「條件機率」</b>：P<sub>wr</sub> = F<sub>wr</sub> / Σ<sub>r</sub> F<sub>wr</sub>（只對至少出現在一篇參照中的字計算）。</li>
     <li><b>字分數</b>：S<sub>w</sub> = Σ<sub>r</sub> P<sub>wr</sub> · A<sub>r</sub>。</li>
-    <li><b>新文件的<abbr class="tt" tabindex="0" data-term="raw scores" title="rescaling = &quot;none&quot; 的 Wordscores 預測值；共用字會把它往中心拉。">原始分數</abbr></b>：S<sub>v</sub> = Σ<sub>w</sub> F<sub>wv</sub> · S<sub>w</sub>，其中 F<sub>wv</sub> 只在「有分數的字」裡計算相對頻率。</li>
+    <li><b>新文件的<abbr class="tt" tabindex="0" data-term="raw scores" data-tip="rescaling = &quot;none&quot; 的 Wordscores 預測值；共用字會把它往中心拉。" title="rescaling = &quot;none&quot; 的 Wordscores 預測值；共用字會把它往中心拉。">原始分數</abbr></b>：S<sub>v</sub> = Σ<sub>w</sub> F<sub>wv</sub> · S<sub>w</sub>，其中 F<sub>wv</sub> 只在「有分數的字」裡計算相對頻率。</li>
   </ol>
   <p>本機驗證（第 11 章 X2）：手算字分數與 <code>coef(ws)</code> 最大差 <code>0</code>；手算文件分數與 <code>ws_raw</code> 最大差 <code>5.662e-15</code>，有分數的字共 2,131 個。</p></div>
 
@@ -639,7 +648,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <div class="lab" id="labToyWS">
     <div class="lab-h"><span class="ic">🧮</span><span class="lt">玩具 Wordscores 計算機</span><span class="ls">補充（非講義內容）· 虛構的 6 個字、2 篇參照、1 篇新文本</span></div>
     <div class="lab-b">
-      <p class="hint">修改表格中的計數或<abbr class="tt" tabindex="0" data-term="reference scores" title="指定給參照文本的位置值；它定義尺度，不是模型的預測值。">參照分數</abbr>，看字分數 S<sub>w</sub> 與新文本分數怎麼變。字和數字都是虛構的，只為示範計算。試試：(1) 把新文本只寫中間詞「budget」，分數會被拉向中心；(2) 新文本出現參照沒有的字（最後一列 <i>pension</i>，參照計數都是 0），它不會得到分數、也不算進<abbr class="tt" tabindex="0" data-term="coverage" title="每篇演講處理後 token 中有字分數的比例；本週 83.6%–100%，不是準確率。">覆蓋率</abbr>。</p>
+      <p class="hint">修改表格中的計數或<abbr class="tt" tabindex="0" data-term="reference scores" data-tip="指定給參照文本的位置值；它定義尺度，不是模型的預測值。" title="指定給參照文本的位置值；它定義尺度，不是模型的預測值。">參照分數</abbr>，看字分數 S<sub>w</sub> 與新文本分數怎麼變。字和數字都是虛構的，只為示範計算。試試：(1) 把新文本只寫中間詞「budget」，分數會被拉向中心；(2) 新文本出現參照沒有的字（最後一列 <i>pension</i>，參照計數都是 0），它不會得到分數、也不算進<abbr class="tt" tabindex="0" data-term="coverage" data-tip="每篇演講處理後 token 中有字分數的比例；本週 83.6%–100%，不是準確率。" title="每篇演講處理後 token 中有字分數的比例；本週 83.6%–100%，不是準確率。">覆蓋率</abbr>。</p>
       <div class="tablewrap jsonly" id="tw"></div>
       <div class="grid3 jsonly">
         <div class="stat"><div class="sl">新文本原始分數 S<sub>v</sub></div><div class="sv" id="twScore">–</div></div>
@@ -676,7 +685,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <div class="mcq" data-ans="3" data-q="c2q3">
     <div class="q">3. 下列哪一個<strong>不是</strong>投影片 14 列出的 Wordscores 假設？</div>
     <button class="opt">參照分數量到我們要的概念</button><button class="opt">字詞以相似方式訊號位置</button><button class="opt">新文本含足夠多已打分的字</button><button class="opt">字詞計數服從條件獨立的 Poisson 分配</button>
-    <div class="fb"><abbr class="tt" tabindex="0" data-term="Poisson" title="描述計數資料的機率分配；Wordfish 假設字詞計數服從條件獨立的 Poisson 分配。">Poisson</abbr> 計數假設是 <abbr class="tt" tabindex="0" data-term="Wordfish" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr> 的（投影片 21）。<span class="slideref">投影片 14、21</span></div>
+    <div class="fb"><abbr class="tt" tabindex="0" data-term="Poisson" data-tip="描述計數資料的機率分配；Wordfish 假設字詞計數服從條件獨立的 Poisson 分配。" title="描述計數資料的機率分配；Wordfish 假設字詞計數服從條件獨立的 Poisson 分配。">Poisson</abbr> 計數假設是 <abbr class="tt" tabindex="0" data-term="Wordfish" data-tip="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr> 的（投影片 21）。<span class="slideref">投影片 14、21</span></div>
   </div>
 </section>
 
@@ -684,7 +693,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 <section class="chapter" id="ch03" data-slides="15,16,17,18,19">
   <div class="crumb">03 · Study 1</div>
   <h1 class="ch">Laver, Benoit &amp; Garry (2003)：讀懂估計出來的變化</h1>
-  <p class="lead"><abbr class="tt" tabindex="0" data-term="Wordscores" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr> 的經典應用：用 1992 年英國政黨<abbr class="tt" tabindex="0" data-term="manifestos" title="政黨在選舉前發布的政策綱領文件，是政黨位置縮放常用的文本。">宣言</abbr>（搭配<abbr class="tt" tabindex="0" data-term="expert scores" title="專家對政黨政策位置的評估；LBG (2003) 用 1992 年專家分數當參照。">專家分數</abbr>）當參照，估計 1997 年宣言的經濟政策位置。投影片 16–19 分四步帶你讀原文 Figure 1（p. 314）。</p>
+  <p class="lead"><abbr class="tt" tabindex="0" data-term="Wordscores" data-tip="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr> 的經典應用：用 1992 年英國政黨<abbr class="tt" tabindex="0" data-term="manifestos" data-tip="政黨在選舉前發布的政策綱領文件，是政黨位置縮放常用的文本。" title="政黨在選舉前發布的政策綱領文件，是政黨位置縮放常用的文本。">宣言</abbr>（搭配<abbr class="tt" tabindex="0" data-term="expert scores" data-tip="專家對政黨政策位置的評估；LBG (2003) 用 1992 年專家分數當參照。" title="專家對政黨政策位置的評估；LBG (2003) 用 1992 年專家分數當參照。">專家分數</abbr>）當參照，估計 1997 年宣言的經濟政策位置。投影片 16–19 分四步帶你讀原文 Figure 1（p. 314）。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c3-q">研究問題</a><a href="#c3-fig">四步讀 Figure 1</a><a href="#c3-ord">順序 vs. 距離</a><a href="#c3-judge">主張判斷練習</a><a href="#c3-quiz">自我檢查</a>
   </div>
@@ -693,16 +702,16 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <ul>
     <li><b>問題</b>：文本如何把政黨定位在政策維度上？</li>
     <li><b>參照</b>：英國 1992 年的政黨宣言與專家分數。</li>
-    <li><b><abbr class="tt" tabindex="0" data-term="virgin texts" title="沒有指定位置、由 Wordscores 預測位置的文本；本週有 12 篇。">新文本</abbr></b>：各黨 1997 年的宣言。</li>
+    <li><b><abbr class="tt" tabindex="0" data-term="virgin texts" data-tip="沒有指定位置、由 Wordscores 預測位置的文本；本週有 12 篇。" title="沒有指定位置、由 Wordscores 預測位置的文本；本週有 12 篇。">新文本</abbr></b>：各黨 1997 年的宣言。</li>
   </ul>
 
   <h2 id="c3-fig">四步讀 Figure 1：參照文本 → 字 → 新文本 <span class="slideref">投影片 16–19</span></h2>
   <div class="tablewrap"><table>
     <tr><th>步驟</th><th>內容</th></tr>
-    <tr><td>1 · 1992 <abbr class="tt" tabindex="0" data-term="reference scores" title="指定給參照文本的位置值；它定義尺度，不是模型的預測值。">參照分數</abbr> <span class="slideref">16</span></td><td>Labour 5.35；Liberal Democrats 8.21；Conservatives 17.21。經濟政策：<b>較低＝公共服務</b>、<b>較高＝減稅</b>。</td></tr>
-    <tr><td>2 · 從文本到字 <span class="slideref">17</span></td><td>從 1992 參照學出<abbr class="tt" tabindex="0" data-term="word scores" title="Wordscores 從參照學到的每個字的分數 S_w；反映參照中的相對用法，不是情緒。">字分數</abbr>；再用每份 1997 宣言中的字詞比例合併。</td></tr>
+    <tr><td>1 · 1992 <abbr class="tt" tabindex="0" data-term="reference scores" data-tip="指定給參照文本的位置值；它定義尺度，不是模型的預測值。" title="指定給參照文本的位置值；它定義尺度，不是模型的預測值。">參照分數</abbr> <span class="slideref">16</span></td><td>Labour 5.35；Liberal Democrats 8.21；Conservatives 17.21。經濟政策：<b>較低＝公共服務</b>、<b>較高＝減稅</b>。</td></tr>
+    <tr><td>2 · 從文本到字 <span class="slideref">17</span></td><td>從 1992 參照學出<abbr class="tt" tabindex="0" data-term="word scores" data-tip="Wordscores 從參照學到的每個字的分數 S_w；反映參照中的相對用法，不是情緒。" title="Wordscores 從參照學到的每個字的分數 S_w；反映參照中的相對用法，不是情緒。">字分數</abbr>；再用每份 1997 宣言中的字詞比例合併。</td></tr>
     <tr><td>3 · 1997 位置 <span class="slideref">18</span></td><td>Labour 9.17；Liberal Democrats 5.00；Conservatives 17.18。<b>Labour 與 Liberal Democrats 換了順序</b>。</td></tr>
-    <tr><td>4 · 讀註腳 <span class="slideref">19</span></td><td>數值經過轉換（transformed）；括號內是<abbr class="tt" tabindex="0" data-term="standard error" title="模型假設下估計值的不確定性；標準誤小不代表尺度有效。">標準誤</abbr>；比較<b>順序</b>，對<b>距離</b>要謹慎。</td></tr>
+    <tr><td>4 · 讀註腳 <span class="slideref">19</span></td><td>數值經過轉換（transformed）；括號內是<abbr class="tt" tabindex="0" data-term="standard error" data-tip="模型假設下估計值的不確定性；標準誤小不代表尺度有效。" title="模型假設下估計值的不確定性；標準誤小不代表尺度有效。">標準誤</abbr>；比較<b>順序</b>，對<b>距離</b>要謹慎。</td></tr>
   </table></div>
   <div class="lab" id="labLBG">
     <div class="lab-h"><span class="ic">📊</span><span class="lt">1992 → 1997 位置對照</span><span class="ls">投影片 16、18 的數字（原文 Figure 1）</span></div>
@@ -713,14 +722,14 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   </div>
 
   <h2 id="c3-ord">為什麼「順序」比「距離」可靠？</h2>
-  <div class="callout tip"><div class="ct">補充（非講義內容）</div><p>原始 Wordscores 分數會因為共用字而被拉向中心（第 2 章玩具），所以 <abbr class="tt" tabindex="0" data-term="LBG" title="Laver, Benoit &amp; Garry (2003) 的縮寫；也是 Wordscores 的 rescaling = &quot;lbg&quot; 轉換。">LBG</abbr> 2003 對新文本分數做了轉換，讓它們的散布接近參照的散布。轉換會改變距離的大小，但不改變順序；而且轉換本身依賴參照的選擇。因此投影片 19 建議：比較順序，對距離謹慎。第 11 章另外示範 R 的 <code>rescaling = "lbg"</code> 會讓同一批分數的距離變成什麼樣子。</p></div>
+  <div class="callout tip"><div class="ct">補充（非講義內容）</div><p>原始 Wordscores 分數會因為共用字而被拉向中心（第 2 章玩具），所以 <abbr class="tt" tabindex="0" data-term="LBG" data-full="Laver, Benoit &amp; Garry (2003)" data-tip="Laver, Benoit &amp; Garry (2003) 的縮寫；也是 Wordscores 的 rescaling = &quot;lbg&quot; 轉換。" title="Laver, Benoit &amp; Garry (2003) — Laver, Benoit &amp; Garry (2003) 的縮寫；也是 Wordscores 的 rescaling = &quot;lbg&quot; 轉換。">LBG</abbr> 2003 對新文本分數做了轉換，讓它們的散布接近參照的散布。轉換會改變距離的大小，但不改變順序；而且轉換本身依賴參照的選擇。因此投影片 19 建議：比較順序，對距離謹慎。第 11 章另外示範 R 的 <code>rescaling = "lbg"</code> 會讓同一批分數的距離變成什麼樣子。</p></div>
 
   <h2 id="c3-judge">主張判斷練習</h2>
   <p>根據投影片 16–19 判斷每句話「可以這樣說」或「不能這樣說」。</p>
   <div class="mcq" data-ans="0" data-q="c3j1">
     <div class="q">主張 A：「在這個經濟政策維度上，1997 年 Labour 的估計位置排在 Liberal Democrats 的右側（較偏減稅那一端）。」</div>
     <button class="opt">可以這樣說</button><button class="opt">不能這樣說</button>
-    <div class="fb">1997：Labour 9.17 &gt; LD 5.00；投影片 18 說兩黨換了順序。這是順序的陳述。<span class="slideref">投影片 18</span></div>
+    <div class="fb">1997：Labour 9.17 &gt; <abbr class="tt" tabindex="0" data-term="LD" data-full="Liberal Democrats" data-tip="英國自由民主黨。" title="Liberal Democrats — 英國自由民主黨。">LD</abbr> 5.00；投影片 18 說兩黨換了順序。這是順序的陳述。<span class="slideref">投影片 18</span></div>
   </div>
   <div class="mcq" data-ans="1" data-q="c3j2">
     <div class="q">主張 B：「Labour 從 5.35 移到 9.17，所以 Labour 右移的幅度剛好是 3.82 個『政策單位』。」</div>
@@ -753,9 +762,9 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 
 <!-- ===================== CH04 ===================== -->
 <section class="chapter" id="ch04" data-slides="20,21,24,25,26">
-  <div class="crumb">04 · <abbr class="tt" tabindex="0" data-term="Wordfish" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr></div>
+  <div class="crumb">04 · <abbr class="tt" tabindex="0" data-term="Wordfish" data-tip="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr></div>
   <h1 class="ch">Wordfish：沒有參照分數時的位置</h1>
-  <p class="lead">如果沒有任何可信的位置標籤，Wordfish 直接從字詞計數的規律中估計一個<strong><abbr class="tt" tabindex="0" data-term="latent dimension" title="無法直接觀察、由字詞計數規律估計出的連續維度；其意義要靠文本與外部證據詮釋。">潛在維度</abbr></strong>：考慮文件長度與字的基準頻率後，看哪些字「隨著位置升高而變多或變少」。</p>
+  <p class="lead">如果沒有任何可信的位置標籤，Wordfish 直接從字詞計數的規律中估計一個<strong><abbr class="tt" tabindex="0" data-term="latent dimension" data-tip="無法直接觀察、由字詞計數規律估計出的連續維度；其意義要靠文本與外部證據詮釋。" title="無法直接觀察、由字詞計數規律估計出的連續維度；其意義要靠文本與外部證據詮釋。">潛在維度</abbr></strong>：考慮文件長度與字的基準頻率後，看哪些字「隨著位置升高而變多或變少」。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c4-sit">情境</a><a href="#c4-model">模型的四個參數</a><a href="#c4-mu">期望計數視覺化</a><a href="#c4-sim">玩具：模擬與擬合</a><a href="#c4-assume">假設與可能的問題</a><a href="#c4-quiz">自我檢查</a>
   </div>
@@ -766,11 +775,11 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <li>考慮文件長度與字詞的基準頻率。</li>
     <li>用文本與外部證據詮釋找到的維度。</li>
   </ul>
-  <p>例子：多次選舉的政黨<abbr class="tt" tabindex="0" data-term="manifestos" title="政黨在選舉前發布的政策綱領文件，是政黨位置縮放常用的文本。">宣言</abbr>，或<strong>一場預算辯論中的演講</strong>（本週 R 練習）。</p>
+  <p>例子：多次選舉的政黨<abbr class="tt" tabindex="0" data-term="manifestos" data-tip="政黨在選舉前發布的政策綱領文件，是政黨位置縮放常用的文本。" title="政黨在選舉前發布的政策綱領文件，是政黨位置縮放常用的文本。">宣言</abbr>，或<strong>一場預算辯論中的演講</strong>（本週 R 練習）。</p>
 
   <h2 id="c4-model">模型：一條式子、四個參數 <span class="slideref">投影片 24–26</span></h2>
-  <div class="keyline" style="font-size:1.1rem">y<sub>ij</sub> ∼ <abbr class="tt" tabindex="0" data-term="Poisson" title="描述計數資料的機率分配；Wordfish 假設字詞計數服從條件獨立的 Poisson 分配。">Poisson</abbr>(μ<sub>ij</sub>)，　log μ<sub>ij</sub> = <abbr class="tt" tabindex="0" data-term="α" title="Wordfish 的文件固定效果（文件基準），部分反映文件長度。">α</abbr><sub>i</sub> + <abbr class="tt" tabindex="0" data-term="ψ" title="Wordfish 的字詞固定效果（基準頻率）；不是原始頻率。">ψ</abbr><sub>j</sub> + <abbr class="tt" tabindex="0" data-term="β" title="Wordfish 的字詞權重：θ 每增加 1，該字 log 期望計數的變化；正值不代表正面情緒。">β</abbr><sub>j</sub> <abbr class="tt" tabindex="0" data-term="θ" title="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。">θ</abbr><sub>i</sub></div>
-  <p class="hint">課程記號：i 是一份文件（宣言），j 是一個字（Slapin &amp; Proksch 2008, <abbr class="tt" tabindex="0" data-term="AJPS" title="American Journal of Political Science，政治學期刊。">AJPS</abbr>, p. 709）。</p>
+  <div class="keyline" style="font-size:1.1rem">y<sub>ij</sub> ∼ <abbr class="tt" tabindex="0" data-term="Poisson" data-tip="描述計數資料的機率分配；Wordfish 假設字詞計數服從條件獨立的 Poisson 分配。" title="描述計數資料的機率分配；Wordfish 假設字詞計數服從條件獨立的 Poisson 分配。">Poisson</abbr>(μ<sub>ij</sub>)，　log μ<sub>ij</sub> = <abbr class="tt" tabindex="0" data-term="α" data-tip="Wordfish 的文件固定效果（文件基準），部分反映文件長度。" title="Wordfish 的文件固定效果（文件基準），部分反映文件長度。">α</abbr><sub>i</sub> + <abbr class="tt" tabindex="0" data-term="ψ" data-tip="Wordfish 的字詞固定效果（基準頻率）；不是原始頻率。" title="Wordfish 的字詞固定效果（基準頻率）；不是原始頻率。">ψ</abbr><sub>j</sub> + <abbr class="tt" tabindex="0" data-term="β" data-tip="Wordfish 的字詞權重：θ 每增加 1，該字 log 期望計數的變化；正值不代表正面情緒。" title="Wordfish 的字詞權重：θ 每增加 1，該字 log 期望計數的變化；正值不代表正面情緒。">β</abbr><sub>j</sub> <abbr class="tt" tabindex="0" data-term="θ" data-tip="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。" title="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。">θ</abbr><sub>i</sub></div>
+  <p class="hint">課程記號：i 是一份文件（宣言），j 是一個字（Slapin &amp; Proksch 2008, <abbr class="tt" tabindex="0" data-term="AJPS" data-full="American Journal of Political Science" data-tip="政治學期刊。" title="American Journal of Political Science — 政治學期刊。">AJPS</abbr>, p. 709）。</p>
   <div class="tablewrap"><table>
     <tr><th>符號</th><th>意義（投影片）</th><th>白話（補充）</th></tr>
     <tr><td>y<sub>ij</sub></td><td>觀察到的字詞計數</td><td>文件 i 裡字 j 出現幾次</td></tr>
@@ -780,7 +789,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <tr><td>θ<sub>i</sub></td><td>宣言（文件）位置</td><td>我們要的那個數字</td></tr>
     <tr><td>β<sub>j</sub></td><td>字詞載荷（log 尺度）</td><td>θ 每增加 1，這個字的 log 期望計數變化多少</td></tr>
   </table></div>
-  <p>投影片 24、26：<strong>不提供<abbr class="tt" tabindex="0" data-term="reference scores" title="指定給參照文本的位置值；它定義尺度，不是模型的預測值。">參照分數</abbr></strong>；所有參數跨選舉<strong>共同擬合</strong>（fit jointly across elections）。</p>
+  <p>投影片 24、26：<strong>不提供<abbr class="tt" tabindex="0" data-term="reference scores" data-tip="指定給參照文本的位置值；它定義尺度，不是模型的預測值。" title="指定給參照文本的位置值；它定義尺度，不是模型的預測值。">參照分數</abbr></strong>；所有參數跨選舉<strong>共同擬合</strong>（fit jointly across elections）。</p>
 
   <h2 id="c4-mu">期望計數怎麼隨位置改變？</h2>
   <div class="lab" id="labMu">
@@ -801,7 +810,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <div class="lab" id="labSim">
     <div class="lab-h"><span class="ic">🐟</span><span class="lt">迷你 Wordfish 模擬器</span><span class="ls">補充（非講義內容）· 瀏覽器內的簡化估計</span></div>
     <div class="lab-b">
-      <p class="hint">設定 8 篇文件的「真實」位置 θ 與 40 個字的 β，依投影片 24 的 Poisson 模型抽樣計數，再用交替的 Poisson 迭代（簡化版，非 <abbr class="tt" tabindex="0" data-term="quanteda" title="R 的文本分析套件，負責語料、tokens 與 DFM；本機 4.5.1、投影片 4.3.1。">quanteda</abbr> 的實作）估計 θ。調高文件長度看估計變穩；調低「有區分力的字」比例看估計變亂。</p>
+      <p class="hint">設定 8 篇文件的「真實」位置 θ 與 40 個字的 β，依投影片 24 的 Poisson 模型抽樣計數，再用交替的 Poisson 迭代（簡化版，非 <abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的文本分析套件，負責語料、tokens 與 DFM；本機 4.5.1、投影片 4.3.1。" title="R 的文本分析套件，負責語料、tokens 與 DFM；本機 4.5.1、投影片 4.3.1。">quanteda</abbr> 的實作）估計 θ。調高文件長度看估計變穩；調低「有區分力的字」比例看估計變亂。</p>
       <div class="grid3 jsonly">
         <label class="f">平均文件長度（字數）<input type="range" id="simLen" min="50" max="3000" step="50" value="600"><span id="simLenV"></span></label>
         <label class="f">有區分力的字（|β| 大）比例<input type="range" id="simDisc" min="0" max="1" step="0.05" value="0.5"><span id="simDiscV"></span></label>
@@ -816,7 +825,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 
   <h2 id="c4-assume">Wordfish 對字詞計數的假設 <span class="slideref">投影片 21–23</span></h2>
   <ul>
-    <li><b>計數模型</b>：字詞計數服從<abbr class="tt" tabindex="0" data-term="conditionally independent" title="給定模型參數後，各字詞計數彼此獨立；這是 Wordfish 的計數假設。">條件獨立</abbr>的 Poisson 分配。</li>
+    <li><b>計數模型</b>：字詞計數服從<abbr class="tt" tabindex="0" data-term="conditionally independent" data-tip="給定模型參數後，各字詞計數彼此獨立；這是 Wordfish 的計數假設。" title="給定模型參數後，各字詞計數彼此獨立；這是 Wordfish 的計數假設。">條件獨立</abbr>的 Poisson 分配。</li>
     <li><b>一個維度</b>：在考慮文件與字詞基準後，一個文件位置有助於解釋字詞使用。</li>
     <li><b>政治詮釋</b>：這個維度必須追蹤我們關心的概念。</li>
   </ul>
@@ -844,7 +853,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 <section class="chapter" id="ch05" data-slides="27,28,29,30,34,35">
   <div class="crumb">05 · Study 2</div>
   <h1 class="ch">Slapin &amp; Proksch (2008)、讀 word plot、兩方法比較</h1>
-  <p class="lead"><abbr class="tt" tabindex="0" data-term="Wordfish" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr> 的原始論文用 1990–2005 年德國政黨<abbr class="tt" tabindex="0" data-term="manifestos" title="政黨在選舉前發布的政策綱領文件，是政黨位置縮放常用的文本。">宣言</abbr>估計跨時位置。本章讀兩張原文圖，再用本週愛爾蘭資料的真實 <abbr class="tt" tabindex="0" data-term="β" title="Wordfish 的字詞權重：θ 每增加 1，該字 log 期望計數的變化；正值不代表正面情緒。">β</abbr>、<abbr class="tt" tabindex="0" data-term="ψ" title="Wordfish 的字詞固定效果（基準頻率）；不是原始頻率。">ψ</abbr> 畫出同樣的 <abbr class="tt" tabindex="0" data-term="word plot" title="以 β（x 軸）與 ψ（y 軸）畫出每個字的 Wordfish 圖；常見字在上方中央，有區分力的字在下方兩側。">word plot</abbr>。</p>
+  <p class="lead"><abbr class="tt" tabindex="0" data-term="Wordfish" data-tip="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr> 的原始論文用 1990–2005 年德國政黨<abbr class="tt" tabindex="0" data-term="manifestos" data-tip="政黨在選舉前發布的政策綱領文件，是政黨位置縮放常用的文本。" title="政黨在選舉前發布的政策綱領文件，是政黨位置縮放常用的文本。">宣言</abbr>估計跨時位置。本章讀兩張原文圖，再用本週愛爾蘭資料的真實 <abbr class="tt" tabindex="0" data-term="β" data-tip="Wordfish 的字詞權重：θ 每增加 1，該字 log 期望計數的變化；正值不代表正面情緒。" title="Wordfish 的字詞權重：θ 每增加 1，該字 log 期望計數的變化；正值不代表正面情緒。">β</abbr>、<abbr class="tt" tabindex="0" data-term="ψ" data-tip="Wordfish 的字詞固定效果（基準頻率）；不是原始頻率。" title="Wordfish 的字詞固定效果（基準頻率）；不是原始頻率。">ψ</abbr> 畫出同樣的 <abbr class="tt" tabindex="0" data-term="word plot" data-tip="以 β（x 軸）與 ψ（y 軸）畫出每個字的 Wordfish 圖；常見字在上方中央，有區分力的字在下方兩側。" title="以 β（x 軸）與 ψ（y 軸）畫出每個字的 Wordfish 圖；常見字在上方中央，有區分力的字在下方兩側。">word plot</abbr>。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c5-sp">研究設計</a><a href="#c5-fig1">Figure 1：跨選舉的政黨位置</a><a href="#c5-fig2">Figure 2：word plot</a><a href="#c5-eiffel">真實資料的 word plot</a><a href="#c5-cmp">兩法的優點與限制</a><a href="#c5-quiz">自我檢查</a>
   </div>
@@ -859,10 +868,10 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <h2 id="c5-fig1">Figure 1：跨選舉的德國政黨位置 <span class="slideref">投影片 28–29</span></h2>
   <ul>
     <li>在<strong>每個 panel 內</strong>比較政黨；panel A 與 panel B 使用<strong>不同的政策範圍</strong>（policy scopes）。</li>
-    <li>投影片 29 標出 SPD 1990–2002 的軌跡。</li>
+    <li>投影片 29 標出 <abbr class="tt" tabindex="0" data-term="SPD" data-full="Sozialdemokratische Partei Deutschlands" data-tip="德國社會民主黨。" title="Sozialdemokratische Partei Deutschlands — 德國社會民主黨。">SPD</abbr> 1990–2002 的軌跡。</li>
     <li>要有共同的時間尺度，前提是<strong>字詞使用可比較</strong>。</li>
   </ul>
-  <p class="hint">原文 <abbr class="tt" tabindex="0" data-term="AJPS" title="American Journal of Political Science，政治學期刊。">AJPS</abbr> Figure 1, p. 714；投影片裁切了四個 panel 中的 A–B。</p>
+  <p class="hint">原文 <abbr class="tt" tabindex="0" data-term="AJPS" data-full="American Journal of Political Science" data-tip="政治學期刊。" title="American Journal of Political Science — 政治學期刊。">AJPS</abbr> Figure 1, p. 714；投影片裁切了四個 panel 中的 A–B。</p>
 
   <h2 id="c5-fig2">Figure 2：讀 word plot <span class="slideref">投影片 30–33</span></h2>
   <ul>
@@ -878,7 +887,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <div class="lab" id="labEiffel">
     <div class="lab-h"><span class="ic">🗼</span><span class="lt">Wordfish word plot（4,885 個字）</span><span class="ls">真實資料 · 本機 S05a 擬合的 <code>wf$beta</code>、<code>wf$psi</code></span></div>
     <div class="lab-b">
-      <p class="hint">每一點是一個字。輸入字詞搜尋，或在圖上點選最近的字。橘色是 S05c 的 6 個探針字（budget、government、tax、jobs、fair、recovery）。方向由 <code>dir</code> 決定：β &gt; 0 的字在 <abbr class="tt" tabindex="0" data-term="θ" title="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。">θ</abbr> 較高（Lenihan、Cowen 那端）的演講中較常出現。</p>
+      <p class="hint">每一點是一個字。輸入字詞搜尋，或在圖上點選最近的字。橘色是 S05c 的 6 個探針字（budget、government、tax、jobs、fair、recovery）。方向由 <code>dir</code> 決定：β &gt; 0 的字在 <abbr class="tt" tabindex="0" data-term="θ" data-tip="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。" title="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。">θ</abbr> 較高（Lenihan、Cowen 那端）的演講中較常出現。</p>
       <div class="row jsonly"><input type="text" id="eifQ" placeholder="搜尋字詞，例如 jobs、cuts、banks" style="max-width:260px"><button class="btn" id="eifGo">標出</button>
         <button class="btn" data-eif="pos">β 最大的 10 個字</button><button class="btn" data-eif="neg">β 最小的 10 個字</button></div>
       <canvas id="eifCv" width="720" height="420" class="jsonly" style="width:100%;max-width:720px;cursor:crosshair"></canvas>
@@ -889,10 +898,10 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 
   <h2 id="c5-cmp">Wordscores 與 Wordfish：優點與限制 <span class="slideref">投影片 34–36</span></h2>
   <div class="tablewrap"><table>
-    <tr><th>面向</th><th><abbr class="tt" tabindex="0" data-term="Wordscores" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr></th><th>Wordfish</th></tr>
-    <tr><td>優點</td><td>用參照位置替<abbr class="tt" tabindex="0" data-term="virgin texts" title="沒有指定位置、由 Wordscores 預測位置的文本；本週有 12 篇。">新文本</abbr>打分</td><td>不需要提供位置分數就能估計位置</td></tr>
-    <tr><td>假設</td><td>可信的參照位置；可比較的語言；共享的字—位置連結</td><td>一個共同維度；<abbr class="tt" tabindex="0" data-term="conditionally independent" title="給定模型參數後，各字詞計數彼此獨立；這是 Wordfish 的計數假設。">條件獨立</abbr>的 <abbr class="tt" tabindex="0" data-term="Poisson" title="描述計數資料的機率分配；Wordfish 假設字詞計數服從條件獨立的 Poisson 分配。">Poisson</abbr> 計數；共享的字詞效果</td></tr>
-    <tr><td>限制</td><td>參照的選擇很重要；沒見過的字沒有分數；共用字把<abbr class="tt" tabindex="0" data-term="raw scores" title="rescaling = &quot;none&quot; 的 Wordscores 預測值；共用字會把它往中心拉。">原始分數</abbr>往中間拉</td><td>主題或角色可能主導尺度；小的<abbr class="tt" tabindex="0" data-term="standard error" title="模型假設下估計值的不確定性；標準誤小不代表尺度有效。">標準誤</abbr>不代表效度</td></tr>
+    <tr><th>面向</th><th><abbr class="tt" tabindex="0" data-term="Wordscores" data-tip="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr></th><th>Wordfish</th></tr>
+    <tr><td>優點</td><td>用參照位置替<abbr class="tt" tabindex="0" data-term="virgin texts" data-tip="沒有指定位置、由 Wordscores 預測位置的文本；本週有 12 篇。" title="沒有指定位置、由 Wordscores 預測位置的文本；本週有 12 篇。">新文本</abbr>打分</td><td>不需要提供位置分數就能估計位置</td></tr>
+    <tr><td>假設</td><td>可信的參照位置；可比較的語言；共享的字—位置連結</td><td>一個共同維度；<abbr class="tt" tabindex="0" data-term="conditionally independent" data-tip="給定模型參數後，各字詞計數彼此獨立；這是 Wordfish 的計數假設。" title="給定模型參數後，各字詞計數彼此獨立；這是 Wordfish 的計數假設。">條件獨立</abbr>的 <abbr class="tt" tabindex="0" data-term="Poisson" data-tip="描述計數資料的機率分配；Wordfish 假設字詞計數服從條件獨立的 Poisson 分配。" title="描述計數資料的機率分配；Wordfish 假設字詞計數服從條件獨立的 Poisson 分配。">Poisson</abbr> 計數；共享的字詞效果</td></tr>
+    <tr><td>限制</td><td>參照的選擇很重要；沒見過的字沒有分數；共用字把<abbr class="tt" tabindex="0" data-term="raw scores" data-tip="rescaling = &quot;none&quot; 的 Wordscores 預測值；共用字會把它往中心拉。" title="rescaling = &quot;none&quot; 的 Wordscores 預測值；共用字會把它往中心拉。">原始分數</abbr>往中間拉</td><td>主題或角色可能主導尺度；小的<abbr class="tt" tabindex="0" data-term="standard error" data-tip="模型假設下估計值的不確定性；標準誤小不代表尺度有效。" title="模型假設下估計值的不確定性；標準誤小不代表尺度有效。">標準誤</abbr>不代表效度</td></tr>
   </table></div>
   <div class="keyline">兩者都需要對照<b>文本</b>與<b>獨立證據</b>檢查。</div>
 
@@ -918,7 +927,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 <section class="chapter" id="ch06" data-slides="37,38,40,41,42,43">
   <div class="crumb">06 · Study 6</div>
   <h1 class="ch">Lowe &amp; Benoit (2013)：人工判斷揭露模型失效</h1>
-  <p class="lead">同一份 14 篇預算演講，Lowe &amp; Benoit 用<strong>人工判斷的預算支持度</strong>當基準檢查 <abbr class="tt" tabindex="0" data-term="Wordfish" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr>。多數位置大致一致，但 <abbr class="tt" tabindex="0" data-term="Sinn Féin" title="愛爾蘭在野政黨；Lowe &amp; Benoit 指出其強烈反對在 Wordfish 中看起來太溫和。">Sinn Féin</abbr> 的強烈反對在 Wordfish 裡看起來太溫和——這就是為什麼本週一直強調「讀文本」。</p>
+  <p class="lead">同一份 14 篇預算演講，Lowe &amp; Benoit 用<strong>人工判斷的預算支持度</strong>當基準檢查 <abbr class="tt" tabindex="0" data-term="Wordfish" data-tip="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr>。多數位置大致一致，但 <abbr class="tt" tabindex="0" data-term="Sinn Féin" data-full="Sinn Féin (SF)" data-tip="愛爾蘭在野政黨；Lowe &amp; Benoit 指出其強烈反對在 Wordfish 中看起來太溫和。" title="Sinn Féin (SF) — 愛爾蘭在野政黨；Lowe &amp; Benoit 指出其強烈反對在 Wordfish 中看起來太溫和。">Sinn Féin</abbr> 的強烈反對在 Wordfish 裡看起來太溫和——這就是為什麼本週一直強調「讀文本」。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c6-lb">研究設計</a><a href="#c6-fail">模型失效</a><a href="#c6-blind">盲讀練習</a><a href="#c6-role">預算支持與說話角色</a><a href="#c6-gormley">Gormley：一人兩角</a><a href="#c6-quiz">自我檢查</a>
   </div>
@@ -937,7 +946,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <li>第二個政治區分讓「一個維度」變得複雜。</li>
   </ul>
   <p class="hint">原文作者手稿 Figure 3, p. 32；維度問題背景見 Benoit (2018), p. 63。投影片 39 同時標出灰色的一致線。</p>
-  <div class="callout note"><div class="ct">在本週 R 結果中也看得到（本機輸出，第 12 章）</div><p>兩位 Sinn Féin 議員 Morgan 與 Ó Caoláin 的 <abbr class="tt" tabindex="0" data-term="θ" title="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。">θ</abbr> 分別是 <code>−0.093</code> 與 <code>−0.098</code>，位在 14 篇的中間，比 Labour 的 Burton（<code>−1.150</code>）、Higgins（<code>−0.979</code>）、Quinn（<code>−0.921</code>）更接近政府端。這只是本週分數的描述；Lowe &amp; Benoit 的人工判斷數值不在 repo 中，本教材無法重做他們的比較。</p></div>
+  <div class="callout note"><div class="ct">在本週 R 結果中也看得到（本機輸出，第 12 章）</div><p>兩位 Sinn Féin 議員 Morgan 與 Ó Caoláin 的 <abbr class="tt" tabindex="0" data-term="θ" data-tip="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。" title="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。">θ</abbr> 分別是 <code>−0.093</code> 與 <code>−0.098</code>，位在 14 篇的中間，比 Labour 的 Burton（<code>−1.150</code>）、Higgins（<code>−0.979</code>）、Quinn（<code>−0.921</code>）更接近政府端。這只是本週分數的描述；Lowe &amp; Benoit 的人工判斷數值不在 repo 中，本教材無法重做他們的比較。</p></div>
 
   <h2 id="c6-blind">盲讀練習：不看黨籍，哪一段支持預算？ <span class="slideref">投影片 40–41</span></h2>
   <div class="grid2">
@@ -945,8 +954,8 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <div class="callout plain"><div class="ct">Text B</div><p>“This is a jobless and a joyless budget.”</p></div>
   </div>
   <details class="quiz"><summary>揭曉講者（投影片 41）</summary><div class="qa">
-    <p><b>Text A</b>：Brian Lenihan（支持預算）· <abbr class="tt" tabindex="0" data-term="Fianna Fáil" title="愛爾蘭政黨；2009 年 12 月與 Green Party 組成執政聯盟，財政部長 Lenihan 屬此黨。">Fianna Fáil</abbr> · 財政部長。<b>Text B</b>：Richard Bruton（反對預算）· <abbr class="tt" tabindex="0" data-term="Fine Gael" title="愛爾蘭政黨，2009 年 12 月為在野；Bruton 是其財政發言人。">Fine Gael</abbr> · 在野黨財政發言人。</p>
-    <p>詮釋：預算支持、政策偏好與政府責任，在這些演講中可能<strong>重疊</strong>。本機檢查：在 <abbr class="tt" tabindex="0" data-term="quanteda" title="R 的文本分析套件，負責語料、tokens 與 DFM；本機 4.5.1、投影片 4.3.1。">quanteda</abbr> 4.5.1 的斷句下，這兩句仍分別是 Lenihan 第 7 句、Bruton 第 6 句（投影片 41 是 quanteda 4.3.1）。</p>
+    <p><b>Text A</b>：Brian Lenihan（支持預算）· <abbr class="tt" tabindex="0" data-term="Fianna Fáil" data-full="Fianna Fáil (FF)" data-tip="愛爾蘭政黨；2009 年 12 月與 Green Party 組成執政聯盟，財政部長 Lenihan 屬此黨。" title="Fianna Fáil (FF) — 愛爾蘭政黨；2009 年 12 月與 Green Party 組成執政聯盟，財政部長 Lenihan 屬此黨。">Fianna Fáil</abbr> · 財政部長。<b>Text B</b>：Richard Bruton（反對預算）· <abbr class="tt" tabindex="0" data-term="Fine Gael" data-full="Fine Gael (FG)" data-tip="愛爾蘭政黨，2009 年 12 月為在野；Bruton 是其財政發言人。" title="Fine Gael (FG) — 愛爾蘭政黨，2009 年 12 月為在野；Bruton 是其財政發言人。">Fine Gael</abbr> · 在野黨財政發言人。</p>
+    <p>詮釋：預算支持、政策偏好與政府責任，在這些演講中可能<strong>重疊</strong>。本機檢查：在 <abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的文本分析套件，負責語料、tokens 與 DFM；本機 4.5.1、投影片 4.3.1。" title="R 的文本分析套件，負責語料、tokens 與 DFM；本機 4.5.1、投影片 4.3.1。">quanteda</abbr> 4.5.1 的斷句下，這兩句仍分別是 Lenihan 第 7 句、Bruton 第 6 句（投影片 41 是 quanteda 4.3.1）。</p>
   </div></details>
   <div class="lab" id="labBlind">
     <div class="lab-h"><span class="ic">🙈</span><span class="lt">盲讀更多句子</span><span class="ls">練習 · 真實資料：14 篇演講的原句（quanteda 4.5.1 斷句）</span></div>
@@ -959,7 +968,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   </div>
 
   <h2 id="c6-role">預算支持與說話角色 <span class="slideref">投影片 41</span></h2>
-  <p>Lenihan 是財政部長，Bruton 是在野黨財政發言人：他們的字詞差異同時反映<strong>對預算的立場</strong>與<strong>在辯論中的角色</strong>（介紹政策 vs. 批評政策）。<abbr class="tt" tabindex="0" data-term="Wordscores" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr> 以這兩篇為參照時，學到的<abbr class="tt" tabindex="0" data-term="word scores" title="Wordscores 從參照學到的每個字的分數 S_w；反映參照中的相對用法，不是情緒。">字分數</abbr>同時混了這兩種差異。</p>
+  <p>Lenihan 是財政部長，Bruton 是在野黨財政發言人：他們的字詞差異同時反映<strong>對預算的立場</strong>與<strong>在辯論中的角色</strong>（介紹政策 vs. 批評政策）。<abbr class="tt" tabindex="0" data-term="Wordscores" data-tip="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr> 以這兩篇為參照時，學到的<abbr class="tt" tabindex="0" data-term="word scores" data-tip="Wordscores 從參照學到的每個字的分數 S_w；反映參照中的相對用法，不是情緒。" title="Wordscores 從參照學到的每個字的分數 S_w；反映參照中的相對用法，不是情緒。">字分數</abbr>同時混了這兩種差異。</p>
 
   <h2 id="c6-gormley">Gormley：一位講者、兩個角色 <span class="slideref">投影片 42–43</span></h2>
   <p>Benoit 講義中較完整的演講例子：Green Party 黨魁<strong>同時是</strong>政府部長。</p>
@@ -999,9 +1008,9 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 
 <!-- ===================== CH07 ===================== -->
 <section class="chapter" id="ch07" data-slides="44,49,50,55,56,59,61,72,75">
-  <div class="crumb">07 · <abbr class="tt" tabindex="0" data-term="Wordshoal" title="先在每場辯論內各擬合 Wordfish，再用跨辯論重複出現的講者把位置連成共同尺度（Lauderdale &amp; Herzog 2016）。">Wordshoal</abbr></div>
+  <div class="crumb">07 · <abbr class="tt" tabindex="0" data-term="Wordshoal" data-tip="先在每場辯論內各擬合 Wordfish，再用跨辯論重複出現的講者把位置連成共同尺度（Lauderdale &amp; Herzog 2016）。" title="先在每場辯論內各擬合 Wordfish，再用跨辯論重複出現的講者把位置連成共同尺度（Lauderdale &amp; Herzog 2016）。">Wordshoal</abbr></div>
   <h1 class="ch">Wordshoal：跨辯論的講者位置</h1>
-  <p class="lead">議員在不同辯論談不同議題。Wordshoal 先在<strong>每場辯論內</strong>各做一次 <abbr class="tt" tabindex="0" data-term="Wordfish" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr>，再透過<strong>重複出現的議員</strong>把各場的位置連成一個共同尺度——shoal 是「一群魚」。</p>
+  <p class="lead">議員在不同辯論談不同議題。Wordshoal 先在<strong>每場辯論內</strong>各做一次 <abbr class="tt" tabindex="0" data-term="Wordfish" data-tip="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr>，再透過<strong>重複出現的議員</strong>把各場的位置連成一個共同尺度——shoal 是「一群魚」。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c7-sit">情境</a><a href="#c7-two">兩個階段</a><a href="#c7-assume">跨辯論的假設</a><a href="#c7-eq">連結辯論位置的式子</a><a href="#c7-align">對齊方向（玩具）</a><a href="#c7-lh">Lauderdale &amp; Herzog</a><a href="#c7-scope">辯論結構與範圍</a><a href="#c7-quiz">自我檢查</a>
   </div>
@@ -1031,10 +1040,10 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <li><b>重疊</b>：重複參與者把辯論連起來。</li>
     <li><b>參與</b>：選擇性發言限制了觀察到的位置代表什麼。</li>
   </ul>
-  <div class="keyline">共同尺度摘要的是議員<b>在他們參加的辯論中表達的</b>位置。第二階段模型把「沒有發言的辯論位置」當作<b><abbr class="tt" tabindex="0" data-term="missing at random" title="Wordshoal 第二階段的假設：議員沒有發言的辯論位置被視為隨機缺失。">隨機缺失</abbr></b>（missing at random）。</div>
+  <div class="keyline">共同尺度摘要的是議員<b>在他們參加的辯論中表達的</b>位置。第二階段模型把「沒有發言的辯論位置」當作<b><abbr class="tt" tabindex="0" data-term="missing at random" data-tip="Wordshoal 第二階段的假設：議員沒有發言的辯論位置被視為隨機缺失。" title="Wordshoal 第二階段的假設：議員沒有發言的辯論位置被視為隨機缺失。">隨機缺失</abbr></b>（missing at random）。</div>
 
   <h2 id="c7-eq">連結辯論位置：第二階段 <span class="slideref">投影片 72–74</span></h2>
-  <div class="keyline" style="font-size:1.1rem">z<sub>ij</sub> = a<sub>j</sub> + b<sub>j</sub> <abbr class="tt" tabindex="0" data-term="θ" title="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。">θ</abbr><sub>i</sub> + ε<sub>ij</sub></div>
+  <div class="keyline" style="font-size:1.1rem">z<sub>ij</sub> = a<sub>j</sub> + b<sub>j</sub> <abbr class="tt" tabindex="0" data-term="θ" data-tip="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。" title="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。">θ</abbr><sub>i</sub> + ε<sub>ij</sub></div>
   <div class="tablewrap"><table>
     <tr><th>量</th><th>意義</th></tr>
     <tr><td>z<sub>ij</sub></td><td>第一階段：講者 i 在辯論 j 的 Wordfish 位置</td></tr>
@@ -1054,12 +1063,12 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
       <div class="explain jsonly" id="shoalTxt"></div>
     </div>
   </div>
-  <div class="callout note"><div class="ct">課堂討論 <span class="slideref">投影片 75</span></div><p>為什麼負的<abbr class="tt" tabindex="0" data-term="debate loading" title="Wordshoal 第二階段的 b_j：該場辯論尺度與共同維度連結的方向（正負）與強度。">辯論載荷</abbr>不一定代表沒有共同結構？（提示：負號只代表那場辯論的 Wordfish 方向和共同維度相反；|b<sub>j</sub>| 才是連結的強度。）</p></div>
+  <div class="callout note"><div class="ct">課堂討論 <span class="slideref">投影片 75</span></div><p>為什麼負的<abbr class="tt" tabindex="0" data-term="debate loading" data-tip="Wordshoal 第二階段的 b_j：該場辯論尺度與共同維度連結的方向（正負）與強度。" title="Wordshoal 第二階段的 b_j：該場辯論尺度與共同維度連結的方向（正負）與強度。">辯論載荷</abbr>不一定代表沒有共同結構？（提示：負號只代表那場辯論的 Wordfish 方向和共同維度相反；|b<sub>j</sub>| 才是連結的強度。）</p></div>
 
   <h2 id="c7-lh">Lauderdale &amp; Herzog (2016)：議會發言 <span class="slideref">投影片 55–60</span></h2>
   <ul>
     <li><b>問題</b>：辯論如何產生議員層級的位置？</li>
-    <li><b>資料</b>：愛爾蘭第 29、30 屆 <abbr class="tt" tabindex="0" data-term="Dáil" title="愛爾蘭國會的下議院；議員稱為 TD。">Dáil</abbr>；美國第 104–113 屆參議院。</li>
+    <li><b>資料</b>：愛爾蘭第 29、30 屆 <abbr class="tt" tabindex="0" data-term="Dáil" data-tip="愛爾蘭國會的下議院；議員稱為 TD。" title="愛爾蘭國會的下議院；議員稱為 TD。">Dáil</abbr>；美國第 104–113 屆參議院。</li>
     <li><b>愛爾蘭 Dáil 的兩種詮釋</b>（Figure 1 a–b）：主要維度追蹤<strong>執政／在野（coalition status）</strong>；左—右需要自己的證據。</li>
   </ul>
   <div class="tablewrap"><table>
@@ -1098,9 +1107,9 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 
 <!-- ===================== CH08 ===================== -->
 <section class="chapter" id="ch08" data-slides="62,63,64,65,68,76,81">
-  <div class="crumb">08 · <abbr class="tt" tabindex="0" data-term="LSS" title="以種子詞定義兩端，依 SVD 語意空間中與種子的相似度替字詞與文件打分的半監督方法（Watanabe 2021）。">LSS</abbr></div>
+  <div class="crumb">08 · <abbr class="tt" tabindex="0" data-term="LSS" data-full="Latent Semantic Scaling" data-tip="以種子詞定義兩端，依 SVD 語意空間中與種子的相似度替字詞與文件打分的半監督方法（Watanabe 2021）。" title="Latent Semantic Scaling — 以種子詞定義兩端，依 SVD 語意空間中與種子的相似度替字詞與文件打分的半監督方法（Watanabe 2021）。">LSS</abbr></div>
   <h1 class="ch">Latent Semantic Scaling：種子詞與地緣政治威脅指數</h1>
-  <p class="lead">當你能說出概念的兩端、卻幾乎沒有已標註的文件時，LSS 用少數<strong><abbr class="tt" tabindex="0" data-term="seed words" title="研究者指定、代表概念兩端的字詞與極性（如 enemy +1、ally −1），用來定義 LSS 的方向。">種子詞</abbr></strong>定義方向，從語料的<abbr class="tt" tabindex="0" data-term="co-occurrence" title="字詞在同一脈絡（如同一句）中一起出現；LSS 從共現規律學語意關係。">共現</abbr>關係學出其他字的<abbr class="tt" tabindex="0" data-term="polarity" title="字詞或文件靠近種子哪一端的程度；LSS 中字詞極性 g_j 是以種子極性加權的相似度平均。">極性</abbr>，再加總到文件。</p>
+  <p class="lead">當你能說出概念的兩端、卻幾乎沒有已標註的文件時，LSS 用少數<strong><abbr class="tt" tabindex="0" data-term="seed words" data-tip="研究者指定、代表概念兩端的字詞與極性（如 enemy +1、ally −1），用來定義 LSS 的方向。" title="研究者指定、代表概念兩端的字詞與極性（如 enemy +1、ally −1），用來定義 LSS 的方向。">種子詞</abbr></strong>定義方向，從語料的<abbr class="tt" tabindex="0" data-term="co-occurrence" data-tip="字詞在同一脈絡（如同一句）中一起出現；LSS 從共現規律學語意關係。" title="字詞在同一脈絡（如同一句）中一起出現；LSS 從共現規律學語意關係。">共現</abbr>關係學出其他字的<abbr class="tt" tabindex="0" data-term="polarity" data-tip="字詞或文件靠近種子哪一端的程度；LSS 中字詞極性 g_j 是以種子極性加權的相似度平均。" title="字詞或文件靠近種子哪一端的程度；LSS 中字詞極性 g_j 是以種子極性加權的相似度平均。">極性</abbr>，再加總到文件。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c8-sit">情境與種子詞</a><a href="#c8-assume">假設</a><a href="#c8-steps">四個步驟</a><a href="#c8-eq">字詞極性公式</a><a href="#c8-toy">玩具：在預算辯論上試種子詞</a><a href="#c8-tw">Trubowitz &amp; Watanabe</a><a href="#c8-level">驗證與分析層級</a><a href="#c8-quiz">自我檢查</a>
   </div>
@@ -1115,13 +1124,13 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <div class="callout warn"><div class="ct">敵意 Hostility（+1）</div><p>enemy, foe, hostile</p></div>
     <div class="callout tip"><div class="ct">友善 Friendliness（−1）</div><p>ally, friend, peaceful</p></div>
   </div>
-  <p class="hint">種子例子取自 Trubowitz &amp; Watanabe (2021), <abbr class="tt" tabindex="0" data-term="ISQ" title="International Studies Quarterly，國際關係期刊。">ISQ</abbr>；投影片省略了複數形與其他種子。方法：Watanabe (2021), “Latent Semantic <abbr class="tt" tabindex="0" data-term="scaling" title="把文本放到一條（或多條）連續尺度上估計位置的程度差異，而不是指定類別。">Scaling</abbr>”。</p>
+  <p class="hint">種子例子取自 Trubowitz &amp; Watanabe (2021), <abbr class="tt" tabindex="0" data-term="ISQ" data-full="International Studies Quarterly" data-tip="國際關係期刊。" title="International Studies Quarterly — 國際關係期刊。">ISQ</abbr>；投影片省略了複數形與其他種子。方法：Watanabe (2021), “Latent Semantic <abbr class="tt" tabindex="0" data-term="scaling" data-tip="把文本放到一條（或多條）連續尺度上估計位置的程度差異，而不是指定類別。" title="把文本放到一條（或多條）連續尺度上估計位置的程度差異，而不是指定類別。">Scaling</abbr>”。</p>
 
   <h2 id="c8-assume">關於意義與脈絡的假設 <span class="slideref">投影片 63</span></h2>
   <ul>
     <li><b>種子</b>：這些字在這個領域中表達預期的兩端。</li>
     <li><b>語意</b>：共現規律含有關於這個區分的有用資訊。</li>
-    <li><b>加總</b>：<abbr class="tt" tabindex="0" data-term="word scores" title="Wordscores 從參照學到的每個字的分數 S_w；反映參照中的相對用法，不是情緒。">字分數</abbr>在文件層級提供有意義的摘要。</li>
+    <li><b>加總</b>：<abbr class="tt" tabindex="0" data-term="word scores" data-tip="Wordscores 從參照學到的每個字的分數 S_w；反映參照中的相對用法，不是情緒。" title="Wordscores 從參照學到的每個字的分數 S_w；反映參照中的相對用法，不是情緒。">字分數</abbr>在文件層級提供有意義的摘要。</li>
     <li><b>目標</b>：極性和我們想量測的行動者或議題有關。</li>
   </ul>
   <div class="callout note"><div class="ct">課堂討論 <span class="slideref">投影片 63</span></div><p>一則負面新聞會不會以同情的方式描述一個盟友？（提示（補充）：「我們的盟友遭到敵人攻擊」同時含有 ally 與 enemy；文件的極性未必是對<strong>這個盟友</strong>的態度。這就是「目標」假設。）</p></div>
@@ -1134,10 +1143,10 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <tr><td>替字詞打分</td><td>在降維語意空間中與種子詞的相似度</td></tr>
     <tr><td>替文件打分</td><td>字分數的頻率加權平均</td></tr>
   </table></div>
-  <div class="keyline">單位很重要：在<b>句子</b>層級學習，可以支援<b>文章</b>層級評分，再加總到<b>國家—年</b>（<abbr class="tt" tabindex="0" data-term="GTI" title="地緣政治威脅指數：《紐約時報》摘要中敵意軍事報導的比例（Trubowitz &amp; Watanabe 2021）；是比例，不是平均極性。">GTI</abbr> 應用）。</div>
+  <div class="keyline">單位很重要：在<b>句子</b>層級學習，可以支援<b>文章</b>層級評分，再加總到<b>國家—年</b>（<abbr class="tt" tabindex="0" data-term="GTI" data-full="Geopolitical Threat Index" data-tip="地緣政治威脅指數：《紐約時報》摘要中敵意軍事報導的比例（Trubowitz &amp; Watanabe 2021）；是比例，不是平均極性。" title="Geopolitical Threat Index — 地緣政治威脅指數：《紐約時報》摘要中敵意軍事報導的比例（Trubowitz &amp; Watanabe 2021）；是比例，不是平均極性。">GTI</abbr> 應用）。</div>
 
   <h2 id="c8-eq">從向量到字詞極性 <span class="slideref">投影片 81</span></h2>
-  <p>用<abbr class="tt" tabindex="0" data-term="SVD" title="奇異值分解：把句子—字詞矩陣降到 k 維，得到 LSS 使用的字詞向量。">奇異值分解</abbr>（SVD）把句子—字詞計數降到 k 維：</p>
+  <p>用<abbr class="tt" tabindex="0" data-term="SVD" data-full="singular value decomposition" data-tip="奇異值分解：把句子—字詞矩陣降到 k 維，得到 LSS 使用的字詞向量。" title="singular value decomposition — 奇異值分解：把句子—字詞矩陣降到 k 維，得到 LSS 使用的字詞向量。">奇異值分解</abbr>（SVD）把句子—字詞計數降到 k 維：</p>
   <div class="keyline" style="font-size:1.1rem">g<sub>j</sub> = (1 / |S|) Σ<sub>s∈S</sub> cos(v<sub>s</sub>, v<sub>j</sub>) p<sub>s</sub></div>
   <div class="tablewrap"><table>
     <tr><th>量</th><th>意義</th></tr>
@@ -1145,13 +1154,13 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <tr><td>p<sub>s</sub></td><td>研究者指定的種子 s 的極性，例如 −1 或 +1</td></tr>
     <tr><td>g<sub>j</sub></td><td>字詞極性：以種子極性加權的相似度</td></tr>
   </table></div>
-  <p>文件分數再用 <abbr class="tt" tabindex="0" data-term="tokens" title="把文本切成的單位（通常是字詞）；quanteda 的 tokens 物件保留字序。">token</abbr> 頻率對字詞極性取平均（Watanabe 2021, Eqs. 1–2）。</p>
+  <p>文件分數再用 <abbr class="tt" tabindex="0" data-term="tokens" data-tip="把文本切成的單位（通常是字詞）；quanteda 的 tokens 物件保留字序。" title="把文本切成的單位（通常是字詞）；quanteda 的 tokens 物件保留字序。">token</abbr> 頻率對字詞極性取平均（Watanabe 2021, Eqs. 1–2）。</p>
 
   <h2 id="c8-toy">玩具：在 14 篇預算演講上試種子詞</h2>
   <div class="lab" id="labLSS">
-    <div class="lab-h"><span class="ic">🌱</span><span class="lt">迷你 LSS（簡化版）</span><span class="ls">補充（非講義內容）· 真實語料、簡化實作，非 <abbr class="tt" tabindex="0" data-term="LSX" title="實作 LSS 的 R 套件，主要函式為 textmodel_lss()。">LSX</abbr></span></div>
+    <div class="lab-h"><span class="ic">🌱</span><span class="lt">迷你 LSS（簡化版）</span><span class="ls">補充（非講義內容）· 真實語料、簡化實作，非 <abbr class="tt" tabindex="0" data-term="LSX" data-tip="實作 LSS 的 R 套件，主要函式為 textmodel_lss()。" title="實作 LSS 的 R 套件，主要函式為 textmodel_lss()。">LSX</abbr></span></div>
     <div class="lab-b">
-      <p class="hint">本機 R 把 14 篇演講切成 2,484 句（去標點、數字、英文<abbr class="tt" tabindex="0" data-term="stopwords" title="the、and 等極常見的功能字；本週課堂矩陣保留了停用字。">停用字</abbr>，只留總次數 ≥ 8 的 695 個字，剩 2,432 個非空句子），做 <abbr class="tt" tabindex="0" data-term="TF-IDF" title="詞頻—逆文件頻率加權，壓低到處都出現的字；本週兩個模型都沒有使用。">TF-IDF</abbr> 後以 SVD 取 40 維、向量正規化，匯出到這裡。瀏覽器依投影片 81 的式子算 g<sub>j</sub>，再用每篇演講的字頻加權平均得到文件分數。<b>這不是 LSX 的 <code>textmodel_lss()</code></b>（語料太小、沒做種子評估），只用來體會「換種子、換方向」。預設的兩組種子是教材自選、刻意模糊的「復甦／危機」框架，不是經過驗證的預算支持量測。</p>
+      <p class="hint">本機 R 把 14 篇演講切成 2,484 句（去標點、數字、英文<abbr class="tt" tabindex="0" data-term="stopwords" data-tip="the、and 等極常見的功能字；本週課堂矩陣保留了停用字。" title="the、and 等極常見的功能字；本週課堂矩陣保留了停用字。">停用字</abbr>，只留總次數 ≥ 8 的 695 個字，剩 2,432 個非空句子），做 <abbr class="tt" tabindex="0" data-term="TF-IDF" data-full="term frequency–inverse document frequency" data-tip="詞頻—逆文件頻率加權，壓低到處都出現的字；本週兩個模型都沒有使用。" title="term frequency–inverse document frequency — 詞頻—逆文件頻率加權，壓低到處都出現的字；本週兩個模型都沒有使用。">TF-IDF</abbr> 後以 SVD 取 40 維、向量正規化，匯出到這裡。瀏覽器依投影片 81 的式子算 g<sub>j</sub>，再用每篇演講的字頻加權平均得到文件分數。<b>這不是 LSX 的 <code>textmodel_lss()</code></b>（語料太小、沒做種子評估），只用來體會「換種子、換方向」。預設的兩組種子是教材自選、刻意模糊的「復甦／危機」框架，不是經過驗證的預算支持量測。</p>
       <div class="grid2 jsonly">
         <label class="f">+1 種子（空白或逗號分隔）<input type="text" id="lssP" value="recovery, growth, confidence, progress"></label>
         <label class="f">−1 種子<input type="text" id="lssN" value="crisis, failed, wrong, pain"></label>
@@ -1168,7 +1177,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <h2 id="c8-tw">Trubowitz &amp; Watanabe (2021)：地緣政治威脅指數 <span class="slideref">投影片 64–67</span></h2>
   <ul>
     <li><b>文本</b>：《紐約時報》新聞摘要，1861–2017。</li>
-    <li><b>模型</b>：<abbr class="tt" tabindex="0" data-term="Newsmap" title="依地理字詞把新聞分到國家的半監督模型；GTI 用它識別報導涉及哪個國家。">Newsmap</abbr> 與 LSS。</li>
+    <li><b>模型</b>：<abbr class="tt" tabindex="0" data-term="Newsmap" data-tip="依地理字詞把新聞分到國家的半監督模型；GTI 用它識別報導涉及哪個國家。" title="依地理字詞把新聞分到國家的半監督模型；GTI 用它識別報導涉及哪個國家。">Newsmap</abbr> 與 LSS。</li>
     <li><b>目標</b>：報導中外國的敵意軍事行為。</li>
     <li><b>Figure 2（學到的字詞極性）</b>：種子指定敵意（投影片 65 在圖上標出 Armies 與 Friends 兩處字詞）；<strong>國家與相關報導需要另外識別</strong>；GTI 加總的是<strong>敵意軍事報導的比例</strong>。</li>
   </ul>
@@ -1205,7 +1214,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 <section class="chapter" id="ch09" data-slides="82,83,84,85,86,87,88,89">
   <div class="crumb">09 · 驗證</div>
   <h1 class="ch">驗證：外部基準、錨點與穩健性</h1>
-  <p class="lead">W6 用保留的人工標籤和 <abbr class="tt" tabindex="0" data-term="F1" title="精確率與召回率的調和平均；W6 用它評估分類，W7 縮放不適用。">F1</abbr> 評估分類；W7 的<abbr class="tt" tabindex="0" data-term="scaling" title="把文本放到一條（或多條）連續尺度上估計位置的程度差異，而不是指定類別。">縮放</abbr>則要問：估計的位置和<strong>外部量測</strong>一致嗎？哪些令人意外的位置值得回去讀？</p>
+  <p class="lead">W6 用保留的人工標籤和 <abbr class="tt" tabindex="0" data-term="F1" data-full="F1 score (F-measure with β = 1)" data-tip="精確率與召回率的調和平均；W6 用它評估分類，W7 縮放不適用。" title="F1 score (F-measure with β = 1) — 精確率與召回率的調和平均；W6 用它評估分類，W7 縮放不適用。">F1</abbr> 評估分類；W7 的<abbr class="tt" tabindex="0" data-term="scaling" data-tip="把文本放到一條（或多條）連續尺度上估計位置的程度差異，而不是指定類別。" title="把文本放到一條（或多條）連續尺度上估計位置的程度差異，而不是指定類別。">縮放</abbr>則要問：估計的位置和<strong>外部量測</strong>一致嗎？哪些令人意外的位置值得回去讀？</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c9-w6">從 W6 評估到 W7 驗證</a><a href="#c9-hj">Hjorth et al. (2015)</a><a href="#c9-t3">Table 3</a><a href="#c9-why">為何德國較好</a><a href="#c9-rob">穩健性與不確定性</a><a href="#c9-plan">研究摘要的驗證計畫</a><a href="#c9-quiz">自我檢查</a>
   </div>
@@ -1214,26 +1223,26 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <div class="tablewrap"><table>
     <tr><th>問題</th><th>W6 分類實作</th><th>W7 縮放</th></tr>
     <tr><td>評估什麼？</td><td>預測類別</td><td>在指定維度上的位置</td></tr>
-    <tr><td>證據是什麼？</td><td>保留的人工標籤；F1</td><td>外部量測；<abbr class="tt" tabindex="0" data-term="rank agreement" title="兩個量測對同一批文本排序的一致程度；支持順序，不建立有意義的距離。">排序一致性</abbr></td></tr>
+    <tr><td>證據是什麼？</td><td>保留的人工標籤；F1</td><td>外部量測；<abbr class="tt" tabindex="0" data-term="rank agreement" data-tip="兩個量測對同一批文本排序的一致程度；支持順序，不建立有意義的距離。" title="兩個量測對同一批文本排序的一致程度；支持順序，不建立有意義的距離。">排序一致性</abbr></td></tr>
     <tr><td>讀什麼？</td><td>錯誤與編碼邊界</td><td>令人意外的位置及其語言</td></tr>
   </table></div>
-  <p>Hjorth et al. 檢驗的是<strong>不同量測之間的收斂</strong>，這和 <abbr class="tt" tabindex="0" data-term="k-fold cross-validation" title="把資料分成 k 份輪流保留測試的評估方式；與 Hjorth et al. 的跨量測收斂檢驗不同。">k-fold 交叉驗證</abbr>不同。</p>
+  <p>Hjorth et al. 檢驗的是<strong>不同量測之間的收斂</strong>，這和 <abbr class="tt" tabindex="0" data-term="k-fold cross-validation" data-tip="把資料分成 k 份輪流保留測試的評估方式；與 Hjorth et al. 的跨量測收斂檢驗不同。" title="把資料分成 k 份輪流保留測試的評估方式；與 Hjorth et al. 的跨量測收斂檢驗不同。">k-fold 交叉驗證</abbr>不同。</p>
 
   <h2 id="c9-hj">Hjorth et al. (2015)：驗證政黨位置 <span class="slideref">投影片 83–84</span></h2>
   <ul>
-    <li><b>問題</b>：文本尺度和其他政黨位置量測一致嗎？比較 <abbr class="tt" tabindex="0" data-term="Wordscores" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr> 與 <abbr class="tt" tabindex="0" data-term="Wordfish" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr>。</li>
-    <li><b>範圍</b>：33 次選舉的 254 份<abbr class="tt" tabindex="0" data-term="manifestos" title="政黨在選舉前發布的政策綱領文件，是政黨位置縮放常用的文本。">宣言</abbr>。</li>
+    <li><b>問題</b>：文本尺度和其他政黨位置量測一致嗎？比較 <abbr class="tt" tabindex="0" data-term="Wordscores" data-tip="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr> 與 <abbr class="tt" tabindex="0" data-term="Wordfish" data-tip="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr>。</li>
+    <li><b>範圍</b>：33 次選舉的 254 份<abbr class="tt" tabindex="0" data-term="manifestos" data-tip="政黨在選舉前發布的政策綱領文件，是政黨位置縮放常用的文本。" title="政黨在選舉前發布的政策綱領文件，是政黨位置縮放常用的文本。">宣言</abbr>。</li>
   </ul>
   <div class="tablewrap"><table>
     <tr><th>國家</th><th>選舉</th><th>宣言</th><th>平均字數</th></tr>
     <tr><td>丹麥，1945–2007</td><td>24</td><td>212</td><td>1,232</td></tr>
     <tr><td>德國，1980–2009</td><td>9</td><td>42</td><td>10,306</td></tr>
   </table></div>
-  <p>三種基準：<b>專家</b>（已發表的政黨位置評估）、<b>選民</b>（各黨支持者的左右自我定位平均）、<b><abbr class="tt" tabindex="0" data-term="CMP" title="Comparative Manifesto Project；RILE 是以人工編碼宣言計算的左右指標。">CMP RILE</abbr></b>（人工編碼宣言的左右指標）。要檢查的假設：這些基準針對的是同一個政治維度嗎？</p>
+  <p>三種基準：<b>專家</b>（已發表的政黨位置評估）、<b>選民</b>（各黨支持者的左右自我定位平均）、<b><abbr class="tt" tabindex="0" data-term="CMP" data-full="Comparative Manifesto Project" data-tip="RILE 是以人工編碼宣言計算的左右指標。" title="Comparative Manifesto Project — RILE 是以人工編碼宣言計算的左右指標。">CMP RILE</abbr></b>（人工編碼宣言的左右指標）。要檢查的假設：這些基準針對的是同一個政治維度嗎？</p>
 
   <h2 id="c9-t3">兩國的驗證結果不同：Table 3 <span class="slideref">投影片 85</span></h2>
   <div class="lab" id="labHj">
-    <div class="lab-h"><span class="ic">📋</span><span class="lt">原文 Table 3：跨選舉的平均 <abbr class="tt" tabindex="0" data-term="Spearman" title="Spearman 等級相關：比較兩組排序的一致性；本週 12 篇為 0.734，不是準確率。">Spearman</abbr> 等級相關</span><span class="ls">投影片 85 轉錄（Hjorth et al. 2015, p. 7）</span></div>
+    <div class="lab-h"><span class="ic">📋</span><span class="lt">原文 Table 3：跨選舉的平均 <abbr class="tt" tabindex="0" data-term="Spearman" data-tip="Spearman 等級相關：比較兩組排序的一致性；本週 12 篇為 0.734，不是準確率。" title="Spearman 等級相關：比較兩組排序的一致性；本週 12 篇為 0.734，不是準確率。">Spearman</abbr> 等級相關</span><span class="ls">投影片 85 轉錄（Hjorth et al. 2015, p. 7）</span></div>
     <div class="lab-b">
       <div class="tablewrap"><table id="hjTab">
         <tr><th>國家</th><th>方法</th><th>CMP</th><th>專家</th><th>選民</th></tr>
@@ -1257,11 +1266,11 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 
   <h2 id="c9-rob">穩健性與不確定性 <span class="slideref">投影片 88</span></h2>
   <ul>
-    <li><b><abbr class="tt" tabindex="0" data-term="sensitivity analysis" title="替換參照、種子、文本範圍或前處理，看結果如何改變；本週 S08 換參照即是。">敏感度</abbr></b>：替換參照或種子、改變文本範圍、比較合理的前處理選擇。</li>
+    <li><b><abbr class="tt" tabindex="0" data-term="sensitivity analysis" data-tip="替換參照、種子、文本範圍或前處理，看結果如何改變；本週 S08 換參照即是。" title="替換參照、種子、文本範圍或前處理，看結果如何改變；本週 S08 換參照即是。">敏感度</abbr></b>：替換參照或種子、改變文本範圍、比較合理的前處理選擇。</li>
     <li><b>不確定性</b>：分辨模型區間、人的意見分歧、跨設定的變異。</li>
     <li><b>評估</b>：保留沒有參與上述選擇的判斷。</li>
   </ul>
-  <div class="callout note"><div class="ct">本機的一個前處理敏感度例子（補充，非講義內容；R 輸出見第 12 章 X3）</div><p>把英文<abbr class="tt" tabindex="0" data-term="stopwords" title="the、and 等極常見的功能字；本週課堂矩陣保留了停用字。">停用字</abbr>從<abbr class="tt" tabindex="0" data-term="DFM" title="文件 × 特徵（字詞）的計數矩陣；本週為 14 × 4,885。">計數矩陣</abbr>移除（4,885 → 4,766 個字）後重跑 Wordfish：<abbr class="tt" tabindex="0" data-term="θ" title="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。">θ</abbr> 與原本的 <abbr class="tt" tabindex="0" data-term="Pearson" title="Pearson 相關：兩組數值的線性相關程度。">Pearson</abbr> 相關 <code>0.984</code>、Spearman <code>0.978</code>。整體排序很接近，但個別演講會移動，例如 Morgan 從 <code>−0.093</code> 變成 <code>0.078</code>（跨過 0）。</p></div>
+  <div class="callout note"><div class="ct">本機的一個前處理敏感度例子（補充，非講義內容；R 輸出見第 12 章 X3）</div><p>把英文<abbr class="tt" tabindex="0" data-term="stopwords" data-tip="the、and 等極常見的功能字；本週課堂矩陣保留了停用字。" title="the、and 等極常見的功能字；本週課堂矩陣保留了停用字。">停用字</abbr>從<abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件 × 特徵（字詞）的計數矩陣；本週為 14 × 4,885。" title="document-feature matrix — 文件 × 特徵（字詞）的計數矩陣；本週為 14 × 4,885。">計數矩陣</abbr>移除（4,885 → 4,766 個字）後重跑 Wordfish：<abbr class="tt" tabindex="0" data-term="θ" data-tip="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。" title="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。">θ</abbr> 與原本的 <abbr class="tt" tabindex="0" data-term="Pearson" data-tip="Pearson 相關：兩組數值的線性相關程度。" title="Pearson 相關：兩組數值的線性相關程度。">Pearson</abbr> 相關 <code>0.984</code>、Spearman <code>0.978</code>。整體排序很接近，但個別演講會移動，例如 Morgan 從 <code>−0.093</code> 變成 <code>0.078</code>（跨過 0）。</p></div>
   <div class="callout note"><div class="ct">課堂討論 <span class="slideref">投影片 88</span></div><p>你會最先改變哪一個選擇？你會保留什麼證據？</p></div>
 
   <h2 id="c9-plan">你的研究摘要：驗證計畫填寫器 <span class="slideref">投影片 89</span></h2>
@@ -1300,7 +1309,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 <section class="chapter" id="ch10" data-slides="90,91,92,93,95,97,99,101">
   <div class="crumb">10 · R 實作 1</div>
   <h1 class="ch">S01–S03：語料、計數矩陣與參照設計</h1>
-  <p class="lead">R 練習的目標：<strong>2010 年愛爾蘭預算的支持度</strong>。用同一份 14 篇演講擬合 <abbr class="tt" tabindex="0" data-term="Wordscores" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr> 與 <abbr class="tt" tabindex="0" data-term="Wordfish" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr>，比較排序、細讀最大的分歧、替換一篇參照評估<abbr class="tt" tabindex="0" data-term="sensitivity analysis" title="替換參照、種子、文本範圍或前處理，看結果如何改變；本週 S08 換參照即是。">敏感度</abbr>（投影片 91）。兩人一組，在<strong>同一個 R session</strong> 依序跑 S01–S08b（含字母子步驟，共 19 個檢查點）。</p>
+  <p class="lead">R 練習的目標：<strong>2010 年愛爾蘭預算的支持度</strong>。用同一份 14 篇演講擬合 <abbr class="tt" tabindex="0" data-term="Wordscores" data-tip="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr> 與 <abbr class="tt" tabindex="0" data-term="Wordfish" data-tip="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr>，比較排序、細讀最大的分歧、替換一篇參照評估<abbr class="tt" tabindex="0" data-term="sensitivity analysis" data-tip="替換參照、種子、文本範圍或前處理，看結果如何改變；本週 S08 換參照即是。" title="替換參照、種子、文本範圍或前處理，看結果如何改變；本週 S08 換參照即是。">敏感度</abbr>（投影片 91）。兩人一組，在<strong>同一個 R session</strong> 依序跑 S01–S08b（含字母子步驟，共 19 個檢查點）。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c10-tools">R 工具</a><a href="#c10-ver">本機實跑說明</a><a href="#c10-s01">S01</a><a href="#c10-s02a">S02a</a><a href="#c10-browse">演講瀏覽器</a><a href="#c10-s02b">S02b</a><a href="#c10-s02c">S02c</a><a href="#c10-s03">S03</a><a href="#c10-quiz">自我檢查</a>
   </div>
@@ -1308,18 +1317,18 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <h2 id="c10-tools">R 工具 <span class="slideref">投影片 90</span></h2>
   <div class="tablewrap"><table>
     <tr><th>任務</th><th>套件</th><th>主要介面</th></tr>
-    <tr><td>準備文本與計數</td><td><abbr class="tt" tabindex="0" data-term="quanteda" title="R 的文本分析套件，負責語料、tokens 與 DFM；本機 4.5.1、投影片 4.3.1。">quanteda</abbr></td><td>corpus、<abbr class="tt" tabindex="0" data-term="tokens" title="把文本切成的單位（通常是字詞）；quanteda 的 tokens 物件保留字序。">tokens</abbr>、<abbr class="tt" tabindex="0" data-term="DFM" title="文件 × 特徵（字詞）的計數矩陣；本週為 14 × 4,885。">DFM</abbr></td></tr>
-    <tr><td>以參照為基礎的<abbr class="tt" tabindex="0" data-term="scaling" title="把文本放到一條（或多條）連續尺度上估計位置的程度差異，而不是指定類別。">縮放</abbr></td><td><abbr class="tt" tabindex="0" data-term="quanteda.textmodels" title="quanteda 的模型擴充套件，提供 textmodel_wordscores()、textmodel_wordfish() 與本週語料。">quanteda.textmodels</abbr></td><td><code>textmodel_wordscores()</code></td></tr>
+    <tr><td>準備文本與計數</td><td><abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的文本分析套件，負責語料、tokens 與 DFM；本機 4.5.1、投影片 4.3.1。" title="R 的文本分析套件，負責語料、tokens 與 DFM；本機 4.5.1、投影片 4.3.1。">quanteda</abbr></td><td>corpus、<abbr class="tt" tabindex="0" data-term="tokens" data-tip="把文本切成的單位（通常是字詞）；quanteda 的 tokens 物件保留字序。" title="把文本切成的單位（通常是字詞）；quanteda 的 tokens 物件保留字序。">tokens</abbr>、<abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件 × 特徵（字詞）的計數矩陣；本週為 14 × 4,885。" title="document-feature matrix — 文件 × 特徵（字詞）的計數矩陣；本週為 14 × 4,885。">DFM</abbr></td></tr>
+    <tr><td>以參照為基礎的<abbr class="tt" tabindex="0" data-term="scaling" data-tip="把文本放到一條（或多條）連續尺度上估計位置的程度差異，而不是指定類別。" title="把文本放到一條（或多條）連續尺度上估計位置的程度差異，而不是指定類別。">縮放</abbr></td><td><abbr class="tt" tabindex="0" data-term="quanteda.textmodels" data-tip="quanteda 的模型擴充套件，提供 textmodel_wordscores()、textmodel_wordfish() 與本週語料。" title="quanteda 的模型擴充套件，提供 textmodel_wordscores()、textmodel_wordfish() 與本週語料。">quanteda.textmodels</abbr></td><td><code>textmodel_wordscores()</code></td></tr>
     <tr><td>潛在計數縮放</td><td>quanteda.textmodels</td><td><code>textmodel_wordfish()</code></td></tr>
-    <tr><td>畫估計位置</td><td><abbr class="tt" tabindex="0" data-term="quanteda.textplots" title="quanteda 的繪圖擴充套件；本週用 textplot_scale1d() 畫估計位置。">quanteda.textplots</abbr></td><td><code>textplot_scale1d()</code></td></tr>
-    <tr><td>跨辯論縮放</td><td><abbr class="tt" tabindex="0" data-term="Wordshoal" title="先在每場辯論內各擬合 Wordfish，再用跨辯論重複出現的講者把位置連成共同尺度（Lauderdale &amp; Herzog 2016）。">wordshoal</abbr></td><td><code>textmodel_wordshoal()</code></td></tr>
-    <tr><td>語意縮放</td><td><abbr class="tt" tabindex="0" data-term="LSX" title="實作 LSS 的 R 套件，主要函式為 textmodel_lss()。">LSX</abbr></td><td><code>textmodel_lss()</code></td></tr>
+    <tr><td>畫估計位置</td><td><abbr class="tt" tabindex="0" data-term="quanteda.textplots" data-tip="quanteda 的繪圖擴充套件；本週用 textplot_scale1d() 畫估計位置。" title="quanteda 的繪圖擴充套件；本週用 textplot_scale1d() 畫估計位置。">quanteda.textplots</abbr></td><td><code>textplot_scale1d()</code></td></tr>
+    <tr><td>跨辯論縮放</td><td><abbr class="tt" tabindex="0" data-term="Wordshoal" data-tip="先在每場辯論內各擬合 Wordfish，再用跨辯論重複出現的講者把位置連成共同尺度（Lauderdale &amp; Herzog 2016）。" title="先在每場辯論內各擬合 Wordfish，再用跨辯論重複出現的講者把位置連成共同尺度（Lauderdale &amp; Herzog 2016）。">wordshoal</abbr></td><td><code>textmodel_wordshoal()</code></td></tr>
+    <tr><td>語意縮放</td><td><abbr class="tt" tabindex="0" data-term="LSX" data-tip="實作 LSS 的 R 套件，主要函式為 textmodel_lss()。" title="實作 LSS 的 R 套件，主要函式為 textmodel_lss()。">LSX</abbr></td><td><code>textmodel_lss()</code></td></tr>
   </table></div>
-  <p class="hint">本週 R 練習只用前四列。本機沒有安裝 wordshoal 與 LSX；第 8 章的 <abbr class="tt" tabindex="0" data-term="LSS" title="以種子詞定義兩端，依 SVD 語意空間中與種子的相似度替字詞與文件打分的半監督方法（Watanabe 2021）。">LSS</abbr> 玩具是以 base R <abbr class="tt" tabindex="0" data-term="SVD" title="奇異值分解：把句子—字詞矩陣降到 k 維，得到 LSS 使用的字詞向量。">SVD</abbr> 做的簡化示範。</p>
+  <p class="hint">本週 R 練習只用前四列。本機沒有安裝 wordshoal 與 LSX；第 8 章的 <abbr class="tt" tabindex="0" data-term="LSS" data-full="Latent Semantic Scaling" data-tip="以種子詞定義兩端，依 SVD 語意空間中與種子的相似度替字詞與文件打分的半監督方法（Watanabe 2021）。" title="Latent Semantic Scaling — 以種子詞定義兩端，依 SVD 語意空間中與種子的相似度替字詞與文件打分的半監督方法（Watanabe 2021）。">LSS</abbr> 玩具是以 base R <abbr class="tt" tabindex="0" data-term="SVD" data-full="singular value decomposition" data-tip="奇異值分解：把句子—字詞矩陣降到 k 維，得到 LSS 使用的字詞向量。" title="singular value decomposition — 奇異值分解：把句子—字詞矩陣降到 k 維，得到 LSS 使用的字詞向量。">SVD</abbr> 做的簡化示範。</p>
 
   <h2 id="c10-ver">本機實跑說明</h2>
   <div class="callout note"><div class="ct">環境與核對結果</div><p>本機（Linux aarch64）以 R 4.5.3（aarch64-conda-linux-gnu）、quanteda 4.5.1、quanteda.textmodels 0.9.10、quanteda.textplots 0.96.1、ggplot2 4.0.3 用 <code>source(echo = TRUE)</code> 執行未修改的 <code>W7/classroom/W7_scaling.R</code>，完整輸出存於 <code>tad/labs/W7/run_output.txt</code>。投影片使用 quanteda 4.3.1、quanteda.textmodels 0.9.10、quanteda.textplots 0.96.1、ggplot2 4.0.2（classroom README）。</p>
-  <p><b>逐一核對投影片 93–129 的每個數字：除了 S01 的 quanteda 版本字串（4.3.1 vs. 4.5.1）之外全部一致</b>，包括 S04b <abbr class="tt" tabindex="0" data-term="coverage" title="每篇演講處理後 token 中有字分數的比例；本週 83.6%–100%，不是準確率。">覆蓋率</abbr>摘要、S04c 的 14 個<abbr class="tt" tabindex="0" data-term="raw scores" title="rescaling = &quot;none&quot; 的 Wordscores 預測值；共用字會把它往中心拉。">原始分數</abbr>、S05b 的 14 組 <abbr class="tt" tabindex="0" data-term="θ" title="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。">θ</abbr> 與 <abbr class="tt" tabindex="0" data-term="standard error" title="模型假設下估計值的不確定性；標準誤小不代表尺度有效。">se</abbr>、S06a 的 <abbr class="tt" tabindex="0" data-term="Spearman" title="Spearman 等級相關：比較兩組排序的一致性；本週 12 篇為 0.734，不是準確率。">Spearman</abbr> 0.734 與 S08b 的排名變化。<code>Lab_Session_W7.R</code> 與 classroom 腳本的程式碼相同（只差 <code>suppressPackageStartupMessages()</code> 包住 <code>library()</code> 與一行註解）。</p></div>
+  <p><b>逐一核對投影片 93–129 的每個數字：除了 S01 的 quanteda 版本字串（4.3.1 vs. 4.5.1）之外全部一致</b>，包括 S04b <abbr class="tt" tabindex="0" data-term="coverage" data-tip="每篇演講處理後 token 中有字分數的比例；本週 83.6%–100%，不是準確率。" title="每篇演講處理後 token 中有字分數的比例；本週 83.6%–100%，不是準確率。">覆蓋率</abbr>摘要、S04c 的 14 個<abbr class="tt" tabindex="0" data-term="raw scores" data-tip="rescaling = &quot;none&quot; 的 Wordscores 預測值；共用字會把它往中心拉。" title="rescaling = &quot;none&quot; 的 Wordscores 預測值；共用字會把它往中心拉。">原始分數</abbr>、S05b 的 14 組 <abbr class="tt" tabindex="0" data-term="θ" data-tip="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。" title="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。">θ</abbr> 與 <abbr class="tt" tabindex="0" data-term="standard error" data-tip="模型假設下估計值的不確定性；標準誤小不代表尺度有效。" title="模型假設下估計值的不確定性；標準誤小不代表尺度有效。">se</abbr>、S06a 的 <abbr class="tt" tabindex="0" data-term="Spearman" data-tip="Spearman 等級相關：比較兩組排序的一致性；本週 12 篇為 0.734，不是準確率。" title="Spearman 等級相關：比較兩組排序的一致性；本週 12 篇為 0.734，不是準確率。">Spearman</abbr> 0.734 與 S08b 的排名變化。<code>Lab_Session_W7.R</code> 與 classroom 腳本的程式碼相同（只差 <code>suppressPackageStartupMessages()</code> 包住 <code>library()</code> 與一行註解）。</p></div>
 
   <h2 id="c10-s01">S01：套件與內建語料 <span class="slideref">投影片 92–93</span></h2>
   <div class="codeblock"><span class="lang">R · S01（W7/classroom/W7_scaling.R）</span><button class="copyb jsonly">複製</button><pre># S01: Packages and the built-in corpus
@@ -1393,7 +1402,7 @@ print(meta, row.names = FALSE)</pre></div>
   ie_12     Ryan Green
   ie_13    Cuffe Green
   ie_14 OCaolain    SF</pre></div>
-  <p>ID 來自演講編號，排序後每個分數仍能對回正確的文本。<code>speaker</code> 與 <code>party</code> 描述演講；<strong>兩個模型都不用 party 欄位</strong>來擬合位置（投影片 95）。</p>
+  <p><abbr class="tt" tabindex="0" data-term="ID" data-full="identifier" data-tip="識別碼：唯一標示一份文件或一筆資料的編號。" title="identifier — 識別碼：唯一標示一份文件或一筆資料的編號。">ID</abbr> 來自演講編號，排序後每個分數仍能對回正確的文本。<code>speaker</code> 與 <code>party</code> 描述演講；<strong>兩個模型都不用 party 欄位</strong>來擬合位置（投影片 95）。</p>
 
   <h2 id="c10-browse">演講瀏覽器（原文） <span class="slideref">投影片 96、122</span></h2>
   <div class="lab" id="labSpeech">
@@ -1444,7 +1453,7 @@ topfeatures(counts, 6)</pre></div>
 &gt; topfeatures(counts, 6)
  the   to   of  and   in    a 
 3598 1633 1537 1359 1231 1013 </pre></div>
-  <p><code>14 4885</code>：14 篇演講與它們合併的字彙；格子是字的出現次數。<code>FALSE</code> 確認清理後每篇都還有字。因為<strong>保留了<abbr class="tt" tabindex="0" data-term="stopwords" title="the、and 等極常見的功能字；本週課堂矩陣保留了停用字。">停用字</abbr></strong>，<i>the</i> 仍然最常見（3,598 次）——單靠出現次數不能區分政治立場。兩個方法都從這份計數開始，<strong>沒有 <abbr class="tt" tabindex="0" data-term="TF-IDF" title="詞頻—逆文件頻率加權，壓低到處都出現的字；本週兩個模型都沒有使用。">TF-IDF</abbr> 加權</strong>、沒有 <abbr class="tt" tabindex="0" data-term="stemming" title="把字詞還原成詞幹（如 cuts → cut）的前處理；本週沒有做。">stemming</abbr> 或 <abbr class="tt" tabindex="0" data-term="trimming" title="依頻率門檻刪除罕見或過常見特徵的前處理；本週沒有做。">trimming</abbr>（投影片 98；classroom README）。</p>
+  <p><code>14 4885</code>：14 篇演講與它們合併的字彙；格子是字的出現次數。<code>FALSE</code> 確認清理後每篇都還有字。因為<strong>保留了<abbr class="tt" tabindex="0" data-term="stopwords" data-tip="the、and 等極常見的功能字；本週課堂矩陣保留了停用字。" title="the、and 等極常見的功能字；本週課堂矩陣保留了停用字。">停用字</abbr></strong>，<i>the</i> 仍然最常見（3,598 次）——單靠出現次數不能區分政治立場。兩個方法都從這份計數開始，<strong>沒有 <abbr class="tt" tabindex="0" data-term="TF-IDF" data-full="term frequency–inverse document frequency" data-tip="詞頻—逆文件頻率加權，壓低到處都出現的字；本週兩個模型都沒有使用。" title="term frequency–inverse document frequency — 詞頻—逆文件頻率加權，壓低到處都出現的字；本週兩個模型都沒有使用。">TF-IDF</abbr> 加權</strong>、沒有 <abbr class="tt" tabindex="0" data-term="stemming" data-tip="把字詞還原成詞幹（如 cuts → cut）的前處理；本週沒有做。" title="把字詞還原成詞幹（如 cuts → cut）的前處理；本週沒有做。">stemming</abbr> 或 <abbr class="tt" tabindex="0" data-term="trimming" data-tip="依頻率門檻刪除罕見或過常見特徵的前處理；本週沒有做。" title="依頻率門檻刪除罕見或過常見特徵的前處理；本週沒有做。">trimming</abbr>（投影片 98；classroom README）。</p>
 
   <h2 id="c10-s03">S03：定義 Wordscores 參照 <span class="slideref">投影片 100–101</span></h2>
   <div class="codeblock"><span class="lang">R · S03（W7/classroom/W7_scaling.R）</span><button class="copyb jsonly">複製</button><pre># S03: Define the Wordscores references
@@ -1491,7 +1500,7 @@ print(data.frame(speaker = meta$speaker[match(ref_ids, meta$doc_id)],
 <section class="chapter" id="ch11" data-slides="102,103,104,105,106,107,108,109">
   <div class="crumb">11 · R 實作 2</div>
   <h1 class="ch">S04a–S04d：Wordscores</h1>
-  <p class="lead">從兩篇參照學出<abbr class="tt" tabindex="0" data-term="word scores" title="Wordscores 從參照學到的每個字的分數 S_w；反映參照中的相對用法，不是情緒。">字分數</abbr>、對齊評分字彙並計算<abbr class="tt" tabindex="0" data-term="coverage" title="每篇演講處理後 token 中有字分數的比例；本週 83.6%–100%，不是準確率。">覆蓋率</abbr>、替每篇演講預測<abbr class="tt" tabindex="0" data-term="raw scores" title="rescaling = &quot;none&quot; 的 Wordscores 預測值；共用字會把它往中心拉。">原始分數</abbr>，最後畫出位置與區間。本章的互動實驗室在瀏覽器裡用同一份<abbr class="tt" tabindex="0" data-term="DFM" title="文件 × 特徵（字詞）的計數矩陣；本週為 14 × 4,885。">計數矩陣</abbr><strong>重算</strong> <abbr class="tt" tabindex="0" data-term="Wordscores" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr>，你可以自己換參照。</p>
+  <p class="lead">從兩篇參照學出<abbr class="tt" tabindex="0" data-term="word scores" data-tip="Wordscores 從參照學到的每個字的分數 S_w；反映參照中的相對用法，不是情緒。" title="Wordscores 從參照學到的每個字的分數 S_w；反映參照中的相對用法，不是情緒。">字分數</abbr>、對齊評分字彙並計算<abbr class="tt" tabindex="0" data-term="coverage" data-tip="每篇演講處理後 token 中有字分數的比例；本週 83.6%–100%，不是準確率。" title="每篇演講處理後 token 中有字分數的比例；本週 83.6%–100%，不是準確率。">覆蓋率</abbr>、替每篇演講預測<abbr class="tt" tabindex="0" data-term="raw scores" data-tip="rescaling = &quot;none&quot; 的 Wordscores 預測值；共用字會把它往中心拉。" title="rescaling = &quot;none&quot; 的 Wordscores 預測值；共用字會把它往中心拉。">原始分數</abbr>，最後畫出位置與區間。本章的互動實驗室在瀏覽器裡用同一份<abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件 × 特徵（字詞）的計數矩陣；本週為 14 × 4,885。" title="document-feature matrix — 文件 × 特徵（字詞）的計數矩陣；本週為 14 × 4,885。">計數矩陣</abbr><strong>重算</strong> <abbr class="tt" tabindex="0" data-term="Wordscores" data-tip="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr>，你可以自己換參照。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c11-s04a">S04a</a><a href="#c11-s04b">S04b</a><a href="#c11-s04c">S04c</a><a href="#c11-s04d">S04d</a><a href="#c11-lab">Wordscores 實驗室</a><a href="#c11-x">補充：重算與 rescaling</a><a href="#c11-judge">主張判斷</a><a href="#c11-quiz">自我檢查</a>
   </div>
@@ -1535,7 +1544,7 @@ summary(ws_coverage)</pre></div>
 &gt; summary(ws_coverage)
    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
   0.836   0.850   0.874   0.886   0.887   1.000 </pre></div>
-  <p>4,885 個字中只有 <strong>2,131</strong> 個出現在參照裡並得到分數；14 篇都還在。覆蓋率 83.6%–100%，中位數 87.4%。重複出現的字也算進覆蓋率；這衡量的是保留下來的語言，<strong>不是預測準確率</strong>（投影片 105）。（補充：100% 那篇是誰？在下方實驗室的「覆蓋率」欄可以看到——<abbr class="tt" tabindex="0" data-term="reference texts" title="Wordscores 中由研究者指定位置的文本，用來學字分數；本週是 Lenihan +1、Bruton −1。">參照文本</abbr>自己的字當然全部有分數。）</p>
+  <p>4,885 個字中只有 <strong>2,131</strong> 個出現在參照裡並得到分數；14 篇都還在。覆蓋率 83.6%–100%，中位數 87.4%。重複出現的字也算進覆蓋率；這衡量的是保留下來的語言，<strong>不是預測準確率</strong>（投影片 105）。（補充：100% 那篇是誰？在下方實驗室的「覆蓋率」欄可以看到——<abbr class="tt" tabindex="0" data-term="reference texts" data-tip="Wordscores 中由研究者指定位置的文本，用來學字分數；本週是 Lenihan +1、Bruton −1。" title="Wordscores 中由研究者指定位置的文本，用來學字分數；本週是 Lenihan +1、Bruton −1。">參照文本</abbr>自己的字當然全部有分數。）</p>
 
   <h2 id="c11-s04c">S04c：預測每篇演講的原始分數 <span class="slideref">投影片 106–107</span></h2>
   <div class="codeblock"><span class="lang">R · S04c（W7/classroom/W7_scaling.R）</span><button class="copyb jsonly">複製</button><pre># S04c: Predict raw Wordscores for every speech
@@ -1593,14 +1602,14 @@ textplot_scale1d(ws_plot, doclabels = ws_labels, sort = TRUE) +
   <div class="lab" id="labWS">
     <div class="lab-h"><span class="ic">🧪</span><span class="lt">在瀏覽器重算 Wordscores</span><span class="ls">真實資料 · S02c 的 14 × 4,885 計數矩陣；<code>smooth = 0</code>、<code>rescaling = "none"</code></span></div>
     <div class="lab-b">
-      <p class="hint">替每篇演講選 +1、−1 或「<abbr class="tt" tabindex="0" data-term="virgin texts" title="沒有指定位置、由 Wordscores 預測位置的文本；本週有 12 篇。">新文本</abbr>」，按「計算」。演算法和第 2 章的三條式子相同，結果與 R 一致（載入時自動比對課堂設定，誤差顯示在下方）。試試：S08 的 Cowen 設定、把 <abbr class="tt" tabindex="0" data-term="Sinn Féin" title="愛爾蘭在野政黨；Lowe &amp; Benoit 指出其強烈反對在 Wordfish 中看起來太溫和。">Sinn Féin</abbr> 兩篇設成 −1、或只用 Green Party 當正向參照。</p>
+      <p class="hint">替每篇演講選 +1、−1 或「<abbr class="tt" tabindex="0" data-term="virgin texts" data-tip="沒有指定位置、由 Wordscores 預測位置的文本；本週有 12 篇。" title="沒有指定位置、由 Wordscores 預測位置的文本；本週有 12 篇。">新文本</abbr>」，按「計算」。演算法和第 2 章的三條式子相同，結果與 R 一致（載入時自動比對課堂設定，誤差顯示在下方）。試試：S08 的 Cowen 設定、把 <abbr class="tt" tabindex="0" data-term="Sinn Féin" data-full="Sinn Féin (SF)" data-tip="愛爾蘭在野政黨；Lowe &amp; Benoit 指出其強烈反對在 Wordfish 中看起來太溫和。" title="Sinn Féin (SF) — 愛爾蘭在野政黨；Lowe &amp; Benoit 指出其強烈反對在 Wordfish 中看起來太溫和。">Sinn Féin</abbr> 兩篇設成 −1、或只用 Green Party 當正向參照。</p>
       <div class="row jsonly"><button class="btn" data-wsp="class">課堂設定：Lenihan +1、Bruton −1</button><button class="btn" data-wsp="s08">S08：Cowen +1、Bruton −1</button><button class="btn" data-wsp="sf">Lenihan +1、Morgan／Ó Caoláin −1</button><button class="btn" data-wsp="clear">全部清除</button></div>
       <div class="tablewrap jsonly" id="wsTab"></div>
       <div class="row jsonly"><button class="btn primary" id="wsRun">計算</button><span class="hint" id="wsCheck"></span></div>
       <div class="grid3 jsonly">
         <div class="stat"><div class="sl">有分數的字</div><div class="sv" id="wsNw">–</div></div>
         <div class="stat"><div class="sl">新文本覆蓋率中位數</div><div class="sv" id="wsCov">–</div></div>
-        <div class="stat"><div class="sl">新文本與 <abbr class="tt" tabindex="0" data-term="Wordfish" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr> <abbr class="tt" tabindex="0" data-term="θ" title="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。">θ</abbr> 的 <abbr class="tt" tabindex="0" data-term="Spearman" title="Spearman 等級相關：比較兩組排序的一致性；本週 12 篇為 0.734，不是準確率。">Spearman</abbr></div><div class="sv" id="wsRho">–</div></div>
+        <div class="stat"><div class="sl">新文本與 <abbr class="tt" tabindex="0" data-term="Wordfish" data-tip="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr> <abbr class="tt" tabindex="0" data-term="θ" data-tip="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。" title="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。">θ</abbr> 的 <abbr class="tt" tabindex="0" data-term="Spearman" data-tip="Spearman 等級相關：比較兩組排序的一致性；本週 12 篇為 0.734，不是準確率。" title="Spearman 等級相關：比較兩組排序的一致性；本週 12 篇為 0.734，不是準確率。">Spearman</abbr></div><div class="sv" id="wsRho">–</div></div>
       </div>
       <div id="wsBars" class="jsonly"></div>
       <div class="row jsonly" style="margin-top:8px"><input type="text" id="wsWord" placeholder="查字分數，例如 tax、fair、cuts" style="max-width:260px"><button class="btn" id="wsWordGo">查詢</button></div>
@@ -1670,7 +1679,7 @@ print(data.frame(speaker = meta$speaker, raw = round(as.numeric(ws_pred), 3),
      Ryan -0.012 -0.271 -0.036
     Cuffe  0.003 -0.123  0.010
  OCaolain  0.026  0.097  0.078</pre></div>
-  <p><code>lbg</code> 依 <abbr class="tt" tabindex="0" data-term="LBG" title="Laver, Benoit &amp; Garry (2003) 的縮寫；也是 Wordscores 的 rescaling = &quot;lbg&quot; 轉換。">LBG</abbr> (2003) 的轉換把分數展開（Lenihan 3.068、Bruton −3.376），<code>mv</code> 把兩篇參照固定在 ±1。三欄的<strong>排序</strong>一樣，但距離完全不同——呼應第 3 章「比較順序，對距離謹慎」。課堂用 <code>rescaling = "none"</code>（投影片 130 也要求報告 raw／rescaled 分數）。</p>
+  <p><code>lbg</code> 依 <abbr class="tt" tabindex="0" data-term="LBG" data-full="Laver, Benoit &amp; Garry (2003)" data-tip="Laver, Benoit &amp; Garry (2003) 的縮寫；也是 Wordscores 的 rescaling = &quot;lbg&quot; 轉換。" title="Laver, Benoit &amp; Garry (2003) — Laver, Benoit &amp; Garry (2003) 的縮寫；也是 Wordscores 的 rescaling = &quot;lbg&quot; 轉換。">LBG</abbr> (2003) 的轉換把分數展開（Lenihan 3.068、Bruton −3.376），<code>mv</code> 把兩篇參照固定在 ±1。三欄的<strong>排序</strong>一樣，但距離完全不同——呼應第 3 章「比較順序，對距離謹慎」。課堂用 <code>rescaling = "none"</code>（投影片 130 也要求報告 raw／rescaled 分數）。</p>
 
   <h2 id="c11-judge">主張判斷練習</h2>
   <div class="mcq" data-ans="1" data-q="c11j1">
@@ -1703,7 +1712,7 @@ print(data.frame(speaker = meta$speaker, raw = round(as.numeric(ws_pred), 3),
   <div class="mcq" data-ans="3" data-q="c11q3">
     <div class="q">3. S04b 的覆蓋率衡量的是？</div>
     <button class="opt">預測準確率</button><button class="opt">有分數的「不同字」占字彙的比例</button><button class="opt">參照文本的長度</button><button class="opt">每篇演講處理後 token 中，有字分數的 token 比例</button>
-    <div class="fb">投影片 104–105：share of each speech's processed <abbr class="tt" tabindex="0" data-term="tokens" title="把文本切成的單位（通常是字詞）；quanteda 的 tokens 物件保留字序。">tokens</abbr> that remain；repeated occurrences count。<span class="slideref">投影片 104–105</span></div>
+    <div class="fb">投影片 104–105：share of each speech's processed <abbr class="tt" tabindex="0" data-term="tokens" data-tip="把文本切成的單位（通常是字詞）；quanteda 的 tokens 物件保留字序。" title="把文本切成的單位（通常是字詞）；quanteda 的 tokens 物件保留字序。">tokens</abbr> that remain；repeated occurrences count。<span class="slideref">投影片 104–105</span></div>
   </div>
 </section>
 
@@ -1711,7 +1720,7 @@ print(data.frame(speaker = meta$speaker, raw = round(as.numeric(ws_pred), 3),
 <section class="chapter" id="ch12" data-slides="110,111,112,113,114,115,116,117">
   <div class="crumb">12 · R 實作 3</div>
   <h1 class="ch">S05a–S05d：Wordfish</h1>
-  <p class="lead">同一份<abbr class="tt" tabindex="0" data-term="DFM" title="文件 × 特徵（字詞）的計數矩陣；本週為 14 × 4,885。">計數矩陣</abbr>、不給位置分數，只用 <code>dir</code> 指定 Bruton 在 Lenihan 左邊。讀 <abbr class="tt" tabindex="0" data-term="θ" title="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。">θ</abbr> 與<abbr class="tt" tabindex="0" data-term="standard error" title="模型假設下估計值的不確定性；標準誤小不代表尺度有效。">標準誤</abbr>、讀字詞的 <abbr class="tt" tabindex="0" data-term="β" title="Wordfish 的字詞權重：θ 每增加 1，該字 log 期望計數的變化；正值不代表正面情緒。">β</abbr> 與 <abbr class="tt" tabindex="0" data-term="ψ" title="Wordfish 的字詞固定效果（基準頻率）；不是原始頻率。">ψ</abbr>，再畫出位置。</p>
+  <p class="lead">同一份<abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件 × 特徵（字詞）的計數矩陣；本週為 14 × 4,885。" title="document-feature matrix — 文件 × 特徵（字詞）的計數矩陣；本週為 14 × 4,885。">計數矩陣</abbr>、不給位置分數，只用 <code>dir</code> 指定 Bruton 在 Lenihan 左邊。讀 <abbr class="tt" tabindex="0" data-term="θ" data-tip="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。" title="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。">θ</abbr> 與<abbr class="tt" tabindex="0" data-term="standard error" data-tip="模型假設下估計值的不確定性；標準誤小不代表尺度有效。" title="模型假設下估計值的不確定性；標準誤小不代表尺度有效。">標準誤</abbr>、讀字詞的 <abbr class="tt" tabindex="0" data-term="β" data-tip="Wordfish 的字詞權重：θ 每增加 1，該字 log 期望計數的變化；正值不代表正面情緒。" title="Wordfish 的字詞權重：θ 每增加 1，該字 log 期望計數的變化；正值不代表正面情緒。">β</abbr> 與 <abbr class="tt" tabindex="0" data-term="ψ" data-tip="Wordfish 的字詞固定效果（基準頻率）；不是原始頻率。" title="Wordfish 的字詞固定效果（基準頻率）；不是原始頻率。">ψ</abbr>，再畫出位置。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c12-s05a">S05a</a><a href="#c12-s05b">S05b</a><a href="#c12-pos">位置與區間（互動）</a><a href="#c12-s05c">S05c</a><a href="#c12-s05d">S05d</a><a href="#c12-x3">補充：停用字敏感度</a><a href="#c12-js">補充：瀏覽器裡的 Wordfish</a><a href="#c12-quiz">自我檢查</a>
   </div>
@@ -1736,7 +1745,7 @@ data.frame(speaker = meta$speaker[wf_dir],
   speaker  theta
 1  Bruton -0.585
 2 Lenihan  1.775</pre></div>
-  <p>Bruton（−0.585）在 Lenihan（1.775）下方，因為 <code>dir</code> 選了這個順序。位置是從計數估計出來的，<strong>不是固定在 ±1</strong>；方向本身也不建立預算支持的意義（投影片 111）。<code>dir</code> 用穩定 ID 找出文件索引（投影片 110）。</p>
+  <p>Bruton（−0.585）在 Lenihan（1.775）下方，因為 <code>dir</code> 選了這個順序。位置是從計數估計出來的，<strong>不是固定在 ±1</strong>；方向本身也不建立預算支持的意義（投影片 111）。<code>dir</code> 用穩定 <abbr class="tt" tabindex="0" data-term="ID" data-full="identifier" data-tip="識別碼：唯一標示一份文件或一筆資料的編號。" title="identifier — 識別碼：唯一標示一份文件或一筆資料的編號。">ID</abbr> 找出文件索引（投影片 110）。</p>
 
   <h2 id="c12-s05b">S05b：讀位置與模型標準誤 <span class="slideref">投影片 112–113</span></h2>
   <div class="codeblock"><span class="lang">R · S05b（W7/classroom/W7_scaling.R）</span><button class="copyb jsonly">複製</button><pre># S05b: Inspect Wordfish positions and model standard errors
@@ -1767,11 +1776,11 @@ print(data.frame(speaker = results$speaker, party = results$party,
      Ryan Green  0.212 0.065
     Cuffe Green  0.793 0.073
  OCaolain    SF -0.098 0.039</pre></div>
-  <p>Burton θ = −1.150、se = 0.016；Gormley 的 se = 0.075 較大。Burton 較小的標準誤給出較窄的模型區間，<strong>但不證明這個尺度量的是預算支持</strong>（投影片 113）。（補充：可以在第 10 章瀏覽器比較各篇的處理後 <abbr class="tt" tabindex="0" data-term="tokens" title="把文本切成的單位（通常是字詞）；quanteda 的 tokens 物件保留字序。">token</abbr> 數，看看 se 和演講長度的關係；se 也取決於模型其他部分，不只是長度。）</p>
+  <p>Burton θ = −1.150、se = 0.016；Gormley 的 se = 0.075 較大。Burton 較小的標準誤給出較窄的模型區間，<strong>但不證明這個尺度量的是預算支持</strong>（投影片 113）。（補充：可以在第 10 章瀏覽器比較各篇的處理後 <abbr class="tt" tabindex="0" data-term="tokens" data-tip="把文本切成的單位（通常是字詞）；quanteda 的 tokens 物件保留字序。" title="把文本切成的單位（通常是字詞）；quanteda 的 tokens 物件保留字序。">token</abbr> 數，看看 se 和演講長度的關係；se 也取決於模型其他部分，不只是長度。）</p>
 
   <h2 id="c12-pos">位置與區間（互動）</h2>
   <div class="lab" id="labWF">
-    <div class="lab-h"><span class="ic">📍</span><span class="lt"><abbr class="tt" tabindex="0" data-term="Wordfish" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr> θ ± 1.96 se</span><span class="ls">真實資料 · 本機 S05b 輸出</span></div>
+    <div class="lab-h"><span class="ic">📍</span><span class="lt"><abbr class="tt" tabindex="0" data-term="Wordfish" data-tip="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr> θ ± 1.96 se</span><span class="ls">真實資料 · 本機 S05b 輸出</span></div>
     <div class="lab-b">
       <div class="row jsonly"><label class="chip"><input type="radio" name="wfv" value="th" checked> 課堂設定（S05a）</label><label class="chip"><input type="radio" name="wfv" value="ns"> 補充：移除停用字後（X3，無 se）</label><label class="chip"><input type="checkbox" id="wfParty" checked> 依政黨上色</label></div>
       <canvas id="wfCv" width="720" height="380" class="jsonly" style="width:100%;max-width:720px"></canvas>
@@ -1797,7 +1806,7 @@ print(data.frame(word = probe_words,
        jobs 0.505 1.842
        fair 0.191 0.860
    recovery 0.358 0.897</pre></div>
-  <p><i>budget</i> 的 ψ（2.711）描述基準常見度；它很小的 β（0.042）表示沿著 θ 幾乎不變。<i>jobs</i> 的 β（0.505）代表 θ 每增加一單位、在其他效果固定下，log 期望計數變化較大。<strong>ψ 不是原始頻率；正的 β 不是正面情緒</strong>（投影片 115）。全部 4,885 個字的 β／ψ 見第 5 章 <abbr class="tt" tabindex="0" data-term="word plot" title="以 β（x 軸）與 ψ（y 軸）畫出每個字的 Wordfish 圖；常見字在上方中央，有區分力的字在下方兩側。">word plot</abbr>。</p>
+  <p><i>budget</i> 的 ψ（2.711）描述基準常見度；它很小的 β（0.042）表示沿著 θ 幾乎不變。<i>jobs</i> 的 β（0.505）代表 θ 每增加一單位、在其他效果固定下，log 期望計數變化較大。<strong>ψ 不是原始頻率；正的 β 不是正面情緒</strong>（投影片 115）。全部 4,885 個字的 β／ψ 見第 5 章 <abbr class="tt" tabindex="0" data-term="word plot" data-tip="以 β（x 軸）與 ψ（y 軸）畫出每個字的 Wordfish 圖；常見字在上方中央，有區分力的字在下方兩側。" title="以 β（x 軸）與 ψ（y 軸）畫出每個字的 Wordfish 圖；常見字在上方中央，有區分力的字在下方兩側。">word plot</abbr>。</p>
 
   <h2 id="c12-s05d">S05d：畫 Wordfish 位置 <span class="slideref">投影片 116–117</span></h2>
   <div class="codeblock"><span class="lang">R · S05d（W7/classroom/W7_scaling.R）</span><button class="copyb jsonly">複製</button><pre># S05d: Plot Wordfish positions with model-based intervals
@@ -1849,13 +1858,13 @@ print(data.frame(speaker = meta$speaker, theta = round(wf$theta, 3),
      Ryan  0.212        0.156
     Cuffe  0.793        0.570
  OCaolain -0.098       -0.050</pre></div>
-  <p>移除 <abbr class="tt" tabindex="0" data-term="quanteda" title="R 的文本分析套件，負責語料、tokens 與 DFM；本機 4.5.1、投影片 4.3.1。">quanteda</abbr> 英文<abbr class="tt" tabindex="0" data-term="stopwords" title="the、and 等極常見的功能字；本週課堂矩陣保留了停用字。">停用字</abbr>只少了 119 個不同的字（4,885 → 4,766）。整體排序相近（<abbr class="tt" tabindex="0" data-term="Spearman" title="Spearman 等級相關：比較兩組排序的一致性；本週 12 篇為 0.734，不是準確率。">Spearman</abbr> 0.978），個別演講仍會移動。這對應投影片 88 的「比較合理的前處理選擇」。</p>
+  <p>移除 <abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的文本分析套件，負責語料、tokens 與 DFM；本機 4.5.1、投影片 4.3.1。" title="R 的文本分析套件，負責語料、tokens 與 DFM；本機 4.5.1、投影片 4.3.1。">quanteda</abbr> 英文<abbr class="tt" tabindex="0" data-term="stopwords" data-tip="the、and 等極常見的功能字；本週課堂矩陣保留了停用字。" title="the、and 等極常見的功能字；本週課堂矩陣保留了停用字。">停用字</abbr>只少了 119 個不同的字（4,885 → 4,766）。整體排序相近（<abbr class="tt" tabindex="0" data-term="Spearman" data-tip="Spearman 等級相關：比較兩組排序的一致性；本週 12 篇為 0.734，不是準確率。" title="Spearman 等級相關：比較兩組排序的一致性；本週 12 篇為 0.734，不是準確率。">Spearman</abbr> 0.978），個別演講仍會移動。這對應投影片 88 的「比較合理的前處理選擇」。</p>
 
   <h2 id="c12-js">補充：在瀏覽器裡跑一個簡化的 Wordfish</h2>
   <div class="lab" id="labWFjs">
-    <div class="lab-h"><span class="ic">🐟</span><span class="lt">只用最常見的 N 個字擬合 Wordfish</span><span class="ls">補充（非講義內容）· 真實計數，簡化演算法（<abbr class="tt" tabindex="0" data-term="Poisson" title="描述計數資料的機率分配；Wordfish 假設字詞計數服從條件獨立的 Poisson 分配。">Poisson</abbr> 交替迭代），不是 quanteda 的實作</span></div>
+    <div class="lab-h"><span class="ic">🐟</span><span class="lt">只用最常見的 N 個字擬合 Wordfish</span><span class="ls">補充（非講義內容）· 真實計數，簡化演算法（<abbr class="tt" tabindex="0" data-term="Poisson" data-tip="描述計數資料的機率分配；Wordfish 假設字詞計數服從條件獨立的 Poisson 分配。" title="描述計數資料的機率分配；Wordfish 假設字詞計數服從條件獨立的 Poisson 分配。">Poisson</abbr> 交替迭代），不是 quanteda 的實作</span></div>
     <div class="lab-b">
-      <p class="hint">從 14 × 4,885 的計數中只保留總次數最高的 N 個字，在瀏覽器裡估計 θ（先驗仿 quanteda 預設：β 的標準差 3、θ 的標準差 1；<abbr class="tt" tabindex="0" data-term="α" title="Wordfish 的文件固定效果（文件基準），部分反映文件長度。">α</abbr>、ψ 不設先驗），並用 Bruton &lt; Lenihan 固定方向，再和 R 的 θ 比較。本機 node 測試（60 次迭代）：用全部 4,885 個字時與 R 的 θ <abbr class="tt" tabindex="0" data-term="Pearson" title="Pearson 相關：兩組數值的線性相關程度。">Pearson</abbr> 0.999、Spearman 0.996；只用前 500 字時 Pearson 0.955、Spearman 0.815。N 越小，模型越只靠功能字與常見字。</p>
+      <p class="hint">從 14 × 4,885 的計數中只保留總次數最高的 N 個字，在瀏覽器裡估計 θ（先驗仿 quanteda 預設：β 的標準差 3、θ 的標準差 1；<abbr class="tt" tabindex="0" data-term="α" data-tip="Wordfish 的文件固定效果（文件基準），部分反映文件長度。" title="Wordfish 的文件固定效果（文件基準），部分反映文件長度。">α</abbr>、ψ 不設先驗），並用 Bruton &lt; Lenihan 固定方向，再和 R 的 θ 比較。本機 node 測試（60 次迭代）：用全部 4,885 個字時與 R 的 θ <abbr class="tt" tabindex="0" data-term="Pearson" data-tip="Pearson 相關：兩組數值的線性相關程度。" title="Pearson 相關：兩組數值的線性相關程度。">Pearson</abbr> 0.999、Spearman 0.996；只用前 500 字時 Pearson 0.955、Spearman 0.815。N 越小，模型越只靠功能字與常見字。</p>
       <label class="f jsonly">N（字數）<input type="range" id="wjN" min="50" max="4900" step="50" value="500"><span id="wjNv"></span></label>
       <div class="row jsonly"><button class="btn primary" id="wjRun">擬合</button></div>
       <div id="wjOut" class="jsonly"></div>
@@ -1867,7 +1876,7 @@ print(data.frame(speaker = meta$speaker, theta = round(wf$theta, 3),
   <div class="mcq" data-ans="2" data-q="c12q1">
     <div class="q">1. S05a 的 <code>dir = wf_dir</code> 做了什麼？</div>
     <button class="opt">把 Bruton 固定在 −1、Lenihan 固定在 +1</button><button class="opt">指定 Lenihan 與 Bruton 為參照文本</button><button class="opt">只要求 Bruton 的位置低於 Lenihan，以決定方向</button><button class="opt">設定隨機種子</button>
-    <div class="fb">投影片 110–111：<abbr class="tt" tabindex="0" data-term="dir" title="textmodel_wordfish() 的參數：指定哪篇文件在左、哪篇在右，只決定方向，不提供維度的意義。">dir</abbr> asks for Bruton below Lenihan；positions are estimated, not fixed at −1/+1。<span class="slideref">投影片 110–111</span></div>
+    <div class="fb">投影片 110–111：<abbr class="tt" tabindex="0" data-term="dir" data-tip="textmodel_wordfish() 的參數：指定哪篇文件在左、哪篇在右，只決定方向，不提供維度的意義。" title="textmodel_wordfish() 的參數：指定哪篇文件在左、哪篇在右，只決定方向，不提供維度的意義。">dir</abbr> asks for Bruton below Lenihan；positions are estimated, not fixed at −1/+1。<span class="slideref">投影片 110–111</span></div>
   </div>
   <div class="mcq" data-ans="1" data-q="c12q2">
     <div class="q">2. 14 篇中哪一篇的 Wordfish se 最大？</div>
@@ -1885,7 +1894,7 @@ print(data.frame(speaker = meta$speaker, theta = round(wf$theta, 3),
 <section class="chapter" id="ch13" data-slides="118,119,120,121,122,123,124,125,126,127,128,129">
   <div class="crumb">13 · R 實作 4</div>
   <h1 class="ch">S06–S08：比較排序、細讀分歧、換參照</h1>
-  <p class="lead">兩個模型在 12 篇<abbr class="tt" tabindex="0" data-term="virgin texts" title="沒有指定位置、由 Wordscores 預測位置的文本；本週有 12 篇。">新文本</abbr>上排序多一致？最大的分歧是誰？回到原文讀她說了什麼。最後換掉正向參照，看看排序會怎麼動。</p>
+  <p class="lead">兩個模型在 12 篇<abbr class="tt" tabindex="0" data-term="virgin texts" data-tip="沒有指定位置、由 Wordscores 預測位置的文本；本週有 12 篇。" title="沒有指定位置、由 Wordscores 預測位置的文本；本週有 12 篇。">新文本</abbr>上排序多一致？最大的分歧是誰？回到原文讀她說了什麼。最後換掉正向參照，看看排序會怎麼動。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c13-s06a">S06a</a><a href="#c13-s06b">S06b</a><a href="#c13-rank">兩種尺度（互動）</a><a href="#c13-s07">S07a–S07b</a><a href="#c13-ans">細讀作答區</a><a href="#c13-s08">S08a–S08b</a><a href="#c13-sens">換參照實驗</a><a href="#c13-run">R 執行清單</a><a href="#c13-quiz">自我檢查</a>
   </div>
@@ -1924,7 +1933,7 @@ print(head(comparison[c("speaker", "ws_rank", "wf_rank", "gap")], 6),
  OCaolain      10       7   3
     Cuffe       8      10   2
    Morgan       9       8   1</pre></div>
-  <p>排除兩篇 <abbr class="tt" tabindex="0" data-term="Wordscores" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr> 參照。固定共同方向後，排名 1 是各尺度的低端。<code>ws_rank = 7</code>、<code>wf_rank = 1</code>，Burton 的絕對差距是 6。<abbr class="tt" tabindex="0" data-term="Spearman" title="Spearman 等級相關：比較兩組排序的一致性；本週 12 篇為 0.734，不是準確率。">Spearman</abbr> <strong>0.734</strong> 摘要 12 篇的整體一致性：整體一致可以和一個大分歧共存，而且<strong>它不是準確率</strong>（投影片 118–119）。（補充：把兩篇參照也算進來，14 篇的 Spearman 是 0.741，見下方 X4。）</p>
+  <p>排除兩篇 <abbr class="tt" tabindex="0" data-term="Wordscores" data-tip="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr> 參照。固定共同方向後，排名 1 是各尺度的低端。<code>ws_rank = 7</code>、<code>wf_rank = 1</code>，Burton 的絕對差距是 6。<abbr class="tt" tabindex="0" data-term="Spearman" data-tip="Spearman 等級相關：比較兩組排序的一致性；本週 12 篇為 0.734，不是準確率。" title="Spearman 等級相關：比較兩組排序的一致性；本週 12 篇為 0.734，不是準確率。">Spearman</abbr> <strong>0.734</strong> 摘要 12 篇的整體一致性：整體一致可以和一個大分歧共存，而且<strong>它不是準確率</strong>（投影片 118–119）。（補充：把兩篇參照也算進來，14 篇的 Spearman 是 0.741，見下方 X4。）</p>
   <div class="codeblock"><span class="lang">R · X4（W7/work/extra_W7.R（補充，非課堂腳本））</span><button class="copyb jsonly">複製</button><pre># X4: Spearman between Wordscores and Wordfish on all fourteen speeches
 round(cor(results$ws_raw, results$wf_theta, method = "spearman"), 3)</pre></div>
   <div class="outbox"><div class="ohead">R console output（補充，本機實跑；不在課堂腳本中）</div><pre>&gt; round(cor(results$ws_raw, results$wf_theta, method = "spearman"), 3)
@@ -1941,7 +1950,7 @@ points(comparison$ws_raw, comparison$wf_theta,
 text(comparison$ws_raw[1:3], comparison$wf_theta[1:3],
   labels = comparison$speaker[1:3], pos = 4, cex = 0.85)</pre></div>
   <div class="figbox"><img src="data:image/webp;base64,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" alt="S06b 兩種尺度散布圖（本機重繪）"><div class="fcap">本機執行 S06b 的輸出（點擊放大）。投影片 121 為原圖。</div></div>
-  <p>Burton 在 Wordscores 接近 0，在 <abbr class="tt" tabindex="0" data-term="Wordfish" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr> 卻很低：排名 7 vs. 1。Wordscores 用兩篇參照演講；Wordfish 擬合全部演講的字詞計數規律。兩軸單位不同。把接近 0 當中立之前，先讀她的論點（投影片 121）。</p>
+  <p>Burton 在 Wordscores 接近 0，在 <abbr class="tt" tabindex="0" data-term="Wordfish" data-tip="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr> 卻很低：排名 7 vs. 1。Wordscores 用兩篇參照演講；Wordfish 擬合全部演講的字詞計數規律。兩軸單位不同。把接近 0 當中立之前，先讀她的論點（投影片 121）。</p>
 
   <h2 id="c13-rank">兩種尺度（互動） <span class="slideref">投影片 119、121</span></h2>
   <div class="lab" id="labRank">
@@ -1993,7 +2002,7 @@ blew it. The budget is straight out of the Leona Helmsley school
 of thought in which burden sharing, like taxation, is only for
 the little people.</pre></div>
   <p>「共識預算」是 Burton 說部長<strong>沒能做到</strong>的事；她在批評負擔分攤。<i>consensus</i> 這類字出現在批評之中，所以接近 0 的分數不一定代表溫和的支持（投影片 125）。完整演講可以在第 10 章的演講瀏覽器選「Burton」閱讀。</p>
-  <div class="callout tip"><div class="ct">補充（非講義內容）：為什麼兩個模型對 Burton 差這麼多？一個可檢查的線索</div><p>本機資料中，Wordfish <abbr class="tt" tabindex="0" data-term="β" title="Wordfish 的字詞權重：θ 每增加 1，該字 log 期望計數的變化；正值不代表正面情緒。">β</abbr> 最小（最負）的字裡，<i>sharing</i>、<i>medicine</i>、<i>gang</i>（各 5 次）、<i>bailout</i>（4 次）、<i>consensus</i>（3 次）<strong>只出現在 Burton 的演講</strong>（可在第 5 章 <abbr class="tt" tabindex="0" data-term="word plot" title="以 β（x 軸）與 ψ（y 軸）畫出每個字的 Wordfish 圖；常見字在上方中央，有區分力的字在下方兩側。">word plot</abbr> 點選查看）。這些字不在 Lenihan 或 Bruton 的參照中，所以在 Wordscores（<code>smooth = 0</code>）裡<strong>沒有分數</strong>；Wordfish 則會用它們來估計 <abbr class="tt" tabindex="0" data-term="θ" title="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。">θ</abbr>。這是一個值得檢查的機制線索，不是已驗證的解釋——下一步仍是讀原文與獨立判斷。</p></div>
+  <div class="callout tip"><div class="ct">補充（非講義內容）：為什麼兩個模型對 Burton 差這麼多？一個可檢查的線索</div><p>本機資料中，Wordfish <abbr class="tt" tabindex="0" data-term="β" data-tip="Wordfish 的字詞權重：θ 每增加 1，該字 log 期望計數的變化；正值不代表正面情緒。" title="Wordfish 的字詞權重：θ 每增加 1，該字 log 期望計數的變化；正值不代表正面情緒。">β</abbr> 最小（最負）的字裡，<i>sharing</i>、<i>medicine</i>、<i>gang</i>（各 5 次）、<i>bailout</i>（4 次）、<i>consensus</i>（3 次）<strong>只出現在 Burton 的演講</strong>（可在第 5 章 <abbr class="tt" tabindex="0" data-term="word plot" data-tip="以 β（x 軸）與 ψ（y 軸）畫出每個字的 Wordfish 圖；常見字在上方中央，有區分力的字在下方兩側。" title="以 β（x 軸）與 ψ（y 軸）畫出每個字的 Wordfish 圖；常見字在上方中央，有區分力的字在下方兩側。">word plot</abbr> 點選查看）。這些字不在 Lenihan 或 Bruton 的參照中，所以在 Wordscores（<code>smooth = 0</code>）裡<strong>沒有分數</strong>；Wordfish 則會用它們來估計 <abbr class="tt" tabindex="0" data-term="θ" data-tip="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。" title="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。">θ</abbr>。這是一個值得檢查的機制線索，不是已驗證的解釋——下一步仍是讀原文與獨立判斷。</p></div>
 
   <h2 id="c13-ans">細讀作答區</h2>
   <div class="lab" id="labAns">
@@ -2039,7 +2048,7 @@ print(data.frame(speaker = meta$speaker[!is.na(ref_alt)],
  speaker reference
   Bruton        -1
    Cowen         1</pre></div>
-  <p>用 Cowen +1 取代 Lenihan +1；Bruton −1 不變。不同的參照演講提供不同的字詞比例，所以即使端點相同，<abbr class="tt" tabindex="0" data-term="word scores" title="Wordscores 從參照學到的每個字的分數 S_w；反映參照中的相對用法，不是情緒。">字分數</abbr>與評分字彙也會改變（投影片 127）。</p>
+  <p>用 Cowen +1 取代 Lenihan +1；Bruton −1 不變。不同的參照演講提供不同的字詞比例，所以即使端點相同，<abbr class="tt" tabindex="0" data-term="word scores" data-tip="Wordscores 從參照學到的每個字的分數 S_w；反映參照中的相對用法，不是情緒。" title="Wordscores 從參照學到的每個字的分數 S_w；反映參照中的相對用法，不是情緒。">字分數</abbr>與評分字彙也會改變（投影片 127）。</p>
   <div class="codeblock"><span class="lang">R · S08b（W7/classroom/W7_scaling.R）</span><button class="copyb jsonly">複製</button><pre># S08b: Compare ranks within the same eleven new texts
 common_new &lt;- is.na(ref_scores) &amp; is.na(ref_alt)
 sensitivity &lt;- meta[common_new, c("doc_id", "speaker")]
@@ -2086,7 +2095,7 @@ print(sensitivity[c("speaker", "before", "after", "change")],
   </div>
 
   <h2 id="c13-run">R 執行清單（19 個檢查點）</h2>
-  <p>README 說明 19 個檢查點 ID 與課堂腳本 <code>W7_scaling.R</code> 一致。跑完一步就勾一步：</p>
+  <p>README 說明 19 個檢查點 <abbr class="tt" tabindex="0" data-term="ID" data-full="identifier" data-tip="識別碼：唯一標示一份文件或一筆資料的編號。" title="identifier — 識別碼：唯一標示一份文件或一筆資料的編號。">ID</abbr> 與課堂腳本 <code>W7_scaling.R</code> 一致。跑完一步就勾一步：</p>
   <div id="runChecklist" class="jsonly"></div>
   <p class="hint jsonly" id="runCount"></p>
 
@@ -2112,7 +2121,7 @@ print(sensitivity[c("speaker", "before", "after", "change")],
 <section class="chapter" id="ch14" data-slides="131,132,133">
   <div class="crumb">14 · 文獻與詞彙</div>
   <h1 class="ch">文獻導讀、常見陷阱與詞彙表</h1>
-  <p class="lead">本週投影片引用的研究整理成卡片。<strong>repo 中沒有 W7 任何論文全文</strong>（<code>W7/</code> 沒有 papers 資料夾，student-source 壓縮檔也只有投影片與 lab），因此以下卡片<strong>只依投影片內容</strong>，頁碼是投影片標示的原文頁碼；要讀全文請用圖書館或 VPN 下載（Hjorth et al. 2015 投影片標示為 CC BY-NC 3.0 開放取用）。</p>
+  <p class="lead">本週投影片引用的研究整理成卡片。<strong>repo 中沒有 W7 任何論文全文</strong>（<code>W7/</code> 沒有 papers 資料夾，student-source 壓縮檔也只有投影片與 lab），因此以下卡片<strong>只依投影片內容</strong>，頁碼是投影片標示的原文頁碼；要讀全文請用圖書館或 <abbr class="tt" tabindex="0" data-term="VPN" data-full="virtual private network" data-tip="虛擬私人網路；用台大 VPN 才能從校外下載付費期刊全文。" title="virtual private network — 虛擬私人網路；用台大 VPN 才能從校外下載付費期刊全文。">VPN</abbr> 下載（Hjorth et al. 2015 投影片標示為 <abbr class="tt" tabindex="0" data-term="CC" data-full="Creative Commons" data-tip="創用 CC 授權；BY＝需標示作者、NC＝非商業使用、ND＝禁止改作。" title="Creative Commons — 創用 CC 授權；BY＝需標示作者、NC＝非商業使用、ND＝禁止改作。">CC</abbr> BY-NC 3.0 開放取用）。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c14-read">文獻卡片</a><a href="#c14-match">配對練習</a><a href="#c14-flip">翻牌卡</a><a href="#c14-pit">常見陷阱</a><a href="#c14-gloss">詞彙表</a>
   </div>
@@ -2121,34 +2130,34 @@ print(sensitivity[c("speaker", "before", "after", "change")],
   <div class="reading" id="r-lb02">
     <h2>Laver &amp; Benoit (2002). Locating TDs in Policy Spaces: Wordscoring Dáil Speeches. <em>Irish Political Studies</em> 17(1): 59–73. <span class="slideref">投影片 4–7、131</span></h2>
     <div class="rgrid">
-      <div><b>文本</b>1991 年 10 月 <abbr class="tt" tabindex="0" data-term="Fianna Fáil" title="愛爾蘭政黨；2009 年 12 月與 Green Party 組成執政聯盟，財政部長 Lenihan 屬此黨。">Fianna Fáil</abbr>–<abbr class="tt" tabindex="0" data-term="PD" title="Progressive Democrats，愛爾蘭政黨；1991 年與 Fianna Fáil 組成政府。">PD</abbr> 政府<abbr class="tt" tabindex="0" data-term="confidence debate" title="國會針對是否信任政府進行的辯論與表決；Laver &amp; Benoit (2002) 分析 1991 年愛爾蘭的一場。">信任案</abbr>辯論的 58 篇個別議員英文演講。</div>
+      <div><b>文本</b>1991 年 10 月 <abbr class="tt" tabindex="0" data-term="Fianna Fáil" data-full="Fianna Fáil (FF)" data-tip="愛爾蘭政黨；2009 年 12 月與 Green Party 組成執政聯盟，財政部長 Lenihan 屬此黨。" title="Fianna Fáil (FF) — 愛爾蘭政黨；2009 年 12 月與 Green Party 組成執政聯盟，財政部長 Lenihan 屬此黨。">Fianna Fáil</abbr>–<abbr class="tt" tabindex="0" data-term="PD" data-full="Progressive Democrats" data-tip="愛爾蘭政黨；1991 年與 Fianna Fáil 組成政府。" title="Progressive Democrats — 愛爾蘭政黨；1991 年與 Fianna Fáil 組成政府。">PD</abbr> 政府<abbr class="tt" tabindex="0" data-term="confidence debate" data-tip="國會針對是否信任政府進行的辯論與表決；Laver &amp; Benoit (2002) 分析 1991 年愛爾蘭的一場。" title="國會針對是否信任政府進行的辯論與表決；Laver &amp; Benoit (2002) 分析 1991 年愛爾蘭的一場。">信任案</abbr>辯論的 58 篇個別議員英文演講。</div>
       <div><b>目標</b>每位講者支持或反對政府的程度。</div>
-      <div><b>設計</b>Haughey +1；Bruton 與 de Rossa −1（pp. 61–66）；<abbr class="tt" tabindex="0" data-term="word scores" title="Wordscores 從參照學到的每個字的分數 S_w；反映參照中的相對用法，不是情緒。">字分數</abbr> → 其他講者位置。</div>
+      <div><b>設計</b>Haughey +1；Bruton 與 de Rossa −1（pp. 61–66）；<abbr class="tt" tabindex="0" data-term="word scores" data-tip="Wordscores 從參照學到的每個字的分數 S_w；反映參照中的相對用法，不是情緒。" title="Wordscores 從參照學到的每個字的分數 S_w；反映參照中的相對用法，不是情緒。">字分數</abbr> → 其他講者位置。</div>
       <div><b>帶走</b>詮釋限定在「這場辯論中對這個政府的支持」。</div>
     </div>
   </div>
   <div class="reading" id="r-lbg03">
     <h2>Laver, Benoit &amp; Garry (2003). Extracting Policy Positions from Political Texts Using Words as Data. <em>APSR</em> 97(2): 311–331. <span class="slideref">投影片 13、15–19、131</span></h2>
     <div class="rgrid">
-      <div><b>文本</b>英國 1992 <abbr class="tt" tabindex="0" data-term="manifestos" title="政黨在選舉前發布的政策綱領文件，是政黨位置縮放常用的文本。">宣言</abbr>＋<abbr class="tt" tabindex="0" data-term="expert scores" title="專家對政黨政策位置的評估；LBG (2003) 用 1992 年專家分數當參照。">專家分數</abbr>為參照；1997 宣言為<abbr class="tt" tabindex="0" data-term="virgin texts" title="沒有指定位置、由 Wordscores 預測位置的文本；本週有 12 篇。">新文本</abbr>。</div>
-      <div><b>結果</b>Figure 1（p. 314）：1992 Lab 5.35／LD 8.21／Con 17.21；1997 Lab 9.17／LD 5.00／Con 17.18。</div>
-      <div><b>注意</b>數值經轉換，括號為<abbr class="tt" tabindex="0" data-term="standard error" title="模型假設下估計值的不確定性；標準誤小不代表尺度有效。">標準誤</abbr>；比較順序、謹慎看距離。</div>
-      <div><b>帶走</b>參照 → 字 → 新文本；pp. 314–315 討論適用範圍；pp. 326–328 含 1991 <abbr class="tt" tabindex="0" data-term="Dáil" title="愛爾蘭國會的下議院；議員稱為 TD。">Dáil</abbr> 辯論。</div>
+      <div><b>文本</b>英國 1992 <abbr class="tt" tabindex="0" data-term="manifestos" data-tip="政黨在選舉前發布的政策綱領文件，是政黨位置縮放常用的文本。" title="政黨在選舉前發布的政策綱領文件，是政黨位置縮放常用的文本。">宣言</abbr>＋<abbr class="tt" tabindex="0" data-term="expert scores" data-tip="專家對政黨政策位置的評估；LBG (2003) 用 1992 年專家分數當參照。" title="專家對政黨政策位置的評估；LBG (2003) 用 1992 年專家分數當參照。">專家分數</abbr>為參照；1997 宣言為<abbr class="tt" tabindex="0" data-term="virgin texts" data-tip="沒有指定位置、由 Wordscores 預測位置的文本；本週有 12 篇。" title="沒有指定位置、由 Wordscores 預測位置的文本；本週有 12 篇。">新文本</abbr>。</div>
+      <div><b>結果</b>Figure 1（p. 314）：1992 Lab 5.35／<abbr class="tt" tabindex="0" data-term="LD" data-full="Liberal Democrats" data-tip="英國自由民主黨。" title="Liberal Democrats — 英國自由民主黨。">LD</abbr> 8.21／Con 17.21；1997 Lab 9.17／LD 5.00／Con 17.18。</div>
+      <div><b>注意</b>數值經轉換，括號為<abbr class="tt" tabindex="0" data-term="standard error" data-tip="模型假設下估計值的不確定性；標準誤小不代表尺度有效。" title="模型假設下估計值的不確定性；標準誤小不代表尺度有效。">標準誤</abbr>；比較順序、謹慎看距離。</div>
+      <div><b>帶走</b>參照 → 字 → 新文本；pp. 314–315 討論適用範圍；pp. 326–328 含 1991 <abbr class="tt" tabindex="0" data-term="Dáil" data-tip="愛爾蘭國會的下議院；議員稱為 TD。" title="愛爾蘭國會的下議院；議員稱為 TD。">Dáil</abbr> 辯論。</div>
     </div>
   </div>
   <div class="reading" id="r-lowe08">
     <h2>Lowe (2008). Understanding Wordscores. <em>Political Analysis</em> 16(4): 356–371. <span class="slideref">投影片 14</span></h2>
     <div class="rgrid">
-      <div><b>角色</b>投影片 14 的 <abbr class="tt" tabindex="0" data-term="Wordscores" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr> 模型詮釋來源。</div>
-      <div><b>帶走</b>四個假設：<abbr class="tt" tabindex="0" data-term="reference scores" title="指定給參照文本的位置值；它定義尺度，不是模型的預測值。">參照分數</abbr>量到概念、可比較的語言、<abbr class="tt" tabindex="0" data-term="coverage" title="每篇演講處理後 token 中有字分數的比例；本週 83.6%–100%，不是準確率。">覆蓋率</abbr>、可轉移。</div>
+      <div><b>角色</b>投影片 14 的 <abbr class="tt" tabindex="0" data-term="Wordscores" data-tip="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr> 模型詮釋來源。</div>
+      <div><b>帶走</b>四個假設：<abbr class="tt" tabindex="0" data-term="reference scores" data-tip="指定給參照文本的位置值；它定義尺度，不是模型的預測值。" title="指定給參照文本的位置值；它定義尺度，不是模型的預測值。">參照分數</abbr>量到概念、可比較的語言、<abbr class="tt" tabindex="0" data-term="coverage" data-tip="每篇演講處理後 token 中有字分數的比例；本週 83.6%–100%，不是準確率。" title="每篇演講處理後 token 中有字分數的比例；本週 83.6%–100%，不是準確率。">覆蓋率</abbr>、可轉移。</div>
     </div>
   </div>
   <div class="reading" id="r-sp08">
     <h2>Slapin &amp; Proksch (2008). A Scaling Model for Estimating Time-Series Party Positions from Texts. <em>AJPS</em> 52(3): 705–722. <span class="slideref">投影片 20–33、131</span></h2>
     <div class="rgrid">
       <div><b>文本</b>德國政黨宣言 1990–2005。</div>
-      <div><b>模型</b>y ∼ <abbr class="tt" tabindex="0" data-term="Poisson" title="描述計數資料的機率分配；Wordfish 假設字詞計數服從條件獨立的 Poisson 分配。">Poisson</abbr>(μ)，log μ = <abbr class="tt" tabindex="0" data-term="α" title="Wordfish 的文件固定效果（文件基準），部分反映文件長度。">α</abbr> + <abbr class="tt" tabindex="0" data-term="ψ" title="Wordfish 的字詞固定效果（基準頻率）；不是原始頻率。">ψ</abbr> + <abbr class="tt" tabindex="0" data-term="β" title="Wordfish 的字詞權重：θ 每增加 1，該字 log 期望計數的變化；正值不代表正面情緒。">β</abbr><abbr class="tt" tabindex="0" data-term="θ" title="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。">θ</abbr>（p. 709）；無參照分數、跨選舉共同擬合。</div>
-      <div><b>證據</b>Figure 1（p. 714）政黨位置；Figure 2（p. 715）<abbr class="tt" tabindex="0" data-term="word plot" title="以 β（x 軸）與 ψ（y 軸）畫出每個字的 Wordfish 圖；常見字在上方中央，有區分力的字在下方兩側。">word plot</abbr>。</div>
+      <div><b>模型</b>y ∼ <abbr class="tt" tabindex="0" data-term="Poisson" data-tip="描述計數資料的機率分配；Wordfish 假設字詞計數服從條件獨立的 Poisson 分配。" title="描述計數資料的機率分配；Wordfish 假設字詞計數服從條件獨立的 Poisson 分配。">Poisson</abbr>(μ)，log μ = <abbr class="tt" tabindex="0" data-term="α" data-tip="Wordfish 的文件固定效果（文件基準），部分反映文件長度。" title="Wordfish 的文件固定效果（文件基準），部分反映文件長度。">α</abbr> + <abbr class="tt" tabindex="0" data-term="ψ" data-tip="Wordfish 的字詞固定效果（基準頻率）；不是原始頻率。" title="Wordfish 的字詞固定效果（基準頻率）；不是原始頻率。">ψ</abbr> + <abbr class="tt" tabindex="0" data-term="β" data-tip="Wordfish 的字詞權重：θ 每增加 1，該字 log 期望計數的變化；正值不代表正面情緒。" title="Wordfish 的字詞權重：θ 每增加 1，該字 log 期望計數的變化；正值不代表正面情緒。">β</abbr><abbr class="tt" tabindex="0" data-term="θ" data-tip="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。" title="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。">θ</abbr>（p. 709）；無參照分數、跨選舉共同擬合。</div>
+      <div><b>證據</b>Figure 1（p. 714）政黨位置；Figure 2（p. 715）<abbr class="tt" tabindex="0" data-term="word plot" data-tip="以 β（x 軸）與 ψ（y 軸）畫出每個字的 Wordfish 圖；常見字在上方中央，有區分力的字在下方兩側。" title="以 β（x 軸）與 ψ（y 軸）畫出每個字的 Wordfish 圖；常見字在上方中央，有區分力的字在下方兩側。">word plot</abbr>。</div>
       <div><b>帶走</b>共同時間尺度需要可比較的用字；panel 間政策範圍不同。</div>
     </div>
   </div>
@@ -2157,7 +2166,7 @@ print(sensitivity[c("speaker", "before", "after", "change")],
     <div class="rgrid">
       <div><b>文本</b>14 篇 2010 年愛爾蘭預算演講（2009 年 12 月），本週 R 資料。</div>
       <div><b>基準</b>人對預算支持度的判斷。</div>
-      <div><b>結果</b>多數位置大致一致；<abbr class="tt" tabindex="0" data-term="Sinn Féin" title="愛爾蘭在野政黨；Lowe &amp; Benoit 指出其強烈反對在 Wordfish 中看起來太溫和。">Sinn Féin</abbr> 的強烈反對在 <abbr class="tt" tabindex="0" data-term="Wordfish" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr> 看起來太溫和（手稿 Figure 3, p. 32）。</div>
+      <div><b>結果</b>多數位置大致一致；<abbr class="tt" tabindex="0" data-term="Sinn Féin" data-full="Sinn Féin (SF)" data-tip="愛爾蘭在野政黨；Lowe &amp; Benoit 指出其強烈反對在 Wordfish 中看起來太溫和。" title="Sinn Féin (SF) — 愛爾蘭在野政黨；Lowe &amp; Benoit 指出其強烈反對在 Wordfish 中看起來太溫和。">Sinn Féin</abbr> 的強烈反對在 <abbr class="tt" tabindex="0" data-term="Wordfish" data-tip="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr> 看起來太溫和（手稿 Figure 3, p. 32）。</div>
       <div><b>帶走</b>第二個政治區分讓單一維度變複雜；要有獨立的人工判斷。</div>
     </div>
   </div>
@@ -2165,7 +2174,7 @@ print(sensitivity[c("speaker", "before", "after", "change")],
     <h2>Lauderdale &amp; Herzog (2016). Measuring Political Positions from Legislative Speech. <em>Political Analysis</em> 24(3): 374–394. <span class="slideref">投影片 44–61、72–75、131</span></h2>
     <div class="rgrid">
       <div><b>資料</b>愛爾蘭第 29、30 屆 Dáil；美國第 104–113 屆參議院。</div>
-      <div><b>方法</b><abbr class="tt" tabindex="0" data-term="Wordshoal" title="先在每場辯論內各擬合 Wordfish，再用跨辯論重複出現的講者把位置連成共同尺度（Lauderdale &amp; Herzog 2016）。">Wordshoal</abbr>：每場辯論 Wordfish → 第二階段連結（§3.2）；缺失視為<abbr class="tt" tabindex="0" data-term="missing at random" title="Wordshoal 第二階段的假設：議員沒有發言的辯論位置被視為隨機缺失。">隨機缺失</abbr>。</div>
+      <div><b>方法</b><abbr class="tt" tabindex="0" data-term="Wordshoal" data-tip="先在每場辯論內各擬合 Wordfish，再用跨辯論重複出現的講者把位置連成共同尺度（Lauderdale &amp; Herzog 2016）。" title="先在每場辯論內各擬合 Wordfish，再用跨辯論重複出現的講者把位置連成共同尺度（Lauderdale &amp; Herzog 2016）。">Wordshoal</abbr>：每場辯論 Wordfish → 第二階段連結（§3.2）；缺失視為<abbr class="tt" tabindex="0" data-term="missing at random" data-tip="Wordshoal 第二階段的假設：議員沒有發言的辯論位置被視為隨機缺失。" title="Wordshoal 第二階段的假設：議員沒有發言的辯論位置被視為隨機缺失。">隨機缺失</abbr>。</div>
       <div><b>結果</b>30th Dáil 與執政地位相關：Wordfish r = 0.31、Wordshoal r = 0.94（Figure 2, p. 382）。</div>
       <div><b>帶走</b>主要維度跟著執政／在野走；左右需要自己的證據。</div>
     </div>
@@ -2173,15 +2182,15 @@ print(sensitivity[c("speaker", "before", "after", "change")],
   <div class="reading" id="r-w21">
     <h2>Watanabe (2021). Latent Semantic Scaling. <em>Communication Methods and Measures</em> 15(2): 81–102. <span class="slideref">投影片 62–63、76–81、132</span></h2>
     <div class="rgrid">
-      <div><b>方法</b><abbr class="tt" tabindex="0" data-term="seed words" title="研究者指定、代表概念兩端的字詞與極性（如 enemy +1、ally −1），用來定義 LSS 的方向。">種子詞</abbr> → <abbr class="tt" tabindex="0" data-term="SVD" title="奇異值分解：把句子—字詞矩陣降到 k 維，得到 LSS 使用的字詞向量。">SVD</abbr> 語意空間 → 字詞<abbr class="tt" tabindex="0" data-term="polarity" title="字詞或文件靠近種子哪一端的程度；LSS 中字詞極性 g_j 是以種子極性加權的相似度平均。">極性</abbr> g<sub>j</sub>（Eqs. 1–2）→ 文件分數（頻率加權平均）。</div>
+      <div><b>方法</b><abbr class="tt" tabindex="0" data-term="seed words" data-tip="研究者指定、代表概念兩端的字詞與極性（如 enemy +1、ally −1），用來定義 LSS 的方向。" title="研究者指定、代表概念兩端的字詞與極性（如 enemy +1、ally −1），用來定義 LSS 的方向。">種子詞</abbr> → <abbr class="tt" tabindex="0" data-term="SVD" data-full="singular value decomposition" data-tip="奇異值分解：把句子—字詞矩陣降到 k 維，得到 LSS 使用的字詞向量。" title="singular value decomposition — 奇異值分解：把句子—字詞矩陣降到 k 維，得到 LSS 使用的字詞向量。">SVD</abbr> 語意空間 → 字詞<abbr class="tt" tabindex="0" data-term="polarity" data-tip="字詞或文件靠近種子哪一端的程度；LSS 中字詞極性 g_j 是以種子極性加權的相似度平均。" title="字詞或文件靠近種子哪一端的程度；LSS 中字詞極性 g_j 是以種子極性加權的相似度平均。">極性</abbr> g<sub>j</sub>（Eqs. 1–2）→ 文件分數（頻率加權平均）。</div>
       <div><b>帶走</b>四個假設：種子、語意、加總、目標；學習單位與評分單位可以不同。</div>
     </div>
   </div>
   <div class="reading" id="r-tw21">
     <h2>Trubowitz &amp; Watanabe (2021). The Geopolitical Threat Index. <em>ISQ</em> 65(3): 852–865. <span class="slideref">投影片 64–70、132</span></h2>
     <div class="rgrid">
-      <div><b>文本</b>《紐約時報》摘要 1861–2017；<abbr class="tt" tabindex="0" data-term="Newsmap" title="依地理字詞把新聞分到國家的半監督模型；GTI 用它識別報導涉及哪個國家。">Newsmap</abbr>＋<abbr class="tt" tabindex="0" data-term="LSS" title="以種子詞定義兩端，依 SVD 語意空間中與種子的相似度替字詞與文件打分的半監督方法（Watanabe 2021）。">LSS</abbr>。</div>
-      <div><b>目標</b>報導中外國的敵意軍事行為；<abbr class="tt" tabindex="0" data-term="GTI" title="地緣政治威脅指數：《紐約時報》摘要中敵意軍事報導的比例（Trubowitz &amp; Watanabe 2021）；是比例，不是平均極性。">GTI</abbr> 是敵意軍事報導的比例。</div>
+      <div><b>文本</b>《紐約時報》摘要 1861–2017；<abbr class="tt" tabindex="0" data-term="Newsmap" data-tip="依地理字詞把新聞分到國家的半監督模型；GTI 用它識別報導涉及哪個國家。" title="依地理字詞把新聞分到國家的半監督模型；GTI 用它識別報導涉及哪個國家。">Newsmap</abbr>＋<abbr class="tt" tabindex="0" data-term="LSS" data-full="Latent Semantic Scaling" data-tip="以種子詞定義兩端，依 SVD 語意空間中與種子的相似度替字詞與文件打分的半監督方法（Watanabe 2021）。" title="Latent Semantic Scaling — 以種子詞定義兩端，依 SVD 語意空間中與種子的相似度替字詞與文件打分的半監督方法（Watanabe 2021）。">LSS</abbr>。</div>
+      <div><b>目標</b>報導中外國的敵意軍事行為；<abbr class="tt" tabindex="0" data-term="GTI" data-full="Geopolitical Threat Index" data-tip="地緣政治威脅指數：《紐約時報》摘要中敵意軍事報導的比例（Trubowitz &amp; Watanabe 2021）；是比例，不是平均極性。" title="Geopolitical Threat Index — 地緣政治威脅指數：《紐約時報》摘要中敵意軍事報導的比例（Trubowitz &amp; Watanabe 2021）；是比例，不是平均極性。">GTI</abbr> 是敵意軍事報導的比例。</div>
       <div><b>驗證</b>年代 r = 0.82；國家 r = 0.94；個別摘要約 59% 一致（Fig. 4；fn. 18）。</div>
       <div><b>帶走</b>在你的主張所針對的單位上驗證。</div>
     </div>
@@ -2190,7 +2199,7 @@ print(sensitivity[c("speaker", "before", "after", "change")],
     <h2>Hjorth, Klemmensen, Hobolt, Hansen &amp; Kurrild-Klitgaard (2015). Computers, Coders, and Voters. <em>Research &amp; Politics</em> 2(2): 1–9. <span class="slideref">投影片 82–86、132</span></h2>
     <div class="rgrid">
       <div><b>範圍</b>33 次選舉 254 份宣言：丹麥 24 次／212 份（平均 1,232 字），德國 9 次／42 份（10,306 字）。</div>
-      <div><b>基準</b>專家、選民、<abbr class="tt" tabindex="0" data-term="CMP" title="Comparative Manifesto Project；RILE 是以人工編碼宣言計算的左右指標。">CMP RILE</abbr>。</div>
+      <div><b>基準</b>專家、選民、<abbr class="tt" tabindex="0" data-term="CMP" data-full="Comparative Manifesto Project" data-tip="RILE 是以人工編碼宣言計算的左右指標。" title="Comparative Manifesto Project — RILE 是以人工編碼宣言計算的左右指標。">CMP RILE</abbr>。</div>
       <div><b>結果</b>Table 3（p. 7）：丹麥 Wordfish 0.2／0.2／0.1；其他組合 0.7–0.8。</div>
       <div><b>帶走</b>縮短德國文本約消失一半優勢；用語的解釋是推論，未單獨檢驗。</div>
     </div>
@@ -2218,14 +2227,14 @@ print(sensitivity[c("speaker", "before", "after", "change")],
 
   <h2 id="c14-pit">十個常見陷阱</h2>
   <div class="callout pit"><div class="ct">1. 把參照的指定值當成預測值</div><p>Lenihan 指定 +1，原始預測 0.339；圖上的參照點是重新打分。<span class="slideref">投影片 107、109</span></p></div>
-  <div class="callout pit"><div class="ct">2. 把<abbr class="tt" tabindex="0" data-term="raw scores" title="rescaling = &quot;none&quot; 的 Wordscores 預測值；共用字會把它往中心拉。">原始分數</abbr>接近 0 讀成「中立」</div><p>Burton −0.001，但她在批評預算。<span class="slideref">投影片 109、121、125</span></p></div>
+  <div class="callout pit"><div class="ct">2. 把<abbr class="tt" tabindex="0" data-term="raw scores" data-tip="rescaling = &quot;none&quot; 的 Wordscores 預測值；共用字會把它往中心拉。" title="rescaling = &quot;none&quot; 的 Wordscores 預測值；共用字會把它往中心拉。">原始分數</abbr>接近 0 讀成「中立」</div><p>Burton −0.001，但她在批評預算。<span class="slideref">投影片 109、121、125</span></p></div>
   <div class="callout pit"><div class="ct">3. 用情緒讀字分數或 β 的正負號</div><p><i>fair</i> −0.229、正的 β 都不是情緒。<span class="slideref">投影片 103、115</span></p></div>
   <div class="callout pit"><div class="ct">4. 把 ψ 當原始頻率</div><p>ψ 是在模型中考慮文件基準後的字詞基準。<span class="slideref">投影片 115</span></p></div>
-  <div class="callout pit"><div class="ct">5. 以為 <abbr class="tt" tabindex="0" data-term="dir" title="textmodel_wordfish() 的參數：指定哪篇文件在左、哪篇在右，只決定方向，不提供維度的意義。">dir</abbr> 讓維度有了意義</div><p>dir 只選方向。<span class="slideref">投影片 87、111</span></p></div>
+  <div class="callout pit"><div class="ct">5. 以為 <abbr class="tt" tabindex="0" data-term="dir" data-tip="textmodel_wordfish() 的參數：指定哪篇文件在左、哪篇在右，只決定方向，不提供維度的意義。" title="textmodel_wordfish() 的參數：指定哪篇文件在左、哪篇在右，只決定方向，不提供維度的意義。">dir</abbr> 讓維度有了意義</div><p>dir 只選方向。<span class="slideref">投影片 87、111</span></p></div>
   <div class="callout pit"><div class="ct">6. 小標準誤＝有效</div><p>Burton se 0.016 很窄，但不證明尺度量的是預算支持。<span class="slideref">投影片 34、113、117</span></p></div>
-  <div class="callout pit"><div class="ct">7. 模型間相關＝準確率</div><p><abbr class="tt" tabindex="0" data-term="Spearman" title="Spearman 等級相關：比較兩組排序的一致性；本週 12 篇為 0.734，不是準確率。">Spearman</abbr> 0.734 是<abbr class="tt" tabindex="0" data-term="rank agreement" title="兩個量測對同一批文本排序的一致程度；支持順序，不建立有意義的距離。">排序一致性</abbr>。<span class="slideref">投影片 119</span></p></div>
+  <div class="callout pit"><div class="ct">7. 模型間相關＝準確率</div><p><abbr class="tt" tabindex="0" data-term="Spearman" data-tip="Spearman 等級相關：比較兩組排序的一致性；本週 12 篇為 0.734，不是準確率。" title="Spearman 等級相關：比較兩組排序的一致性；本週 12 篇為 0.734，不是準確率。">Spearman</abbr> 0.734 是<abbr class="tt" tabindex="0" data-term="rank agreement" data-tip="兩個量測對同一批文本排序的一致程度；支持順序，不建立有意義的距離。" title="兩個量測對同一批文本排序的一致程度；支持順序，不建立有意義的距離。">排序一致性</abbr>。<span class="slideref">投影片 119</span></p></div>
   <div class="callout pit"><div class="ct">8. 用不同組演講比較排名</div><p>S08b 只在兩種設計下都是新文本的 11 篇裡重算排名。<span class="slideref">投影片 128–129</span></p></div>
-  <div class="callout pit"><div class="ct">9. 直接比較轉換後的距離</div><p><abbr class="tt" tabindex="0" data-term="LBG" title="Laver, Benoit &amp; Garry (2003) 的縮寫；也是 Wordscores 的 rescaling = &quot;lbg&quot; 轉換。">LBG</abbr> Figure 1 的值經過轉換；比較順序。<span class="slideref">投影片 19</span></p></div>
+  <div class="callout pit"><div class="ct">9. 直接比較轉換後的距離</div><p><abbr class="tt" tabindex="0" data-term="LBG" data-full="Laver, Benoit &amp; Garry (2003)" data-tip="Laver, Benoit &amp; Garry (2003) 的縮寫；也是 Wordscores 的 rescaling = &quot;lbg&quot; 轉換。" title="Laver, Benoit &amp; Garry (2003) — Laver, Benoit &amp; Garry (2003) 的縮寫；也是 Wordscores 的 rescaling = &quot;lbg&quot; 轉換。">LBG</abbr> Figure 1 的值經過轉換；比較順序。<span class="slideref">投影片 19</span></p></div>
   <div class="callout pit"><div class="ct">10. 在錯的層級驗證</div><p>GTI 加總層級 r = 0.82／0.94，個別摘要約 59%。<span class="slideref">投影片 68–70</span></p></div>
 
   <h2 id="c14-gloss">詞彙表</h2>
@@ -2239,7 +2248,7 @@ print(sensitivity[c("speaker", "before", "after", "change")],
 <section class="chapter" id="ch15" data-slides="130,131,132,133">
   <div class="crumb">15 · 總複習</div>
   <h1 class="ch">總複習、報告清單與參考文獻</h1>
-  <p class="lead">用 15 題總複習檢查自己，再對照投影片 130 的「報告一份文本<abbr class="tt" tabindex="0" data-term="scaling" title="把文本放到一條（或多條）連續尺度上估計位置的程度差異，而不是指定類別。">縮放</abbr>分析」清單。</p>
+  <p class="lead">用 15 題總複習檢查自己，再對照投影片 130 的「報告一份文本<abbr class="tt" tabindex="0" data-term="scaling" data-tip="把文本放到一條（或多條）連續尺度上估計位置的程度差異，而不是指定類別。" title="把文本放到一條（或多條）連續尺度上估計位置的程度差異，而不是指定類別。">縮放</abbr>分析」清單。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c15-final">總複習測驗</a><a href="#c15-report">報告清單</a><a href="#c15-prog">學習進度</a><a href="#c15-ref">參考文獻</a>
   </div>
@@ -2252,10 +2261,10 @@ print(sensitivity[c("speaker", "before", "after", "change")],
   <h2 id="c15-report">報告一份文本縮放分析 <span class="slideref">投影片 130</span></h2>
   <div class="tablewrap"><table>
     <tr><th>決策</th><th>要報告什麼</th><th>本週練習的答案</th></tr>
-    <tr><td>語料與表示</td><td>辯論、講者、前處理與計數</td><td>14 篇 2009 年 12 月預算演講；去標點／符號／數字、小寫；保留<abbr class="tt" tabindex="0" data-term="stopwords" title="the、and 等極常見的功能字；本週課堂矩陣保留了停用字。">停用字</abbr>；計數 <abbr class="tt" tabindex="0" data-term="DFM" title="文件 × 特徵（字詞）的計數矩陣；本週為 14 × 4,885。">DFM</abbr> 14 × 4,885</td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="Wordscores" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr></td><td><abbr class="tt" tabindex="0" data-term="reference texts" title="Wordscores 中由研究者指定位置的文本，用來學字分數；本週是 Lenihan +1、Bruton −1。">參照文本</abbr>、指定值、<abbr class="tt" tabindex="0" data-term="coverage" title="每篇演講處理後 token 中有字分數的比例；本週 83.6%–100%，不是準確率。">覆蓋率</abbr>、raw／rescaled 分數</td><td>Lenihan +1、Bruton −1；<code>smooth = 0</code>；2,131 個評分字、覆蓋率 83.6%–100%；raw 分數</td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="Wordfish" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr></td><td>方向、模型設定、<abbr class="tt" tabindex="0" data-term="θ" title="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。">θ</abbr> 的詮釋</td><td><code>dir</code>：Bruton &lt; Lenihan；<code>dispersion = "poisson"</code>；<code>set.seed(7197)</code>；θ 為相對位置</td></tr>
-    <tr><td>評估</td><td>排序分歧、讀過的段落、<abbr class="tt" tabindex="0" data-term="sensitivity analysis" title="替換參照、種子、文本範圍或前處理，看結果如何改變；本週 S08 換參照即是。">敏感度</abbr></td><td><abbr class="tt" tabindex="0" data-term="Spearman" title="Spearman 等級相關：比較兩組排序的一致性；本週 12 篇為 0.734，不是準確率。">Spearman</abbr> 0.734；Burton 7 vs. 1、讀第 1、5–7 句；Cowen 替換後 Ryan +3、Ó Caoláin −3</td></tr>
+    <tr><td>語料與表示</td><td>辯論、講者、前處理與計數</td><td>14 篇 2009 年 12 月預算演講；去標點／符號／數字、小寫；保留<abbr class="tt" tabindex="0" data-term="stopwords" data-tip="the、and 等極常見的功能字；本週課堂矩陣保留了停用字。" title="the、and 等極常見的功能字；本週課堂矩陣保留了停用字。">停用字</abbr>；計數 <abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件 × 特徵（字詞）的計數矩陣；本週為 14 × 4,885。" title="document-feature matrix — 文件 × 特徵（字詞）的計數矩陣；本週為 14 × 4,885。">DFM</abbr> 14 × 4,885</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="Wordscores" data-tip="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。" title="以參照文本的指定位置學出每個字的分數，再用字詞比例加權平均替新文本定位的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr></td><td><abbr class="tt" tabindex="0" data-term="reference texts" data-tip="Wordscores 中由研究者指定位置的文本，用來學字分數；本週是 Lenihan +1、Bruton −1。" title="Wordscores 中由研究者指定位置的文本，用來學字分數；本週是 Lenihan +1、Bruton −1。">參照文本</abbr>、指定值、<abbr class="tt" tabindex="0" data-term="coverage" data-tip="每篇演講處理後 token 中有字分數的比例；本週 83.6%–100%，不是準確率。" title="每篇演講處理後 token 中有字分數的比例；本週 83.6%–100%，不是準確率。">覆蓋率</abbr>、raw／rescaled 分數</td><td>Lenihan +1、Bruton −1；<code>smooth = 0</code>；2,131 個評分字、覆蓋率 83.6%–100%；raw 分數</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="Wordfish" data-tip="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。" title="不需參照分數的 Poisson 縮放模型，從字詞計數估計文件的潛在位置 θ（Slapin &amp; Proksch 2008）。">Wordfish</abbr></td><td>方向、模型設定、<abbr class="tt" tabindex="0" data-term="θ" data-tip="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。" title="Wordfish 的文件位置；相對、正規化的估計值，不是固定在 ±1。">θ</abbr> 的詮釋</td><td><code>dir</code>：Bruton &lt; Lenihan；<code>dispersion = "poisson"</code>；<code>set.seed(7197)</code>；θ 為相對位置</td></tr>
+    <tr><td>評估</td><td>排序分歧、讀過的段落、<abbr class="tt" tabindex="0" data-term="sensitivity analysis" data-tip="替換參照、種子、文本範圍或前處理，看結果如何改變；本週 S08 換參照即是。" title="替換參照、種子、文本範圍或前處理，看結果如何改變；本週 S08 換參照即是。">敏感度</abbr></td><td><abbr class="tt" tabindex="0" data-term="Spearman" data-tip="Spearman 等級相關：比較兩組排序的一致性；本週 12 篇為 0.734，不是準確率。" title="Spearman 等級相關：比較兩組排序的一致性；本週 12 篇為 0.734，不是準確率。">Spearman</abbr> 0.734；Burton 7 vs. 1、讀第 1、5–7 句；Cowen 替換後 Ryan +3、Ó Caoláin −3</td></tr>
   </table></div>
   <div class="callout note"><div class="ct">回到 Lowe &amp; Benoit <span class="slideref">投影片 130</span></div><p>什麼樣的獨立讀者判斷可以檢驗我們「預算支持」的詮釋？（可以把你在第 13 章作答區第 4 題的答案拿來用。）</p></div>
 
@@ -2267,7 +2276,7 @@ print(sensitivity[c("speaker", "before", "after", "change")],
   <h3>縮放的基礎</h3>
   <ul>
     <li>Benoit, Kenneth. 2018. <em>Scaling Text.</em> Quants 3: Quantitative Text Analysis, Trinity College Dublin, March 23.（講義；pp. 3–27, 34–50, 54–55, 59–70）</li>
-    <li>Laver, Michael, and Kenneth Benoit. 2002. “Locating <abbr class="tt" tabindex="0" data-term="TD" title="Teachta Dála，愛爾蘭 Dáil 的議員。">TDs</abbr> in Policy Spaces: Wordscoring <abbr class="tt" tabindex="0" data-term="Dáil" title="愛爾蘭國會的下議院；議員稱為 TD。">Dáil</abbr> Speeches.” <em>Irish Political Studies</em> 17(1): 59–73.</li>
+    <li>Laver, Michael, and Kenneth Benoit. 2002. “Locating <abbr class="tt" tabindex="0" data-term="TD" data-full="Teachta Dála (member of the Irish Dáil)" data-tip="Teachta Dála，愛爾蘭 Dáil 的議員。" title="Teachta Dála (member of the Irish Dáil) — Teachta Dála，愛爾蘭 Dáil 的議員。">TDs</abbr> in Policy Spaces: Wordscoring <abbr class="tt" tabindex="0" data-term="Dáil" data-tip="愛爾蘭國會的下議院；議員稱為 TD。" title="愛爾蘭國會的下議院；議員稱為 TD。">Dáil</abbr> Speeches.” <em>Irish Political Studies</em> 17(1): 59–73.</li>
     <li>Laver, Michael, Kenneth Benoit, and John Garry. 2003. “Extracting Policy Positions from Political Texts Using Words as Data.” <em>American Political Science Review</em> 97(2): 311–331.</li>
     <li>Slapin, Jonathan B., and Sven-Oliver Proksch. 2008. “A Scaling Model for Estimating Time-Series Party Positions from Texts.” <em>American Journal of Political Science</em> 52(3): 705–722.</li>
     <li>Lauderdale, Benjamin E., and Alexander Herzog. 2016. “Measuring Political Positions from Legislative Speech.” <em>Political Analysis</em> 24(3): 374–394.</li>
@@ -2276,19 +2285,19 @@ print(sensitivity[c("speaker", "before", "after", "change")],
   <ul>
     <li>Hjorth, Frederik, Robert Klemmensen, Sara Hobolt, Martin Ejnar Hansen, and Peter Kurrild-Klitgaard. 2015. “Computers, Coders, and Voters: Comparing Automated Methods for Estimating Party Positions.” <em>Research &amp; Politics</em> 2(2): 1–9.</li>
     <li>Lowe, Will, and Kenneth Benoit. 2013. “Validating Estimates of Latent Traits from Textual Data Using Human Judgment as a Benchmark.” <em>Political Analysis</em> 21(3): 298–313.</li>
-    <li>Watanabe, Kohei. 2021. “<abbr class="tt" tabindex="0" data-term="LSS" title="以種子詞定義兩端，依 SVD 語意空間中與種子的相似度替字詞與文件打分的半監督方法（Watanabe 2021）。">Latent Semantic Scaling</abbr>: A Semisupervised Text Analysis Technique for New Domains and Languages.” <em>Communication Methods and Measures</em> 15(2): 81–102.</li>
-    <li>Trubowitz, Peter, and Kohei Watanabe. 2021. “The <abbr class="tt" tabindex="0" data-term="GTI" title="地緣政治威脅指數：《紐約時報》摘要中敵意軍事報導的比例（Trubowitz &amp; Watanabe 2021）；是比例，不是平均極性。">Geopolitical Threat Index</abbr>: A Text-Based Computational Approach to Identifying Foreign Threats.” <em>International Studies Quarterly</em> 65(3): 852–865.</li>
+    <li>Watanabe, Kohei. 2021. “<abbr class="tt" tabindex="0" data-term="LSS" data-full="Latent Semantic Scaling" data-tip="以種子詞定義兩端，依 SVD 語意空間中與種子的相似度替字詞與文件打分的半監督方法（Watanabe 2021）。" title="Latent Semantic Scaling — 以種子詞定義兩端，依 SVD 語意空間中與種子的相似度替字詞與文件打分的半監督方法（Watanabe 2021）。">Latent Semantic Scaling</abbr>: A Semisupervised Text Analysis Technique for New Domains and Languages.” <em>Communication Methods and Measures</em> 15(2): 81–102.</li>
+    <li>Trubowitz, Peter, and Kohei Watanabe. 2021. “The <abbr class="tt" tabindex="0" data-term="GTI" data-full="Geopolitical Threat Index" data-tip="地緣政治威脅指數：《紐約時報》摘要中敵意軍事報導的比例（Trubowitz &amp; Watanabe 2021）；是比例，不是平均極性。" title="Geopolitical Threat Index — 地緣政治威脅指數：《紐約時報》摘要中敵意軍事報導的比例（Trubowitz &amp; Watanabe 2021）；是比例，不是平均極性。">Geopolitical Threat Index</abbr>: A Text-Based Computational Approach to Identifying Foreign Threats.” <em>International Studies Quarterly</em> 65(3): 852–865.</li>
   </ul>
   <h3>投影片中另外引用</h3>
   <ul>
     <li>Lowe, Will. 2008. “Understanding Wordscores.” <em>Political Analysis</em> 16(4): 356–371.（投影片 14）</li>
-    <li>Park, Ju Yeon. 2021. 原始的連續 <abbr class="tt" tabindex="0" data-term="grandstanding" title="議員為吸引注意而做的表演式發言；W6 的分類任務，Park 原始量測是連續分數。">grandstanding</abbr> 量測（W6 連結；投影片 8–10）。</li>
+    <li>Park, Ju Yeon. 2021. 原始的連續 <abbr class="tt" tabindex="0" data-term="grandstanding" data-tip="議員為吸引注意而做的表演式發言；W6 的分類任務，Park 原始量測是連續分數。" title="議員為吸引注意而做的表演式發言；W6 的分類任務，Park 原始量測是連續分數。">grandstanding</abbr> 量測（W6 連結；投影片 8–10）。</li>
   </ul>
   <h3>軟體</h3>
   <ul>
-    <li><abbr class="tt" tabindex="0" data-term="quanteda" title="R 的文本分析套件，負責語料、tokens 與 DFM；本機 4.5.1、投影片 4.3.1。">quanteda</abbr>、<abbr class="tt" tabindex="0" data-term="quanteda.textmodels" title="quanteda 的模型擴充套件，提供 textmodel_wordscores()、textmodel_wordfish() 與本週語料。">quanteda.textmodels</abbr>（<code>textmodel_wordscores()</code>、<code>textmodel_wordfish()</code>、<code>data_corpus_irishbudget2010</code>）、<abbr class="tt" tabindex="0" data-term="quanteda.textplots" title="quanteda 的繪圖擴充套件；本週用 textplot_scale1d() 畫估計位置。">quanteda.textplots</abbr>（<code>textplot_scale1d()</code>）；<abbr class="tt" tabindex="0" data-term="Wordshoal" title="先在每場辯論內各擬合 Wordfish，再用跨辯論重複出現的講者把位置連成共同尺度（Lauderdale &amp; Herzog 2016）。">wordshoal</abbr>；<abbr class="tt" tabindex="0" data-term="LSX" title="實作 LSS 的 R 套件，主要函式為 textmodel_lss()。">LSX</abbr>（投影片 90、133）。</li>
+    <li><abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的文本分析套件，負責語料、tokens 與 DFM；本機 4.5.1、投影片 4.3.1。" title="R 的文本分析套件，負責語料、tokens 與 DFM；本機 4.5.1、投影片 4.3.1。">quanteda</abbr>、<abbr class="tt" tabindex="0" data-term="quanteda.textmodels" data-tip="quanteda 的模型擴充套件，提供 textmodel_wordscores()、textmodel_wordfish() 與本週語料。" title="quanteda 的模型擴充套件，提供 textmodel_wordscores()、textmodel_wordfish() 與本週語料。">quanteda.textmodels</abbr>（<code>textmodel_wordscores()</code>、<code>textmodel_wordfish()</code>、<code>data_corpus_irishbudget2010</code>）、<abbr class="tt" tabindex="0" data-term="quanteda.textplots" data-tip="quanteda 的繪圖擴充套件；本週用 textplot_scale1d() 畫估計位置。" title="quanteda 的繪圖擴充套件；本週用 textplot_scale1d() 畫估計位置。">quanteda.textplots</abbr>（<code>textplot_scale1d()</code>）；<abbr class="tt" tabindex="0" data-term="Wordshoal" data-tip="先在每場辯論內各擬合 Wordfish，再用跨辯論重複出現的講者把位置連成共同尺度（Lauderdale &amp; Herzog 2016）。" title="先在每場辯論內各擬合 Wordfish，再用跨辯論重複出現的講者把位置連成共同尺度（Lauderdale &amp; Herzog 2016）。">wordshoal</abbr>；<abbr class="tt" tabindex="0" data-term="LSX" data-tip="實作 LSS 的 R 套件，主要函式為 textmodel_lss()。" title="實作 LSS 的 R 套件，主要函式為 textmodel_lss()。">LSX</abbr>（投影片 90、133）。</li>
   </ul>
-  <div class="pagemeta">本教材依據 NTLDEV 7191 W7 投影片（Yen-Chieh Liao 廖彥傑，課程日 2026-10-23；PDF 133 頁，2026-10-30 編譯版）、<code>W7/classroom/W7_scaling.R</code> 與 README、<code>W7/lab/Lab_Session_W7.R</code> 與 README、<code>Data/README.md</code> 製作；參考 Jerry 的舊版 W7 講義結構，數字全部依本機實跑與投影片重新核對。R 輸出為本機重新執行（R 4.5.3（aarch64-conda-linux-gnu）、quanteda 4.5.1、quanteda.textmodels 0.9.10、quanteda.textplots 0.96.1、ggplot2 4.0.3）。文獻卡片僅依投影片內容（repo 中無全文）。標示「補充（非講義內容）」的段落與玩具示範為額外說明。製作日期 2026-11-06。</div>
+  <div class="pagemeta">本教材依據 NTLDEV 7191 W7 投影片（Yen-Chieh Liao 廖彥傑，課程日 2026-10-23；<abbr class="tt" tabindex="0" data-term="PDF" data-full="Portable Document Format" data-tip="可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。" title="Portable Document Format — 可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。">PDF</abbr> 133 頁，2026-10-30 編譯版）、<code>W7/classroom/W7_scaling.R</code> 與 README、<code>W7/lab/Lab_Session_W7.R</code> 與 README、<code>Data/README.md</code> 製作；參考 Jerry 的舊版 W7 講義結構，數字全部依本機實跑與投影片重新核對。R 輸出為本機重新執行（R 4.5.3（aarch64-conda-linux-gnu）、quanteda 4.5.1、quanteda.textmodels 0.9.10、quanteda.textplots 0.96.1、ggplot2 4.0.3）。文獻卡片僅依投影片內容（repo 中無全文）。標示「補充（非講義內容）」的段落與玩具示範為額外說明。製作日期 2026-11-06。</div>
 </section>
 
     <div class="foot">NTLDEV 7191 Text as Data · W7 互動自學教材 · 依據 2026-10-23 課程投影片製作（2026-11-06）</div>
@@ -2297,7 +2306,7 @@ print(sensitivity[c("speaker", "before", "after", "change")],
     <div class="sp-h"><span class="sp-t">投影片對照</span><span class="sp-l" id="spLabel">p. 1 / 133</span><button class="btn" id="spClose">隱藏</button></div>
     <div class="sp-img" id="spImgBox" title="點擊放大"><img id="spImg" alt="投影片頁面"></div>
     <div class="sp-nav"><button class="btn arrow" id="spPrev" aria-label="上一頁投影片">‹</button><div class="sp-tabs" id="spTabs"></div><button class="btn arrow" id="spNext" aria-label="下一頁投影片">›</button></div>
-    <label class="sp-follow"><input type="checkbox" id="spFollow" checked> 跟著捲動自動切換頁面</label>
+    <label class="sp-follow"><input type="checkbox" id="spFollow" checked> 跟著捲動自動切換頁面</label><label class="sp-follow sp-rev"><input type="checkbox" id="spRev" checked> 換投影片時，講義跟著跳到對應段落</label><form class="sp-goto" id="spGoto" autocomplete="off"><label for="spGotoN">跳到投影片 p.</label><input type="number" id="spGotoN" min="1" inputmode="numeric" placeholder="頁碼"><button class="btn" type="submit">前往</button></form>
     <div class="sp-note" id="spNote"></div>
     <div class="sp-strip" id="spStrip"></div>
   </aside>
@@ -2575,6 +2584,7 @@ function spChapterDefault(){
     spSet(parsePages(sec.dataset.slides),"本章開頭：先顯示最相關的投影片；捲動到標有「投影片」的段落時會自動切換。");return true;}
   return false;
 }
+try{window.__spApi={page:function(){return spPage;},setPage:function(n){spSetPage(n);},show:function(id){show(id,true);},badge:function(b){spFromBadge(b);},cur:function(){return spBadge;},chapter:function(){return current;},n:function(){return SLIDES.length;}};}catch(__e){}
 function spTrack(){
   if(!$("#spFollow").checked)return;
   var sec=$("section.chapter.show");if(!sec)return;
@@ -3038,6 +3048,78 @@ else if(window.__w8fail)window.__w8fail("no chapter shown");}catch(__e){__w8e("i
 })();
 
 </script>
+<script id="series-revsync">
+(function(){try{
+  var A=window.__spApi;if(!A)return;
+  var M={"exact": "講義已跳到引用投影片 p.%s 的段落：", "chapter": "講義已跳到涵蓋投影片 p.%s 的章節開頭：", "near": "講義沒有直接引用投影片 p.%s，已跳到最接近的段落（%s）：", "none": "講義沒有引用投影片 p.%s 附近的段落。", "stay": "目前段落已涵蓋投影片 p.%s。"};
+  function $(s,r){return (r||document).querySelector(s);}
+  function $$(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));}
+  var rev=$("#spRev"),follow=$("#spFollow");
+  try{var v=localStorage.getItem("tad:revsync");if(v==="0")rev.checked=false;}catch(e){}
+  rev.addEventListener("change",function(){try{localStorage.setItem("tad:revsync",rev.checked?"1":"0");}catch(e){}});
+  function pages(t){var out=[];(String(t).match(/\d+\s*[–-]\s*\d+|\d+/g)||[]).forEach(function(m){var r=m.split(/[–-]/).map(function(x){return +x;});
+    if(r.length===2&&r[1]>=r[0]&&r[1]-r[0]<200){for(var i=r[0];i<=r[1];i++)out.push(i);}else out.push(r[0]);});
+    var N=A.n();return out.filter(function(n){return n>=1&&n<=N;});}
+  var IDX=null;
+  function index(){if(IDX)return IDX;IDX=[];var k=0;
+    $$("section.chapter").forEach(function(sec){
+      $$(".slideref",sec).forEach(function(b){if(b.closest("aside,.fb,#ttPop"))return;var pg=pages(b.textContent);if(!pg.length)return;
+        IDX.push({b:b,sec:sec,lo:Math.min.apply(null,pg),hi:Math.max.apply(null,pg),pg:pg,k:k++});});});
+    return IDX;}
+  function ctx(b){var h=b.closest("h2,h3,h4");if(h)return h.textContent.replace(b.textContent,"").trim();
+    var c=b.closest(".callout,.card,li,p,td,div");var t=c?c.textContent.replace(/\s+/g," ").trim():"";return t.length>60?t.slice(0,58)+"…":t;}
+  function secTitle(sec){var h=$("h2",sec)||$("h1",sec);if(!h)return sec.id;var c=h.cloneNode(true);$$(".slideref",c).forEach(function(x){x.parentNode.removeChild(x);});return c.textContent.replace(/\s+/g," ").trim();}
+  function block(b){return b.closest("h2,h3,h4,.callout,li,p,tr,.card,figure,div")||b;}
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+  function setNote(h){var n=$("#spNote");if(n)n.innerHTML=h;}
+  function flash(el){if(!el)return;el.classList.remove("sp-hit");void el.offsetWidth;el.classList.add("sp-hit");setTimeout(function(){el.classList.remove("sp-hit");},2400);}
+  function vis(e){return !!(e&&e.offsetParent);}
+  function goSec(sec){if(A.chapter()!==sec.id)A.show(sec.id);}
+  function scrollTo(el){var r=el.getBoundingClientRect();var y=r.top+(window.pageYOffset||document.documentElement.scrollTop)-Math.round(innerHeight*0.26);
+    window.scrollTo(0,Math.max(0,y));}
+  var lockT=null,wasFollow=true;
+  function lock(){if(lockT){clearTimeout(lockT);}else{wasFollow=follow?follow.checked:false;}if(follow)follow.checked=false;
+    lockT=setTimeout(function(){if(follow)follow.checked=wasFollow;lockT=null;},450);}
+  function jump(p){
+    if(!rev.checked)return;
+    var cur=A.cur();if(cur&&vis(cur)&&pages(cur.textContent).indexOf(p)>=0){return;}
+    var I=index(),chap=A.chapter();
+    var ex=I.filter(function(x){return x.pg.indexOf(p)>=0;});
+    /* chapter that walks through this part of the deck: density of nearby citations (+ current-chapter bonus) */
+    var sc={};I.forEach(function(x){var d=1e9;x.pg.forEach(function(q){d=Math.min(d,Math.abs(q-p));});if(d<=2)sc[x.sec.id]=(sc[x.sec.id]||0)+(d===0?2:1)/x.pg.length;});
+    $$("section.chapter").forEach(function(s){if(s.dataset.slides&&pages(s.dataset.slides).indexOf(p)>=0)sc[s.id]=(sc[s.id]||0)+1;});
+    if(sc[chap])sc[chap]+=1.5;
+    ex.sort(function(a,b){return ((sc[b.sec.id]||0)-(sc[a.sec.id]||0))||(a.pg.length-b.pg.length)||(a.k-b.k);});
+    lock();
+    for(var i=0;i<ex.length;i++){goSec(ex[i].sec);if(vis(ex[i].b)){land(ex[i].b,p,"exact");return;}}
+    var secs=$$("section.chapter").filter(function(s){return s.dataset.slides&&pages(s.dataset.slides).indexOf(p)>=0;});
+    secs.sort(function(a,b){return (a.id===chap?0:1)-(b.id===chap?0:1);});
+    if(secs.length){goSec(secs[0]);window.scrollTo(0,0);A.setPage(p);setNote(M.chapter.replace("%s",p)+"<b>"+esc(secTitle(secs[0]))+"</b>");flash($("h2",secs[0]));return;}
+    var near=I.slice().sort(function(a,b){
+      var da=a.hi<p?p-a.hi:(a.lo-p)+0.5,db=b.hi<p?p-b.hi:(b.lo-p)+0.5;return (da-db)||((a.hi-a.lo)-(b.hi-b.lo))||(a.k-b.k);});
+    for(var j=0;j<near.length&&j<40;j++){goSec(near[j].sec);if(vis(near[j].b)){land(near[j].b,p,"near");return;}}
+    setNote(M.none.replace("%s",p));
+  }
+  function land(b,p,kind){
+    setTimeout(function(){
+      scrollTo(b);
+      if(kind==="exact"){A.badge(b);}
+      A.setPage(p);
+      var lab=b.textContent.replace(/\s+/g," ").trim();
+      setNote((kind==="exact"?M.exact.replace("%s",p):M.near.replace("%s",p).replace("%s",esc(lab)))+"<b>"+esc(ctx(b)||secTitle(b.closest("section.chapter")))+"</b>");
+      flash(block(b));
+    },40);
+  }
+  document.addEventListener("click",function(e){
+    var t=e.target.closest("#spPrev,#spNext,#spTabs button,#spStrip button");if(!t)return;
+    setTimeout(function(){jump(A.page());},0);
+  });
+  var f=$("#spGoto"),inp=$("#spGotoN");
+  if(inp)inp.max=A.n();
+  if(f)f.addEventListener("submit",function(e){e.preventDefault();var n=parseInt(inp.value,10);if(!(n>=1&&n<=A.n()))return;
+    A.setPage(n);jump(n);inp.blur();});
+}catch(e){if(window.console)console.warn("revsync",e);(window.__w8errs=window.__w8errs||[]).push("revsync: "+(e&&e.message));}})();
+</script>
 <script id="series-js">
 (function(){try{
   var pop=null,cur=null;
@@ -3045,7 +3127,7 @@ else if(window.__w8fail)window.__w8fail("no chapter shown");}catch(__e){__w8e("i
   function show(el){
     var p=mk(),tip=el.getAttribute("data-tip")||"";cur=el;
     p.innerHTML="";var b=document.createElement("b");b.appendChild(document.createTextNode(el.getAttribute("data-term")||el.textContent));
-    p.appendChild(b);p.appendChild(document.createTextNode(tip));p.style.display="block";
+    p.appendChild(b);var fu=el.getAttribute("data-full");if(fu){var fi=document.createElement("i");fi.className="full";fi.appendChild(document.createTextNode(fu));p.appendChild(fi);}p.appendChild(document.createTextNode(tip));p.style.display="block";
     var r=el.getBoundingClientRect(),w=p.offsetWidth,h=p.offsetHeight,vw=document.documentElement.clientWidth,vh=window.innerHeight;
     var x=r.left+r.width/2-w/2;if(x<12)x=12;if(x+w>vw-12)x=vw-12-w;
     var y=r.bottom+8;if(y+h>vh-8&&r.top-h-8>8)y=r.top-h-8;
@@ -3054,7 +3136,7 @@ else if(window.__w8fail)window.__w8fail("no chapter shown");}catch(__e){__w8e("i
   function hide(){if(pop)pop.style.display="none";cur=null;}
   var els=document.querySelectorAll("abbr.tt");
   for(var i=0;i<els.length;i++){(function(el){
-    var t=el.getAttribute("title");if(t){el.setAttribute("data-tip",t);el.removeAttribute("title");}
+    var t=el.getAttribute("title");if(t){if(!el.getAttribute("data-tip"))el.setAttribute("data-tip",t);el.removeAttribute("title");}
     el.addEventListener("mouseenter",function(){show(el);});
     el.addEventListener("mouseleave",function(){if(document.activeElement!==el)hide();});
     el.addEventListener("focus",function(){show(el);});

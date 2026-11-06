@@ -375,6 +375,13 @@
   .kwic .kl{border-bottom:0;}
   @media (max-width:860px){ .lab .grid3[style]{grid-template-columns:1fr 1fr !important;} }
 </style>
+<style id="series-revsync-css">
+.sp-goto{display:flex;align-items:center;gap:6px;margin:4px 0 6px;font-size:.82rem;flex-wrap:wrap;}
+.sp-goto input{width:5.2em;padding:4px 6px;border-radius:8px;border:1px solid var(--border,#3a4456);background:transparent;color:inherit;font:inherit;}
+.sp-goto .btn{padding:3px 10px;}
+.sp-hit{animation:spHit 2.2s ease-out 1;border-radius:6px;}
+@keyframes spHit{0%,35%{background:rgba(255,196,0,.32);box-shadow:0 0 0 4px rgba(255,196,0,.32);}100%{background:transparent;box-shadow:0 0 0 4px transparent;}}
+</style>
 <style id="series-css">
 .topbar .homebtn,.topbar .langbtn{text-decoration:none;display:inline-flex;align-items:center;}
 .topbar .langbtn{font-weight:600;}
@@ -385,7 +392,9 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 #ttPop{position:fixed;z-index:9999;max-width:min(340px,calc(100vw - 24px));padding:10px 12px;border-radius:10px;
   background:var(--surface-2,#1d2330);color:var(--text,#e8ecf3);border:1px solid var(--border,#3a4456);box-shadow:0 8px 28px rgba(0,0,0,.35);
   font-size:.86rem;line-height:1.55;display:none;pointer-events:none;word-wrap:break-word;overflow-wrap:anywhere;}
-#ttPop b{display:block;margin-bottom:3px;color:var(--accent,#6aa9ff);}
+#ttPop b{display:block;margin-bottom:1px;color:var(--accent,#6aa9ff);}
+#ttPop i.full{display:block;font-style:normal;font-weight:600;margin-bottom:5px;opacity:.95;}
+#ttPop b+span{display:block;margin-top:3px;}
 </style>
 </head>
 <body>
@@ -442,7 +451,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 <section class="chapter" id="ch00" data-slides="1,2,3,4,5,6,7">
   <div class="crumb">00 · 本週導覽</div>
   <h1 class="ch">W4：字典與情緒分析（Dictionaries and Sentiment Analysis）</h1>
-  <p class="lead">W2 把文字切成 <abbr class="tt" tabindex="0" data-term="token" title="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。">token</abbr>、做成 <abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：列是文件、欄是特徵（字），格子是次數；quanteda 用 dfm() 建立。">DFM</abbr>；W4 往前一步：<strong>先定義要量的概念</strong>，再用一份「詞 → 類別」的對照表（dictionary）把文字變成分數，最後拿人工判斷來<strong>驗證</strong>這個分數到底量到了什麼。</p>
+  <p class="lead">W2 把文字切成 <abbr class="tt" tabindex="0" data-term="token" data-tip="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。" title="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。">token</abbr>、做成 <abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件-特徵矩陣：列是文件、欄是特徵（字），格子是次數；quanteda 用 dfm() 建立。" title="document-feature matrix — 文件-特徵矩陣：列是文件、欄是特徵（字），格子是次數；quanteda 用 dfm() 建立。">DFM</abbr>；W4 往前一步：<strong>先定義要量的概念</strong>，再用一份「詞 → 類別」的對照表（dictionary）把文字變成分數，最後拿人工判斷來<strong>驗證</strong>這個分數到底量到了什麼。</p>
 
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c0-obj">學習目標</a><a href="#c0-q">研究問題</a><a href="#c0-ass">注意力、情緒、立場</a><a href="#c0-wf">測量流程</a><a href="#c0-cic">概念 → 指標 → 主張</a><a href="#c0-unit">分析單位</a><a href="#c0-sort">練習：分類三種概念</a><a href="#c0-how">怎麼使用本教材</a>
@@ -466,9 +475,9 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <h2 id="c0-ass">注意力、情緒、立場：三個不同的問題 <span class="slideref">投影片 4</span></h2>
   <div class="tablewrap"><table>
     <tr><th>概念</th><th>問的是</th><th>投影片例句</th></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="issue attention" title="議題注意力：文本提到了什麼議題，不涉及評價。">Issue attention</abbr>（議題注意力）</td><td>提到了什麼？</td><td>This speech discusses energy bills.</td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="sentiment" title="某件事被如何評價（正面或負面）；和議題注意力、立場是不同的概念。">Sentiment</abbr>（情緒）</td><td>某件事被怎麼評價？</td><td>High energy bills are hurting families.</td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="stance" title="立場：對特定目標的支持或反對；負面情緒不等於反對。">Stance</abbr>（立場）</td><td>對某個目標採取什麼立場？</td><td>I support the government’s price cap.</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="issue attention" data-tip="議題注意力：文本提到了什麼議題，不涉及評價。" title="議題注意力：文本提到了什麼議題，不涉及評價。">Issue attention</abbr>（議題注意力）</td><td>提到了什麼？</td><td>This speech discusses energy bills.</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="sentiment" data-tip="某件事被如何評價（正面或負面）；和議題注意力、立場是不同的概念。" title="某件事被如何評價（正面或負面）；和議題注意力、立場是不同的概念。">Sentiment</abbr>（情緒）</td><td>某件事被怎麼評價？</td><td>High energy bills are hurting families.</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="stance" data-tip="立場：對特定目標的支持或反對；負面情緒不等於反對。" title="立場：對特定目標的支持或反對；負面情緒不等於反對。">Stance</abbr>（立場）</td><td>對某個目標採取什麼立場？</td><td>I support the government’s price cap.</td></tr>
   </table></div>
   <div class="callout warn"><div class="ct">投影片 4 的重點</div><p>描述問題時用的負面字，可能同時伴隨<strong>支持</strong>某項政策。「負面情緒」不等於「反對」。</p></div>
 
@@ -492,7 +501,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <h2 id="c0-cic">概念、指標、分數、主張 <span class="slideref">投影片 6</span></h2>
   <div class="tablewrap"><table>
     <tr><th>層次</th><th>具體例子（投影片 6）</th></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="construct" title="構念：研究者真正想測量的概念（如對家戶狀況的負面評價），字典比對只是它的指標。">Construct</abbr>（概念）</td><td>議員談家戶開銷有多少</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="construct" data-tip="構念：研究者真正想測量的概念（如對家戶狀況的負面評價），字典比對只是它的指標。" title="構念：研究者真正想測量的概念（如對家戶狀況的負面評價），字典比對只是它的指標。">Construct</abbr>（概念）</td><td>議員談家戶開銷有多少</td></tr>
     <tr><td>Indicator（指標）</td><td>計算 <code>rent</code>、<code>energy bills</code>（一個片語比對）等詞的比對次數</td></tr>
     <tr><td>Score（分數）</td><td>演說 A：4 次 / 100 字 = 每百字 4；演說 B：4 / 200 = 每百字 2</td></tr>
     <tr><td>Claim（主張）</td><td>每 100 字中，A 的家戶開銷比對次數是 B 的兩倍</td></tr>
@@ -516,7 +525,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <tr><td>Speech（一次發言）</td><td>一次發言有多少比例在談困難？</td></tr>
     <tr><td>Speaker-period（講者 × 時期）</td><td>某位講者的注意力如何隨時間改變？</td></tr>
   </table></div>
-  <p>本週練習資料：<strong>5,000 筆英國下議院（House of Commons）發言，1945–2025</strong>（<code>Data/hc_sample_1945_2025.rds</code>）。切分或合併文本時，要保留講者、日期與來源 ID。<span class="slideref">投影片 7</span></p>
+  <p>本週練習資料：<strong>5,000 筆英國下議院（House of Commons）發言，1945–2025</strong>（<code>Data/hc_sample_1945_2025.rds</code>）。切分或合併文本時，要保留講者、日期與來源 <abbr class="tt" tabindex="0" data-term="ID" data-full="identifier" data-tip="識別碼：唯一標示一份文件或一筆資料的編號。" title="identifier — 識別碼：唯一標示一份文件或一筆資料的編號。">ID</abbr>。<span class="slideref">投影片 7</span></p>
 
   <h2 id="c0-sort">練習：這句話在量哪一種概念？</h2>
   <p>每句選一個：議題注意力、情緒、立場。（例句改寫自投影片 3–4 與 66 的概念；判斷理由會在作答後顯示。）</p>
@@ -529,7 +538,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <h2 id="c0-how">怎麼使用本教材</h2>
   <ul>
     <li>每章右側（寬螢幕）或右下角按鈕（手機）是<strong>投影片對照</strong>；捲到標有「投影片 N」的段落會自動翻頁。</li>
-    <li>R 程式碼取自 <code>W4/classroom/W4_classroom.R</code>（C01–C16）與課後 <code>W4/lab/Lab_Session_W4.R</code>；所有輸出都是<strong>本機實際執行</strong>的結果（R 4.5.3、<abbr class="tt" tabindex="0" data-term="quanteda" title="本課使用的 R 文本分析套件，提供 corpus、tokens、dfm、dictionary、kwic 等工具。">quanteda</abbr> 4.5.1、<abbr class="tt" tabindex="0" data-term="quanteda.textstats" title="quanteda 的統計擴充套件，提供 textstat_frequency、textstat_collocations、textstat_keyness 等函式。">quanteda.textstats</abbr> 0.97.2、<abbr class="tt" tabindex="0" data-term="irr" title="計算編碼者一致性的 R 套件；本週用 kappa2() 算 Cohen’s κ。">irr</abbr> 0.85、ggplot2 4.0.3；Linux aarch64），並逐一對照投影片數字。</li>
+    <li>R 程式碼取自 <code>W4/classroom/W4_classroom.R</code>（C01–C16）與課後 <code>W4/lab/Lab_Session_W4.R</code>；所有輸出都是<strong>本機實際執行</strong>的結果（R 4.5.3、<abbr class="tt" tabindex="0" data-term="quanteda" data-tip="本課使用的 R 文本分析套件，提供 corpus、tokens、dfm、dictionary、kwic 等工具。" title="本課使用的 R 文本分析套件，提供 corpus、tokens、dfm、dictionary、kwic 等工具。">quanteda</abbr> 4.5.1、<abbr class="tt" tabindex="0" data-term="quanteda.textstats" data-tip="quanteda 的統計擴充套件，提供 textstat_frequency、textstat_collocations、textstat_keyness 等函式。" title="quanteda 的統計擴充套件，提供 textstat_frequency、textstat_collocations、textstat_keyness 等函式。">quanteda.textstats</abbr> 0.97.2、<abbr class="tt" tabindex="0" data-term="irr" data-tip="計算編碼者一致性的 R 套件；本週用 kappa2() 算 Cohen’s κ。" title="計算編碼者一致性的 R 套件；本週用 kappa2() 算 Cohen’s κ。">irr</abbr> 0.85、ggplot2 4.0.3；Linux aarch64），並逐一對照投影片數字。</li>
     <li>互動元件分三類：<b>真實資料</b>（用本週 Data/ 匯出）、<b>玩具直覺</b>（標「補充（非講義內容）」）、<b>練習</b>（作答區、翻牌卡、主張判斷、計畫填寫器）。</li>
     <li>進度、作答只存在這台瀏覽器；側欄可看完成度。</li>
   </ul>
@@ -545,7 +554,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 <section class="chapter" id="ch01" data-slides="8,9,10,11,12,13">
   <div class="crumb">01 · 先建立直覺</div>
   <h1 class="ch">Bag of words、DFM 與字典</h1>
-  <p class="lead">字典方法建立在 W2 的 <abbr class="tt" tabindex="0" data-term="bag of words" title="詞袋：只保留每個字的次數、丟掉字序的文本表示法；因此 not good 與 good not 無法區分。">bag-of-words</abbr> 之上：文件被拆成 <abbr class="tt" tabindex="0" data-term="token" title="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。">token</abbr>、數成一張文件 × 特徵的表（<abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：列是文件、欄是特徵（字），格子是次數；quanteda 用 dfm() 建立。">DFM</abbr>）。這一章先跑 C01 載入資料，再用兩句話的小例子看清楚 DFM、文件長度與字典比對。</p>
+  <p class="lead">字典方法建立在 W2 的 <abbr class="tt" tabindex="0" data-term="bag of words" data-tip="詞袋：只保留每個字的次數、丟掉字序的文本表示法；因此 not good 與 good not 無法區分。" title="詞袋：只保留每個字的次數、丟掉字序的文本表示法；因此 not good 與 good not 無法區分。">bag-of-words</abbr> 之上：文件被拆成 <abbr class="tt" tabindex="0" data-term="token" data-tip="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。" title="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。">token</abbr>、數成一張文件 × 特徵的表（<abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件-特徵矩陣：列是文件、欄是特徵（字），格子是次數；quanteda 用 dfm() 建立。" title="document-feature matrix — 文件-特徵矩陣：列是文件、欄是特徵（字），格子是次數；quanteda 用 dfm() 建立。">DFM</abbr>）。這一章先跑 C01 載入資料，再用兩句話的小例子看清楚 DFM、文件長度與字典比對。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c1-c01">C01 載入</a><a href="#c1-c02">C02 計數與長度</a><a href="#c1-toy">互動：自己做 DFM</a><a href="#c1-order">字數表丟掉了什麼</a><a href="#c1-dict">什麼是字典</a><a href="#c1-apply">套用字典</a>
   </div>
@@ -584,10 +593,10 @@ See https://quanteda.io for tutorials and examples.
 &gt; source("workflow.R")</pre></div>
   <div class="callout note"><div class="ct">workflow.R 幫你做了什麼（讀原始碼整理）</div>
     <ul>
-      <li>讀 <code>hc_sample_1945_2025.rds</code>（檢查 5,000 列、沒有缺文字），給每篇 <code>speech_0001</code>… 的 ID。</li>
+      <li>讀 <code>hc_sample_1945_2025.rds</code>（檢查 5,000 列、沒有缺文字），給每篇 <code>speech_0001</code>… 的 <abbr class="tt" tabindex="0" data-term="ID" data-full="identifier" data-tip="識別碼：唯一標示一份文件或一筆資料的編號。" title="identifier — 識別碼：唯一標示一份文件或一筆資料的編號。">ID</abbr>。</li>
       <li><code>toks</code>：去標點、轉小寫；<code>lengths_original</code> = 每篇 token 數，<strong>之後所有「每百字」「每千字」的分母都用它</strong>。</li>
       <li><code>policy_tokens</code>：<strong>保留標點</strong>的另一條 token 流，專門拿來比對片語，避免片語跨過句號。</li>
-      <li>用固定種子 <code>set.seed(719104)</code> 抽 80 篇做人工編碼範本（30 development + 50 test）；<code>discovery_tokens</code> = 扣掉 50 篇 test 之後的 4,950 篇。<strong>找詞只用 <abbr class="tt" tabindex="0" data-term="discovery" title="用來找候選詞、調整字典的文本（本週 4,950 篇）；不能拿來做最終評估。">discovery</abbr>，測試留給 test</strong>（第 02 章末、第 07 章）。</li>
+      <li>用固定種子 <code>set.seed(719104)</code> 抽 80 篇做人工編碼範本（30 development + 50 test）；<code>discovery_tokens</code> = 扣掉 50 篇 test 之後的 4,950 篇。<strong>找詞只用 <abbr class="tt" tabindex="0" data-term="discovery" data-tip="用來找候選詞、調整字典的文本（本週 4,950 篇）；不能拿來做最終評估。" title="用來找候選詞、調整字典的文本（本週 4,950 篇）；不能拿來做最終評估。">discovery</abbr>，測試留給 test</strong>（第 02 章末、第 07 章）。</li>
     </ul></div>
 
   <h2 id="c1-c02">C02：計數與文件長度 <span class="slideref">投影片 9–10</span></h2>
@@ -638,7 +647,7 @@ A B
       <label class="f">要顯示的特徵（逗號分隔；留空＝全部）<input type="text" id="dfmSel" value="prices, rise, fall"></label>
       <div class="row"><label class="chip"><input type="checkbox" id="dfmPunct" checked> remove_punct = TRUE</label><label class="chip"><input type="checkbox" id="dfmLower" checked> 轉小寫（dfm 預設）</label></div>
       <div id="dfmOut"></div>
-      <p class="hint">補充（非講義內容）：這裡的切字規則是簡化版（以空白與標點切開），對英文短句與 <abbr class="tt" tabindex="0" data-term="quanteda" title="本課使用的 R 文本分析套件，提供 corpus、tokens、dfm、dictionary、kwic 等工具。">quanteda</abbr> 結果一致，但不處理連字號、縮寫等細節。</p>
+      <p class="hint">補充（非講義內容）：這裡的切字規則是簡化版（以空白與標點切開），對英文短句與 <abbr class="tt" tabindex="0" data-term="quanteda" data-tip="本課使用的 R 文本分析套件，提供 corpus、tokens、dfm、dictionary、kwic 等工具。" title="本課使用的 R 文本分析套件，提供 corpus、tokens、dfm、dictionary、kwic 等工具。">quanteda</abbr> 結果一致，但不處理連字號、縮寫等細節。</p>
     </div>
   </div>
 
@@ -647,7 +656,7 @@ A B
     <div class="callout plain"><p>The government does not support the opposition.</p></div>
     <div class="callout plain"><p>The opposition does not support the government.</p></div>
   </div>
-  <p>同一袋字，<strong>誰對誰</strong>完全相反。這也是為什麼 W4 之後要談片語（第 03 章）、<abbr class="tt" tabindex="0" data-term="negation" title="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。">否定</abbr>（第 05 章）與「情緒 ≠ <abbr class="tt" tabindex="0" data-term="stance" title="立場：對特定目標的支持或反對；負面情緒不等於反對。">立場</abbr>」（第 08 章）。在上面的互動元件把兩句貼進 A、B、清空特徵欄，就會看到兩列完全相同。</p>
+  <p>同一袋字，<strong>誰對誰</strong>完全相反。這也是為什麼 W4 之後要談片語（第 03 章）、<abbr class="tt" tabindex="0" data-term="negation" data-tip="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。" title="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。">否定</abbr>（第 05 章）與「情緒 ≠ <abbr class="tt" tabindex="0" data-term="stance" data-tip="立場：對特定目標的支持或反對；負面情緒不等於反對。" title="立場：對特定目標的支持或反對；負面情緒不等於反對。">立場</abbr>」（第 08 章）。在上面的互動元件把兩句貼進 A、B、清空特徵欄，就會看到兩列完全相同。</p>
 
   <h2 id="c1-dict">什麼是字典？ <span class="slideref">投影片 12</span></h2>
   <p><strong>字典把「表達方式」對應到事先定義好的類別。</strong>quanteda 的寫法：</p>
@@ -695,7 +704,7 @@ docs    household_costs employment
 <section class="chapter" id="ch02" data-slides="14,15,16,17,18,19,20,21,22,23,24">
   <div class="crumb">02 · 建字典</div>
   <h1 class="ch">找候選詞：頻率、KWIC、搭配詞、keyness</h1>
-  <p class="lead">字典可以沿用、改編或自建，但「現成的」不等於「合適的」。這一章跑 C03–C06，用四種工具從 4,950 篇 <abbr class="tt" tabindex="0" data-term="discovery" title="用來找候選詞、調整字典的文本（本週 4,950 篇）；不能拿來做最終評估。">discovery</abbr> 發言裡找候選詞，並且每一步都回去讀上下文。</p>
+  <p class="lead">字典可以沿用、改編或自建，但「現成的」不等於「合適的」。這一章跑 C03–C06，用四種工具從 4,950 篇 <abbr class="tt" tabindex="0" data-term="discovery" data-tip="用來找候選詞、調整字典的文本（本週 4,950 篇）；不能拿來做最終評估。" title="用來找候選詞、調整字典的文本（本週 4,950 篇）；不能拿來做最終評估。">discovery</abbr> 發言裡找候選詞，並且每一步都回去讀上下文。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c2-choice">沿用、改編或自建</a><a href="#c2-steps">建詞表四步</a><a href="#c2-freq">C03 頻率</a><a href="#c2-kwic">C04 KWIC</a><a href="#c2-coll">C05 搭配詞</a><a href="#c2-key">C06 keyness</a><a href="#c2-sep">discovery 與 evaluation 分開</a>
   </div>
@@ -761,7 +770,7 @@ head(freq, 6)</pre></div>
   </div>
 
   <h2 id="c2-kwic">C04：KWIC——把字放回上下文 <span class="slideref">投影片 18–19</span></h2>
-  <p>KWIC = <abbr class="tt" tabindex="0" data-term="KWIC" title="keyword in context：列出每次比對到的字及其前後文，用來人工判讀比對是否切題。">keyword in context</abbr>。<code>security</code> 一定指國防嗎？</p>
+  <p>KWIC = <abbr class="tt" tabindex="0" data-term="KWIC" data-full="keyword in context" data-tip="列出每次比對到的字及其前後文，用來人工判讀比對是否切題。" title="keyword in context — 列出每次比對到的字及其前後文，用來人工判讀比對是否切題。">keyword in context</abbr>。<code>security</code> 一定指國防嗎？</p>
   <div class="codeblock"><span class="lang">R · C04（W4/classroom/W4_classroom.R）</span><button class="copyb jsonly">複製</button><pre># C04: Context in real speeches (run C01 first)
 live_contexts &lt;- kwic(discovery_tokens, "security", window = 5)
 context_table &lt;- as.data.frame(live_contexts)
@@ -777,7 +786,7 @@ head(context_table[, columns], 2)</pre></div>
       docname                         pre  keyword                    post
 1 speech_0024 as a basis of international security   , is essential to the
 2 speech_0246   raise the question in the security council . we advanced £</pre></div>
-  <p>每列是一次比對；從 pre → keyword → post 橫著讀，左右各最多 5 個 <abbr class="tt" tabindex="0" data-term="token" title="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。">token</abbr>。第 1 列是 <em>international security</em>，第 2 列是 <em>security council</em>——同一個字，兩種意思。<span class="slideref">投影片 19</span></p>
+  <p>每列是一次比對；從 pre → keyword → post 橫著讀，左右各最多 5 個 <abbr class="tt" tabindex="0" data-term="token" data-tip="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。" title="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。">token</abbr>。第 1 列是 <em>international security</em>，第 2 列是 <em>security council</em>——同一個字，兩種意思。<span class="slideref">投影片 19</span></p>
   <div class="lab" id="labKwic">
     <div class="lab-h"><span class="ic">🔎</span><span class="lt">KWIC 判讀練習</span><span class="ls">真實資料 · discovery_tokens，window = 8</span></div>
     <div class="lab-b">
@@ -790,7 +799,7 @@ head(context_table[, columns], 2)</pre></div>
   </div>
 
   <h2 id="c2-coll">C05：搭配詞——候選片語 <span class="slideref">投影片 20–21</span></h2>
-  <p><abbr class="tt" tabindex="0" data-term="collocation" title="搭配詞：相鄰出現且統計上強烈相關的字串（如 sri lanka）；只是候選詞，仍需人工判讀。">Collocation</abbr>：相鄰且統計上強烈相關的兩個字。依 <code>lambda</code> 由大到小排序。</p>
+  <p><abbr class="tt" tabindex="0" data-term="collocation" data-tip="搭配詞：相鄰出現且統計上強烈相關的字串（如 sri lanka）；只是候選詞，仍需人工判讀。" title="搭配詞：相鄰出現且統計上強烈相關的字串（如 sri lanka）；只是候選詞，仍需人工判讀。">Collocation</abbr>：相鄰且統計上強烈相關的兩個字。依 <code>lambda</code> 由大到小排序。</p>
   <div class="codeblock"><span class="lang">R · C05（W4/classroom/W4_classroom.R）</span><button class="copyb jsonly">複製</button><pre># C05: Phrases in real speeches (run C01 first)
 coll &lt;- textstat_collocations(discovery_tokens, size = 2, min_count = 20)
 row_order &lt;- order(coll$lambda, decreasing = TRUE)
@@ -868,13 +877,13 @@ head(keys_lab, 3)</pre></div>
 3 advertising 38.71565 4.902623e-10       64          12</pre></div>
   <div class="tablewrap"><table>
     <tr><th colspan="4">Target: Conservative（投影片 23）</th><th colspan="4">Target: Labour</th></tr>
-    <tr><th>Word</th><th class="n"><abbr class="tt" tabindex="0" data-term="chi2" title="卡方統計量；本週用作 keyness 指標，值越大表示該字越能區分兩群。">chi2</abbr></th><th class="n">Con.</th><th class="n">Lab.</th><th>Word</th><th class="n">chi2</th><th class="n">Con.</th><th class="n">Lab.</th></tr>
+    <tr><th>Word</th><th class="n"><abbr class="tt" tabindex="0" data-term="chi2" data-tip="卡方統計量；本週用作 keyness 指標，值越大表示該字越能區分兩群。" title="卡方統計量；本週用作 keyness 指標，值越大表示該字越能區分兩群。">chi2</abbr></th><th class="n">Con.</th><th class="n">Lab.</th><th>Word</th><th class="n">chi2</th><th class="n">Con.</th><th class="n">Lab.</th></tr>
     <tr><td>aircraft</td><td class="n">44.37</td><td class="n">116</td><td class="n">31</td><td>waste</td><td class="n">61.43</td><td class="n">31</td><td class="n">124</td></tr>
     <tr><td>cyberstalking</td><td class="n">39.62</td><td class="n">42</td><td class="n">0</td><td>tory</td><td class="n">49.50</td><td class="n">11</td><td class="n">73</td></tr>
     <tr><td>stalking</td><td class="n">33.96</td><td class="n">36</td><td class="n">0</td><td>advertising</td><td class="n">38.72</td><td class="n">12</td><td class="n">64</td></tr>
   </table></div>
   <ul>
-    <li>兩個 target 各跑一次，每個表顯示該黨前三個正 <abbr class="tt" tabindex="0" data-term="keyness" title="某字在 target 群相對 reference 群被多用的程度；不是頻率，也不是情緒。">keyness</abbr> 分數。</li>
+    <li>兩個 target 各跑一次，每個表顯示該黨前三個正 <abbr class="tt" tabindex="0" data-term="keyness" data-tip="某字在 target 群相對 reference 群被多用的程度；不是頻率，也不是情緒。" title="某字在 target 群相對 reference 群被多用的程度；不是頻率，也不是情緒。">keyness</abbr> 分數。</li>
     <li>keyness 考慮了每群的 token 總數——光看次數不能決定。</li>
     <li>這些字是這份<strong>樣本</strong>中的特徵詞，不一定最常見，也跟情緒正負無關。<span class="slideref">投影片 23</span></li>
   </ul>
@@ -889,8 +898,8 @@ head(keys_lab, 3)</pre></div>
   <div class="flow jsonly" id="flowSep">
     <div class="st"><div class="sn">A</div><div class="sd">Discovery texts</div></div><div class="ar">→</div>
     <div class="st"><div class="sn">B</div><div class="sd">候選詞 → 人工審查</div></div><div class="ar">→</div>
-    <div class="st"><div class="sn">C</div><div class="sd"><abbr class="tt" tabindex="0" data-term="freeze" title="凍結：測試前固定字典版本並記錄，之後不再修改；用測試資訊改字典就需要新的測試集。">凍結</abbr>字典</div></div><div class="ar">→</div>
-    <div class="st"><div class="sn">D</div><div class="sd"><abbr class="tt" tabindex="0" data-term="held-out" title="留出集：不參與字典開發、凍結字典後才拿來評估的文本。">Held-out</abbr> texts＋獨立人工標記</div></div><div class="ar">→</div>
+    <div class="st"><div class="sn">C</div><div class="sd"><abbr class="tt" tabindex="0" data-term="freeze" data-tip="凍結：測試前固定字典版本並記錄，之後不再修改；用測試資訊改字典就需要新的測試集。" title="凍結：測試前固定字典版本並記錄，之後不再修改；用測試資訊改字典就需要新的測試集。">凍結</abbr>字典</div></div><div class="ar">→</div>
+    <div class="st"><div class="sn">D</div><div class="sd"><abbr class="tt" tabindex="0" data-term="held-out" data-tip="留出集：不參與字典開發、凍結字典後才拿來評估的文本。" title="留出集：不參與字典開發、凍結字典後才拿來評估的文本。">Held-out</abbr> texts＋獨立人工標記</div></div><div class="ar">→</div>
     <div class="st"><div class="sn">E</div><div class="sd">錯誤分析</div></div>
   </div>
   <div class="explain jsonly" id="flowSepTxt"></div>
@@ -901,10 +910,10 @@ head(keys_lab, 3)</pre></div>
   </ul>
   <p>對應到程式：<code>workflow.R</code> 把 50 篇 test 發言從 <code>discovery_tokens</code> 拿掉，所以 C03–C06 找詞時根本看不到它們。</p>
 
-  <div class="mcq" data-q="q02a" data-ans="1"><div class="q">C03 中 hon 的 frequency = 6,514、<abbr class="tt" tabindex="0" data-term="docfreq" title="有出現某字的文件數，不是總次數；例如 hon 的 docfreq 2,826 表示 2,826 篇發言含 hon。">docfreq</abbr> = 2,826。docfreq 的意思是？</div>
+  <div class="mcq" data-q="q02a" data-ans="1"><div class="q">C03 中 hon 的 frequency = 6,514、<abbr class="tt" tabindex="0" data-term="docfreq" data-tip="有出現某字的文件數，不是總次數；例如 hon 的 docfreq 2,826 表示 2,826 篇發言含 hon。" title="有出現某字的文件數，不是總次數；例如 hon 的 docfreq 2,826 表示 2,826 篇發言含 hon。">docfreq</abbr> = 2,826。docfreq 的意思是？</div>
     <button class="opt">hon 在排名第 2,826 名</button><button class="opt">有 2,826 篇發言至少出現一次 hon</button><button class="opt">hon 平均每篇出現 2,826 次</button>
     <div class="fb">frequency counts occurrences; docfreq counts speeches with a match。<span class="slideref">投影片 16–17</span></div></div>
-  <div class="mcq" data-q="q02b" data-ans="2"><div class="q">C05 依 <abbr class="tt" tabindex="0" data-term="lambda" title="textstat_collocations 的關聯強度指標；越大表示這組字越常一起出現（超過偶然）。">lambda</abbr> 排第一的搭配詞是 sri lanka。這代表？</div>
+  <div class="mcq" data-q="q02b" data-ans="2"><div class="q">C05 依 <abbr class="tt" tabindex="0" data-term="lambda" data-tip="textstat_collocations 的關聯強度指標；越大表示這組字越常一起出現（超過偶然）。" title="textstat_collocations 的關聯強度指標；越大表示這組字越常一起出現（超過偶然）。">lambda</abbr> 排第一的搭配詞是 sri lanka。這代表？</div>
     <button class="opt">應把 sri lanka 加入家戶開銷字典</button><button class="opt">英國國會最常討論斯里蘭卡</button><button class="opt">它只是統計上強烈相連的候選片語，要讀 KWIC 才知道是否與構念相關</button>
     <div class="fb">兩次比對都來自同一篇發言；地名本身不量家戶開銷。<span class="slideref">投影片 21</span></div></div>
   <div class="mcq" data-q="q02c" data-ans="0"><div class="q">為什麼要把 50 篇 test 發言排除在 discovery 之外？</div>
@@ -928,7 +937,7 @@ head(keys_lab, 3)</pre></div>
     <tr><td>This bill reforms parliament.</td><td class="n">1</td><td class="n">0</td></tr>
     <tr><td>Families cannot afford heating.</td><td class="n">0</td><td class="n">0</td></tr>
   </table></div>
-  <p>改用片語去掉了一個 <abbr class="tt" tabindex="0" data-term="FP" title="false positive：字典判為相關、人工判為不相關（誤比對）。">false positive</abbr>（法案），但仍然漏掉一個相關段落（買不起暖氣）。<span class="slideref">投影片 25</span></p>
+  <p>改用片語去掉了一個 <abbr class="tt" tabindex="0" data-term="FP" data-full="false positive" data-tip="字典判為相關、人工判為不相關（誤比對）。" title="false positive — 字典判為相關、人工判為不相關（誤比對）。">false positive</abbr>（法案），但仍然漏掉一個相關段落（買不起暖氣）。<span class="slideref">投影片 25</span></p>
 
   <h2 id="c3-c07">C07：用 quanteda 比對片語 <span class="slideref">投影片 26</span></h2>
   <div class="codeblock"><span class="lang">R · C07（W4/classroom/W4_classroom.R）</span><button class="copyb jsonly">複製</button><pre># C07: A complete phrase-lookup example
@@ -961,7 +970,7 @@ docs    costs
   text1     1
   text2     0
   text3     0</pre></div>
-  <p>預測對了嗎？只有第一句被比對到（1, 0, 0）。投影片的練習：在字典裡加 <code>"cannot afford heating"</code>——哪種錯誤會改變？（第三句的 <abbr class="tt" tabindex="0" data-term="FN" title="false negative：人工判為相關、字典沒比對到（漏掉）；只能在沒比對到的文本裡找到。">false negative</abbr> 被修好了，但這個片語非常具體，換個說法就又漏掉。）下面的測試台可以直接試。</p>
+  <p>預測對了嗎？只有第一句被比對到（1, 0, 0）。投影片的練習：在字典裡加 <code>"cannot afford heating"</code>——哪種錯誤會改變？（第三句的 <abbr class="tt" tabindex="0" data-term="FN" data-full="false negative" data-tip="人工判為相關、字典沒比對到（漏掉）；只能在沒比對到的文本裡找到。" title="false negative — 人工判為相關、字典沒比對到（漏掉）；只能在沒比對到的文本裡找到。">false negative</abbr> 被修好了，但這個片語非常具體，換個說法就又漏掉。）下面的測試台可以直接試。</p>
 
   <h2 id="c3-c08">C08：萬用字元 vs 精確比對 <span class="slideref">投影片 27–28</span></h2>
   <div class="codeblock"><span class="lang">R · C08（W4/classroom/W4_classroom.R）</span><button class="copyb jsonly">複製</button><pre># C08: Wildcards in real speeches (run C01 first)
@@ -1010,7 +1019,7 @@ This bill reforms parliament. | 0
 Families cannot afford heating. | 1</textarea></label>
       <div class="row"><button class="btn" data-rp="energy bills">片語</button><button class="btn" data-rp="bill*">寬 bill*</button><button class="btn" data-rp="energy bills&#10;cannot afford heating">加 cannot afford heating</button></div>
       <div id="ruleOut"></div>
-      <p class="hint">補充（非講義內容）：比對邏輯模仿 <code>tokens_lookup()</code> 的 <abbr class="tt" tabindex="0" data-term="wildcard" title="萬用字元：bill* 比對所有 bill 開頭的字，也會抓到 billion 等無關字。">glob</abbr> 規則（不分大小寫、* 代表任意字尾、片語須連續出現、保留標點時片語不能跨過句號）。</p>
+      <p class="hint">補充（非講義內容）：比對邏輯模仿 <code>tokens_lookup()</code> 的 <abbr class="tt" tabindex="0" data-term="wildcard" data-tip="萬用字元：bill* 比對所有 bill 開頭的字，也會抓到 billion 等無關字。" title="萬用字元：bill* 比對所有 bill 開頭的字，也會抓到 billion 等無關字。">glob</abbr> 規則（不分大小寫、* 代表任意字尾、片語須連續出現、保留標點時片語不能跨過句號）。</p>
     </div>
   </div>
 
@@ -1019,7 +1028,7 @@ Families cannot afford heating. | 1</textarea></label>
     <li>片語能分出能源帳單與立法法案。</li>
     <li>越長的 n-gram 帶有越多在地脈絡。</li>
     <li>但越具體的表達也越罕見。</li>
-    <li><strong>先比對片語，再移除<abbr class="tt" tabindex="0" data-term="stopwords" title="常見功能詞清單；stopwords(&quot;en&quot;) 包含 not，先刪停用詞會讓否定規則失效。">停用詞</abbr></strong>——不然 <em>cannot afford</em> 之類的片語可能先被拆壞。</li>
+    <li><strong>先比對片語，再移除<abbr class="tt" tabindex="0" data-term="stopwords" data-tip="常見功能詞清單；stopwords(&quot;en&quot;) 包含 not，先刪停用詞會讓否定規則失效。" title="常見功能詞清單；stopwords(&quot;en&quot;) 包含 not，先刪停用詞會讓否定規則失效。">停用詞</abbr></strong>——不然 <em>cannot afford</em> 之類的片語可能先被拆壞。</li>
   </ul>
   <p class="hint">投影片 29 的圖（Hvitfeldt &amp; Silge 2022）：每個點是一篇 Andersen 童話在某個 n-gram 長度下的不同 n-gram 數；n 越大，最常見的 n-gram 次數越少（顏色越紫）。</p>
 
@@ -1035,7 +1044,7 @@ Families cannot afford heating. | 1</textarea></label>
 <section class="chapter" id="ch04" data-slides="30,31,32,33,34">
   <div class="crumb">04 · 計分</div>
   <h1 class="ch">分母、情緒分數與「零」</h1>
-  <p class="lead">比對完之後要變成數字。這一章談三件事：<strong>除以什麼</strong>（C09）、<strong>兩種情緒摘要</strong>（<abbr class="tt" tabindex="0" data-term="net tone" title="100 × (P − N) / L：正面減負面比對數除以總 token 數，單位是每百字。">net tone</abbr> 與 <abbr class="tt" tabindex="0" data-term="coverage" title="100 × (P + N) / L：每百字中有多少字比對到情緒字典。">coverage</abbr>）、以及<strong>零分不一定是中性</strong>（C10）。</p>
+  <p class="lead">比對完之後要變成數字。這一章談三件事：<strong>除以什麼</strong>（C09）、<strong>兩種情緒摘要</strong>（<abbr class="tt" tabindex="0" data-term="net tone" data-tip="100 × (P − N) / L：正面減負面比對數除以總 token 數，單位是每百字。" title="100 × (P − N) / L：正面減負面比對數除以總 token 數，單位是每百字。">net tone</abbr> 與 <abbr class="tt" tabindex="0" data-term="coverage" data-tip="100 × (P + N) / L：每百字中有多少字比對到情緒字典。" title="100 × (P + N) / L：每百字中有多少字比對到情緒字典。">coverage</abbr>）、以及<strong>零分不一定是中性</strong>（C10）。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c4-c09">C09 次數 vs 比率</a><a href="#c4-rank">互動：排名與門檻</a><a href="#c4-two">兩種情緒摘要</a><a href="#c4-c10">C10 零、平衡與 NA</a><a href="#c4-score">互動：計分器</a>
   </div>
@@ -1075,12 +1084,12 @@ speech_4435 speech_4435     4     69     5.797101
 speech_1551 speech_1551     4     78     5.128205
 speech_4917 speech_4917     3     59     5.084746</pre></div>
   <ul>
-    <li>Rate = 100 × broad / <abbr class="tt" tabindex="0" data-term="token" title="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。">tokens</abbr>；broad 是 <code>bill*</code> 的比對次數。</li>
+    <li>Rate = 100 × broad / <abbr class="tt" tabindex="0" data-term="token" data-tip="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。" title="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。">tokens</abbr>；broad 是 <code>bill*</code> 的比對次數。</li>
     <li>20 / 1,349 → 每百字 1.48；4 / 69 → 每百字 5.80。<strong>比對次數多，不代表密度高。</strong><span class="slideref">投影片 31</span></li>
     <li>本機輸出的六列與投影片 31 完全相同。</li>
   </ul>
   <div class="lab" id="labRank">
-    <div class="lab-h"><span class="ic">📏</span><span class="lt">次數排名 vs 比率排名</span><span class="ls">真實資料 · 4,950 篇 <abbr class="tt" tabindex="0" data-term="discovery" title="用來找候選詞、調整字典的文本（本週 4,950 篇）；不能拿來做最終評估。">discovery</abbr> 發言的 bill* 比對</span></div>
+    <div class="lab-h"><span class="ic">📏</span><span class="lt">次數排名 vs 比率排名</span><span class="ls">真實資料 · 4,950 篇 <abbr class="tt" tabindex="0" data-term="discovery" data-tip="用來找候選詞、調整字典的文本（本週 4,950 篇）；不能拿來做最終評估。" title="用來找候選詞、調整字典的文本（本週 4,950 篇）；不能拿來做最終評估。">discovery</abbr> 發言的 bill* 比對</span></div>
     <div class="lab-b">
       <label class="f">最少 token 數門檻：<b id="rkMinV">50</b><input type="range" id="rkMin" min="0" max="300" step="10" value="50"></label>
       <div class="grid2"><div><b>依次數排序（前 5）</b><div id="rkCount"></div></div><div><b>依每百字比率排序（前 5）</b><div id="rkRate"></div></div></div>
@@ -1119,9 +1128,9 @@ check_scores[, c("doc_id", "positive", "negative",
 5     empty        0        0         NA              NA      NA</pre></div>
   <div class="tablewrap"><table>
     <tr><th>doc_id</th><th>發生什麼事（投影片 34）</th></tr>
-    <tr><td>good</td><td>1 個正面比對 / 4 字 → 每百字 25；所有比對都是正面，<abbr class="tt" tabindex="0" data-term="balance" title="(P − N) / (P + N)：只看比對到的字的正負平衡，介於 −1 與 +1；P + N = 0 時為 NA。">balance</abbr> = 1。</td></tr>
+    <tr><td>good</td><td>1 個正面比對 / 4 字 → 每百字 25；所有比對都是正面，<abbr class="tt" tabindex="0" data-term="balance" data-tip="(P − N) / (P + N)：只看比對到的字的正負平衡，介於 −1 與 +1；P + N = 0 時為 NA。" title="(P − N) / (P + N)：只看比對到的字的正負平衡，介於 −1 與 +1；P + N = 0 時為 NA。">balance</abbr> = 1。</td></tr>
     <tr><td>negated</td><td>1 個正面比對 / 5 字 → 20。規則忽略了 <code>not</code>。</td></tr>
-    <tr><td>unmatched</td><td>有文字但 P = N = 0；balance 的分母是 0 → <abbr class="tt" tabindex="0" data-term="NA" title="R 的缺失值；分母為 0（如空文本）時分數未定義，應記為 NA，而不是 0。">NA</abbr>。</td></tr>
+    <tr><td>unmatched</td><td>有文字但 P = N = 0；balance 的分母是 0 → <abbr class="tt" tabindex="0" data-term="NA" data-full="Not Available (R&#x27;s missing value)" data-tip="R 的缺失值；分母為 0（如空文本）時分數未定義，應記為 NA，而不是 0。" title="Not Available (R&#x27;s missing value) — R 的缺失值；分母為 0（如空文本）時分數未定義，應記為 NA，而不是 0。">NA</abbr>。</td></tr>
     <tr><td>balanced</td><td>P = N = 1、共 7 字：net = 0，coverage = 100 × 2 / 7 = 28.57%。</td></tr>
     <tr><td>empty</td><td>L = 0 且 P + N = 0：三個分數都無定義（NA）。</td></tr>
   </table></div>
@@ -1136,7 +1145,7 @@ A good plan with a bad outcome.
 </textarea></label>
       <div class="row"><label class="chip"><input type="checkbox" id="scNeg"> 補充：加一條「前一個字是 not 就反轉」的規則</label></div>
       <div id="scOut"></div>
-      <p class="hint">未勾選時，計算方式與 <code>workflow.R</code> 的 <code>score_sentiment()</code> 相同（去標點、轉小寫、分母為全部 token；分母為 0 時給 NA）。最後一行空白對應 empty。勾選的<abbr class="tt" tabindex="0" data-term="negation" title="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。">否定</abbr>規則是補充（非講義內容），用來對照第 05 章「固定否定視窗的限制」。</p>
+      <p class="hint">未勾選時，計算方式與 <code>workflow.R</code> 的 <code>score_sentiment()</code> 相同（去標點、轉小寫、分母為全部 token；分母為 0 時給 NA）。最後一行空白對應 empty。勾選的<abbr class="tt" tabindex="0" data-term="negation" data-tip="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。" title="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。">否定</abbr>規則是補充（非講義內容），用來對照第 05 章「固定否定視窗的限制」。</p>
     </div>
   </div>
 
@@ -1152,7 +1161,7 @@ A good plan with a bad outcome.
 <section class="chapter" id="ch05" data-slides="35,36,37,38,39,40,41">
   <div class="crumb">05 · 計分</div>
   <h1 class="ch">否定詞、前處理與 Denny &amp; Spirling</h1>
-  <p class="lead"><abbr class="tt" tabindex="0" data-term="bag of words" title="詞袋：只保留每個字的次數、丟掉字序的文本表示法；因此 not good 與 good not 無法區分。">bag-of-words</abbr> 字典不懂「not good」。保留 <code>not</code> 只是第一步，還需要一條<strong>用到它</strong>的規則；而每個前處理選擇（<abbr class="tt" tabindex="0" data-term="stopwords" title="常見功能詞清單；stopwords(&quot;en&quot;) 包含 not，先刪停用詞會讓否定規則失效。">停用詞</abbr>、詞形）都可能改變結果——Denny &amp; Spirling 的宣言案例顯示，128 種前處理組合會排出 12 種不同順序。</p>
+  <p class="lead"><abbr class="tt" tabindex="0" data-term="bag of words" data-tip="詞袋：只保留每個字的次數、丟掉字序的文本表示法；因此 not good 與 good not 無法區分。" title="詞袋：只保留每個字的次數、丟掉字序的文本表示法；因此 not good 與 good not 無法區分。">bag-of-words</abbr> 字典不懂「not good」。保留 <code>not</code> 只是第一步，還需要一條<strong>用到它</strong>的規則；而每個前處理選擇（<abbr class="tt" tabindex="0" data-term="stopwords" data-tip="常見功能詞清單；stopwords(&quot;en&quot;) 包含 not，先刪停用詞會讓否定規則失效。" title="常見功能詞清單；stopwords(&quot;en&quot;) 包含 not，先刪停用詞會讓否定規則失效。">停用詞</abbr>、詞形）都可能改變結果——Denny &amp; Spirling 的宣言案例顯示，128 種前處理組合會排出 12 種不同順序。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c5-c11">C11 刻意示範失敗</a><a href="#c5-neg">互動：否定視窗</a><a href="#c5-lim">固定視窗的限制</a><a href="#c5-pre">前處理要配合字典</a><a href="#c5-stop">互動：停用詞刪掉了什麼</a><a href="#c5-ds">Denny &amp; Spirling 案例</a>
   </div>
@@ -1197,9 +1206,9 @@ $negated
 [1] "policy" "good"  </pre></div>
   <ol>
     <li><b>字典比對</b>：兩句都比對到 good（positive = 1、negative = 0）。規則<strong>沒有用</strong> not 來反轉。</li>
-    <li><b>移除停用詞之後</b>：<code>not</code> 在 <code>stopwords("en")</code> 裡，被刪掉了；兩句的 <abbr class="tt" tabindex="0" data-term="token" title="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。">token</abbr> 變得<strong>一模一樣</strong>：<code>"policy" "good"</code>。</li>
+    <li><b>移除停用詞之後</b>：<code>not</code> 在 <code>stopwords("en")</code> 裡，被刪掉了；兩句的 <abbr class="tt" tabindex="0" data-term="token" data-tip="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。" title="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。">token</abbr> 變得<strong>一模一樣</strong>：<code>"policy" "good"</code>。</li>
   </ol>
-  <div class="callout note"><div class="ct">投影片 36 的結論</div><p>保留<abbr class="tt" tabindex="0" data-term="negation" title="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。">否定</abbr>詞，<strong>然後</strong>加一條處理它的規則。</p></div>
+  <div class="callout note"><div class="ct">投影片 36 的結論</div><p>保留<abbr class="tt" tabindex="0" data-term="negation" data-tip="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。" title="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。">否定</abbr>詞，<strong>然後</strong>加一條處理它的規則。</p></div>
 
   <h2 id="c5-neg">互動：一個固定的否定視窗能做到哪裡？</h2>
   <div class="lab" id="labNeg">
@@ -1230,7 +1239,7 @@ $negated
   </ul>
   <p class="hint">投影片 38 的圖（Hvitfeldt &amp; Silge 2022）：每篇故事三個點、對應三份停用詞表；X = 總字數、Y = 被移除字詞的百分比。同一份文本，不同表移除的比例不同。</p>
   <div class="lab" id="labStop">
-    <div class="lab-h"><span class="ic">🧹</span><span class="lt"><abbr class="tt" tabindex="0" data-term="quanteda" title="本課使用的 R 文本分析套件，提供 corpus、tokens、dfm、dictionary、kwic 等工具。">quanteda</abbr> 的 stopwords("en") 會刪掉哪些字？</span><span class="ls">真實資料 · 本機匯出的停用詞表</span></div>
+    <div class="lab-h"><span class="ic">🧹</span><span class="lt"><abbr class="tt" tabindex="0" data-term="quanteda" data-tip="本課使用的 R 文本分析套件，提供 corpus、tokens、dfm、dictionary、kwic 等工具。" title="本課使用的 R 文本分析套件，提供 corpus、tokens、dfm、dictionary、kwic 等工具。">quanteda</abbr> 的 stopwords("en") 會刪掉哪些字？</span><span class="ls">真實資料 · 本機匯出的停用詞表</span></div>
     <div class="lab-b">
       <label class="f">輸入一句英文<input type="text" id="stIn" value="The policy is not good and we cannot support it."></label>
       <div id="stOut"></div>
@@ -1240,7 +1249,7 @@ $negated
 
   <h2 id="c5-ds">案例：從宣言定位政黨（Denny &amp; Spirling 2018） <span class="slideref">投影片 39–41</span></h2>
   <ul>
-    <li>問題：宣言用語能把政黨放在左右量尺上嗎？資料：8 份英國政黨宣言，1983–1997；模型：<abbr class="tt" tabindex="0" data-term="Wordfish" title="從字數估計文件在一維量尺上位置的縮放模型（W7）；Denny &amp; Spirling 用它示範前處理的影響。">Wordfish</abbr>（從字數估計位置）。<span class="slideref">投影片 39</span></li>
+    <li>問題：宣言用語能把政黨放在左右量尺上嗎？資料：8 份英國政黨宣言，1983–1997；模型：<abbr class="tt" tabindex="0" data-term="Wordfish" data-tip="從字數估計文件在一維量尺上位置的縮放模型（W7）；Denny &amp; Spirling 用它示範前處理的影響。" title="從字數估計文件在一維量尺上位置的縮放模型（W7）；Denny &amp; Spirling 用它示範前處理的影響。">Wordfish</abbr>（從字數估計位置）。<span class="slideref">投影片 39</span></li>
     <li>同樣 8 份宣言、同一個 Wordfish 模型，<strong>128 種前處理規格</strong>，排出<strong>12 種不同的文件順序</strong>；黑色格子＝與作者事前排序不一致。<span class="slideref">投影片 40</span></li>
   </ul>
   <div class="tablewrap"><table>
@@ -1263,7 +1272,7 @@ $negated
 <section class="chapter" id="ch06" data-slides="42,43,44">
   <div class="crumb">06 · 計分</div>
   <h1 class="ch">字典修訂與敏感度（C12、C15）</h1>
-  <p class="lead">這一章的研究<abbr class="tt" tabindex="0" data-term="construct" title="構念：研究者真正想測量的概念（如對家戶狀況的負面評價），字典比對只是它的指標。">構念</abbr>換成<strong>能源政策注意力</strong>（不是情緒）。<code>Dictionaries/energy_policy.csv</code> 有兩個版本：v1 寬、v2 窄。改字典會改分數——但改了之後是不是<strong>更好</strong>，只有人工判斷能回答。</p>
+  <p class="lead">這一章的研究<abbr class="tt" tabindex="0" data-term="construct" data-tip="構念：研究者真正想測量的概念（如對家戶狀況的負面評價），字典比對只是它的指標。" title="構念：研究者真正想測量的概念（如對家戶狀況的負面評價），字典比對只是它的指標。">構念</abbr>換成<strong>能源政策注意力</strong>（不是情緒）。<code>Dictionaries/energy_policy.csv</code> 有兩個版本：v1 寬、v2 窄。改字典會改分數——但改了之後是不是<strong>更好</strong>，只有人工判斷能回答。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c6-c12">C12 兩個版本</a><a href="#c6-read">互動：發言螢光筆</a><a href="#c6-c15">C15 敏感度散布圖</a><a href="#c6-party">延伸：政黨比率</a>
   </div>
@@ -1314,12 +1323,12 @@ Keyword-in-context with 3 matches.
   <ul>
     <li>v2 拿掉了最歧義的 <code>power</code>（政治權力）、<code>gas</code>（催淚瓦斯）、<code>bill*</code>（法案），把 gas 收窄成片語 <code>gas bill*</code>，並加上再生能源相關詞。</li>
     <li>結果寫在下面的輸出：<code>v1 = 899 篇、v2 = 139 篇（4,950 篇中至少一次比對）</code>。分數變了——但這是否更接近人工判斷？投影片 42 的討論題就是這個。</li>
-    <li><abbr class="tt" tabindex="0" data-term="KWIC" title="keyword in context：列出每次比對到的字及其前後文，用來人工判讀比對是否切題。">KWIC</abbr> 的前 3 列能直接看到 <code>energy</code> 也可能是「精力」的意思。</li>
+    <li><abbr class="tt" tabindex="0" data-term="KWIC" data-full="keyword in context" data-tip="列出每次比對到的字及其前後文，用來人工判讀比對是否切題。" title="keyword in context — 列出每次比對到的字及其前後文，用來人工判讀比對是否切題。">KWIC</abbr> 的前 3 列能直接看到 <code>energy</code> 也可能是「精力」的意思。</li>
   </ul>
 
   <h2 id="c6-read">互動：在真實發言上比較 v1 與 v2 的螢光筆</h2>
   <div class="lab" id="labDoc">
-    <div class="lab-h"><span class="ic">🖍</span><span class="lt">發言瀏覽器＋字典螢光筆</span><span class="ls">真實資料 · 335 篇 <abbr class="tt" tabindex="0" data-term="discovery" title="用來找候選詞、調整字典的文本（本週 4,950 篇）；不能拿來做最終評估。">discovery</abbr> 發言</span></div>
+    <div class="lab-h"><span class="ic">🖍</span><span class="lt">發言瀏覽器＋字典螢光筆</span><span class="ls">真實資料 · 335 篇 <abbr class="tt" tabindex="0" data-term="discovery" data-tip="用來找候選詞、調整字典的文本（本週 4,950 篇）；不能拿來做最終評估。" title="用來找候選詞、調整字典的文本（本週 4,950 篇）；不能拿來做最終評估。">discovery</abbr> 發言</span></div>
     <div class="lab-b">
       <div class="row"><label class="f">篩選 <select id="docFilt"><option value="all">全部 335 篇</option><option value="v1only">只有 v1 比對到</option><option value="both">v1、v2 都比對到</option><option value="none">兩版都沒比對</option></select></label>
         <label class="f" style="flex:1">發言 <select id="docSel" style="width:100%"></select></label><button class="btn" id="docRand">隨機一篇</button></div>
@@ -1328,7 +1337,7 @@ Keyword-in-context with 3 matches.
       <div class="speech" id="docText" style="max-height:420px;overflow:auto"></div>
       <div class="row"><span class="hint">你的判斷（依 Lab handout 的標記規則）：</span><div class="seg" id="docJudge"><button data-v="1">1 相關</button><button data-v="0">0 不相關</button><button data-v="u">不確定</button></div></div>
       <div class="explain" id="docTally"></div>
-      <p class="hint">樣本：本機以 <code>set.seed(719)</code> 從 discovery 發言中抽 300 篇（60–700 <abbr class="tt" tabindex="0" data-term="token" title="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。">tokens</abbr>），再加入 v2 每千字比對最高的 40 篇（≤ 900 tokens）以確保有能源相關發言，去重後 335 篇——<strong>不是</strong>隨機樣本，不能拿來估計全語料的 <abbr class="tt" tabindex="0" data-term="precision" title="TP / (TP + FP)：字典比對到的文本中真正相關的比例。">precision</abbr>。比對邏輯同第 07 章驗證台（JS 模仿 <code>tokens_lookup()</code>）；每千字比率的分母用 JS 的切字數，與 R 的 <code>tokens</code> 欄可能有小差異，下方同時列出 R 的 token 數。</p>
+      <p class="hint">樣本：本機以 <code>set.seed(719)</code> 從 discovery 發言中抽 300 篇（60–700 <abbr class="tt" tabindex="0" data-term="token" data-tip="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。" title="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。">tokens</abbr>），再加入 v2 每千字比對最高的 40 篇（≤ 900 tokens）以確保有能源相關發言，去重後 335 篇——<strong>不是</strong>隨機樣本，不能拿來估計全語料的 <abbr class="tt" tabindex="0" data-term="precision" data-tip="TP / (TP + FP)：字典比對到的文本中真正相關的比例。" title="TP / (TP + FP)：字典比對到的文本中真正相關的比例。">precision</abbr>。比對邏輯同第 07 章驗證台（<abbr class="tt" tabindex="0" data-term="JS" data-full="JavaScript" data-tip="瀏覽器執行的程式語言；本講義的互動示範用它寫成。" title="JavaScript — 瀏覽器執行的程式語言；本講義的互動示範用它寫成。">JS</abbr> 模仿 <code>tokens_lookup()</code>）；每千字比率的分母用 JS 的切字數，與 R 的 <code>tokens</code> 欄可能有小差異，下方同時列出 R 的 token 數。</p>
     </div>
   </div>
 
@@ -1372,14 +1381,14 @@ ggplot(dev, aes(x = v1_per1000, y = v2_per1000)) +
 <section class="chapter" id="ch07" data-slides="45,46,47,48,49,50,51,52,95">
   <div class="crumb">07 · 驗證</div>
   <h1 class="ch">人工基準、kappa、precision／recall</h1>
-  <p class="lead">驗證要有<strong>人工判斷</strong>當基準。這一章先看人與人之間一致嗎（C13，<abbr class="tt" tabindex="0" data-term="Cohen’s κ" title="扣除偶然一致後的兩人一致性：(p_o − p_e) / (1 − p_e)；C13 為 0.60。">kappa</abbr>），再看字典和人一致嗎（C14，<abbr class="tt" tabindex="0" data-term="precision" title="TP / (TP + FP)：字典比對到的文本中真正相關的比例。">precision</abbr>／<abbr class="tt" tabindex="0" data-term="recall" title="TP / (TP + FN)：真正相關的文本中被字典抓到的比例；需要讀沒比對到的文本才能估。">recall</abbr>／<abbr class="tt" tabindex="0" data-term="F1" title="precision 與 recall 的調和平均：2TP / (2TP + FP + FN)。">F1</abbr>），最後用 24 句教學句子實作「開發 → <abbr class="tt" tabindex="0" data-term="freeze" title="凍結：測試前固定字典版本並記錄，之後不再修改；用測試資訊改字典就需要新的測試集。">凍結</abbr> → 測試」。</p>
+  <p class="lead">驗證要有<strong>人工判斷</strong>當基準。這一章先看人與人之間一致嗎（C13，<abbr class="tt" tabindex="0" data-term="Cohen’s κ" data-tip="扣除偶然一致後的兩人一致性：(p_o − p_e) / (1 − p_e)；C13 為 0.60。" title="扣除偶然一致後的兩人一致性：(p_o − p_e) / (1 − p_e)；C13 為 0.60。">kappa</abbr>），再看字典和人一致嗎（C14，<abbr class="tt" tabindex="0" data-term="precision" data-tip="TP / (TP + FP)：字典比對到的文本中真正相關的比例。" title="TP / (TP + FP)：字典比對到的文本中真正相關的比例。">precision</abbr>／<abbr class="tt" tabindex="0" data-term="recall" data-tip="TP / (TP + FN)：真正相關的文本中被字典抓到的比例；需要讀沒比對到的文本才能估。" title="TP / (TP + FN)：真正相關的文本中被字典抓到的比例；需要讀沒比對到的文本才能估。">recall</abbr>／<abbr class="tt" tabindex="0" data-term="F1" data-full="F1 score (F-measure with β = 1)" data-tip="precision 與 recall 的調和平均：2TP / (2TP + FP + FN)。" title="F1 score (F-measure with β = 1) — precision 與 recall 的調和平均：2TP / (2TP + FP + FN)。">F1</abbr>），最後用 24 句教學句子實作「開發 → <abbr class="tt" tabindex="0" data-term="freeze" data-tip="凍結：測試前固定字典版本並記錄，之後不再修改；用測試資訊改字典就需要新的測試集。" title="凍結：測試前固定字典版本並記錄，之後不再修改；用測試資訊改字典就需要新的測試集。">凍結</abbr> → 測試」。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c7-bench">人工基準</a><a href="#c7-which">驗證哪些文本</a><a href="#c7-c13">C13 kappa</a><a href="#c7-cm">混淆矩陣</a><a href="#c7-c14">C14 precision／recall</a><a href="#c7-syn">互動：開發 → 凍結 → 測試</a><a href="#c7-cont">連續分數</a><a href="#c7-level">主張的層次</a>
   </div>
 
   <h2 id="c7-bench">人工基準 <span class="slideref">投影片 45</span></h2>
   <ul>
-    <li>寫一份 <abbr class="tt" tabindex="0" data-term="codebook" title="人工標記的規則說明，附正例、反例與模糊例，讓不同編碼者標得一致。">codebook</abbr>，附正面、負面與模糊的例子。</li>
+    <li>寫一份 <abbr class="tt" tabindex="0" data-term="codebook" data-tip="人工標記的規則說明，附正例、反例與模糊例，讓不同編碼者標得一致。" title="人工標記的規則說明，附正例、反例與模糊例，讓不同編碼者標得一致。">codebook</abbr>，附正面、負面與模糊的例子。</li>
     <li>可行時，讓編碼者<strong>不知道</strong>字典的預測。</li>
     <li>記錄分歧與裁決程序。</li>
     <li>編碼單位要對齊分數的用途。</li>
@@ -1443,8 +1452,8 @@ Loading required package: lpSolve
   <h2 id="c7-cm">議題偵測的混淆矩陣 <span class="slideref">投影片 48</span></h2>
   <div class="tablewrap"><table>
     <tr><th>20 個示範段落</th><th>人工：相關</th><th>人工：不相關</th></tr>
-    <tr><td>字典：有比對</td><td>6 <abbr class="tt" tabindex="0" data-term="TP" title="true positive：字典判為相關、人工也判為相關。">true positives</abbr></td><td>2 <abbr class="tt" tabindex="0" data-term="FP" title="false positive：字典判為相關、人工判為不相關（誤比對）。">false positives</abbr></td></tr>
-    <tr><td>字典：沒比對</td><td>4 <abbr class="tt" tabindex="0" data-term="FN" title="false negative：人工判為相關、字典沒比對到（漏掉）；只能在沒比對到的文本裡找到。">false negatives</abbr></td><td>8 <abbr class="tt" tabindex="0" data-term="TN" title="true negative：字典與人工都判為不相關。">true negatives</abbr></td></tr>
+    <tr><td>字典：有比對</td><td>6 <abbr class="tt" tabindex="0" data-term="TP" data-full="true positive" data-tip="字典判為相關、人工也判為相關。" title="true positive — 字典判為相關、人工也判為相關。">true positives</abbr></td><td>2 <abbr class="tt" tabindex="0" data-term="FP" data-full="false positive" data-tip="字典判為相關、人工判為不相關（誤比對）。" title="false positive — 字典判為相關、人工判為不相關（誤比對）。">false positives</abbr></td></tr>
+    <tr><td>字典：沒比對</td><td>4 <abbr class="tt" tabindex="0" data-term="FN" data-full="false negative" data-tip="人工判為相關、字典沒比對到（漏掉）；只能在沒比對到的文本裡找到。" title="false negative — 人工判為相關、字典沒比對到（漏掉）；只能在沒比對到的文本裡找到。">false negatives</abbr></td><td>8 <abbr class="tt" tabindex="0" data-term="TN" data-full="true negative" data-tip="字典與人工都判為不相關。" title="true negative — 字典與人工都判為不相關。">true negatives</abbr></td></tr>
   </table></div>
   <p class="hint">單位是<strong>段落</strong>，不是字典裡的字。</p>
 
@@ -1522,7 +1531,7 @@ precision    recall        F1
       <div id="synTable"></div>
       <div class="explain" id="synNote">規則：先只看 development 調整；滿意後按「凍結」，再切到 test。凍結前偷看 test 也行，但這裡會記下來。</div>
       <div class="row"><button class="btn primary" id="synFreeze">凍結目前字典</button><button class="btn" id="synReset">重設</button></div>
-      <p class="hint">比對邏輯：保留標點、不分大小寫、<abbr class="tt" tabindex="0" data-term="wildcard" title="萬用字元：bill* 比對所有 bill 開頭的字，也會抓到 billion 等無關字。">glob</abbr> 萬用字元、片語須連續（模仿 <code>policy_counts()</code>）；載入 v1／v2 時，每句的預測會與 R 實跑結果核對，表格最右欄顯示「R」的預測。</p>
+      <p class="hint">比對邏輯：保留標點、不分大小寫、<abbr class="tt" tabindex="0" data-term="wildcard" data-tip="萬用字元：bill* 比對所有 bill 開頭的字，也會抓到 billion 等無關字。" title="萬用字元：bill* 比對所有 bill 開頭的字，也會抓到 billion 等無關字。">glob</abbr> 萬用字元、片語須連續（模仿 <code>policy_counts()</code>）；載入 v1／v2 時，每句的預測會與 R 實跑結果核對，表格最右欄顯示「R」的預測。</p>
     </div>
   </div>
 
@@ -1578,22 +1587,22 @@ precision    recall        F1
   <h2 id="c8-boyle">能源研究的政策相關性（Boyle et al. 2025） <span class="slideref">投影片 53–55</span></h2>
   <ul>
     <li>問題：哪些摘要在傳達政策相關性？資料：<strong>270,537 篇摘要、100 份期刊、2010–2023</strong>；用自訂字典辨識相關陳述。表達的相關性 ≠ 政策實際採用。<span class="slideref">投影片 53</span></li>
-    <li>單位：一篇摘要（是否含政策相關陳述）。開發：從政策詞開始，讀 <strong>400 篇雙人編碼</strong>摘要找出更多詞；精修：只保留能提升開發集正類 <abbr class="tt" tabindex="0" data-term="F1" title="precision 與 recall 的調和平均：2TP / (2TP + FP + FN)。">F1</abbr> 的新增詞；測試：在另外 <strong>200 篇</strong>人工編碼、未參與調整的摘要上評估。</li>
+    <li>單位：一篇摘要（是否含政策相關陳述）。開發：從政策詞開始，讀 <strong>400 篇雙人編碼</strong>摘要找出更多詞；精修：只保留能提升開發集正類 <abbr class="tt" tabindex="0" data-term="F1" data-full="F1 score (F-measure with β = 1)" data-tip="precision 與 recall 的調和平均：2TP / (2TP + FP + FN)。" title="F1 score (F-measure with β = 1) — precision 與 recall 的調和平均：2TP / (2TP + FP + FN)。">F1</abbr> 的新增詞；測試：在另外 <strong>200 篇</strong>人工編碼、未參與調整的摘要上評估。</li>
     <li>報告的平均 F1：<strong>開發 0.90／留出 0.86</strong>。老師的研究過程註記：一開始試過 fine-tune transformers，結果不理想。<span class="slideref">投影片 54</span></li>
     <li>約 15% 摘要被分類為政策相關；只有 8% 明確提到 policy／policies。期刊宗旨明確提到政策者：26.7%；沒有提到者：3.7%。這是描述性的文本型態，不是政策採用的證據。<span class="slideref">投影片 55</span></li>
   </ul>
-  <p class="hint">對照第 02 章投影片 24：這正是「<abbr class="tt" tabindex="0" data-term="discovery" title="用來找候選詞、調整字典的文本（本週 4,950 篇）；不能拿來做最終評估。">discovery</abbr> → <abbr class="tt" tabindex="0" data-term="freeze" title="凍結：測試前固定字典版本並記錄，之後不再修改；用測試資訊改字典就需要新的測試集。">凍結</abbr> → <abbr class="tt" tabindex="0" data-term="held-out" title="留出集：不參與字典開發、凍結字典後才拿來評估的文本。">held-out</abbr>」的實際研究版本。開發集 F1 比留出集高，是預期中的現象。</p>
+  <p class="hint">對照第 02 章投影片 24：這正是「<abbr class="tt" tabindex="0" data-term="discovery" data-tip="用來找候選詞、調整字典的文本（本週 4,950 篇）；不能拿來做最終評估。" title="用來找候選詞、調整字典的文本（本週 4,950 篇）；不能拿來做最終評估。">discovery</abbr> → <abbr class="tt" tabindex="0" data-term="freeze" data-tip="凍結：測試前固定字典版本並記錄，之後不再修改；用測試資訊改字典就需要新的測試集。" title="凍結：測試前固定字典版本並記錄，之後不再修改；用測試資訊改字典就需要新的測試集。">凍結</abbr> → <abbr class="tt" tabindex="0" data-term="held-out" data-tip="留出集：不參與字典開發、凍結字典後才拿來評估的文本。" title="留出集：不參與字典開發、凍結字典後才拿來評估的文本。">held-out</abbr>」的實際研究版本。開發集 F1 比留出集高，是預期中的現象。</p>
 
   <h2 id="c8-rauh">德國政治語言的情緒字典（Rauh 2018） <span class="slideref">投影片 56–60</span></h2>
   <div class="tablewrap"><table>
     <tr><th>步驟</th><th>研究做了什麼（投影片 57）</th></tr>
-    <tr><td>Dictionary</td><td>合併 <abbr class="tt" tabindex="0" data-term="SentiWS" title="德文情緒詞典；Rauh（2018）把它與 GermanPolarityClues 合併並人工審查。">SentiWS</abbr> 與 <abbr class="tt" tabindex="0" data-term="GermanPolarityClues" title="德文極性詞典；Rauh（2018）與 SentiWS 合併成德國政治語言情緒字典。">GermanPolarityClues</abbr>；人工審查詞條</td></tr>
-    <tr><td>Context</td><td>加上直接的兩字<abbr class="tt" tabindex="0" data-term="negation" title="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。">否定</abbr>規則</td></tr>
+    <tr><td>Dictionary</td><td>合併 <abbr class="tt" tabindex="0" data-term="SentiWS" data-tip="德文情緒詞典；Rauh（2018）把它與 GermanPolarityClues 合併並人工審查。" title="德文情緒詞典；Rauh（2018）把它與 GermanPolarityClues 合併並人工審查。">SentiWS</abbr> 與 <abbr class="tt" tabindex="0" data-term="GermanPolarityClues" data-tip="德文極性詞典；Rauh（2018）與 SentiWS 合併成德國政治語言情緒字典。" title="德文極性詞典；Rauh（2018）與 SentiWS 合併成德國政治語言情緒字典。">GermanPolarityClues</abbr>；人工審查詞條</td></tr>
+    <tr><td>Context</td><td>加上直接的兩字<abbr class="tt" tabindex="0" data-term="negation" data-tip="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。" title="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。">否定</abbr>規則</td></tr>
     <tr><td>Score</td><td>正面減負面比對數，除以保留的詞數</td></tr>
-    <tr><td>Validation</td><td>三人編碼 1,500 句抽樣的 <abbr class="tt" tabindex="0" data-term="Bundestag" title="德國聯邦議院；Rauh（2018）用 1,500 句 Bundestag 句子做人工驗證。">Bundestag</abbr> 句子</td></tr>
+    <tr><td>Validation</td><td>三人編碼 1,500 句抽樣的 <abbr class="tt" tabindex="0" data-term="Bundestag" data-tip="德國聯邦議院；Rauh（2018）用 1,500 句 Bundestag 句子做人工驗證。" title="德國聯邦議院；Rauh（2018）用 1,500 句 Bundestag 句子做人工驗證。">Bundestag</abbr> 句子</td></tr>
   </table></div>
   <ul>
-    <li>編碼者一致性：3 位編碼者、1,500 句；<strong>完全一致 59.1%；<abbr class="tt" tabindex="0" data-term="ordinal alpha" title="Krippendorff 型的序數一致性指標；Rauh（2018）三位編碼者為 .675。">ordinal alpha</abbr> .675</strong>。一致性不等於效度。<span class="slideref">投影片 58</span></li>
+    <li>編碼者一致性：3 位編碼者、1,500 句；<strong>完全一致 59.1%；<abbr class="tt" tabindex="0" data-term="ordinal alpha" data-tip="Krippendorff 型的序數一致性指標；Rauh（2018）三位編碼者為 .675。" title="Krippendorff 型的序數一致性指標；Rauh（2018）三位編碼者為 .675。">ordinal alpha</abbr> .675</strong>。一致性不等於效度。<span class="slideref">投影片 58</span></li>
     <li>比較三個字典在人工評分類別上的分數；正面類別分得比較開。區間顯示的是群組平均的不確定性，不是分類準確率。<span class="slideref">投影片 59</span></li>
     <li>結果：正面評價比負面評價容易還原。用途：比較政治文本中評價語言的已檢驗指標。限制：分數集中在 0 附近，沒有不證自明的數值單位。這個研究驗證的是<strong>測量</strong>，不解釋政治人物為何變得更正面。<span class="slideref">投影片 60</span></li>
   </ul>
@@ -1602,17 +1611,17 @@ precision    recall        F1
   <p>問題：在野黨的語氣是否反映跨黨共識？更正面的在野黨語言是否與法案<strong>無異議通過</strong>相關？<span class="slideref">投影片 61–62</span></p>
   <ol>
     <li>蒐集約 26,000 篇演說，涉及 871 個德國政府法案，2005–2017。</li>
-    <li>用翻譯的 <abbr class="tt" tabindex="0" data-term="Lexicoder" title="為政治文本設計的情緒字典；Proksch et al.（2019）翻譯後用於多語國會演說。">Lexicoder</abbr> 情緒字典比對正負面字。</li>
+    <li>用翻譯的 <abbr class="tt" tabindex="0" data-term="Lexicoder" data-tip="為政治文本設計的情緒字典；Proksch et al.（2019）翻譯後用於多語國會演說。" title="為政治文本設計的情緒字典；Proksch et al.（2019）翻譯後用於多語國會演說。">Lexicoder</abbr> 情緒字典比對正負面字。</li>
     <li>依政黨與法案加總：<strong>log((P + 0.5) / (N + 0.5))</strong>。</li>
-    <li>把法案層級的情緒放進「無異議通過」的 <abbr class="tt" tabindex="0" data-term="logistic regression" title="預測二元結果機率的迴歸；Proksch et al. 用它分析法案是否無異議通過。">logistic 迴歸</abbr>。</li>
+    <li>把法案層級的情緒放進「無異議通過」的 <abbr class="tt" tabindex="0" data-term="logistic regression" data-tip="預測二元結果機率的迴歸；Proksch et al. 用它分析法案是否無異議通過。" title="預測二元結果機率的迴歸；Proksch et al. 用它分析法案是否無異議通過。">logistic 迴歸</abbr>。</li>
   </ol>
   <ul>
     <li>人工驗證：300 段、每段兩個人工評分；以講者群組比較標準化分數；報告的<strong>群組層級相關約 0.9</strong>——這<strong>不是</strong> 90% 分類準確率。<span class="slideref">投影片 63</span></li>
-    <li>翻譯本身是測量決策：譯詞的政治用法可能不同、可能有多個對應、詞形與<abbr class="tt" tabindex="0" data-term="segmentation" title="斷詞：把沒有空格的中文切成詞；切法會直接影響字典能否比對。">斷詞</abbr>會影響比對；各語言要分開驗證。相同的類別名稱不保證數值尺度可比。<span class="slideref">投影片 64</span></li>
+    <li>翻譯本身是測量決策：譯詞的政治用法可能不同、可能有多個對應、詞形與<abbr class="tt" tabindex="0" data-term="segmentation" data-tip="斷詞：把沒有空格的中文切成詞；切法會直接影響字典能否比對。" title="斷詞：把沒有空格的中文切成詞；切法會直接影響字典能否比對。">斷詞</abbr>會影響比對；各語言要分開驗證。相同的類別名稱不保證數值尺度可比。<span class="slideref">投影片 64</span></li>
     <li>迴歸：814 個法案；三個模型係數都是正的，只有模型 (3) 顯著。這是<strong>關聯</strong>，不是語氣的因果效果。<span class="slideref">投影片 65</span></li>
   </ul>
   <div class="lab" id="labLR">
-    <div class="lab-h"><span class="ic">➗</span><span class="lt"><abbr class="tt" tabindex="0" data-term="log ratio" title="Proksch et al. 的分數 log((P + 0.5) / (N + 0.5))；+0.5 讓 0 次時仍可取對數。">log ratio</abbr> vs <abbr class="tt" tabindex="0" data-term="net tone" title="100 × (P − N) / L：正面減負面比對數除以總 token 數，單位是每百字。">net tone</abbr></span><span class="ls">玩具直覺型 · 公式取自投影片 32、62</span></div>
+    <div class="lab-h"><span class="ic">➗</span><span class="lt"><abbr class="tt" tabindex="0" data-term="log ratio" data-tip="Proksch et al. 的分數 log((P + 0.5) / (N + 0.5))；+0.5 讓 0 次時仍可取對數。" title="Proksch et al. 的分數 log((P + 0.5) / (N + 0.5))；+0.5 讓 0 次時仍可取對數。">log ratio</abbr> vs <abbr class="tt" tabindex="0" data-term="net tone" data-tip="100 × (P − N) / L：正面減負面比對數除以總 token 數，單位是每百字。" title="100 × (P − N) / L：正面減負面比對數除以總 token 數，單位是每百字。">net tone</abbr></span><span class="ls">玩具直覺型 · 公式取自投影片 32、62</span></div>
     <div class="lab-b">
       <div class="grid3">
         <label class="f">P（正面比對）<input type="number" id="lrP" value="3" min="0"></label>
@@ -1627,8 +1636,8 @@ precision    recall        F1
   <h2 id="c8-ssc">情緒、立場與衝突 <span class="slideref">投影片 66</span></h2>
   <div class="tablewrap"><table>
     <tr><th>概念</th><th>證據必須建立什麼</th></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="sentiment" title="某件事被如何評價（正面或負面）；和議題注意力、立場是不同的概念。">Sentiment</abbr></td><td>某個定義好的單位中的評價語言</td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="stance" title="立場：對特定目標的支持或反對；負面情緒不等於反對。">Stance</abbr></td><td>對特定目標的支持或反對</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="sentiment" data-tip="某件事被如何評價（正面或負面）；和議題注意力、立場是不同的概念。" title="某件事被如何評價（正面或負面）；和議題注意力、立場是不同的概念。">Sentiment</abbr></td><td>某個定義好的單位中的評價語言</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="stance" data-tip="立場：對特定目標的支持或反對；負面情緒不等於反對。" title="立場：對特定目標的支持或反對；負面情緒不等於反對。">Stance</abbr></td><td>對特定目標的支持或反對</td></tr>
     <tr><td>Conflict</td><td>行動者或立場之間的實質關係</td></tr>
   </table></div>
   <p class="hint">負面字可以描述社會問題，而不是在攻擊另一個政黨。</p>
@@ -1641,7 +1650,7 @@ precision    recall        F1
 
   <div class="mcq" data-q="q08a" data-ans="2"><div class="q">Proksch et al. 報告人工與自動分數在群組層級相關約 0.9。正確解讀？</div>
     <button class="opt">字典 90% 的段落分類正確</button><button class="opt">字典可以用在任何語言</button><button class="opt">按講者群組平均後，兩種分數高度同向變動；不是逐段分類準確率</button>
-    <div class="fb">This is not 90% classification <abbr class="tt" tabindex="0" data-term="accuracy" title="(TP + TN) / 全部；相關文本很少時會被大量 TN 撐高。">accuracy</abbr>。<span class="slideref">投影片 63</span></div></div>
+    <div class="fb">This is not 90% classification <abbr class="tt" tabindex="0" data-term="accuracy" data-tip="(TP + TN) / 全部；相關文本很少時會被大量 TN 撐高。" title="(TP + TN) / 全部；相關文本很少時會被大量 TN 撐高。">accuracy</abbr>。<span class="slideref">投影片 63</span></div></div>
   <div class="mcq" data-q="q08b" data-ans="0"><div class="q">Boyle et al. 的開發集 F1 0.90、留出集 0.86。為什麼要報兩個？</div>
     <button class="opt">開發集參與了調整，會偏樂觀；留出集才是較誠實的表現估計</button><button class="opt">因為兩組編碼者不同</button><button class="opt">因為 transformers 比較好</button>
     <div class="fb">Test: evaluate on 200 other human-coded abstracts, kept out of tuning。<span class="slideref">投影片 54</span></div></div>
@@ -1651,7 +1660,7 @@ precision    recall        F1
 <section class="chapter" id="ch09" data-slides="67,68,69,70,71,72,73,74,75,76">
   <div class="crumb">09 · 延伸應用</div>
   <h1 class="ch">LIWC、自訂字典與競選承諾</h1>
-  <p class="lead"><abbr class="tt" tabindex="0" data-term="LIWC" title="Linguistic Inquiry and Word Count：授權軟體與專有字典，多數類別分數是佔全文字數的百分比。">LIWC</abbr> 是最常見的「類別百分比」工具；但軟體、官方字典與我們自己的 <abbr class="tt" tabindex="0" data-term="quanteda" title="本課使用的 R 文本分析套件，提供 corpus、tokens、dfm、dictionary、kwic 等工具。">quanteda</abbr> 字典是三件不同的事。接著用 Eichorst &amp; Lin（2019）的概念做一個兩句話的「具體 vs 模糊」例子，最後看兩個中文 LIWC 研究。</p>
+  <p class="lead"><abbr class="tt" tabindex="0" data-term="LIWC" data-full="Linguistic Inquiry and Word Count" data-tip="授權軟體與專有字典，多數類別分數是佔全文字數的百分比。" title="Linguistic Inquiry and Word Count — 授權軟體與專有字典，多數類別分數是佔全文字數的百分比。">LIWC</abbr> 是最常見的「類別百分比」工具；但軟體、官方字典與我們自己的 <abbr class="tt" tabindex="0" data-term="quanteda" data-tip="本課使用的 R 文本分析套件，提供 corpus、tokens、dfm、dictionary、kwic 等工具。" title="本課使用的 R 文本分析套件，提供 corpus、tokens、dfm、dictionary、kwic 等工具。">quanteda</abbr> 字典是三件不同的事。接著用 Eichorst &amp; Lin（2019）的概念做一個兩句話的「具體 vs 模糊」例子，最後看兩個中文 LIWC 研究。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c9-liwc">LIWC 量什麼</a><a href="#c9-role">LIWC 與 quanteda</a><a href="#c9-c16">C16 自訂字典</a><a href="#c9-el">Eichorst &amp; Lin</a><a href="#c9-camp">兩句話例子</a><a href="#c9-zh">中文 LIWC</a>
   </div>
@@ -1708,7 +1717,7 @@ docs    positive negative
 docs    positive negative
   text1       50  0.00000
   text2        0 66.66667</pre></div>
-  <p>「Good policy.」2 個字中 1 個正面 → 50%；「A bad crisis.」3 個字中 2 個負面 → 66.67%。討論題：為什麼除以<strong>全部 <abbr class="tt" tabindex="0" data-term="token" title="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。">token</abbr></strong>，而不是只除以比對數？（除以比對數只會得到 0 或 100%，失去「用了多少情緒字」的資訊；這也是第 04 章 <abbr class="tt" tabindex="0" data-term="coverage" title="100 × (P + N) / L：每百字中有多少字比對到情緒字典。">coverage</abbr> 與 <abbr class="tt" tabindex="0" data-term="balance" title="(P − N) / (P + N)：只看比對到的字的正負平衡，介於 −1 與 +1；P + N = 0 時為 NA。">balance</abbr> 的差別。）</p>
+  <p>「Good policy.」2 個字中 1 個正面 → 50%；「A bad crisis.」3 個字中 2 個負面 → 66.67%。討論題：為什麼除以<strong>全部 <abbr class="tt" tabindex="0" data-term="token" data-tip="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。" title="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。">token</abbr></strong>，而不是只除以比對數？（除以比對數只會得到 0 或 100%，失去「用了多少情緒字」的資訊；這也是第 04 章 <abbr class="tt" tabindex="0" data-term="coverage" data-tip="100 × (P + N) / L：每百字中有多少字比對到情緒字典。" title="100 × (P + N) / L：每百字中有多少字比對到情緒字典。">coverage</abbr> 與 <abbr class="tt" tabindex="0" data-term="balance" data-tip="(P − N) / (P + N)：只看比對到的字的正負平衡，介於 −1 與 +1；P + N = 0 時為 NA。" title="(P − N) / (P + N)：只看比對到的字的正負平衡，介於 −1 與 +1；P + N = 0 時為 NA。">balance</abbr> 的差別。）</p>
 
   <h2 id="c9-el">競選陳述：模糊還是具體？（Eichorst &amp; Lin 2019） <span class="slideref">投影片 70–71</span></h2>
   <ul>
@@ -1745,7 +1754,7 @@ text1 text2
   <ul>
     <li>text1：<code>may</code> 比對 vague 一次；text2：<code>guarantee</code> 比對 concrete 一次。</li>
     <li>教學分數 = 100 × (C − V) / L，即「具體百分比 − 模糊百分比」，單位是百分點：text1 = 100 × (0 − 1) / 5 = −20；text2 = +20。<span class="slideref">投影片 74</span></li>
-    <li>改編自 Eichorst &amp; Lin（2019）：原論文分母<strong>不含<abbr class="tt" tabindex="0" data-term="stopwords" title="常見功能詞清單；stopwords(&quot;en&quot;) 包含 not，先刪停用詞會讓否定規則失效。">停用詞</abbr></strong>，並把差值重新縮放到 0–1；這個例子兩者都沒做。</li>
+    <li>改編自 Eichorst &amp; Lin（2019）：原論文分母<strong>不含<abbr class="tt" tabindex="0" data-term="stopwords" data-tip="常見功能詞清單；stopwords(&quot;en&quot;) 包含 not，先刪停用詞會讓否定規則失效。" title="常見功能詞清單；stopwords(&quot;en&quot;) 包含 not，先刪停用詞會讓否定規則失效。">停用詞</abbr></strong>，並把差值重新縮放到 0–1；這個例子兩者都沒做。</li>
   </ul>
   <div class="lab" id="labCamp">
     <div class="lab-h"><span class="ic">📣</span><span class="lt">具體 vs 模糊計分器</span><span class="ls">玩具直覺型 · 預設＝投影片 72</span></div>
@@ -1762,7 +1771,7 @@ We will not guarantee better public services.</textarea></label>
   <h2 id="c9-zh">中文 LIWC：兩個研究 <span class="slideref">投影片 75–76</span></h2>
   <ul>
     <li>Lin（2023）：中文的回顧文章，介紹字典類別與用字率，回顧運動傷害、自我效能與運動傳播的研究。討論題：語言能揭露一個隊伍的什麼？<span class="slideref">投影片 75</span></li>
-    <li>Lin et al.（2020）：類別能區分情緒脈絡嗎？資料：<abbr class="tt" tabindex="0" data-term="PTT" title="臺灣的大型 BBS 論壇；Lin et al.（2020）用 PTT 的 Hate 與 Sad 貼文比較 LIWC 類別。">PTT</abbr> 的 50 篇 Hate 與 50 篇 Sad 貼文；憤怒詞 <strong>2.00% vs 0.88%，Cohen’s d = 0.61</strong>。群體差異不是個人診斷。<span class="slideref">投影片 76</span></li>
+    <li>Lin et al.（2020）：類別能區分情緒脈絡嗎？資料：<abbr class="tt" tabindex="0" data-term="PTT" data-tip="臺灣的大型 BBS 論壇；Lin et al.（2020）用 PTT 的 Hate 與 Sad 貼文比較 LIWC 類別。" title="臺灣的大型 BBS 論壇；Lin et al.（2020）用 PTT 的 Hate 與 Sad 貼文比較 LIWC 類別。">PTT</abbr> 的 50 篇 Hate 與 50 篇 Sad 貼文；憤怒詞 <strong>2.00% vs 0.88%，Cohen’s d = 0.61</strong>。群體差異不是個人診斷。<span class="slideref">投影片 76</span></li>
   </ul>
 
   <div class="mcq" data-q="q09a" data-ans="1"><div class="q">在 quanteda 裡用 <code>format = "LIWC"</code> 讀一個 .dic 檔，代表？</div>
@@ -1770,20 +1779,20 @@ We will not guarantee better public services.</textarea></label>
     <div class="fb">Importing a file does not grant a license to use its dictionary。<span class="slideref">投影片 68–69</span></div></div>
   <div class="mcq" data-q="q09b" data-ans="2"><div class="q">「We will not guarantee better public services.」用投影片 72 的字典，教學分數？</div>
     <button class="opt">−14.29（not 讓它變模糊）</button><button class="opt">+20</button><button class="opt">+14.29：concrete 仍算 1，但 L = 7</button>
-    <div class="fb">字典沒有<abbr class="tt" tabindex="0" data-term="negation" title="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。">否定</abbr>規則；100 × (1 − 0) / 7 ≈ 14.29。<span class="slideref">投影片 73–74</span></div></div>
+    <div class="fb">字典沒有<abbr class="tt" tabindex="0" data-term="negation" data-tip="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。" title="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。">否定</abbr>規則；100 × (1 − 0) / 7 ≈ 14.29。<span class="slideref">投影片 73–74</span></div></div>
 </section>
 
 <!-- ===================== CH10 ===================== -->
 <section class="chapter" id="ch10" data-slides="77,78,79,80,81,82,83,84,85,86,87,88,89,90">
   <div class="crumb">10 · 延伸</div>
   <h1 class="ch">字典之外：POS、TextRank、NER、LLM</h1>
-  <p class="lead">這些工具幫我們<strong>找候選詞</strong>或<strong>找名稱</strong>，但都不會自動驗證字典。選讀延伸（O01、<abbr class="tt" tabindex="0" data-term="TextRank" title="在候選詞的共現網絡上用 PageRank 排名關鍵詞；高中心性不代表與構念相關。">TextRank</abbr>、<abbr class="tt" tabindex="0" data-term="Flair" title="Python 的 NLP 套件；W4_flair_ner.py 用它的 ner-fast 模型做具名實體辨識。">Flair</abbr>）需要下載模型；本機能跑的照實貼輸出，跑不了的照實說。</p>
+  <p class="lead">這些工具幫我們<strong>找候選詞</strong>或<strong>找名稱</strong>，但都不會自動驗證字典。選讀延伸（O01、<abbr class="tt" tabindex="0" data-term="TextRank" data-tip="在候選詞的共現網絡上用 PageRank 排名關鍵詞；高中心性不代表與構念相關。" title="在候選詞的共現網絡上用 PageRank 排名關鍵詞；高中心性不代表與構念相關。">TextRank</abbr>、<abbr class="tt" tabindex="0" data-term="Flair" data-tip="Python 的 NLP 套件；W4_flair_ner.py 用它的 ner-fast 模型做具名實體辨識。" title="Python 的 NLP 套件；W4_flair_ner.py 用它的 ner-fast 模型做具名實體辨識。">Flair</abbr>）需要下載模型；本機能跑的照實貼輸出，跑不了的照實說。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c10-pos">POS（UDPipe）</a><a href="#c10-tr">TextRank</a><a href="#c10-ner">NER（Flair）</a><a href="#c10-llm">Embeddings 與 LLM</a><a href="#c10-zh">中文文本</a><a href="#c10-five">五句話三種方法</a>
   </div>
 
   <h2 id="c10-pos">POS 標註（UDPipe） <span class="slideref">投影片 77–80</span></h2>
-  <p>選讀延伸：回到「找候選詞」，現在是 <abbr class="tt" tabindex="0" data-term="POS" title="詞類標註（名詞、形容詞…）；UDPipe 預測的 upos 可能出錯，例如 Housing → ADJ。">POS</abbr> → 候選詞 → 人工審查。</p>
+  <p>選讀延伸：回到「找候選詞」，現在是 <abbr class="tt" tabindex="0" data-term="POS" data-full="part of speech" data-tip="詞類標註（名詞、形容詞…）；UDPipe 預測的 upos 可能出錯，例如 Housing → ADJ。" title="part of speech — 詞類標註（名詞、形容詞…）；UDPipe 預測的 upos 可能出錯，例如 Housing → ADJ。">POS</abbr> → 候選詞 → 人工審查。</p>
   <div class="codeblock"><span class="lang">R · examples/W4_pos_simple.R</span><button class="copyb jsonly">複製</button><pre># Standalone POS example. No C01 or workflow.R required.
 # The model is saved in udpipe_models under your current working directory.
 # O01: POS candidates (model download on first run)
@@ -1850,7 +1859,7 @@ Downloading finished, model stored at 'udpipe_models/english-ewt-ud-2.5-191206.u
     <tr><td><code>udpipe_annotate</code></td><td>把模型套到我們的句子</td></tr>
     <tr><td><code>as.data.frame(annotation)</code></td><td>把結果轉成表格</td></tr>
   </table></div>
-  <p>投影片 79 的輸出：Housing → ADJ、costs → NOUN（<abbr class="tt" tabindex="0" data-term="lemma" title="字的預測原形（字典形式），例如 costs 的 lemma 是 cost。">lemma</abbr> cost）、are → AUX、unaffordable → ADJ。<abbr class="tt" tabindex="0" data-term="token" title="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。">token</abbr> 是觀察到的形式、lemma 是<strong>預測的</strong>原形、upos 是<strong>預測的</strong>詞類。本機 O01 輸出與此完全一致。討論：你接受 Housing → ADJ 嗎？</p>
+  <p>投影片 79 的輸出：Housing → <abbr class="tt" tabindex="0" data-term="ADJ" data-full="adjective (UD part-of-speech tag)" data-tip="形容詞；Universal Dependencies 的詞性標籤（UPOS）。" title="adjective (UD part-of-speech tag) — 形容詞；Universal Dependencies 的詞性標籤（UPOS）。">ADJ</abbr>、costs → <abbr class="tt" tabindex="0" data-term="NOUN" data-full="noun (UD part-of-speech tag)" data-tip="名詞；Universal Dependencies 的詞性標籤（UPOS）。" title="noun (UD part-of-speech tag) — 名詞；Universal Dependencies 的詞性標籤（UPOS）。">NOUN</abbr>（<abbr class="tt" tabindex="0" data-term="lemma" data-tip="字的預測原形（字典形式），例如 costs 的 lemma 是 cost。" title="字的預測原形（字典形式），例如 costs 的 lemma 是 cost。">lemma</abbr> cost）、are → <abbr class="tt" tabindex="0" data-term="AUX" data-full="auxiliary (UD part-of-speech tag)" data-tip="助動詞；Universal Dependencies 的詞性標籤（UPOS）。" title="auxiliary (UD part-of-speech tag) — 助動詞；Universal Dependencies 的詞性標籤（UPOS）。">AUX</abbr>、unaffordable → ADJ。<abbr class="tt" tabindex="0" data-term="token" data-tip="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。" title="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。">token</abbr> 是觀察到的形式、lemma 是<strong>預測的</strong>原形、upos 是<strong>預測的</strong>詞類。本機 O01 輸出與此完全一致。討論：你接受 Housing → ADJ 嗎？</p>
   <div class="tablewrap"><table>
     <tr><th>方法</th><th>POS 與 token 關係的角色（投影片 80）</th></tr>
     <tr><td>候選詞過濾</td><td>保留名詞或形容詞給人工審查</td></tr>
@@ -1859,7 +1868,7 @@ Downloading finished, model stored at 'udpipe_models/english-ewt-ud-2.5-191206.u
   </table></div>
 
   <h2 id="c10-tr">TextRank：排名候選詞 <span class="slideref">投影片 81–83</span></h2>
-  <p>資料：<abbr class="tt" tabindex="0" data-term="quanteda" title="本課使用的 R 文本分析套件，提供 corpus、tokens、dfm、dictionary、kwic 等工具。">quanteda</abbr> 內建的 Obama 2013 就職演說（<code>examples/W4_keywords_real.R</code>，不需 C01）。節點＝候選 lemma；邊＝相鄰的名詞／形容詞配對；<abbr class="tt" tabindex="0" data-term="PageRank" title="依網絡連結與鄰居分數計算節點重要性的演算法；TextRank 用它排序候選詞。">PageRank</abbr> 用配對次數與鄰居分數。投影片 82 的實際輸出：new 0.0161、same 0.0096、endure 0.0095、nation 0.0094、common 0.0092、hard 0.0083；並提醒 new 很籠統、有些 endure 被標成名詞。</p>
+  <p>資料：<abbr class="tt" tabindex="0" data-term="quanteda" data-tip="本課使用的 R 文本分析套件，提供 corpus、tokens、dfm、dictionary、kwic 等工具。" title="本課使用的 R 文本分析套件，提供 corpus、tokens、dfm、dictionary、kwic 等工具。">quanteda</abbr> 內建的 Obama 2013 就職演說（<code>examples/W4_keywords_real.R</code>，不需 C01）。節點＝候選 lemma；邊＝相鄰的名詞／形容詞配對；<abbr class="tt" tabindex="0" data-term="PageRank" data-tip="依網絡連結與鄰居分數計算節點重要性的演算法；TextRank 用它排序候選詞。" title="依網絡連結與鄰居分數計算節點重要性的演算法；TextRank 用它排序候選詞。">PageRank</abbr> 用配對次數與鄰居分數。投影片 82 的實際輸出：new 0.0161、same 0.0096、endure 0.0095、nation 0.0094、common 0.0092、hard 0.0083；並提醒 new 很籠統、有些 endure 被標成名詞。</p>
   <div class="codeblock"><span class="lang">R · examples/W4_keywords_real.R</span><button class="copyb jsonly">複製</button><pre># Real political speech: Obama 2013 inaugural address. No C01 required.
 # Source: https://quanteda.io/reference/data_corpus_inaugural.html
 # install.packages(c("quanteda", "udpipe", "textrank", "igraph"))
@@ -2015,7 +2024,7 @@ The following object is masked from ‘package:base’:
 6   we be     2    6</pre></div>
   <div class="callout warn"><div class="ct">本機 TextRank 與投影片 82–83 對不上（並列說明）</div>
     <div class="tablewrap"><table>
-      <tr><th>名次</th><th>投影片 82（老師的執行）</th><th>本機（<abbr class="tt" tabindex="0" data-term="UDPipe" title="做斷詞、詞類標註、lemma 與依存分析的工具；R 套件 udpipe 需下載語言模型。">udpipe</abbr> 0.8.16、textrank 0.3.1、english-ewt 2.5）</th></tr>
+      <tr><th>名次</th><th>投影片 82（老師的執行）</th><th>本機（<abbr class="tt" tabindex="0" data-term="UDPipe" data-tip="做斷詞、詞類標註、lemma 與依存分析的工具；R 套件 udpipe 需下載語言模型。" title="做斷詞、詞類標註、lemma 與依存分析的工具；R 套件 udpipe 需下載語言模型。">udpipe</abbr> 0.8.16、textrank 0.3.1、english-ewt 2.5）</th></tr>
       <tr><td>1</td><td>new 0.0161</td><td>new 0.0125</td></tr>
       <tr><td>2</td><td>same 0.0096</td><td>we 0.0122</td></tr>
       <tr><td>3</td><td>endure 0.0095</td><td>require 0.0112</td></tr>
@@ -2023,23 +2032,23 @@ The following object is masked from ‘package:base’:
       <tr><td>5</td><td>common 0.0092</td><td>common 0.0089</td></tr>
       <tr><td>6</td><td>hard 0.0083</td><td>these 0.0083</td></tr>
     </table></div>
-    <p>前兩個共現配對（individual–freedom 2、new–job 2）與投影片一致，第三個不同（投影片：other–nation 2；本機：fellow–citizen 1）。本機的 POS 標註看起來有問題：診斷時發現代名詞 <code>we</code> 有 5 次被標成 NOUN、8 次被標成 NUM，因此被當成候選詞；<code>endure</code> 的三個形式都被標成 VERB（投影片說有些被標成名詞）。可能原因（<strong>未證實</strong>）：這台 aarch64 機器上 udpipe 第一次編譯時記憶體不足被中止，改用 <code>-O0</code> 重新編譯；或套件／模型版本與老師不同。同一個模型對 O01 的單句（Housing costs are unaffordable.）結果與投影片 79 完全一致。<strong>請以投影片 82–83 的數字為準</strong>；本機輸出只用來說明「POS 標註錯誤會直接改變 TextRank 候選」——這正是投影片 82 要你人工審查的理由。</p></div>
+    <p>前兩個共現配對（individual–freedom 2、new–job 2）與投影片一致，第三個不同（投影片：other–nation 2；本機：fellow–citizen 1）。本機的 POS 標註看起來有問題：診斷時發現代名詞 <code>we</code> 有 5 次被標成 NOUN、8 次被標成 <abbr class="tt" tabindex="0" data-term="NUM" data-full="numeral (UD part-of-speech tag)" data-tip="數詞；Universal Dependencies 的詞性標籤（UPOS）。" title="numeral (UD part-of-speech tag) — 數詞；Universal Dependencies 的詞性標籤（UPOS）。">NUM</abbr>，因此被當成候選詞；<code>endure</code> 的三個形式都被標成 <abbr class="tt" tabindex="0" data-term="VERB" data-full="verb (UD part-of-speech tag)" data-tip="動詞；Universal Dependencies 的詞性標籤（UPOS）。" title="verb (UD part-of-speech tag) — 動詞；Universal Dependencies 的詞性標籤（UPOS）。">VERB</abbr>（投影片說有些被標成名詞）。可能原因（<strong>未證實</strong>）：這台 aarch64 機器上 udpipe 第一次編譯時記憶體不足被中止，改用 <code>-O0</code> 重新編譯；或套件／模型版本與老師不同。同一個模型對 O01 的單句（Housing costs are unaffordable.）結果與投影片 79 完全一致。<strong>請以投影片 82–83 的數字為準</strong>；本機輸出只用來說明「POS 標註錯誤會直接改變 TextRank 候選」——這正是投影片 82 要你人工審查的理由。</p></div>
 
   <h2 id="c10-ner">具名實體（Flair，Python 選讀） <span class="slideref">投影片 84–86</span></h2>
-  <p>POS 標的是詞類；<abbr class="tt" tabindex="0" data-term="NER" title="具名實體辨識：找出人名、組織、地點等名稱及其類型；提到實體不等於立場。">NER</abbr> 找的是<strong>名稱與其類型</strong>。投影片 85 的結果：Barack Obama → PER、United Nations → ORG、New York → LOC；United Nations 是一個 entity span。</p>
+  <p>POS 標的是詞類；<abbr class="tt" tabindex="0" data-term="NER" data-full="named entity recognition" data-tip="具名實體辨識：找出人名、組織、地點等名稱及其類型；提到實體不等於立場。" title="named entity recognition — 具名實體辨識：找出人名、組織、地點等名稱及其類型；提到實體不等於立場。">NER</abbr> 找的是<strong>名稱與其類型</strong>。投影片 85 的結果：Barack Obama → <abbr class="tt" tabindex="0" data-term="PER" data-full="person (NER entity type)" data-tip="命名實體類型：人名。" title="person (NER entity type) — 命名實體類型：人名。">PER</abbr>、United Nations → <abbr class="tt" tabindex="0" data-term="ORG" data-full="organization (NER entity type)" data-tip="命名實體類型：組織名。" title="organization (NER entity type) — 命名實體類型：組織名。">ORG</abbr>、New York → <abbr class="tt" tabindex="0" data-term="LOC" data-full="location (NER entity type)" data-tip="命名實體類型：地名。" title="location (NER entity type) — 命名實體類型：地名。">LOC</abbr>；United Nations 是一個 entity span。</p>
   <div class="callout note"><div class="ct">本機沒有執行</div><p><code>examples/W4_flair_ner.py</code> 需要 <code>pip install flair</code>（含 PyTorch）並在第一次執行時下載 <code>ner-fast</code> 模型；這台建置機沒有安裝 Flair，因此本教材<strong>沒有</strong>重跑，以上結果引自投影片 85。</p></div>
-  <p>投影片 86：「The minister praised the NHS but criticized its funding.」——提到一個組織，不代表講者支持它；<strong>實體提及不是<abbr class="tt" tabindex="0" data-term="stance" title="立場：對特定目標的支持或反對；負面情緒不等於反對。">立場</abbr></strong>。</p>
+  <p>投影片 86：「The minister praised the <abbr class="tt" tabindex="0" data-term="NHS" data-full="National Health Service" data-tip="英國國民保健署（公共醫療體系）。" title="National Health Service — 英國國民保健署（公共醫療體系）。">NHS</abbr> but criticized its funding.」——提到一個組織，不代表講者支持它；<strong>實體提及不是<abbr class="tt" tabindex="0" data-term="stance" data-tip="立場：對特定目標的支持或反對；負面情緒不等於反對。" title="立場：對特定目標的支持或反對；負面情緒不等於反對。">立場</abbr></strong>。</p>
 
   <h2 id="c10-llm">Embeddings 與 LLM 可以提出候選詞 <span class="slideref">投影片 87</span></h2>
-  <p>種子概念 → 建議詞 → 語料中的例子 → 研究者審查。<abbr class="tt" tabindex="0" data-term="embeddings" title="把字表示成向量、相近用法的字向量也相近；可建議相關詞，但不能認證字典效度。">Embeddings</abbr> 能建議相關說法；<abbr class="tt" tabindex="0" data-term="LLM" title="大型語言模型；可提出候選詞或變體，但仍需獨立的人工基準驗證。">LLM</abbr> 能提出變體或整理候選清單；但也可能冒出反義詞與無關聯想。保留一個<strong>獨立的人工基準</strong>：這些工具協助開發字典，不能認證效度。</p>
+  <p>種子概念 → 建議詞 → 語料中的例子 → 研究者審查。<abbr class="tt" tabindex="0" data-term="embeddings" data-tip="把字表示成向量、相近用法的字向量也相近；可建議相關詞，但不能認證字典效度。" title="把字表示成向量、相近用法的字向量也相近；可建議相關詞，但不能認證字典效度。">Embeddings</abbr> 能建議相關說法；<abbr class="tt" tabindex="0" data-term="LLM" data-full="large language model" data-tip="大型語言模型；可提出候選詞或變體，但仍需獨立的人工基準驗證。" title="large language model — 大型語言模型；可提出候選詞或變體，但仍需獨立的人工基準驗證。">LLM</abbr> 能提出變體或整理候選清單；但也可能冒出反義詞與無關聯想。保留一個<strong>獨立的人工基準</strong>：這些工具協助開發字典，不能認證效度。</p>
 
   <h2 id="c10-zh">延伸到中文文本 <span class="slideref">投影片 88</span></h2>
   <div class="tablewrap"><table>
     <tr><th>選擇</th><th>例子</th></tr>
-    <tr><td>斷詞（<abbr class="tt" tabindex="0" data-term="segmentation" title="斷詞：把沒有空格的中文切成詞；切法會直接影響字典能否比對。">Segmentation</abbr>）</td><td>相關的表達有沒有被切壞？</td></tr>
+    <tr><td>斷詞（<abbr class="tt" tabindex="0" data-term="segmentation" data-tip="斷詞：把沒有空格的中文切成詞；切法會直接影響字典能否比對。" title="斷詞：把沒有空格的中文切成詞；切法會直接影響字典能否比對。">Segmentation</abbr>）</td><td>相關的表達有沒有被切壞？</td></tr>
     <tr><td>字形正規化</td><td>繁簡、異體字是否適當合併？</td></tr>
     <tr><td>實體別名</td><td>縮寫有沒有連到正確的機構？</td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="negation" title="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。">否定</abbr>與脈絡</td><td>這個片語表達支持、批評還是引述？</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="negation" data-tip="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。" title="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。">否定</abbr>與脈絡</td><td>這個片語表達支持、批評還是引述？</td></tr>
   </table></div>
   <p class="hint">要在專案所用的語言與政治場域內驗證。補充（非講義內容）：例如「不」「沒有」「未必」在中文常緊貼在評價詞前，斷詞器把「不好」切成一個詞或兩個詞，會直接決定字典能不能比對到「好」。</p>
 
@@ -2145,7 +2154,7 @@ Check negation and possible irony; unmatched does not establish neutral sentimen
   </ul>
 
   <h2 id="c11-proj">把概念套到研究專題 <span class="slideref">投影片 92–93</span></h2>
-  <p>投影片 92 的句型：我想量 …，而不只是數 …；我的分析單位是 …；一個可能的 <abbr class="tt" tabindex="0" data-term="FP" title="false positive：字典判為相關、人工判為不相關（誤比對）。">false positive</abbr> 是 …；一個可能的 <abbr class="tt" tabindex="0" data-term="FN" title="false negative：人工判為相關、字典沒比對到（漏掉）；只能在沒比對到的文本裡找到。">false negative</abbr> 是 …；我會用 … 驗證這個測量。開場問題的延伸：還需要哪些規則才能辨識<strong>對家戶狀況的負面評價</strong>？投影片 93：字典適合你的專案嗎？列兩個優點、兩個限制；速度、透明度與脈絡敏感度怎麼取捨？</p>
+  <p>投影片 92 的句型：我想量 …，而不只是數 …；我的分析單位是 …；一個可能的 <abbr class="tt" tabindex="0" data-term="FP" data-full="false positive" data-tip="字典判為相關、人工判為不相關（誤比對）。" title="false positive — 字典判為相關、人工判為不相關（誤比對）。">false positive</abbr> 是 …；一個可能的 <abbr class="tt" tabindex="0" data-term="FN" data-full="false negative" data-tip="人工判為相關、字典沒比對到（漏掉）；只能在沒比對到的文本裡找到。" title="false negative — 人工判為相關、字典沒比對到（漏掉）；只能在沒比對到的文本裡找到。">false negative</abbr> 是 …；我會用 … 驗證這個測量。開場問題的延伸：還需要哪些規則才能辨識<strong>對家戶狀況的負面評價</strong>？投影片 93：字典適合你的專案嗎？列兩個優點、兩個限制；速度、透明度與脈絡敏感度怎麼取捨？</p>
   <p>第 14 章有一個<strong>研究計畫填寫器</strong>，把這些句型整理成 Markdown。</p>
 
   <h2 id="c11-o02">O02：你自己的政策字典（選做挑戰） <span class="slideref">投影片 94</span></h2>
@@ -2157,7 +2166,7 @@ my_counts &lt;- as.numeric(my_dfm[, "energy"])
 sum(my_counts &gt; 0)
 my_context &lt;- kwic(discovery_tokens, "energy", window = 6)
 head(my_context, 3)</pre></div>
-  <p class="hint">第 02 章的 <abbr class="tt" tabindex="0" data-term="KWIC" title="keyword in context：列出每次比對到的字及其前後文，用來人工判讀比對是否切題。">KWIC</abbr> 判讀練習與第 07 章的字典驗證台可以當作 O02 的線上版。</p>
+  <p class="hint">第 02 章的 <abbr class="tt" tabindex="0" data-term="KWIC" data-full="keyword in context" data-tip="列出每次比對到的字及其前後文，用來人工判讀比對是否切題。" title="keyword in context — 列出每次比對到的字及其前後文，用來人工判讀比對是否切題。">KWIC</abbr> 判讀練習與第 07 章的字典驗證台可以當作 O02 的線上版。</p>
 
   <h2 id="c11-t1">Lab 任務 1：讀字典、看比對 <span class="slideref">投影片 97</span></h2>
   <p>Setup 區塊（和 C01 相同，會 <code>source("workflow.R")</code>）跑完後，先讀 <code>.dic</code> 原始檔：</p>
@@ -2199,7 +2208,7 @@ Dictionary object with 2 key entries.
 &gt; net_score
 text1 text2 
    25    20 </pre></div>
-  <p>25 和 20：一個正面比對除以 4 字與 5 字。第二句分數較低是因為 <code>not</code> 增加了分母，<strong>不是</strong>因為規則認出了<abbr class="tt" tabindex="0" data-term="negation" title="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。">否定</abbr>。</p>
+  <p>25 和 20：一個正面比對除以 4 字與 5 字。第二句分數較低是因為 <code>not</code> 增加了分母，<strong>不是</strong>因為規則認出了<abbr class="tt" tabindex="0" data-term="negation" data-tip="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。" title="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。">否定</abbr>。</p>
   <div class="outbox"><div class="ohead">R console output（本機實跑 W4/lab/Lab_Session_W4.R，第 5 個程式區塊）</div><pre>&gt; # The setup above created these five named examples.
 &gt; check_texts
                              good                           negated                         unmatched 
@@ -2442,14 +2451,14 @@ precision    recall        F1
 18 test06               Heating tariffs must remain affordable.     1  0
 22 test10                 Her energy transformed the committee.     0  1</pre></div>
   <ul>
-    <li>v2：<abbr class="tt" tabindex="0" data-term="TP" title="true positive：字典判為相關、人工也判為相關。">TP</abbr> = 4、FP = 1、FN = 2、<abbr class="tt" tabindex="0" data-term="TN" title="true negative：字典與人工都判為不相關。">TN</abbr> = 5；<abbr class="tt" tabindex="0" data-term="precision" title="TP / (TP + FP)：字典比對到的文本中真正相關的比例。">precision</abbr> 0.80、<abbr class="tt" tabindex="0" data-term="recall" title="TP / (TP + FN)：真正相關的文本中被字典抓到的比例；需要讀沒比對到的文本才能估。">recall</abbr> 0.667、<abbr class="tt" tabindex="0" data-term="F1" title="precision 與 recall 的調和平均：2TP / (2TP + FP + FN)。">F1</abbr> 0.727，與投影片 95 一致。</li>
+    <li>v2：<abbr class="tt" tabindex="0" data-term="TP" data-full="true positive" data-tip="字典判為相關、人工也判為相關。" title="true positive — 字典判為相關、人工也判為相關。">TP</abbr> = 4、FP = 1、FN = 2、<abbr class="tt" tabindex="0" data-term="TN" data-full="true negative" data-tip="字典與人工都判為不相關。" title="true negative — 字典與人工都判為不相關。">TN</abbr> = 5；<abbr class="tt" tabindex="0" data-term="precision" data-tip="TP / (TP + FP)：字典比對到的文本中真正相關的比例。" title="TP / (TP + FP)：字典比對到的文本中真正相關的比例。">precision</abbr> 0.80、<abbr class="tt" tabindex="0" data-term="recall" data-tip="TP / (TP + FN)：真正相關的文本中被字典抓到的比例；需要讀沒比對到的文本才能估。" title="TP / (TP + FN)：真正相關的文本中被字典抓到的比例；需要讀沒比對到的文本才能估。">recall</abbr> 0.667、<abbr class="tt" tabindex="0" data-term="F1" data-full="F1 score (F-measure with β = 1)" data-tip="precision 與 recall 的調和平均：2TP / (2TP + FP + FN)。" title="F1 score (F-measure with β = 1) — precision 與 recall 的調和平均：2TP / (2TP + FP + FN)。">F1</abbr> 0.727，與投影片 95 一致。</li>
     <li>answers：v1 找到同樣 4 句相關句，但也標了 4 句不相關句。</li>
     <li>如果現在加 <code>coal</code> 或 <code>heating</code>，就是用測試句的資訊改字典；要評估新版本，需要一組新的測試集。</li>
     <li>這些結果只描述 12 句測試句；要評估國會發言，需要那些發言的人工標記。</li>
   </ul>
 
   <h2 id="c11-w6">W6 預習：五篇文本、一個困難決定 <span class="slideref">投影片 96</span></h2>
-  <p>W5（10 月 9 日）放假；W6（10 月 16 日）談人工編碼與分類。現在先用簡短 <abbr class="tt" tabindex="0" data-term="codebook" title="人工標記的規則說明，附正例、反例與模糊例，讓不同編碼者標得一致。">codebook</abbr> 標五篇、說明一個不確定的決定、把字典預測分開保存；約 10 分鐘，不用訓練模型也不用上傳。</p>
+  <p>W5（10 月 9 日）放假；W6（10 月 16 日）談人工編碼與分類。現在先用簡短 <abbr class="tt" tabindex="0" data-term="codebook" data-tip="人工標記的規則說明，附正例、反例與模糊例，讓不同編碼者標得一致。" title="人工標記的規則說明，附正例、反例與模糊例，讓不同編碼者標得一致。">codebook</abbr> 標五篇、說明一個不確定的決定、把字典預測分開保存；約 10 分鐘，不用訓練模型也不用上傳。</p>
   <div class="outbox"><div class="ohead">R console output（本機實跑 W4/lab/Lab_Session_W4.R，第 15 個程式區塊）</div><pre>&gt; development_texts &lt;- subset(coding_template, split == "development")
 
 &gt; preview &lt;- head(development_texts, 5)
@@ -2521,40 +2530,40 @@ precision    recall        F1
   <h2 id="c12-ds">Denny &amp; Spirling (2018) <span class="slideref">投影片 39–41、98</span></h2>
   <div class="rgrid">
     <div><b>書目</b>“Text Preprocessing for Unsupervised Learning: Why It Matters, When It Misleads, and What to Do about It.” <em>Political Analysis</em> 26(2): 168–189.</div>
-    <div><b>本週用到的論點</b>同樣 8 份英國宣言（1983–1997）、同一個 <abbr class="tt" tabindex="0" data-term="Wordfish" title="從字數估計文件在一維量尺上位置的縮放模型（W7）；Denny &amp; Spirling 用它示範前處理的影響。">Wordfish</abbr> 模型，128 種前處理規格排出 12 種不同順序（投影片 40）。</div>
+    <div><b>本週用到的論點</b>同樣 8 份英國宣言（1983–1997）、同一個 <abbr class="tt" tabindex="0" data-term="Wordfish" data-tip="從字數估計文件在一維量尺上位置的縮放模型（W7）；Denny &amp; Spirling 用它示範前處理的影響。" title="從字數估計文件在一維量尺上位置的縮放模型（W7）；Denny &amp; Spirling 用它示範前處理的影響。">Wordfish</abbr> 模型，128 種前處理規格排出 12 種不同順序（投影片 40）。</div>
     <div><b>帶回字典</b>實質比較在合理的計分選擇下站得住嗎？（投影片 41；本教材第 05–06 章）</div>
     <div><b>全文</b>不在 repo。未取得全文，無法提供論文頁碼。</div>
   </div>
   <h2 id="c12-rauh">Rauh (2018) <span class="slideref">投影片 56–60、98</span></h2>
   <div class="rgrid">
-    <div><b>書目</b>“Validating a <abbr class="tt" tabindex="0" data-term="sentiment" title="某件事被如何評價（正面或負面）；和議題注意力、立場是不同的概念。">Sentiment</abbr> Dictionary for German Political Language: A Workbench Note.” <em>Journal of Information Technology &amp; Politics</em> 15(4): 319–343.</div>
-    <div><b>設計</b>合併 <abbr class="tt" tabindex="0" data-term="SentiWS" title="德文情緒詞典；Rauh（2018）把它與 GermanPolarityClues 合併並人工審查。">SentiWS</abbr> 與 <abbr class="tt" tabindex="0" data-term="GermanPolarityClues" title="德文極性詞典；Rauh（2018）與 SentiWS 合併成德國政治語言情緒字典。">GermanPolarityClues</abbr>、人工審查、兩字<abbr class="tt" tabindex="0" data-term="negation" title="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。">否定</abbr>規則；(正 − 負) / 保留詞數；3 位編碼者 1,500 句 <abbr class="tt" tabindex="0" data-term="Bundestag" title="德國聯邦議院；Rauh（2018）用 1,500 句 Bundestag 句子做人工驗證。">Bundestag</abbr> 句子（投影片 57）。</div>
-    <div><b>關鍵數字</b>完全一致 59.1%、<abbr class="tt" tabindex="0" data-term="ordinal alpha" title="Krippendorff 型的序數一致性指標；Rauh（2018）三位編碼者為 .675。">ordinal alpha</abbr> .675（投影片 58）；正面評價比負面容易還原；分數集中在 0 附近（投影片 60）。</div>
+    <div><b>書目</b>“Validating a <abbr class="tt" tabindex="0" data-term="sentiment" data-tip="某件事被如何評價（正面或負面）；和議題注意力、立場是不同的概念。" title="某件事被如何評價（正面或負面）；和議題注意力、立場是不同的概念。">Sentiment</abbr> Dictionary for German Political Language: A Workbench Note.” <em>Journal of Information Technology &amp; Politics</em> 15(4): 319–343.</div>
+    <div><b>設計</b>合併 <abbr class="tt" tabindex="0" data-term="SentiWS" data-tip="德文情緒詞典；Rauh（2018）把它與 GermanPolarityClues 合併並人工審查。" title="德文情緒詞典；Rauh（2018）把它與 GermanPolarityClues 合併並人工審查。">SentiWS</abbr> 與 <abbr class="tt" tabindex="0" data-term="GermanPolarityClues" data-tip="德文極性詞典；Rauh（2018）與 SentiWS 合併成德國政治語言情緒字典。" title="德文極性詞典；Rauh（2018）與 SentiWS 合併成德國政治語言情緒字典。">GermanPolarityClues</abbr>、人工審查、兩字<abbr class="tt" tabindex="0" data-term="negation" data-tip="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。" title="否定：not good 這類語意反轉；詞袋字典預設不處理，需要另加規則。">否定</abbr>規則；(正 − 負) / 保留詞數；3 位編碼者 1,500 句 <abbr class="tt" tabindex="0" data-term="Bundestag" data-tip="德國聯邦議院；Rauh（2018）用 1,500 句 Bundestag 句子做人工驗證。" title="德國聯邦議院；Rauh（2018）用 1,500 句 Bundestag 句子做人工驗證。">Bundestag</abbr> 句子（投影片 57）。</div>
+    <div><b>關鍵數字</b>完全一致 59.1%、<abbr class="tt" tabindex="0" data-term="ordinal alpha" data-tip="Krippendorff 型的序數一致性指標；Rauh（2018）三位編碼者為 .675。" title="Krippendorff 型的序數一致性指標；Rauh（2018）三位編碼者為 .675。">ordinal alpha</abbr> .675（投影片 58）；正面評價比負面容易還原；分數集中在 0 附近（投影片 60）。</div>
     <div><b>全文</b>不在 repo。未取得全文，無法提供論文頁碼。</div>
   </div>
   <h2 id="c12-pr">Proksch, Lowe, Wäckerle &amp; Soroka (2019) <span class="slideref">投影片 61–66、98</span></h2>
   <div class="rgrid">
     <div><b>書目</b>“Multilingual Sentiment Analysis: A New Approach to Measuring Conflict in Legislative Speeches.” <em>Legislative Studies Quarterly</em> 44(1): 97–131.</div>
-    <div><b>設計</b>約 26,000 篇演說、871 個德國政府法案（2005–2017）；翻譯 <abbr class="tt" tabindex="0" data-term="Lexicoder" title="為政治文本設計的情緒字典；Proksch et al.（2019）翻譯後用於多語國會演說。">Lexicoder</abbr>；log((P + 0.5) / (N + 0.5))；<abbr class="tt" tabindex="0" data-term="logistic regression" title="預測二元結果機率的迴歸；Proksch et al. 用它分析法案是否無異議通過。">logistic 迴歸</abbr>（814 個法案）（投影片 62、65）。</div>
+    <div><b>設計</b>約 26,000 篇演說、871 個德國政府法案（2005–2017）；翻譯 <abbr class="tt" tabindex="0" data-term="Lexicoder" data-tip="為政治文本設計的情緒字典；Proksch et al.（2019）翻譯後用於多語國會演說。" title="為政治文本設計的情緒字典；Proksch et al.（2019）翻譯後用於多語國會演說。">Lexicoder</abbr>；log((P + 0.5) / (N + 0.5))；<abbr class="tt" tabindex="0" data-term="logistic regression" data-tip="預測二元結果機率的迴歸；Proksch et al. 用它分析法案是否無異議通過。" title="預測二元結果機率的迴歸；Proksch et al. 用它分析法案是否無異議通過。">logistic 迴歸</abbr>（814 個法案）（投影片 62、65）。</div>
     <div><b>驗證</b>300 段、每段兩個人工評分；群組層級相關約 0.9，不是 90% 準確率（投影片 63）。翻譯是測量決策（投影片 64）。</div>
     <div><b>全文</b>不在 repo。未取得全文，無法提供論文頁碼。</div>
   </div>
   <h2 id="c12-gs">Grimmer &amp; Stewart (2013)（repo：<code>Ｗ1/papers/Grimmer2013.pdf</code>）</h2>
   <div class="rgrid">
     <div><b>書目</b>“Text as Data: The Promise and Pitfalls of Automatic Content Analysis Methods for Political Texts.” <em>Political Analysis</em> 21(3): 267–297。投影片 7、9、11 引用。</div>
-    <div><b>字典的定義（p. 274）</b>字典用關鍵字出現的比率把文件分類，或衡量文件屬於某類別的程度；最簡單的 tone 是每個字給 +1／−1，再除以文件字數 N<sub>i</sub>——就是第 04 章 <abbr class="tt" tabindex="0" data-term="net tone" title="100 × (P − N) / L：正面減負面比對數除以總 token 數，單位是每百字。">net tone</abbr> 的形式（差在乘 100）。</div>
+    <div><b>字典的定義（p. 274）</b>字典用關鍵字出現的比率把文件分類，或衡量文件屬於某類別的程度；最簡單的 tone 是每個字給 +1／−1，再除以文件字數 N<sub>i</sub>——就是第 04 章 <abbr class="tt" tabindex="0" data-term="net tone" data-tip="100 × (P − N) / L：正面減負面比對數除以總 token 數，單位是每百字。" title="100 × (P − N) / L：正面減負面比對數除以總 token 數，單位是每百字。">net tone</abbr> 的形式（差在乘 100）。</div>
     <div><b>領域特定性（pp. 274–275）</b>字典的分數必須貼近字在<strong>該脈絡</strong>的用法；作者引 Loughran &amp; McDonald（2011）：tax、cost、crude（oil）、cancer 在其他脈絡帶負面意涵，在公司財報裡可能帶正面意涵；把一個領域建的字典套到另一個領域，可能出現嚴重錯誤。</div>
     <div><b>驗證（p. 275；原則 4 見 p. 271）</b>作者指出字典測量「rarely validated」，建議要嘛把問題簡化成二元分類、用人工黃金標準驗證，要嘛像非監督方法一樣多面向驗證。原則 4：“Validate, Validate, Validate”。</div>
   </div>
   <h2 id="c12-more">延伸閱讀與軟體（投影片 99）</h2>
   <ul>
     <li>Grimmer, Roberts &amp; Stewart (2022). <em>Text as Data</em>. Chapters 5 and 16.</li>
-    <li>Hvitfeldt &amp; Silge. <em>Supervised Machine Learning for Text Analysis in R</em>. <abbr class="tt" tabindex="0" data-term="token" title="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。">tokenization</abbr> 與 <abbr class="tt" tabindex="0" data-term="stopwords" title="常見功能詞清單；stopwords(&quot;en&quot;) 包含 not，先刪停用詞會讓否定規則失效。">stopwords</abbr> 章節（線上）。</li>
+    <li>Hvitfeldt &amp; Silge. <em>Supervised Machine Learning for Text Analysis in R</em>. <abbr class="tt" tabindex="0" data-term="token" data-tip="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。" title="切字後的基本單位（字、標點等）；quanteda 用 tokens() 把文本切成 token 序列。">tokenization</abbr> 與 <abbr class="tt" tabindex="0" data-term="stopwords" data-tip="常見功能詞清單；stopwords(&quot;en&quot;) 包含 not，先刪停用詞會讓否定規則失效。" title="常見功能詞清單；stopwords(&quot;en&quot;) 包含 not，先刪停用詞會讓否定規則失效。">stopwords</abbr> 章節（線上）。</li>
     <li>Eichorst &amp; Lin (2019). “Resist to Commit.” <em>The Journal of Politics</em> 81(1): 15–32.</li>
     <li>Boyle et al. (2025). “Catalysts for progress? Mapping policy insights from energy research.” <em>Energy Research &amp; Social Science</em> 121: 103955.</li>
-    <li>軟體：<abbr class="tt" tabindex="0" data-term="quanteda" title="本課使用的 R 文本分析套件，提供 corpus、tokens、dfm、dictionary、kwic 等工具。">quanteda</abbr>（字典、<abbr class="tt" tabindex="0" data-term="KWIC" title="keyword in context：列出每次比對到的字及其前後文，用來人工判讀比對是否切題。">KWIC</abbr>、比對）、<abbr class="tt" tabindex="0" data-term="quanteda.textstats" title="quanteda 的統計擴充套件，提供 textstat_frequency、textstat_collocations、textstat_keyness 等函式。">quanteda.textstats</abbr>（頻率、<abbr class="tt" tabindex="0" data-term="collocation" title="搭配詞：相鄰出現且統計上強烈相關的字串（如 sri lanka）；只是候選詞，仍需人工判讀。">搭配詞</abbr>、<abbr class="tt" tabindex="0" data-term="keyness" title="某字在 target 群相對 reference 群被多用的程度；不是頻率，也不是情緒。">keyness</abbr>）、<abbr class="tt" tabindex="0" data-term="UDPipe" title="做斷詞、詞類標註、lemma 與依存分析的工具；R 套件 udpipe 需下載語言模型。">UDPipe</abbr>／<abbr class="tt" tabindex="0" data-term="TextRank" title="在候選詞的共現網絡上用 PageRank 排名關鍵詞；高中心性不代表與構念相關。">TextRank</abbr>、ggplot2、<abbr class="tt" tabindex="0" data-term="Flair" title="Python 的 NLP 套件；W4_flair_ner.py 用它的 ner-fast 模型做具名實體辨識。">Flair</abbr>（Python <abbr class="tt" tabindex="0" data-term="NER" title="具名實體辨識：找出人名、組織、地點等名稱及其類型；提到實體不等於立場。">NER</abbr>）、<abbr class="tt" tabindex="0" data-term="irr" title="計算編碼者一致性的 R 套件；本週用 kappa2() 算 Cohen’s κ。">irr</abbr>（編碼者一致性）、<abbr class="tt" tabindex="0" data-term="LIWC" title="Linguistic Inquiry and Word Count：授權軟體與專有字典，多數類別分數是佔全文字數的百分比。">LIWC</abbr>。</li>
+    <li>軟體：<abbr class="tt" tabindex="0" data-term="quanteda" data-tip="本課使用的 R 文本分析套件，提供 corpus、tokens、dfm、dictionary、kwic 等工具。" title="本課使用的 R 文本分析套件，提供 corpus、tokens、dfm、dictionary、kwic 等工具。">quanteda</abbr>（字典、<abbr class="tt" tabindex="0" data-term="KWIC" data-full="keyword in context" data-tip="列出每次比對到的字及其前後文，用來人工判讀比對是否切題。" title="keyword in context — 列出每次比對到的字及其前後文，用來人工判讀比對是否切題。">KWIC</abbr>、比對）、<abbr class="tt" tabindex="0" data-term="quanteda.textstats" data-tip="quanteda 的統計擴充套件，提供 textstat_frequency、textstat_collocations、textstat_keyness 等函式。" title="quanteda 的統計擴充套件，提供 textstat_frequency、textstat_collocations、textstat_keyness 等函式。">quanteda.textstats</abbr>（頻率、<abbr class="tt" tabindex="0" data-term="collocation" data-tip="搭配詞：相鄰出現且統計上強烈相關的字串（如 sri lanka）；只是候選詞，仍需人工判讀。" title="搭配詞：相鄰出現且統計上強烈相關的字串（如 sri lanka）；只是候選詞，仍需人工判讀。">搭配詞</abbr>、<abbr class="tt" tabindex="0" data-term="keyness" data-tip="某字在 target 群相對 reference 群被多用的程度；不是頻率，也不是情緒。" title="某字在 target 群相對 reference 群被多用的程度；不是頻率，也不是情緒。">keyness</abbr>）、<abbr class="tt" tabindex="0" data-term="UDPipe" data-tip="做斷詞、詞類標註、lemma 與依存分析的工具；R 套件 udpipe 需下載語言模型。" title="做斷詞、詞類標註、lemma 與依存分析的工具；R 套件 udpipe 需下載語言模型。">UDPipe</abbr>／<abbr class="tt" tabindex="0" data-term="TextRank" data-tip="在候選詞的共現網絡上用 PageRank 排名關鍵詞；高中心性不代表與構念相關。" title="在候選詞的共現網絡上用 PageRank 排名關鍵詞；高中心性不代表與構念相關。">TextRank</abbr>、ggplot2、<abbr class="tt" tabindex="0" data-term="Flair" data-tip="Python 的 NLP 套件；W4_flair_ner.py 用它的 ner-fast 模型做具名實體辨識。" title="Python 的 NLP 套件；W4_flair_ner.py 用它的 ner-fast 模型做具名實體辨識。">Flair</abbr>（Python <abbr class="tt" tabindex="0" data-term="NER" data-full="named entity recognition" data-tip="具名實體辨識：找出人名、組織、地點等名稱及其類型；提到實體不等於立場。" title="named entity recognition — 具名實體辨識：找出人名、組織、地點等名稱及其類型；提到實體不等於立場。">NER</abbr>）、<abbr class="tt" tabindex="0" data-term="irr" data-tip="計算編碼者一致性的 R 套件；本週用 kappa2() 算 Cohen’s κ。" title="計算編碼者一致性的 R 套件；本週用 kappa2() 算 Cohen’s κ。">irr</abbr>（編碼者一致性）、<abbr class="tt" tabindex="0" data-term="LIWC" data-full="Linguistic Inquiry and Word Count" data-tip="授權軟體與專有字典，多數類別分數是佔全文字數的百分比。" title="Linguistic Inquiry and Word Count — 授權軟體與專有字典，多數類別分數是佔全文字數的百分比。">LIWC</abbr>。</li>
   </ul>
-  <p class="hint">以上延伸閱讀的全文同樣不在 repo；如需細讀，請 Jerry 透過學校 VPN 下載。</p>
+  <p class="hint">以上延伸閱讀的全文同樣不在 repo；如需細讀，請 Jerry 透過學校 <abbr class="tt" tabindex="0" data-term="VPN" data-full="virtual private network" data-tip="虛擬私人網路；用台大 VPN 才能從校外下載付費期刊全文。" title="virtual private network — 虛擬私人網路；用台大 VPN 才能從校外下載付費期刊全文。">VPN</abbr> 下載。</p>
 </section>
 
 <!-- ===================== CH13 ===================== -->
@@ -2566,11 +2575,11 @@ precision    recall        F1
   <details class="quiz"><summary>把「提到」當成「評價」</summary><div class="qa"><p>提到 inflation 不代表負面評價家戶狀況（投影片 3）。議題詞量注意力，評價詞量情緒，兩者要連到同一個對象。</p></div></details>
   <details class="quiz"><summary>把情緒當立場</summary><div class="qa"><p>負面語言描述問題，同時可能支持某政策（投影片 4、66）。</p></div></details>
   <details class="quiz"><summary>只比次數、不除長度</summary><div class="qa"><p>speech_2792 有 20 次 bill* 比對但每百字 1.48；speech_4435 只有 4 次卻是 5.80（投影片 31）。</p></div></details>
-  <details class="quiz"><summary>把 0 當中性</summary><div class="qa"><p>沒比對到與正負相抵都是 0；空文本是 <abbr class="tt" tabindex="0" data-term="NA" title="R 的缺失值；分母為 0（如空文本）時分數未定義，應記為 NA，而不是 0。">NA</abbr>（投影片 34）。</p></div></details>
-  <details class="quiz"><summary>先刪停用詞再比對否定或片語</summary><div class="qa"><p><code>not</code> 在 <abbr class="tt" tabindex="0" data-term="stopwords" title="常見功能詞清單；stopwords(&quot;en&quot;) 包含 not，先刪停用詞會讓否定規則失效。">stopwords</abbr>("en") 裡會被刪掉（投影片 36）；片語要在刪停用詞之前比對（投影片 29）。</p></div></details>
+  <details class="quiz"><summary>把 0 當中性</summary><div class="qa"><p>沒比對到與正負相抵都是 0；空文本是 <abbr class="tt" tabindex="0" data-term="NA" data-full="Not Available (R&#x27;s missing value)" data-tip="R 的缺失值；分母為 0（如空文本）時分數未定義，應記為 NA，而不是 0。" title="Not Available (R&#x27;s missing value) — R 的缺失值；分母為 0（如空文本）時分數未定義，應記為 NA，而不是 0。">NA</abbr>（投影片 34）。</p></div></details>
+  <details class="quiz"><summary>先刪停用詞再比對否定或片語</summary><div class="qa"><p><code>not</code> 在 <abbr class="tt" tabindex="0" data-term="stopwords" data-tip="常見功能詞清單；stopwords(&quot;en&quot;) 包含 not，先刪停用詞會讓否定規則失效。" title="常見功能詞清單；stopwords(&quot;en&quot;) 包含 not，先刪停用詞會讓否定規則失效。">stopwords</abbr>("en") 裡會被刪掉（投影片 36）；片語要在刪停用詞之前比對（投影片 29）。</p></div></details>
   <details class="quiz"><summary>萬用字元太寬</summary><div class="qa"><p><code>bill*</code> 抓到 billion、billericay（投影片 28）。</p></div></details>
-  <details class="quiz"><summary>只讀比對到的段落就宣稱 recall</summary><div class="qa"><p>沒有比對到的段落才找得到 <abbr class="tt" tabindex="0" data-term="FN" title="false negative：人工判為相關、字典沒比對到（漏掉）；只能在沒比對到的文本裡找到。">false negatives</abbr>（投影片 50）。</p></div></details>
-  <details class="quiz"><summary>在測試集上繼續調字典</summary><div class="qa"><p><abbr class="tt" tabindex="0" data-term="freeze" title="凍結：測試前固定字典版本並記錄，之後不再修改；用測試資訊改字典就需要新的測試集。">凍結</abbr>後才測試；用了測試資訊就需要新的測試集（投影片 24、95；Lab answers）。</p></div></details>
+  <details class="quiz"><summary>只讀比對到的段落就宣稱 recall</summary><div class="qa"><p>沒有比對到的段落才找得到 <abbr class="tt" tabindex="0" data-term="FN" data-full="false negative" data-tip="人工判為相關、字典沒比對到（漏掉）；只能在沒比對到的文本裡找到。" title="false negative — 人工判為相關、字典沒比對到（漏掉）；只能在沒比對到的文本裡找到。">false negatives</abbr>（投影片 50）。</p></div></details>
+  <details class="quiz"><summary>在測試集上繼續調字典</summary><div class="qa"><p><abbr class="tt" tabindex="0" data-term="freeze" data-tip="凍結：測試前固定字典版本並記錄，之後不再修改；用測試資訊改字典就需要新的測試集。" title="凍結：測試前固定字典版本並記錄，之後不再修改；用測試資訊改字典就需要新的測試集。">凍結</abbr>後才測試；用了測試資訊就需要新的測試集（投影片 24、95；Lab answers）。</p></div></details>
   <details class="quiz"><summary>把群組相關當分類準確率</summary><div class="qa"><p>Proksch et al. 的 0.9 是群組層級相關（投影片 63）。</p></div></details>
   <details class="quiz"><summary>以為有現成字典就合適／有授權</summary><div class="qa"><p>Availability is not evidence of suitability（投影片 14）；匯入檔案不等於取得授權（投影片 68）。</p></div></details>
 
@@ -2623,12 +2632,12 @@ precision    recall        F1
     <li>Grimmer, J., M. E. Roberts, and B. M. Stewart (2022). <em>Text as Data</em>. Princeton University Press. Chapters 5 and 16.</li>
     <li>Grimmer, J., and B. M. Stewart (2013). “Text as Data.” <em>Political Analysis</em> 21(3): 267–297.</li>
     <li>Hvitfeldt, E., and J. Silge (2022). <em>Supervised Machine Learning for Text Analysis in R</em>.</li>
-    <li>Lin, W.-F. (2023). “<abbr class="tt" tabindex="0" data-term="LIWC" title="Linguistic Inquiry and Word Count：授權軟體與專有字典，多數類別分數是佔全文字數的百分比。">Linguistic inquiry and word count</abbr> in sport and exercise.” <em>Physical Education Journal</em> 56(1): 1–16. doi:10.6222/pej.202303_56(1).0001（投影片 75）</li>
+    <li>Lin, W.-F. (2023). “<abbr class="tt" tabindex="0" data-term="LIWC" data-full="Linguistic Inquiry and Word Count" data-tip="授權軟體與專有字典，多數類別分數是佔全文字數的百分比。" title="Linguistic Inquiry and Word Count — 授權軟體與專有字典，多數類別分數是佔全文字數的百分比。">Linguistic inquiry and word count</abbr> in sport and exercise.” <em>Physical Education Journal</em> 56(1): 1–16. doi:10.6222/pej.202303_56(1).0001（投影片 75）</li>
     <li>Lin, W.-F., C.-L. Huang, Y.-C. Lin, C.-L. Lee, and J. W. Pennebaker (2020). “The Revision of the Chinese Linguistic Inquiry and Word Count Dictionary 2015.” <em>Survey Research – Method and Application</em> 45: 73–118. doi:10.7014/SRMA.2020100004（投影片 76）</li>
     <li>Proksch, S.-O., W. Lowe, J. Wäckerle, and S. Soroka (2019). <em>Legislative Studies Quarterly</em> 44(1): 97–131.</li>
     <li>Rauh, C. (2018). <em>Journal of Information Technology &amp; Politics</em> 15(4): 319–343.</li>
   </ul>
-  <div class="pagemeta">本教材依據 NTLDEV 7191 W4 投影片（Yen-Chieh Liao 廖彥傑，2026-10-02；PDF 共 99 頁，Last compiled 2026-10-08）、<code>W4/classroom/W4_classroom.R</code>、<code>workflow.R</code>、<code>examples/</code>、<code>W4/lab/Lab_Session_W4.R</code> 與 <code>answers/</code> 製作。R 輸出為本機重新執行（R 4.5.3、<abbr class="tt" tabindex="0" data-term="quanteda" title="本課使用的 R 文本分析套件，提供 corpus、tokens、dfm、dictionary、kwic 等工具。">quanteda</abbr> 4.5.1、<abbr class="tt" tabindex="0" data-term="quanteda.textstats" title="quanteda 的統計擴充套件，提供 textstat_frequency、textstat_collocations、textstat_keyness 等函式。">quanteda.textstats</abbr> 0.97.2、<abbr class="tt" tabindex="0" data-term="irr" title="計算編碼者一致性的 R 套件；本週用 kappa2() 算 Cohen’s κ。">irr</abbr> 0.85、ggplot2 4.0.3；Linux aarch64）。三篇指定閱讀全文不在 repo，導讀卡依投影片整理。標示「補充（非講義內容）」的段落與玩具示範為額外說明。製作日期 2026-11-06。</div>
+  <div class="pagemeta">本教材依據 NTLDEV 7191 W4 投影片（Yen-Chieh Liao 廖彥傑，2026-10-02；<abbr class="tt" tabindex="0" data-term="PDF" data-full="Portable Document Format" data-tip="可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。" title="Portable Document Format — 可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。">PDF</abbr> 共 99 頁，Last compiled 2026-10-08）、<code>W4/classroom/W4_classroom.R</code>、<code>workflow.R</code>、<code>examples/</code>、<code>W4/lab/Lab_Session_W4.R</code> 與 <code>answers/</code> 製作。R 輸出為本機重新執行（R 4.5.3、<abbr class="tt" tabindex="0" data-term="quanteda" data-tip="本課使用的 R 文本分析套件，提供 corpus、tokens、dfm、dictionary、kwic 等工具。" title="本課使用的 R 文本分析套件，提供 corpus、tokens、dfm、dictionary、kwic 等工具。">quanteda</abbr> 4.5.1、<abbr class="tt" tabindex="0" data-term="quanteda.textstats" data-tip="quanteda 的統計擴充套件，提供 textstat_frequency、textstat_collocations、textstat_keyness 等函式。" title="quanteda 的統計擴充套件，提供 textstat_frequency、textstat_collocations、textstat_keyness 等函式。">quanteda.textstats</abbr> 0.97.2、<abbr class="tt" tabindex="0" data-term="irr" data-tip="計算編碼者一致性的 R 套件；本週用 kappa2() 算 Cohen’s κ。" title="計算編碼者一致性的 R 套件；本週用 kappa2() 算 Cohen’s κ。">irr</abbr> 0.85、ggplot2 4.0.3；Linux aarch64）。三篇指定閱讀全文不在 repo，導讀卡依投影片整理。標示「補充（非講義內容）」的段落與玩具示範為額外說明。製作日期 2026-11-06。</div>
 </section>
 
     <div class="foot">NTLDEV 7191 Text as Data · W4 互動自學教材 · 依據 2026-10-02 投影片製作（2026-11-06）</div>
@@ -2637,7 +2646,7 @@ precision    recall        F1
     <div class="sp-h"><span class="sp-t">投影片對照</span><span class="sp-l" id="spLabel">p. 1 / 99</span><button class="btn" id="spClose">隱藏</button></div>
     <div class="sp-img" id="spImgBox" title="點擊放大"><img id="spImg" alt="投影片頁面"></div>
     <div class="sp-nav"><button class="btn arrow" id="spPrev" aria-label="上一頁投影片">‹</button><div class="sp-tabs" id="spTabs"></div><button class="btn arrow" id="spNext" aria-label="下一頁投影片">›</button></div>
-    <label class="sp-follow"><input type="checkbox" id="spFollow" checked> 跟著捲動自動切換頁面</label>
+    <label class="sp-follow"><input type="checkbox" id="spFollow" checked> 跟著捲動自動切換頁面</label><label class="sp-follow sp-rev"><input type="checkbox" id="spRev" checked> 換投影片時，講義跟著跳到對應段落</label><form class="sp-goto" id="spGoto" autocomplete="off"><label for="spGotoN">跳到投影片 p.</label><input type="number" id="spGotoN" min="1" inputmode="numeric" placeholder="頁碼"><button class="btn" type="submit">前往</button></form>
     <div class="sp-note" id="spNote"></div>
     <div class="sp-strip" id="spStrip"></div>
   </aside>
@@ -2915,6 +2924,7 @@ function spChapterDefault(){
     spSet(parsePages(sec.dataset.slides),"本章開頭：先顯示最相關的投影片；捲動到標有「投影片」的段落時會自動切換。");return true;}
   return false;
 }
+try{window.__spApi={page:function(){return spPage;},setPage:function(n){spSetPage(n);},show:function(id){show(id,true);},badge:function(b){spFromBadge(b);},cur:function(){return spBadge;},chapter:function(){return current;},n:function(){return SLIDES.length;}};}catch(__e){}
 function spTrack(){
   if(!$("#spFollow").checked)return;
   var sec=$("section.chapter.show");if(!sec)return;
@@ -3466,6 +3476,78 @@ else if(window.__w8fail)window.__w8fail("no chapter shown");}catch(__e){__w8e("i
 })();
 
 </script>
+<script id="series-revsync">
+(function(){try{
+  var A=window.__spApi;if(!A)return;
+  var M={"exact": "講義已跳到引用投影片 p.%s 的段落：", "chapter": "講義已跳到涵蓋投影片 p.%s 的章節開頭：", "near": "講義沒有直接引用投影片 p.%s，已跳到最接近的段落（%s）：", "none": "講義沒有引用投影片 p.%s 附近的段落。", "stay": "目前段落已涵蓋投影片 p.%s。"};
+  function $(s,r){return (r||document).querySelector(s);}
+  function $$(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));}
+  var rev=$("#spRev"),follow=$("#spFollow");
+  try{var v=localStorage.getItem("tad:revsync");if(v==="0")rev.checked=false;}catch(e){}
+  rev.addEventListener("change",function(){try{localStorage.setItem("tad:revsync",rev.checked?"1":"0");}catch(e){}});
+  function pages(t){var out=[];(String(t).match(/\d+\s*[–-]\s*\d+|\d+/g)||[]).forEach(function(m){var r=m.split(/[–-]/).map(function(x){return +x;});
+    if(r.length===2&&r[1]>=r[0]&&r[1]-r[0]<200){for(var i=r[0];i<=r[1];i++)out.push(i);}else out.push(r[0]);});
+    var N=A.n();return out.filter(function(n){return n>=1&&n<=N;});}
+  var IDX=null;
+  function index(){if(IDX)return IDX;IDX=[];var k=0;
+    $$("section.chapter").forEach(function(sec){
+      $$(".slideref",sec).forEach(function(b){if(b.closest("aside,.fb,#ttPop"))return;var pg=pages(b.textContent);if(!pg.length)return;
+        IDX.push({b:b,sec:sec,lo:Math.min.apply(null,pg),hi:Math.max.apply(null,pg),pg:pg,k:k++});});});
+    return IDX;}
+  function ctx(b){var h=b.closest("h2,h3,h4");if(h)return h.textContent.replace(b.textContent,"").trim();
+    var c=b.closest(".callout,.card,li,p,td,div");var t=c?c.textContent.replace(/\s+/g," ").trim():"";return t.length>60?t.slice(0,58)+"…":t;}
+  function secTitle(sec){var h=$("h2",sec)||$("h1",sec);if(!h)return sec.id;var c=h.cloneNode(true);$$(".slideref",c).forEach(function(x){x.parentNode.removeChild(x);});return c.textContent.replace(/\s+/g," ").trim();}
+  function block(b){return b.closest("h2,h3,h4,.callout,li,p,tr,.card,figure,div")||b;}
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+  function setNote(h){var n=$("#spNote");if(n)n.innerHTML=h;}
+  function flash(el){if(!el)return;el.classList.remove("sp-hit");void el.offsetWidth;el.classList.add("sp-hit");setTimeout(function(){el.classList.remove("sp-hit");},2400);}
+  function vis(e){return !!(e&&e.offsetParent);}
+  function goSec(sec){if(A.chapter()!==sec.id)A.show(sec.id);}
+  function scrollTo(el){var r=el.getBoundingClientRect();var y=r.top+(window.pageYOffset||document.documentElement.scrollTop)-Math.round(innerHeight*0.26);
+    window.scrollTo(0,Math.max(0,y));}
+  var lockT=null,wasFollow=true;
+  function lock(){if(lockT){clearTimeout(lockT);}else{wasFollow=follow?follow.checked:false;}if(follow)follow.checked=false;
+    lockT=setTimeout(function(){if(follow)follow.checked=wasFollow;lockT=null;},450);}
+  function jump(p){
+    if(!rev.checked)return;
+    var cur=A.cur();if(cur&&vis(cur)&&pages(cur.textContent).indexOf(p)>=0){return;}
+    var I=index(),chap=A.chapter();
+    var ex=I.filter(function(x){return x.pg.indexOf(p)>=0;});
+    /* chapter that walks through this part of the deck: density of nearby citations (+ current-chapter bonus) */
+    var sc={};I.forEach(function(x){var d=1e9;x.pg.forEach(function(q){d=Math.min(d,Math.abs(q-p));});if(d<=2)sc[x.sec.id]=(sc[x.sec.id]||0)+(d===0?2:1)/x.pg.length;});
+    $$("section.chapter").forEach(function(s){if(s.dataset.slides&&pages(s.dataset.slides).indexOf(p)>=0)sc[s.id]=(sc[s.id]||0)+1;});
+    if(sc[chap])sc[chap]+=1.5;
+    ex.sort(function(a,b){return ((sc[b.sec.id]||0)-(sc[a.sec.id]||0))||(a.pg.length-b.pg.length)||(a.k-b.k);});
+    lock();
+    for(var i=0;i<ex.length;i++){goSec(ex[i].sec);if(vis(ex[i].b)){land(ex[i].b,p,"exact");return;}}
+    var secs=$$("section.chapter").filter(function(s){return s.dataset.slides&&pages(s.dataset.slides).indexOf(p)>=0;});
+    secs.sort(function(a,b){return (a.id===chap?0:1)-(b.id===chap?0:1);});
+    if(secs.length){goSec(secs[0]);window.scrollTo(0,0);A.setPage(p);setNote(M.chapter.replace("%s",p)+"<b>"+esc(secTitle(secs[0]))+"</b>");flash($("h2",secs[0]));return;}
+    var near=I.slice().sort(function(a,b){
+      var da=a.hi<p?p-a.hi:(a.lo-p)+0.5,db=b.hi<p?p-b.hi:(b.lo-p)+0.5;return (da-db)||((a.hi-a.lo)-(b.hi-b.lo))||(a.k-b.k);});
+    for(var j=0;j<near.length&&j<40;j++){goSec(near[j].sec);if(vis(near[j].b)){land(near[j].b,p,"near");return;}}
+    setNote(M.none.replace("%s",p));
+  }
+  function land(b,p,kind){
+    setTimeout(function(){
+      scrollTo(b);
+      if(kind==="exact"){A.badge(b);}
+      A.setPage(p);
+      var lab=b.textContent.replace(/\s+/g," ").trim();
+      setNote((kind==="exact"?M.exact.replace("%s",p):M.near.replace("%s",p).replace("%s",esc(lab)))+"<b>"+esc(ctx(b)||secTitle(b.closest("section.chapter")))+"</b>");
+      flash(block(b));
+    },40);
+  }
+  document.addEventListener("click",function(e){
+    var t=e.target.closest("#spPrev,#spNext,#spTabs button,#spStrip button");if(!t)return;
+    setTimeout(function(){jump(A.page());},0);
+  });
+  var f=$("#spGoto"),inp=$("#spGotoN");
+  if(inp)inp.max=A.n();
+  if(f)f.addEventListener("submit",function(e){e.preventDefault();var n=parseInt(inp.value,10);if(!(n>=1&&n<=A.n()))return;
+    A.setPage(n);jump(n);inp.blur();});
+}catch(e){if(window.console)console.warn("revsync",e);(window.__w8errs=window.__w8errs||[]).push("revsync: "+(e&&e.message));}})();
+</script>
 <script id="series-js">
 (function(){try{
   var pop=null,cur=null;
@@ -3473,7 +3555,7 @@ else if(window.__w8fail)window.__w8fail("no chapter shown");}catch(__e){__w8e("i
   function show(el){
     var p=mk(),tip=el.getAttribute("data-tip")||"";cur=el;
     p.innerHTML="";var b=document.createElement("b");b.appendChild(document.createTextNode(el.getAttribute("data-term")||el.textContent));
-    p.appendChild(b);p.appendChild(document.createTextNode(tip));p.style.display="block";
+    p.appendChild(b);var fu=el.getAttribute("data-full");if(fu){var fi=document.createElement("i");fi.className="full";fi.appendChild(document.createTextNode(fu));p.appendChild(fi);}p.appendChild(document.createTextNode(tip));p.style.display="block";
     var r=el.getBoundingClientRect(),w=p.offsetWidth,h=p.offsetHeight,vw=document.documentElement.clientWidth,vh=window.innerHeight;
     var x=r.left+r.width/2-w/2;if(x<12)x=12;if(x+w>vw-12)x=vw-12-w;
     var y=r.bottom+8;if(y+h>vh-8&&r.top-h-8>8)y=r.top-h-8;
@@ -3482,7 +3564,7 @@ else if(window.__w8fail)window.__w8fail("no chapter shown");}catch(__e){__w8e("i
   function hide(){if(pop)pop.style.display="none";cur=null;}
   var els=document.querySelectorAll("abbr.tt");
   for(var i=0;i<els.length;i++){(function(el){
-    var t=el.getAttribute("title");if(t){el.setAttribute("data-tip",t);el.removeAttribute("title");}
+    var t=el.getAttribute("title");if(t){if(!el.getAttribute("data-tip"))el.setAttribute("data-tip",t);el.removeAttribute("title");}
     el.addEventListener("mouseenter",function(){show(el);});
     el.addEventListener("mouseleave",function(){if(document.activeElement!==el)hide();});
     el.addEventListener("focus",function(){show(el);});

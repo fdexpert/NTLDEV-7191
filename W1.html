@@ -364,6 +364,13 @@
   #fcCards .btn{width:100%;}
   @media (max-width:860px){ #labDag .grid2{grid-template-columns:1fr;} #calTable td:nth-child(3){min-width:180px;} }
 </style>
+<style id="series-revsync-css">
+.sp-goto{display:flex;align-items:center;gap:6px;margin:4px 0 6px;font-size:.82rem;flex-wrap:wrap;}
+.sp-goto input{width:5.2em;padding:4px 6px;border-radius:8px;border:1px solid var(--border,#3a4456);background:transparent;color:inherit;font:inherit;}
+.sp-goto .btn{padding:3px 10px;}
+.sp-hit{animation:spHit 2.2s ease-out 1;border-radius:6px;}
+@keyframes spHit{0%,35%{background:rgba(255,196,0,.32);box-shadow:0 0 0 4px rgba(255,196,0,.32);}100%{background:transparent;box-shadow:0 0 0 4px transparent;}}
+</style>
 <style id="series-css">
 .topbar .homebtn,.topbar .langbtn{text-decoration:none;display:inline-flex;align-items:center;}
 .topbar .langbtn{font-weight:600;}
@@ -374,7 +381,9 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 #ttPop{position:fixed;z-index:9999;max-width:min(340px,calc(100vw - 24px));padding:10px 12px;border-radius:10px;
   background:var(--surface-2,#1d2330);color:var(--text,#e8ecf3);border:1px solid var(--border,#3a4456);box-shadow:0 8px 28px rgba(0,0,0,.35);
   font-size:.86rem;line-height:1.55;display:none;pointer-events:none;word-wrap:break-word;overflow-wrap:anywhere;}
-#ttPop b{display:block;margin-bottom:3px;color:var(--accent,#6aa9ff);}
+#ttPop b{display:block;margin-bottom:1px;color:var(--accent,#6aa9ff);}
+#ttPop i.full{display:block;font-style:normal;font-weight:600;margin-bottom:5px;opacity:.95;}
+#ttPop b+span{display:block;margin-top:3px;}
 </style>
 </head>
 <body>
@@ -383,7 +392,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 <div class="wrap">
   <nav class="side" id="side" aria-label="章節">
     <div class="brand"><span class="dot"></span>W1 文本即數據導論</div>
-    <div class="brandsub"><abbr class="tt" tabindex="0" data-term="text as data" title="把非結構化的語言轉成可分析的量化資訊，用來回答社會科學問題（投影片 4）。">Text as Data</abbr> · NTLDEV 7191<br>2026-09-11 · 廖彥傑老師</div>
+    <div class="brandsub"><abbr class="tt" tabindex="0" data-term="text as data" data-tip="把非結構化的語言轉成可分析的量化資訊，用來回答社會科學問題（投影片 4）。" title="把非結構化的語言轉成可分析的量化資訊，用來回答社會科學問題（投影片 4）。">Text as Data</abbr> · NTLDEV 7191<br>2026-09-11 · 廖彥傑老師</div>
     <div class="progress-mini jsonly"><span id="progTxt">已完成 0 / 15 章</span><div class="track"><div class="fill" id="progFill"></div></div>
       <div id="quizMini" class="quizmini">小測驗：0 / 0 題答對</div></div>
     <div class="nav-group"><div class="gtitle">Part 1：政治學裡的 Text as Data</div>
@@ -427,7 +436,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 <section class="chapter" id="ch00" data-slides="1,2">
   <div class="crumb">00 · 本週導覽</div>
   <h1 class="ch">W1：文本即數據導論（How We Can Use Text as Data for Social Science Research）</h1>
-  <p class="lead">第一週有兩件事：<strong>Part 1</strong> 說明什麼是 <abbr class="tt" tabindex="0" data-term="text as data" title="把非結構化的語言轉成可分析的量化資訊，用來回答社會科學問題（投影片 4）。">text as data</abbr>、這個領域怎麼發展、它被拿來做什麼；<strong>Part 2</strong> 說明這門課怎麼運作：課表、工具、評分、加分、AI 使用與學術誠信。<span class="slideref">投影片 1–2</span></p>
+  <p class="lead">第一週有兩件事：<strong>Part 1</strong> 說明什麼是 <abbr class="tt" tabindex="0" data-term="text as data" data-tip="把非結構化的語言轉成可分析的量化資訊，用來回答社會科學問題（投影片 4）。" title="把非結構化的語言轉成可分析的量化資訊，用來回答社會科學問題（投影片 4）。">text as data</abbr>、這個領域怎麼發展、它被拿來做什麼；<strong>Part 2</strong> 說明這門課怎麼運作：課表、工具、評分、加分、<abbr class="tt" tabindex="0" data-term="AI" data-full="artificial intelligence" data-tip="人工智慧：讓電腦執行需要「智慧」的任務（如理解語言、分類）的技術統稱。" title="artificial intelligence — 人工智慧：讓電腦執行需要「智慧」的任務（如理解語言、分類）的技術統稱。">AI</abbr> 使用與學術誠信。<span class="slideref">投影片 1–2</span></p>
 
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c0-obj">本週要能說明的事</a><a href="#c0-map">概念地圖</a><a href="#c0-src">這份教材用了哪些材料</a><a href="#c0-how">怎麼使用</a><a href="#c0-due">要記下來的日期</a>
@@ -436,7 +445,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <h2 id="c0-obj">本週要能說明的事</h2>
   <p>投影片沒有列「學習目標」，下面四點是依投影片 2–34 的結構整理的（整理方式屬補充，內容都有投影片出處）：</p>
   <ol class="objlist" id="objList">
-    <li data-o="1">用一句話說明 <strong>text as data</strong> 的意思，並說出 <abbr class="tt" tabindex="0" data-term="corpus" title="為特定研究目的選出、要分析的文件集合。">corpus</abbr> → representation → model → <abbr class="tt" tabindex="0" data-term="validation" title="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。">validation</abbr> → inference 這條流程的每一步。<span class="slideref">投影片 4</span></li>
+    <li data-o="1">用一句話說明 <strong>text as data</strong> 的意思，並說出 <abbr class="tt" tabindex="0" data-term="corpus" data-tip="為特定研究目的選出、要分析的文件集合。" title="為特定研究目的選出、要分析的文件集合。">corpus</abbr> → representation → model → <abbr class="tt" tabindex="0" data-term="validation" data-tip="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。" title="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。">validation</abbr> → inference 這條流程的每一步。<span class="slideref">投影片 4</span></li>
     <li data-o="2">分辨一篇研究是 <strong>Measurement</strong>（貢獻在量測／方法）還是 <strong>Application</strong>（貢獻在實質發現），並說明 validation 為什麼一直是核心要求。<span class="slideref">投影片 5–6</span></li>
     <li data-o="3">說出這門課的評分結構、三個關鍵期限（10/23、12/4、12/18）和加分規則的條件。<span class="slideref">投影片 14、25–28</span></li>
     <li data-o="4">知道作業中使用生成式 AI 時<strong>必須怎麼揭露</strong>，以及沒有揭露的後果。<span class="slideref">投影片 29</span></li>
@@ -456,8 +465,8 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <div class="explain jsonly" id="flowPipeTxt"></div>
   <ul class="hint">
     <li><b>Corpus</b>：例如國會演說、政黨政見、判決、新聞、推文、開放式問卷回答。<span class="slideref">投影片 3</span></li>
-    <li><b>Representation</b>：<abbr class="tt" tabindex="0" data-term="bag of words" title="只保留每個字在文件中出現幾次、丟掉語序的文本表示法。">bag of words</abbr>、<abbr class="tt" tabindex="0" data-term="word embeddings" title="以稠密向量表示字義的表示法，意思相近的字向量也相近（W9）。">word embeddings</abbr>、language models。<span class="slideref">投影片 4</span></li>
-    <li><b>Model</b>：dictionaries、classifiers、<abbr class="tt" tabindex="0" data-term="topic model" title="從字的共現找出潛在主題的非監督式模型，例如 LDA、STM（W8）。">topic models</abbr>、<abbr class="tt" tabindex="0" data-term="scaling" title="把文本放到一條（政策）維度上估計位置的方法，例如 Wordscores、Wordfish（W7）。">scaling</abbr>。<span class="slideref">投影片 4</span></li>
+    <li><b>Representation</b>：<abbr class="tt" tabindex="0" data-term="bag of words" data-tip="只保留每個字在文件中出現幾次、丟掉語序的文本表示法。" title="只保留每個字在文件中出現幾次、丟掉語序的文本表示法。">bag of words</abbr>、<abbr class="tt" tabindex="0" data-term="word embeddings" data-tip="以稠密向量表示字義的表示法，意思相近的字向量也相近（W9）。" title="以稠密向量表示字義的表示法，意思相近的字向量也相近（W9）。">word embeddings</abbr>、language models。<span class="slideref">投影片 4</span></li>
+    <li><b>Model</b>：dictionaries、classifiers、<abbr class="tt" tabindex="0" data-term="topic model" data-tip="從字的共現找出潛在主題的非監督式模型，例如 LDA、STM（W8）。" title="從字的共現找出潛在主題的非監督式模型，例如 LDA、STM（W8）。">topic models</abbr>、<abbr class="tt" tabindex="0" data-term="scaling" data-tip="把文本放到一條（政策）維度上估計位置的方法，例如 Wordscores、Wordfish（W7）。" title="把文本放到一條（政策）維度上估計位置的方法，例如 Wordscores、Wordfish（W7）。">scaling</abbr>。<span class="slideref">投影片 4</span></li>
     <li><b>Validation</b>：與人工編碼比較、專家判斷、外部標準。<span class="slideref">投影片 4</span></li>
     <li><b>Inference</b>：用量到的東西回答社會科學問題；「社會科學問題才是工作本身」。<span class="slideref">投影片 4</span></li>
   </ul>
@@ -465,10 +474,10 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <h2 id="c0-src">這份教材用了哪些材料</h2>
   <div class="tablewrap"><table>
     <tr><th>材料</th><th>在本教材的用法</th></tr>
-    <tr><td>投影片 <code>W1/slide/week1.pdf</code>（38 頁，2026-09-20 編譯）</td><td>章節結構、所有課程規則與數字；右側投影片面板是這份 PDF 的頁面圖。</td></tr>
+    <tr><td>投影片 <code>W1/slide/week1.pdf</code>（38 頁，2026-09-20 編譯）</td><td>章節結構、所有課程規則與數字；右側投影片面板是這份 <abbr class="tt" tabindex="0" data-term="PDF" data-full="Portable Document Format" data-tip="可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。" title="Portable Document Format — 可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。">PDF</abbr> 的頁面圖。</td></tr>
     <tr><td>課程大綱 <code>NTLDEV_7191_1151.pdf</code></td><td>投影片 25 的評分表是圖片，權重與期限以大綱 §8.1（大綱 PDF 第 40 頁）的文字表核對；工作量另有差異，見第 06 章。</td></tr>
     <tr><td><code>W1/papers/</code>：Grimmer &amp; Stewart (2013)、Benoit (2020)、Baden et al. (2022)</td><td>第 12 章文獻導讀，附頁碼。</td></tr>
-    <tr><td>R 腳本</td><td><strong>W1 沒有 classroom 或 lab R 腳本</strong>。第 11 章是助教寫的<strong>補充（非講義內容）</strong>小實作：用 <abbr class="tt" tabindex="0" data-term="quanteda" title="R 的計量文本分析套件，提供 corpus、tokens、dfm 等物件與函式；本課主要工具。">quanteda</abbr> 把本週投影片本身當成 38 份文件的語料庫，所有輸出都是本機實際執行的結果。</td></tr>
+    <tr><td>R 腳本</td><td><strong>W1 沒有 classroom 或 lab R 腳本</strong>。第 11 章是助教寫的<strong>補充（非講義內容）</strong>小實作：用 <abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的計量文本分析套件，提供 corpus、tokens、dfm 等物件與函式；本課主要工具。" title="R 的計量文本分析套件，提供 corpus、tokens、dfm 等物件與函式；本課主要工具。">quanteda</abbr> 把本週投影片本身當成 38 份文件的語料庫，所有輸出都是本機實際執行的結果。</td></tr>
   </table></div>
 
   <h2 id="c0-how">怎麼使用這份教材</h2>
@@ -479,7 +488,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <li>每章結尾有「自我檢查」，第 14 章有總複習（可只重做答錯的題目）。</li>
     <li>進度與填寫內容只存在這台瀏覽器的 localStorage；第 14 章可一鍵清除。</li>
   </ul>
-  <div class="keyline"><b>本週核心觀念：</b><abbr class="tt" tabindex="0" data-term="QTA" title="計量文本分析：以量化方式分析文本內容。">計量文本分析</abbr>與 <abbr class="tt" tabindex="0" data-term="NLP" title="自然語言處理：讓電腦處理人類語言的技術；本課把它當工具，不講模型內部。">NLP</abbr> 是工具，<strong>社會科學問題才是工作本身</strong>；而在這個領域的每個階段，<strong>validation 是唯一從未消失的要求</strong>。<span class="slideref">投影片 4–5</span></div>
+  <div class="keyline"><b>本週核心觀念：</b><abbr class="tt" tabindex="0" data-term="QTA" data-full="quantitative text analysis" data-tip="計量文本分析：以量化方式分析文本內容。" title="quantitative text analysis — 計量文本分析：以量化方式分析文本內容。">計量文本分析</abbr>與 <abbr class="tt" tabindex="0" data-term="NLP" data-full="natural language processing" data-tip="自然語言處理：讓電腦處理人類語言的技術；本課把它當工具，不講模型內部。" title="natural language processing — 自然語言處理：讓電腦處理人類語言的技術；本課把它當工具，不講模型內部。">NLP</abbr> 是工具，<strong>社會科學問題才是工作本身</strong>；而在這個領域的每個階段，<strong>validation 是唯一從未消失的要求</strong>。<span class="slideref">投影片 4–5</span></div>
 
   <h2 id="c0-due">要記下來的日期 <span class="slideref">投影片 14</span></h2>
   <div class="callout warn"><div class="ct">Dates worth writing down（投影片 14）</div>
@@ -488,7 +497,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
       <li><b>W13 · 12/4</b>：期中研究設計報告（midterm research design report）截止</li>
       <li><b>W14 · 12/11</b>：海報工作坊（poster workshop）</li>
       <li><b>W15 · 12/18</b>：期末海報發表（final poster presentations）</li>
-      <li>完整論文（manuscript）與加分的期限：TBA</li>
+      <li>完整論文（manuscript）與加分的期限：<abbr class="tt" tabindex="0" data-term="TBA" data-full="to be announced" data-tip="待公布：日期或內容尚未決定。" title="to be announced — 待公布：日期或內容尚未決定。">TBA</abbr></li>
       <li>停課：W3（9/25）、W5（10/9）、W11（11/20）、W16（12/25）</li>
     </ul>
   </div>
@@ -527,30 +536,30 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
       <li>新聞報導、社群媒體貼文、政治人物的推文</li>
       <li>開放式問卷回答、訪談逐字稿</li></ul></div>
     <div class="callout plain"><div class="ct">過去 vs. 現在（投影片 3）</div>
-      <p><b>以前</b>：人工閱讀與人工編碼（例如 <abbr class="tt" tabindex="0" data-term="Manifesto Project" title="以人工閱讀並編碼各國政黨政見的大型長期計畫。">Manifesto Project</abbr>）。</p>
+      <p><b>以前</b>：人工閱讀與人工編碼（例如 <abbr class="tt" tabindex="0" data-term="Manifesto Project" data-tip="以人工閱讀並編碼各國政黨政見的大型長期計畫。" title="以人工閱讀並編碼各國政黨政見的大型長期計畫。">Manifesto Project</abbr>）。</p>
       <p><b>現在</b>：規模（scale）──數百萬份文件可以被系統性地分析。</p></div>
   </div>
-  <p>Benoit (2020) 用類似的話開場：立法辯論、政見、委員會逐字稿、演說、遊說文件、法院意見、法律，今天不但都有紀錄，很多還是容易轉成結構化資料的形式（Benoit 2020，repo PDF 第 2 頁）。</p>
+  <p>Benoit (2020) 用類似的話開場：立法辯論、政見、委員會逐字稿、演說、遊說文件、法院意見、法律，今天不但都有紀錄，很多還是容易轉成結構化資料的形式（Benoit 2020，repo <abbr class="tt" tabindex="0" data-term="PDF" data-full="Portable Document Format" data-tip="可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。" title="Portable Document Format — 可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。">PDF</abbr> 第 2 頁）。</p>
 
   <h2 id="c1-what">什麼是 “Text as Data”？ <span class="slideref">投影片 4</span></h2>
   <div class="keyline"><b>定義（投影片 4）：</b>把文本當成資料──把非結構化的語言／資料，轉成可分析的量化資訊，用來回答社會科學問題。</div>
   <p>投影片 4 也列出流程中三個環節常見的選項：</p>
   <div class="tablewrap"><table>
     <tr><th>環節</th><th>投影片 4 列出的選項</th><th>本課程大約在哪幾週（依大綱課表標題，補充）</th></tr>
-    <tr><td>Representation</td><td><abbr class="tt" tabindex="0" data-term="bag of words" title="只保留每個字在文件中出現幾次、丟掉語序的文本表示法。">bag of words</abbr>、<abbr class="tt" tabindex="0" data-term="word embeddings" title="以稠密向量表示字義的表示法，意思相近的字向量也相近（W9）。">word embeddings</abbr>、language models</td><td>W4（tokenisation、<abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：列是文件、欄是特徵（字詞）、格子是次數；quanteda 的核心資料結構。">DFM</abbr>）、W9（embeddings）、W10、W12（<abbr class="tt" tabindex="0" data-term="transformer" title="以注意力機制為核心的神經網路架構，是 BERT、GPT 等語言模型的基礎。">transformers</abbr>、<abbr class="tt" tabindex="0" data-term="LLM" title="大型語言模型：以大量文本訓練的 transformer 模型，可用來標註、分類文本（W12）。">LLMs</abbr>）</td></tr>
-    <tr><td>Model</td><td>dictionaries、classifiers、<abbr class="tt" tabindex="0" data-term="topic model" title="從字的共現找出潛在主題的非監督式模型，例如 LDA、STM（W8）。">topic models</abbr>、<abbr class="tt" tabindex="0" data-term="scaling" title="把文本放到一條（政策）維度上估計位置的方法，例如 Wordscores、Wordfish（W7）。">scaling</abbr></td><td>W4（dictionaries）、W6（classification）、W7（scaling）、W8（topic models）</td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="validation" title="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。">Validation</abbr></td><td>與人工編碼比較、專家判斷、外部標準</td><td>每一週都會出現</td></tr>
+    <tr><td>Representation</td><td><abbr class="tt" tabindex="0" data-term="bag of words" data-tip="只保留每個字在文件中出現幾次、丟掉語序的文本表示法。" title="只保留每個字在文件中出現幾次、丟掉語序的文本表示法。">bag of words</abbr>、<abbr class="tt" tabindex="0" data-term="word embeddings" data-tip="以稠密向量表示字義的表示法，意思相近的字向量也相近（W9）。" title="以稠密向量表示字義的表示法，意思相近的字向量也相近（W9）。">word embeddings</abbr>、language models</td><td>W4（tokenisation、<abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件-特徵矩陣：列是文件、欄是特徵（字詞）、格子是次數；quanteda 的核心資料結構。" title="document-feature matrix — 文件-特徵矩陣：列是文件、欄是特徵（字詞）、格子是次數；quanteda 的核心資料結構。">DFM</abbr>）、W9（embeddings）、W10、W12（<abbr class="tt" tabindex="0" data-term="transformer" data-tip="以注意力機制為核心的神經網路架構，是 BERT、GPT 等語言模型的基礎。" title="以注意力機制為核心的神經網路架構，是 BERT、GPT 等語言模型的基礎。">transformers</abbr>、<abbr class="tt" tabindex="0" data-term="LLM" data-full="large language model" data-tip="大型語言模型：以大量文本訓練的 transformer 模型，可用來標註、分類文本（W12）。" title="large language model — 大型語言模型：以大量文本訓練的 transformer 模型，可用來標註、分類文本（W12）。">LLMs</abbr>）</td></tr>
+    <tr><td>Model</td><td>dictionaries、classifiers、<abbr class="tt" tabindex="0" data-term="topic model" data-tip="從字的共現找出潛在主題的非監督式模型，例如 LDA、STM（W8）。" title="從字的共現找出潛在主題的非監督式模型，例如 LDA、STM（W8）。">topic models</abbr>、<abbr class="tt" tabindex="0" data-term="scaling" data-tip="把文本放到一條（政策）維度上估計位置的方法，例如 Wordscores、Wordfish（W7）。" title="把文本放到一條（政策）維度上估計位置的方法，例如 Wordscores、Wordfish（W7）。">scaling</abbr></td><td>W4（dictionaries）、W6（classification）、W7（scaling）、W8（topic models）</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="validation" data-tip="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。" title="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。">Validation</abbr></td><td>與人工編碼比較、專家判斷、外部標準</td><td>每一週都會出現</td></tr>
   </table></div>
 
   <h2 id="c1-rep">表示法的第一步：bag of words</h2>
-  <p>本週投影片只列出「bag of words」這個名稱；細節在 W4。這裡先借 Grimmer &amp; Stewart (2013) 的說法建立直覺：把文字變成數字時，<strong>最重大、也最令人吃驚的一步是丟掉字的順序</strong>，假設文件是一個「詞袋」；作者認為改變句意的語序例子在實務上很少見，只看單字（<abbr class="tt" tabindex="0" data-term="unigram" title="單一個字構成的特徵；詞袋最基本的特徵單位。">unigrams</abbr>）通常就足以傳達文本的大意，若無法接受，可以加入 <abbr class="tt" tabindex="0" data-term="bigram" title="相鄰兩個字組成的特徵（如 flies_like），能保留一點語序。">bigrams</abbr>、trigrams 保留部分語序（Grimmer &amp; Stewart 2013, p. 272）。</p>
+  <p>本週投影片只列出「bag of words」這個名稱；細節在 W4。這裡先借 Grimmer &amp; Stewart (2013) 的說法建立直覺：把文字變成數字時，<strong>最重大、也最令人吃驚的一步是丟掉字的順序</strong>，假設文件是一個「詞袋」；作者認為改變句意的語序例子在實務上很少見，只看單字（<abbr class="tt" tabindex="0" data-term="unigram" data-tip="單一個字構成的特徵；詞袋最基本的特徵單位。" title="單一個字構成的特徵；詞袋最基本的特徵單位。">unigrams</abbr>）通常就足以傳達文本的大意，若無法接受，可以加入 <abbr class="tt" tabindex="0" data-term="bigram" data-tip="相鄰兩個字組成的特徵（如 flies_like），能保留一點語序。" title="相鄰兩個字組成的特徵（如 flies_like），能保留一點語序。">bigrams</abbr>、trigrams 保留部分語序（Grimmer &amp; Stewart 2013, p. 272）。</p>
   <p>他們也提醒：所有語言的量化模型都是錯的。例子是那個經典笑話 “Time flies like an arrow. Fruit flies like a banana.”──同樣的 “flies like”，前半句是比喻，後半句是字面意思（p. 270）。詞袋完全看不到這種差別。</p>
 
   <h2 id="c1-bow">互動：詞袋產生器 <span class="slideref">投影片 4</span></h2>
   <div class="lab" id="labBow">
     <div class="lab-h"><span class="ic">🧺</span><span class="lt">玩具示範：把句子丟進詞袋</span><span class="ls">補充（非講義內容）</span></div>
     <div class="lab-b">
-      <p class="hint">在兩格輸入文件（英文），下面會即時算出文件-特徵矩陣。切字規則是本教材自己寫的簡化版（以空白與標點切開），不是 <abbr class="tt" tabindex="0" data-term="quanteda" title="R 的計量文本分析套件，提供 corpus、tokens、dfm 等物件與函式；本課主要工具。">quanteda</abbr> 的規則；quanteda 的真實結果見第 11 章。</p>
+      <p class="hint">在兩格輸入文件（英文），下面會即時算出文件-特徵矩陣。切字規則是本教材自己寫的簡化版（以空白與標點切開），不是 <abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的計量文本分析套件，提供 corpus、tokens、dfm 等物件與函式；本課主要工具。" title="R 的計量文本分析套件，提供 corpus、tokens、dfm 等物件與函式；本課主要工具。">quanteda</abbr> 的規則；quanteda 的真實結果見第 11 章。</p>
       <div class="grid2">
         <label class="f">文件 1<textarea id="bowA" rows="2">Time flies like an arrow.</textarea></label>
         <label class="f">文件 2<textarea id="bowB" rows="2">Fruit flies like a banana.</textarea></label>
@@ -604,19 +613,19 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <h2 id="c2-tl">三個階段、七篇研究 <span class="slideref">投影片 5</span></h2>
   <div class="tablewrap"><table>
     <tr><th>階段</th><th>研究</th><th>投影片 5 的一句話</th></tr>
-    <tr><td rowspan="3">2003–2010 · <abbr class="tt" tabindex="0" data-term="bag of words" title="只保留每個字在文件中出現幾次、丟掉語序的文本表示法。">Bag of words</abbr></td><td><abbr class="tt" tabindex="0" data-term="Wordscores" title="以已知位置的參考文本替字詞計分，再估計其他文本立場的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr> (2003)，Laver, Benoit &amp; Garry · <em><abbr class="tt" tabindex="0" data-term="APSR" title="American Political Science Review，政治學頂尖期刊。">APSR</abbr></em></td><td>—</td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="Wordfish" title="不需參考文本的 Poisson 縮放模型，從字詞次數估計文件位置（Slapin &amp; Proksch 2008）。">Wordfish</abbr> (2008)，Slapin &amp; Proksch · <em><abbr class="tt" tabindex="0" data-term="AJPS" title="American Journal of Political Science，政治學頂尖期刊。">AJPS</abbr></em></td><td>—</td></tr>
+    <tr><td rowspan="3">2003–2010 · <abbr class="tt" tabindex="0" data-term="bag of words" data-tip="只保留每個字在文件中出現幾次、丟掉語序的文本表示法。" title="只保留每個字在文件中出現幾次、丟掉語序的文本表示法。">Bag of words</abbr></td><td><abbr class="tt" tabindex="0" data-term="Wordscores" data-tip="以已知位置的參考文本替字詞計分，再估計其他文本立場的縮放方法（Laver, Benoit &amp; Garry 2003）。" title="以已知位置的參考文本替字詞計分，再估計其他文本立場的縮放方法（Laver, Benoit &amp; Garry 2003）。">Wordscores</abbr> (2003)，Laver, Benoit &amp; Garry · <em><abbr class="tt" tabindex="0" data-term="APSR" data-full="American Political Science Review" data-tip="政治學頂尖期刊。" title="American Political Science Review — 政治學頂尖期刊。">APSR</abbr></em></td><td>—</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="Wordfish" data-tip="不需參考文本的 Poisson 縮放模型，從字詞次數估計文件位置（Slapin &amp; Proksch 2008）。" title="不需參考文本的 Poisson 縮放模型，從字詞次數估計文件位置（Slapin &amp; Proksch 2008）。">Wordfish</abbr> (2008)，Slapin &amp; Proksch · <em><abbr class="tt" tabindex="0" data-term="AJPS" data-full="American Journal of Political Science" data-tip="政治學頂尖期刊。" title="American Journal of Political Science — 政治學頂尖期刊。">AJPS</abbr></em></td><td>—</td></tr>
     <tr><td>Expressed agenda (2010)，Grimmer · <em>Political Analysis</em></td><td>—</td></tr>
-    <tr><td rowspan="2">2013–2014 · <abbr class="tt" tabindex="0" data-term="validation" title="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。">Validation</abbr></td><td>Promise and Pitfalls (2013)，Grimmer &amp; Stewart · <em>Political Analysis</em></td><td>the four principles — and “validate”</td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="STM" title="結構主題模型：讓主題比例或內容隨文件共變數變化的主題模型（Roberts et al. 2014）。">Structural topic model</abbr> (2014)，Roberts et al. · <em>AJPS</em></td><td>topics as a function of <abbr class="tt" tabindex="0" data-term="covariates" title="描述文件的其他變數（如作者、黨派、時間），可放進模型解釋文本差異。">covariates</abbr></td></tr>
+    <tr><td rowspan="2">2013–2014 · <abbr class="tt" tabindex="0" data-term="validation" data-tip="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。" title="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。">Validation</abbr></td><td>Promise and Pitfalls (2013)，Grimmer &amp; Stewart · <em>Political Analysis</em></td><td>the four principles — and “validate”</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="STM" data-full="Structural Topic Model" data-tip="結構主題模型：讓主題比例或內容隨文件共變數變化的主題模型（Roberts et al. 2014）。" title="Structural Topic Model — 結構主題模型：讓主題比例或內容隨文件共變數變化的主題模型（Roberts et al. 2014）。">Structural topic model</abbr> (2014)，Roberts et al. · <em>AJPS</em></td><td>topics as a function of <abbr class="tt" tabindex="0" data-term="covariates" data-tip="描述文件的其他變數（如作者、黨派、時間），可放進模型解釋文本差異。" title="描述文件的其他變數（如作者、黨派、時間），可放進模型解釋文本差異。">covariates</abbr></td></tr>
     <tr><td rowspan="2">2023– · Meaning in context</td><td>Embedding regression (2023)，Rodríguez, Spirling &amp; Stewart · <em>APSR</em></td><td>what a word means, by party and era</td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="LLM" title="大型語言模型：以大量文本訓練的 transformer 模型，可用來標註、分類文本（W12）。">LLMs</abbr> as annotators (2024)，Heseltine &amp; Clemm von Hohenberg · <em>Research &amp; Politics</em></td><td>—</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="LLM" data-full="large language model" data-tip="大型語言模型：以大量文本訓練的 transformer 模型，可用來標註、分類文本（W12）。" title="large language model — 大型語言模型：以大量文本訓練的 transformer 模型，可用來標註、分類文本（W12）。">LLMs</abbr> as annotators (2024)，Heseltine &amp; Clemm von Hohenberg · <em>Research &amp; Politics</em></td><td>—</td></tr>
   </table></div>
   <p>投影片 5 的總結：每個階段加了什麼？<strong>bag of words → validation &amp; covariates → meaning in context → models that label for you</strong>。<span class="slideref">投影片 5</span></p>
 
   <h2 id="c2-lab">互動：點一個階段 <span class="slideref">投影片 5</span></h2>
   <div class="lab" id="labTl">
-    <div class="lab-h"><span class="ic">🕰</span><span class="lt"><abbr class="tt" tabindex="0" data-term="text as data" title="把非結構化的語言轉成可分析的量化資訊，用來回答社會科學問題（投影片 4）。">Text as data</abbr> 的時間軸</span><span class="ls">點圓點看說明</span></div>
+    <div class="lab-h"><span class="ic">🕰</span><span class="lt"><abbr class="tt" tabindex="0" data-term="text as data" data-tip="把非結構化的語言轉成可分析的量化資訊，用來回答社會科學問題（投影片 4）。" title="把非結構化的語言轉成可分析的量化資訊，用來回答社會科學問題（投影片 4）。">Text as data</abbr> 的時間軸</span><span class="ls">點圓點看說明</span></div>
     <div class="lab-b">
       <svg id="tlSvg" viewBox="0 0 900 170" role="img" aria-label="時間軸"></svg>
       <div class="explain" id="tlTxt">點時間軸上的圓點。</div>
@@ -641,7 +650,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 
   <h2 id="c2-quiz">自我檢查</h2>
   <div class="mcq" data-ans="1" data-q="c2q1">
-    <div class="q">1. 依投影片 5，Structural <abbr class="tt" tabindex="0" data-term="topic model" title="從字的共現找出潛在主題的非監督式模型，例如 LDA、STM（W8）。">topic model</abbr> (2014) 加入的關鍵是？</div>
+    <div class="q">1. 依投影片 5，Structural <abbr class="tt" tabindex="0" data-term="topic model" data-tip="從字的共現找出潛在主題的非監督式模型，例如 LDA、STM（W8）。" title="從字的共現找出潛在主題的非監督式模型，例如 LDA、STM（W8）。">topic model</abbr> (2014) 加入的關鍵是？</div>
     <button class="opt">詞向量</button>
     <button class="opt">topics as a function of covariates（主題比例隨共變數改變）</button>
     <button class="opt">讓 LLM 標註</button>
@@ -669,7 +678,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <tr><th></th><th>Measurement（量測）</th><th>Application（應用）</th></tr>
     <tr><td>核心問題</td><td>怎麼把一個概念變成可信的、以文本為基礎的量測？</td><td>這個量測回答什麼實質問題？</td></tr>
     <tr><td>貢獻</td><td>新方法、新量測、新資料集</td><td>新的實證發現、理論檢驗</td></tr>
-    <tr><td>主角（star of the show）</td><td>方法本身</td><td>研究設計與識別（<abbr class="tt" tabindex="0" data-term="identification" title="讓資料能支持因果或實質主張的研究設計條件；本課 application 型研究的主角。">identification</abbr>）</td></tr>
+    <tr><td>主角（star of the show）</td><td>方法本身</td><td>研究設計與識別（<abbr class="tt" tabindex="0" data-term="identification" data-tip="讓資料能支持因果或實質主張的研究設計條件；本課 application 型研究的主角。" title="讓資料能支持因果或實質主張的研究設計條件；本課 application 型研究的主角。">identification</abbr>）</td></tr>
   </table></div>
 
   <h2 id="c3-book">與教科書的對應 <span class="slideref">投影片 6、12</span></h2>
@@ -720,11 +729,11 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <h2 id="c4-cat">案例 1：From Pork to Policy <span class="slideref">投影片 7</span></h2>
   <p>Catalinac (2016), <em>The Journal of Politics</em> 78(1): 1–18。投影片 7 的重點在<strong>方法的角色</strong>：</p>
   <ul>
-    <li>Method：<strong>現成的工具，不是新工具</strong>──<abbr class="tt" tabindex="0" data-term="LDA" title="潛在狄利克雷分配（2003）：最常見的主題模型，假設每份文件是多個主題的混合。">LDA</abbr> (2003)，每個主題都透過閱讀來<abbr class="tt" tabindex="0" data-term="validation" title="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。">驗證</abbr>。</li>
+    <li>Method：<strong>現成的工具，不是新工具</strong>──<abbr class="tt" tabindex="0" data-term="LDA" data-full="Latent Dirichlet Allocation" data-tip="潛在狄利克雷分配（2003）：最常見的主題模型，假設每份文件是多個主題的混合。" title="Latent Dirichlet Allocation — 潛在狄利克雷分配（2003）：最常見的主題模型，假設每份文件是多個主題的混合。">LDA</abbr> (2003)，每個主題都透過閱讀來<abbr class="tt" tabindex="0" data-term="validation" data-tip="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。" title="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。">驗證</abbr>。</li>
     <li>貢獻在<strong>政治學</strong>，不是新演算法。</li>
-    <li>建立新的 <abbr class="tt" tabindex="0" data-term="NLP" title="自然語言處理：讓電腦處理人類語言的技術；本課把它當工具，不講模型內部。">NLP</abbr> 模型是電腦科學的工作；我們的工作是<strong>把它們用好，來回答一個問題</strong>。<span class="slideref">投影片 7</span></li>
+    <li>建立新的 <abbr class="tt" tabindex="0" data-term="NLP" data-full="natural language processing" data-tip="自然語言處理：讓電腦處理人類語言的技術；本課把它當工具，不講模型內部。" title="natural language processing — 自然語言處理：讓電腦處理人類語言的技術；本課把它當工具，不講模型內部。">NLP</abbr> 模型是電腦科學的工作；我們的工作是<strong>把它們用好，來回答一個問題</strong>。<span class="slideref">投影片 7</span></li>
   </ul>
-  <p class="hint">投影片 7 放的是論文摘要的截圖；W1 的 <code>papers/</code> 資料夾沒有這篇全文，所以本教材不轉述論文內容與數字。這篇在 W8（<abbr class="tt" tabindex="0" data-term="topic model" title="從字的共現找出潛在主題的非監督式模型，例如 LDA、STM（W8）。">主題模型</abbr>）會再出現。</p>
+  <p class="hint">投影片 7 放的是論文摘要的截圖；W1 的 <code>papers/</code> 資料夾沒有這篇全文，所以本教材不轉述論文內容與數字。這篇在 W8（<abbr class="tt" tabindex="0" data-term="topic model" data-tip="從字的共現找出潛在主題的非監督式模型，例如 LDA、STM（W8）。" title="從字的共現找出潛在主題的非監督式模型，例如 LDA、STM（W8）。">主題模型</abbr>）會再出現。</p>
 
   <h2 id="c4-jlt">案例 2：把開放式回答編成因果圖 <span class="slideref">投影片 8–9</span></h2>
   <div class="grid2">
@@ -734,10 +743,10 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
       <li>資料：1,200 位美國成人（quota-matched）；數題開放式題目（投影片中的圖編碼的是 Q7）。</li></ul></div>
     <div class="callout plain"><div class="ct">題目（投影片 8 原文）</div><p>“Which factors, events, groups, or institutions do you think caused Democrats and Republicans to view each other more negatively than they did 50 years ago? Please explain what caused what, who or what you think was responsible, and what effects followed.”</p></div>
   </div>
-  <div class="keyline"><b>量測上的關鍵一步（投影片 8）：</b>把每一則自由文字回答編成一張<strong><abbr class="tt" tabindex="0" data-term="DAG" title="有向無環圖：節點以有方向的邊相連、且不形成循環；Jankin, Liao &amp; Tang 把開放式回答編成 DAG。">有向無環圖</abbr>（DAG）</strong>：節點是受訪者提到的因素（15 個因素、3 個領域），邊是他畫出的因果連結。</div>
+  <div class="keyline"><b>量測上的關鍵一步（投影片 8）：</b>把每一則自由文字回答編成一張<strong><abbr class="tt" tabindex="0" data-term="DAG" data-full="directed acyclic graph" data-tip="有向無環圖：節點以有方向的邊相連、且不形成循環；Jankin, Liao &amp; Tang 把開放式回答編成 DAG。" title="directed acyclic graph — 有向無環圖：節點以有方向的邊相連、且不形成循環；Jankin, Liao &amp; Tang 把開放式回答編成 DAG。">有向無環圖</abbr>（DAG）</strong>：節點是受訪者提到的因素（15 個因素、3 個領域），邊是他畫出的因果連結。</div>
   <ul>
-    <li><b>同樣的因素、相反的箭頭</b>：只有方向能區分兩種理論；這張圖給出每個人的<strong>根本原因（<abbr class="tt" tabindex="0" data-term="root cause" title="因果圖中沒有其他因素指向它的起點（投影片 9）。">root cause</abbr>）</strong>。<span class="slideref">投影片 9</span></li>
-    <li><b>驗證</b>：編碼者對「每則回答提到哪些因素」的一致性 <abbr class="tt" tabindex="0" data-term="Cohen&#x27;s κ" title="扣除機遇一致後的編碼者一致性：κ = (p_o − p_e)/(1 − p_e)。">κ</abbr> = 0.84；用同一份 <abbr class="tt" tabindex="0" data-term="codebook" title="人工編碼的規則手冊：定義每個類別與判斷標準，讓不同編碼者（或 LLM）一致地標註。">codebook</abbr> 的 <abbr class="tt" tabindex="0" data-term="LLM" title="大型語言模型：以大量文本訓練的 transformer 模型，可用來標註、分類文本（W12）。">LLM</abbr> 與人工編碼相比 <abbr class="tt" tabindex="0" data-term="F1" title="precision 與 recall 的調和平均，衡量分類（或標註）抓對「正類」的程度。">F1</abbr> = 0.92。<span class="slideref">投影片 9</span></li>
+    <li><b>同樣的因素、相反的箭頭</b>：只有方向能區分兩種理論；這張圖給出每個人的<strong>根本原因（<abbr class="tt" tabindex="0" data-term="root cause" data-tip="因果圖中沒有其他因素指向它的起點（投影片 9）。" title="因果圖中沒有其他因素指向它的起點（投影片 9）。">root cause</abbr>）</strong>。<span class="slideref">投影片 9</span></li>
+    <li><b>驗證</b>：編碼者對「每則回答提到哪些因素」的一致性 <abbr class="tt" tabindex="0" data-term="Cohen&#x27;s κ" data-tip="扣除機遇一致後的編碼者一致性：κ = (p_o − p_e)/(1 − p_e)。" title="扣除機遇一致後的編碼者一致性：κ = (p_o − p_e)/(1 − p_e)。">κ</abbr> = 0.84；用同一份 <abbr class="tt" tabindex="0" data-term="codebook" data-tip="人工編碼的規則手冊：定義每個類別與判斷標準，讓不同編碼者（或 LLM）一致地標註。" title="人工編碼的規則手冊：定義每個類別與判斷標準，讓不同編碼者（或 LLM）一致地標註。">codebook</abbr> 的 <abbr class="tt" tabindex="0" data-term="LLM" data-full="large language model" data-tip="大型語言模型：以大量文本訓練的 transformer 模型，可用來標註、分類文本（W12）。" title="large language model — 大型語言模型：以大量文本訓練的 transformer 模型，可用來標註、分類文本（W12）。">LLM</abbr> 與人工編碼相比 <abbr class="tt" tabindex="0" data-term="F1" data-full="F1 score (F-measure with β = 1)" data-tip="precision 與 recall 的調和平均，衡量分類（或標註）抓對「正類」的程度。" title="F1 score (F-measure with β = 1) — precision 與 recall 的調和平均，衡量分類（或標註）抓對「正類」的程度。">F1</abbr> = 0.92。<span class="slideref">投影片 9</span></li>
     <li><b>文本的角色</b>：你持有的理論能預測你對反民主行動的容忍度，在控制情感極化（affect）與意識形態之後仍然如此。<span class="slideref">投影片 9</span></li>
   </ul>
   <p class="hint">投影片 9 的圖（Fig. 4）呈現依根本原因分組的常見 folk theories（% 為黨內比例）；圖中數字本教材未轉錄，請看右側投影片。這篇是 working paper，repo 裡沒有全文。</p>
@@ -805,7 +814,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 
   <h2 id="c5-who">這門課給誰？ <span class="slideref">投影片 11</span></h2>
   <div class="keyline"><b>一門社會科學課，不是技術課。</b><span class="slideref">投影片 11</span></div>
-  <p>這是為<abbr class="tt" tabindex="0" data-term="GIND" title="臺大國家發展研究所（Graduate Institute of National Development）。">國發所</abbr>及相關社會科學領域學生設計的入門課，不需要進階的技術訓練；重點是把 text-as-data 與 <abbr class="tt" tabindex="0" data-term="NLP" title="自然語言處理：讓電腦處理人類語言的技術；本課把它當工具，不講模型內部。">NLP</abbr> 技術用來回答政治學、政治傳播、法律研究、社會學等領域的實質研究問題。</p>
+  <p>這是為<abbr class="tt" tabindex="0" data-term="GIND" data-full="Graduate Institute of National Development (NTU)" data-tip="臺大國家發展研究所（Graduate Institute of National Development）。" title="Graduate Institute of National Development (NTU) — 臺大國家發展研究所（Graduate Institute of National Development）。">國發所</abbr>及相關社會科學領域學生設計的入門課，不需要進階的技術訓練；重點是把 text-as-data 與 <abbr class="tt" tabindex="0" data-term="NLP" data-full="natural language processing" data-tip="自然語言處理：讓電腦處理人類語言的技術；本課把它當工具，不講模型內部。" title="natural language processing — 自然語言處理：讓電腦處理人類語言的技術；本課把它當工具，不講模型內部。">NLP</abbr> 技術用來回答政治學、政治傳播、法律研究、社會學等領域的實質研究問題。</p>
   <ul>
     <li>想學模型內部、架構、最佳化？<strong>這不是那種課</strong>。</li>
     <li>目標：用這些方法寫出<strong>你自己的</strong>政治學／社會科學論文。<span class="slideref">投影片 11</span></li>
@@ -813,16 +822,16 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 
   <h2 id="c5-src">教材從哪來 <span class="slideref">投影片 12</span></h2>
   <ul>
-    <li>講課框架：Grimmer, Roberts &amp; Stewart (2022), <em><abbr class="tt" tabindex="0" data-term="text as data" title="把非結構化的語言轉成可分析的量化資訊，用來回答社會科學問題（投影片 4）。">Text as Data</abbr>: A New Framework for Machine Learning and the Social Sciences</em>（Princeton University Press）。本課的兩種任務是把書中 discovery → measurement → inference 簡化而來。</li>
+    <li>講課框架：Grimmer, Roberts &amp; Stewart (2022), <em><abbr class="tt" tabindex="0" data-term="text as data" data-tip="把非結構化的語言轉成可分析的量化資訊，用來回答社會科學問題（投影片 4）。" title="把非結構化的語言轉成可分析的量化資訊，用來回答社會科學問題（投影片 4）。">Text as Data</abbr>: A New Framework for Machine Learning and the Social Sciences</em>（Princeton University Press）。本課的兩種任務是把書中 discovery → measurement → inference 簡化而來。</li>
     <li>不需要買書：課程以論文為主（paper-first），每週 3–4 篇核心材料，多為期刊論文與公開教學；必讀書章提供節錄。</li>
-    <li>也有用：Benoit (2020)、Nielbo et al. (2024)、Watanabe &amp; Müller 的 <abbr class="tt" tabindex="0" data-term="quanteda" title="R 的計量文本分析套件，提供 corpus、tokens、dfm 等物件與函式；本課主要工具。">quanteda</abbr> tutorials、Jurafsky &amp; Martin 的 SLP（免費線上）。<span class="slideref">投影片 12</span></li>
+    <li>也有用：Benoit (2020)、Nielbo et al. (2024)、Watanabe &amp; Müller 的 <abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的計量文本分析套件，提供 corpus、tokens、dfm 等物件與函式；本課主要工具。" title="R 的計量文本分析套件，提供 corpus、tokens、dfm 等物件與函式；本課主要工具。">quanteda</abbr> tutorials、Jurafsky &amp; Martin 的 <abbr class="tt" tabindex="0" data-term="SLP" data-full="Speech and Language Processing" data-tip="Jurafsky &amp; Martin 的 NLP 教科書《Speech and Language Processing》，作者提供免費線上版。" title="Speech and Language Processing — Jurafsky &amp; Martin 的 NLP 教科書《Speech and Language Processing》，作者提供免費線上版。">SLP</abbr>（免費線上）。<span class="slideref">投影片 12</span></li>
   </ul>
 
   <h2 id="c5-blocks">一學期分三個區塊 <span class="slideref">投影片 14</span></h2>
   <div class="grid3">
-    <div class="callout note"><div class="ct">W1–W2 · Foundations</div><p><abbr class="tt" tabindex="0" data-term="QTA" title="計量文本分析：以量化方式分析文本內容。">計量文本分析</abbr>導論；文本前處理與 R/Python 協作工作流程。</p></div>
-    <div class="callout note"><div class="ct">W4–W8 · Core methods</div><p>Tokenisation 與 <abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：列是文件、欄是特徵（字詞）、格子是次數；quanteda 的核心資料結構。">DFM</abbr>；字典與情感分析；人工編碼與分類；縮放（<abbr class="tt" tabindex="0" data-term="scaling" title="把文本放到一條（政策）維度上估計位置的方法，例如 Wordscores、Wordfish（W7）。">scaling</abbr>）；<abbr class="tt" tabindex="0" data-term="topic model" title="從字的共現找出潛在主題的非監督式模型，例如 LDA、STM（W8）。">主題模型</abbr>。</p></div>
-    <div class="callout note"><div class="ct">W9–W13 · Advanced representations</div><p>可讀性、相似度與 embeddings；NLP 與 <abbr class="tt" tabindex="0" data-term="transformer" title="以注意力機制為核心的神經網路架構，是 BERT、GPT 等語言模型的基礎。">transformers</abbr>；<abbr class="tt" tabindex="0" data-term="LLM" title="大型語言模型：以大量文本訓練的 transformer 模型，可用來標註、分類文本（W12）。">LLMs</abbr>；多語與多模態資料。</p></div>
+    <div class="callout note"><div class="ct">W1–W2 · Foundations</div><p><abbr class="tt" tabindex="0" data-term="QTA" data-full="quantitative text analysis" data-tip="計量文本分析：以量化方式分析文本內容。" title="quantitative text analysis — 計量文本分析：以量化方式分析文本內容。">計量文本分析</abbr>導論；文本前處理與 R/Python 協作工作流程。</p></div>
+    <div class="callout note"><div class="ct">W4–W8 · Core methods</div><p>Tokenisation 與 <abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件-特徵矩陣：列是文件、欄是特徵（字詞）、格子是次數；quanteda 的核心資料結構。" title="document-feature matrix — 文件-特徵矩陣：列是文件、欄是特徵（字詞）、格子是次數；quanteda 的核心資料結構。">DFM</abbr>；字典與情感分析；人工編碼與分類；縮放（<abbr class="tt" tabindex="0" data-term="scaling" data-tip="把文本放到一條（政策）維度上估計位置的方法，例如 Wordscores、Wordfish（W7）。" title="把文本放到一條（政策）維度上估計位置的方法，例如 Wordscores、Wordfish（W7）。">scaling</abbr>）；<abbr class="tt" tabindex="0" data-term="topic model" data-tip="從字的共現找出潛在主題的非監督式模型，例如 LDA、STM（W8）。" title="從字的共現找出潛在主題的非監督式模型，例如 LDA、STM（W8）。">主題模型</abbr>。</p></div>
+    <div class="callout note"><div class="ct">W9–W13 · Advanced representations</div><p>可讀性、相似度與 embeddings；NLP 與 <abbr class="tt" tabindex="0" data-term="transformer" data-tip="以注意力機制為核心的神經網路架構，是 BERT、GPT 等語言模型的基礎。" title="以注意力機制為核心的神經網路架構，是 BERT、GPT 等語言模型的基礎。">transformers</abbr>；<abbr class="tt" tabindex="0" data-term="LLM" data-full="large language model" data-tip="大型語言模型：以大量文本訓練的 transformer 模型，可用來標註、分類文本（W12）。" title="large language model — 大型語言模型：以大量文本訓練的 transformer 模型，可用來標註、分類文本（W12）。">LLMs</abbr>；多語與多模態資料。</p></div>
   </div>
   <p>停課：W3（9/25）、W5（10/9）、W11（11/20）、W16（12/25）。<span class="slideref">投影片 14</span></p>
 
@@ -830,7 +839,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <div class="lab" id="labCal">
     <div class="lab-h"><span class="ic">📅</span><span class="lt">課表與期限</span><span class="ls">真實課程資料</span></div>
     <div class="lab-b">
-      <p class="hint">投影片 13 的課表是圖片；這裡的週次、日期、主題與備註取自課程大綱的課表（大綱 PDF 第 10 頁），並與投影片 14 的期限交叉核對。選一個日期，看下一個期限還有幾天。</p>
+      <p class="hint">投影片 13 的課表是圖片；這裡的週次、日期、主題與備註取自課程大綱的課表（大綱 <abbr class="tt" tabindex="0" data-term="PDF" data-full="Portable Document Format" data-tip="可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。" title="Portable Document Format — 可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。">PDF</abbr> 第 10 頁），並與投影片 14 的期限交叉核對。選一個日期，看下一個期限還有幾天。</p>
       <div class="row"><label>以這天為「今天」：<input type="date" id="calDate" value="2026-09-11"></label>
         <div class="seg" id="calFilter"><button data-f="all" class="on">全部</button><button data-f="due">只看期限</button><button data-f="off">只看停課</button></div></div>
       <div class="explain" id="calNext"></div>
@@ -841,16 +850,16 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
         <tr><td>W4</td><td>10/2</td><td>Tokenisation, Document-Feature Matrices, Dictionaries, and Sentiment Analysis</td><td></td></tr>
         <tr><td>W5</td><td>10/9</td><td>National Day Observed (No Class)</td><td>停課</td></tr>
         <tr><td>W6</td><td>10/16</td><td>Human Coding and Document Classification</td><td></td></tr>
-        <tr><td>W7</td><td>10/23</td><td><abbr class="tt" tabindex="0" data-term="supervised" title="用已標註答案的資料訓練模型（如分類器）；非監督式則不需標註（如主題模型）。">Supervised</abbr>, Unsupervised, and Semi-Supervised Scaling</td><td>個人研究摘要截止</td></tr>
+        <tr><td>W7</td><td>10/23</td><td><abbr class="tt" tabindex="0" data-term="supervised" data-tip="用已標註答案的資料訓練模型（如分類器）；非監督式則不需標註（如主題模型）。" title="用已標註答案的資料訓練模型（如分類器）；非監督式則不需標註（如主題模型）。">Supervised</abbr>, Unsupervised, and Semi-Supervised Scaling</td><td>個人研究摘要截止</td></tr>
         <tr><td>W8</td><td>10/30</td><td>Topic Models and Their Variants</td><td></td></tr>
-        <tr><td>W9</td><td>11/6</td><td>Describing and Comparing Texts: Readability, Similarity, and <abbr class="tt" tabindex="0" data-term="word embeddings" title="以稠密向量表示字義的表示法，意思相近的字向量也相近（W9）。">Word Embeddings</abbr></td><td></td></tr>
+        <tr><td>W9</td><td>11/6</td><td>Describing and Comparing Texts: Readability, Similarity, and <abbr class="tt" tabindex="0" data-term="word embeddings" data-tip="以稠密向量表示字義的表示法，意思相近的字向量也相近（W9）。" title="以稠密向量表示字義的表示法，意思相近的字向量也相近（W9）。">Word Embeddings</abbr></td><td></td></tr>
         <tr><td>W10</td><td>11/13</td><td>NLP Pipelines and Transformers: Annotation, Classification, and Interpretability</td><td></td></tr>
-        <tr><td>W11</td><td>11/20</td><td>NTU Sports Day (No Class)</td><td>停課</td></tr>
+        <tr><td>W11</td><td>11/20</td><td><abbr class="tt" tabindex="0" data-term="NTU" data-full="National Taiwan University" data-tip="國立臺灣大學。" title="National Taiwan University — 國立臺灣大學。">NTU</abbr> Sports Day (No Class)</td><td>停課</td></tr>
         <tr><td>W12</td><td>11/27</td><td>Large Language Models and Multi-Agent Systems</td><td></td></tr>
         <tr><td>W13</td><td>12/4</td><td>New Forms of Textual Data: Multilingual and Multimodal Sources</td><td>期中研究設計報告截止</td></tr>
         <tr><td>W14</td><td>12/11</td><td>Poster Workshop: Format, Visual Presentation, and 5-Minute Talk</td><td>海報修改診所</td></tr>
         <tr><td>W15</td><td>12/18</td><td>Final Poster Presentations</td><td>5 分鐘報告；同儕回饋</td></tr>
-        <tr><td>W16</td><td>12/25</td><td>Constitution Day Holiday (No Class)</td><td>停課；完整論文與加分期限 TBA</td></tr>
+        <tr><td>W16</td><td>12/25</td><td>Constitution Day Holiday (No Class)</td><td>停課；完整論文與加分期限 <abbr class="tt" tabindex="0" data-term="TBA" data-full="to be announced" data-tip="待公布：日期或內容尚未決定。" title="to be announced — 待公布：日期或內容尚未決定。">TBA</abbr></td></tr>
       </table></div>
     </div>
   </div>
@@ -883,28 +892,28 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <h2 id="c6-lang">語言與套件 <span class="slideref">投影片 15</span></h2>
   <p>這門課需要先有 R 的經驗，並能在 Python 環境裡跑一些程式；除此之外不需要進階技術訓練。</p>
   <div class="grid2">
-    <div class="callout note"><div class="ct">R：大部分課程與方法</div><p><abbr class="tt" tabindex="0" data-term="quanteda" title="R 的計量文本分析套件，提供 corpus、tokens、dfm 等物件與函式；本課主要工具。">quanteda</abbr>、tidytext、text2vec、udpipe、keyATM、spacyr</p></div>
-    <div class="callout note"><div class="ct">Python：選擇性使用</div><p><abbr class="tt" tabindex="0" data-term="transformer" title="以注意力機制為核心的神經網路架構，是 BERT、GPT 等語言模型的基礎。">transformers</abbr>、flair（transformer 模型）；gensim、spacy（<abbr class="tt" tabindex="0" data-term="NLP" title="自然語言處理：讓電腦處理人類語言的技術；本課把它當工具，不講模型內部。">NLP</abbr> 工具）；BERTopic（<abbr class="tt" tabindex="0" data-term="topic model" title="從字的共現找出潛在主題的非監督式模型，例如 LDA、STM（W8）。">主題模型</abbr>）</p></div>
+    <div class="callout note"><div class="ct">R：大部分課程與方法</div><p><abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的計量文本分析套件，提供 corpus、tokens、dfm 等物件與函式；本課主要工具。" title="R 的計量文本分析套件，提供 corpus、tokens、dfm 等物件與函式；本課主要工具。">quanteda</abbr>、tidytext、text2vec、udpipe、keyATM、spacyr</p></div>
+    <div class="callout note"><div class="ct">Python：選擇性使用</div><p><abbr class="tt" tabindex="0" data-term="transformer" data-tip="以注意力機制為核心的神經網路架構，是 BERT、GPT 等語言模型的基礎。" title="以注意力機制為核心的神經網路架構，是 BERT、GPT 等語言模型的基礎。">transformers</abbr>、flair（transformer 模型）；gensim、spacy（<abbr class="tt" tabindex="0" data-term="NLP" data-full="natural language processing" data-tip="自然語言處理：讓電腦處理人類語言的技術；本課把它當工具，不講模型內部。" title="natural language processing — 自然語言處理：讓電腦處理人類語言的技術；本課把它當工具，不講模型內部。">NLP</abbr> 工具）；BERTopic（<abbr class="tt" tabindex="0" data-term="topic model" data-tip="從字的共現找出潛在主題的非監督式模型，例如 LDA、STM（W8）。" title="從字的共現找出潛在主題的非監督式模型，例如 LDA、STM（W8）。">主題模型</abbr>）</p></div>
   </div>
   <p>請帶一台<strong>已經裝好開發環境</strong>的筆電：多數課堂是短講課加上你自己跑的程式練習。第一堂課前會寄出詳細的設定指南。<span class="slideref">投影片 15</span></p>
 
   <h2 id="c6-ide">IDE 與寫作工具 <span class="slideref">投影片 16</span></h2>
   <ul>
-    <li><abbr class="tt" tabindex="0" data-term="IDE" title="整合開發環境：集編輯、執行、除錯、套件管理於一身的程式工具。">IDE</abbr>：R 用 <b><abbr class="tt" tabindex="0" data-term="RStudio" title="Posit 公司的 R 整合開發環境（IDE）。">RStudio</abbr></b>；Python 與跨語言工作用 <b><abbr class="tt" tabindex="0" data-term="Positron" title="Posit 公司的新一代 IDE，支援 Python、R 等多種語言。">Positron</abbr></b>。你要能編輯與執行程式、除錯、管理套件、使用內建終端機。</li>
-    <li>R <abbr class="tt" tabindex="0" data-term="Markdown" title="以簡單符號（# 標題、** 粗體）標記格式的純文字語法。">Markdown</abbr>／<abbr class="tt" tabindex="0" data-term="Quarto" title="Posit 的開源出版系統，可把程式碼、結果與文字組成文件、網頁或簡報。">Quarto</abbr>（RStudio）與 Jupyter／Quarto notebooks（Positron）有幫助但不是必要；W2 會講實際設定與工作流程。</li>
+    <li><abbr class="tt" tabindex="0" data-term="IDE" data-full="integrated development environment" data-tip="整合開發環境：集編輯、執行、除錯、套件管理於一身的程式工具。" title="integrated development environment — 整合開發環境：集編輯、執行、除錯、套件管理於一身的程式工具。">IDE</abbr>：R 用 <b><abbr class="tt" tabindex="0" data-term="RStudio" data-tip="Posit 公司的 R 整合開發環境（IDE）。" title="Posit 公司的 R 整合開發環境（IDE）。">RStudio</abbr></b>；Python 與跨語言工作用 <b><abbr class="tt" tabindex="0" data-term="Positron" data-tip="Posit 公司的新一代 IDE，支援 Python、R 等多種語言。" title="Posit 公司的新一代 IDE，支援 Python、R 等多種語言。">Positron</abbr></b>。你要能編輯與執行程式、除錯、管理套件、使用內建終端機。</li>
+    <li>R <abbr class="tt" tabindex="0" data-term="Markdown" data-tip="以簡單符號（# 標題、** 粗體）標記格式的純文字語法。" title="以簡單符號（# 標題、** 粗體）標記格式的純文字語法。">Markdown</abbr>／<abbr class="tt" tabindex="0" data-term="Quarto" data-tip="Posit 的開源出版系統，可把程式碼、結果與文字組成文件、網頁或簡報。" title="Posit 的開源出版系統，可把程式碼、結果與文字組成文件、網頁或簡報。">Quarto</abbr>（RStudio）與 Jupyter／Quarto notebooks（Positron）有幫助但不是必要；W2 會講實際設定與工作流程。</li>
     <li>沒用過這些 IDE？<strong>W2 之前先完成一個基本教學</strong>，讓這學期花在方法上，而不是跟工具打架。</li>
-    <li>書面作業與海報用 <b><abbr class="tt" tabindex="0" data-term="LaTeX" title="以標記語法排版的文書系統，學術論文與海報常用。">LaTeX</abbr></b>，在共享的 <b><abbr class="tt" tabindex="0" data-term="Overleaf" title="線上 LaTeX 協作編輯器；本課書面作業與海報以共享專案繳交，須給老師 Editor 權限。">Overleaf</abbr></b> 專案中完成；Quarto 可以用在分析筆記本。可選：可能用 LM Studio 在本機跑 LLaMA 或 Mistral，沒有 API 費用。<span class="slideref">投影片 16</span></li>
+    <li>書面作業與海報用 <b><abbr class="tt" tabindex="0" data-term="LaTeX" data-tip="以標記語法排版的文書系統，學術論文與海報常用。" title="以標記語法排版的文書系統，學術論文與海報常用。">LaTeX</abbr></b>，在共享的 <b><abbr class="tt" tabindex="0" data-term="Overleaf" data-tip="線上 LaTeX 協作編輯器；本課書面作業與海報以共享專案繳交，須給老師 Editor 權限。" title="線上 LaTeX 協作編輯器；本課書面作業與海報以共享專案繳交，須給老師 Editor 權限。">Overleaf</abbr></b> 專案中完成；Quarto 可以用在分析筆記本。可選：可能用 LM Studio 在本機跑 LLaMA 或 Mistral，沒有 <abbr class="tt" tabindex="0" data-term="API" data-full="application programming interface" data-tip="應用程式介面：讓程式透過固定格式呼叫另一個服務（例如 LLM）。" title="application programming interface — 應用程式介面：讓程式透過固定格式呼叫另一個服務（例如 LLM）。">API</abbr> 費用。<span class="slideref">投影片 16</span></li>
   </ul>
 
   <h2 id="c6-git">GitHub 放程式，Overleaf 放書面作業 <span class="slideref">投影片 17</span></h2>
   <ul>
-    <li>課程材料（講義、程式、資料、練習）都在 <abbr class="tt" tabindex="0" data-term="GitHub" title="以 Git 為基礎的程式碼託管平台；本課教材與程式碼放在 GitHub。">GitHub</abbr>。研究程式請放在<strong>私人（private）repository</strong>。</li>
+    <li>課程材料（講義、程式、資料、練習）都在 <abbr class="tt" tabindex="0" data-term="GitHub" data-tip="以 Git 為基礎的程式碼託管平台；本課教材與程式碼放在 GitHub。" title="以 Git 為基礎的程式碼託管平台；本課教材與程式碼放在 GitHub。">GitHub</abbr>。研究程式請放在<strong>私人（private）repository</strong>。</li>
     <li>書面作業透過共享的 Overleaf 專案繳交，並給老師<strong>編輯權限</strong>。</li>
-    <li>建立免費 GitHub 帳號並安裝 <abbr class="tt" tabindex="0" data-term="GitHub Desktop" title="GitHub 的圖形介面程式，不用指令就能下載（clone）與同步 repo。">GitHub Desktop</abbr>（點選操作、不需命令列）；RStudio 與 Positron 也內建 Git 工具。</li>
+    <li>建立免費 GitHub 帳號並安裝 <abbr class="tt" tabindex="0" data-term="GitHub Desktop" data-tip="GitHub 的圖形介面程式，不用指令就能下載（clone）與同步 repo。" title="GitHub 的圖形介面程式，不用指令就能下載（clone）與同步 repo。">GitHub Desktop</abbr>（點選操作、不需命令列）；RStudio 與 Positron 也內建 Git 工具。</li>
     <li>建議用學校信箱申請免費的 GitHub Student Developer Pack（GitHub Pro、Copilot 等）。</li>
     <li>W1：課程規則與材料、作業、溝通的組織方式；W2：GitHub Desktop 與 IDE 設定（clone、commit、分享程式）。<span class="slideref">投影片 17</span></li>
   </ul>
-  <div class="callout note"><div class="ct">大綱的補充細節（課程大綱 §8.1，大綱 PDF 第 39 頁）</div><p>每一份評分作業用<strong>一個獨立的 Overleaf 專案</strong>，以你的名字與作業命名；截止前邀請老師為 <b>Editor (can edit)</b>，只給檢視權限（view-only）不算繳交。專案必須包含完整、最新的原始檔並能成功編譯成 PDF。免費帳號每個專案可邀一位協作者，足夠使用。</p></div>
+  <div class="callout note"><div class="ct">大綱的補充細節（課程大綱 §8.1，大綱 <abbr class="tt" tabindex="0" data-term="PDF" data-full="Portable Document Format" data-tip="可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。" title="Portable Document Format — 可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。">PDF</abbr> 第 39 頁）</div><p>每一份評分作業用<strong>一個獨立的 Overleaf 專案</strong>，以你的名字與作業命名；截止前邀請老師為 <b>Editor (can edit)</b>，只給檢視權限（view-only）不算繳交。專案必須包含完整、最新的原始檔並能成功編譯成 PDF。免費帳號每個專案可邀一位協作者，足夠使用。</p></div>
 
   <h2 id="c6-hours">每週要花多少時間？ <span class="slideref">投影片 18</span></h2>
   <p>這是 2 學分的課。投影片 18 的估計：</p>
@@ -957,8 +966,8 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <h2 id="c7-part">自學程式練習與課堂參與 <span class="slideref">投影片 19</span></h2>
   <ul>
     <li>Lab 檔提供範例與練習。<strong>這些練習不計分，也不需要繳交。</strong></li>
-    <li><b>Class Participation — 20%</b>：參與閱讀、方法與應用的討論；同儕回饋；在 <abbr class="tt" tabindex="0" data-term="NTU COOL" title="臺大的線上教學平台，課程公告與繳交在此進行。">NTU COOL</abbr> 或課程 <abbr class="tt" tabindex="0" data-term="GitHub" title="以 Git 為基礎的程式碼託管平台；本課教材與程式碼放在 GitHub。">GitHub</abbr> Issues 上的提問與回答。</li>
-    <li>書面作業與海報用 <abbr class="tt" tabindex="0" data-term="LaTeX" title="以標記語法排版的文書系統，學術論文與海報常用。">LaTeX</abbr> 製作，透過共享 <abbr class="tt" tabindex="0" data-term="Overleaf" title="線上 LaTeX 協作編輯器；本課書面作業與海報以共享專案繳交，須給老師 Editor 權限。">Overleaf</abbr> 專案繳交。<span class="slideref">投影片 19</span></li>
+    <li><b>Class Participation — 20%</b>：參與閱讀、方法與應用的討論；同儕回饋；在 <abbr class="tt" tabindex="0" data-term="NTU COOL" data-tip="臺大的線上教學平台，課程公告與繳交在此進行。" title="臺大的線上教學平台，課程公告與繳交在此進行。">NTU COOL</abbr> 或課程 <abbr class="tt" tabindex="0" data-term="GitHub" data-tip="以 Git 為基礎的程式碼託管平台；本課教材與程式碼放在 GitHub。" title="以 Git 為基礎的程式碼託管平台；本課教材與程式碼放在 GitHub。">GitHub</abbr> Issues 上的提問與回答。</li>
+    <li>書面作業與海報用 <abbr class="tt" tabindex="0" data-term="LaTeX" data-tip="以標記語法排版的文書系統，學術論文與海報常用。" title="以標記語法排版的文書系統，學術論文與海報常用。">LaTeX</abbr> 製作，透過共享 <abbr class="tt" tabindex="0" data-term="Overleaf" data-tip="線上 LaTeX 協作編輯器；本課書面作業與海報以共享專案繳交，須給老師 Editor 權限。" title="線上 LaTeX 協作編輯器；本課書面作業與海報以共享專案繳交，須給老師 Editor 權限。">Overleaf</abbr> 專案繳交。<span class="slideref">投影片 19</span></li>
   </ul>
 
   <h2 id="c7-poster">期末海報發表 — 25% <span class="slideref">投影片 20–21</span></h2>
@@ -976,15 +985,15 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
       <ul><li>Abstract</li><li>Introduction：問題與動機</li><li>文獻回顧：替研究定位</li><li>研究設計：資料、方法、策略</li><li>初步結果，或預計的分析策略</li><li>可行性、預期發現、貢獻</li></ul>
       <p>最多 10 頁、不超過 2,500 字。<b>截止：12 月 4 日（W13）</b>。</p></div>
     <div class="callout note"><div class="ct">期末論文 — 25%（投影片 23）</div>
-      <p>同樣獨立完成。延續期中報告，補上完整的實證分析：更強的設計、穩健的推論、適當的<abbr class="tt" tabindex="0" data-term="validation" title="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。">驗證</abbr>與敏感度檢定，再寫發現、限制與貢獻。</p>
-      <ul><li>正文：最多 4,000 字（不含參考文獻），寫成 <b><abbr class="tt" tabindex="0" data-term="PSRM" title="期刊 Political Science Research and Methods；期末論文採其 Research Note 格式。">PSRM</abbr> Research Note</b> 格式</li>
+      <p>同樣獨立完成。延續期中報告，補上完整的實證分析：更強的設計、穩健的推論、適當的<abbr class="tt" tabindex="0" data-term="validation" data-tip="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。" title="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。">驗證</abbr>與敏感度檢定，再寫發現、限制與貢獻。</p>
+      <ul><li>正文：最多 4,000 字（不含參考文獻），寫成 <b><abbr class="tt" tabindex="0" data-term="PSRM" data-full="Political Science Research and Methods" data-tip="期刊 Political Science Research and Methods；期末論文採其 Research Note 格式。" title="Political Science Research and Methods — 期刊 Political Science Research and Methods；期末論文採其 Research Note 格式。">PSRM</abbr> Research Note</b> 格式</li>
         <li>附錄：不限字數與頁數（穩健性、替代設定、驗證、標註流程、prompts、模型細節、程式說明）</li>
         <li>可重現的程式 repository（GitHub 或 CodeOcean）</li>
-        <li>截止：TBA</li></ul></div>
+        <li>截止：<abbr class="tt" tabindex="0" data-term="TBA" data-full="to be announced" data-tip="待公布：日期或內容尚未決定。" title="to be announced — 待公布：日期或內容尚未決定。">TBA</abbr></li></ul></div>
   </div>
 
   <h2 id="c7-topics">從哪裡開始？ <span class="slideref">投影片 24</span></h2>
-  <p>如果你心中還沒有<abbr class="tt" tabindex="0" data-term="corpus" title="為特定研究目的選出、要分析的文件集合。">語料</abbr>，大綱列了這些建議題目：</p>
+  <p>如果你心中還沒有<abbr class="tt" tabindex="0" data-term="corpus" data-tip="為特定研究目的選出、要分析的文件集合。" title="為特定研究目的選出、要分析的文件集合。">語料</abbr>，大綱列了這些建議題目：</p>
   <div class="grid2">
     <div class="callout plain"><div class="ct">Legislatures and parties</div><ul><li>台灣立法行為：記名表決、發言、質詢</li><li>立法發言分析</li><li>政黨政見（跨國或跨時）</li></ul></div>
     <div class="callout plain"><div class="ct">Media and rhetoric</div><ul><li>社群媒體政治論述</li><li>政治議題的新聞框架</li><li>比較政治修辭</li><li>中共戰狼外交與宣傳</li></ul></div>
@@ -995,7 +1004,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <div class="lab" id="labGrade">
     <div class="lab-h"><span class="ic">📊</span><span class="lt">五個評分項目</span><span class="ls">真實課程資料</span></div>
     <div class="lab-b">
-      <p class="hint">投影片 25 的評分表是圖片；權重與期限取自課程大綱 §8.1 的表格（大綱 PDF 第 40 頁），並與投影片 19、20、22、23 寫出的百分比核對一致。研究摘要的 10% 只在大綱中以文字出現（投影片 25 的文字部分沒有寫百分比）。</p>
+      <p class="hint">投影片 25 的評分表是圖片；權重與期限取自課程大綱 §8.1 的表格（大綱 <abbr class="tt" tabindex="0" data-term="PDF" data-full="Portable Document Format" data-tip="可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。" title="Portable Document Format — 可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。">PDF</abbr> 第 40 頁），並與投影片 19、20、22、23 寫出的百分比核對一致。研究摘要的 10% 只在大綱中以文字出現（投影片 25 的文字部分沒有寫百分比）。</p>
       <div id="gradeBars"></div>
       <h3 style="margin-top:14px">試算加權方式（補充）</h3>
       <p class="hint">輸入各項的假想分數（0–100），看加權平均怎麼算。<b>只示範加權</b>；投影片沒有說明 extra credit 怎麼併入總成績，實際成績以老師公告為準。</p>
@@ -1050,23 +1059,23 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <h2 id="c8-two">兩種加分 <span class="slideref">投影片 26</span></h2>
   <div class="grid2">
     <div class="callout note"><div class="ct">研討會接受 — 最多 5%</div>
-      <p>APSA（1 月初）、MPSA（11 月）、EPSS（12 月下旬）、COMPTEXT（1 月初）、TPSA（夏季）、JSQPS（冬季場 10 月下旬；夏季場 7–8 月）；PolMeth — Annual Meeting（3 月）、Europe PolMeth（11 月中下旬）、Asian PolMeth（10 月中下旬）。</p>
+      <p><abbr class="tt" tabindex="0" data-term="APSA" data-full="American Political Science Association" data-tip="美國政治學會；其年會是政治學最大的研討會之一。" title="American Political Science Association — 美國政治學會；其年會是政治學最大的研討會之一。">APSA</abbr>（1 月初）、<abbr class="tt" tabindex="0" data-term="MPSA" data-full="Midwest Political Science Association" data-tip="美國中西部政治學會；每年在芝加哥舉辦年會。" title="Midwest Political Science Association — 美國中西部政治學會；每年在芝加哥舉辦年會。">MPSA</abbr>（11 月）、EPSS（12 月下旬）、<abbr class="tt" tabindex="0" data-term="COMPTEXT" data-full="COMPTEXT Conference" data-tip="以計算文本分析為主題的年度國際研討會（課程大綱列出的研討會之一）。" title="COMPTEXT Conference — 以計算文本分析為主題的年度國際研討會（課程大綱列出的研討會之一）。">COMPTEXT</abbr>（1 月初）、<abbr class="tt" tabindex="0" data-term="TPSA" data-full="Taiwan Political Science Association" data-tip="台灣政治學會（課程大綱列出的研討會之一）。" title="Taiwan Political Science Association — 台灣政治學會（課程大綱列出的研討會之一）。">TPSA</abbr>（夏季）、<abbr class="tt" tabindex="0" data-term="JSQPS" data-full="Japanese Society for Quantitative Political Science" data-tip="日本計量政治學會，有冬季與夏季兩場會議（課程大綱列出的研討會之一）。" title="Japanese Society for Quantitative Political Science — 日本計量政治學會，有冬季與夏季兩場會議（課程大綱列出的研討會之一）。">JSQPS</abbr>（冬季場 10 月下旬；夏季場 7–8 月）；PolMeth — Annual Meeting（3 月）、Europe PolMeth（11 月中下旬）、Asian PolMeth（10 月中下旬）。</p>
       <p class="hint">投影片注明：這些月份是<strong>典型的投稿截止時間，不是會議日期</strong>。</p></div>
     <div class="callout note"><div class="ct">期刊投稿 — 最多 10%</div>
       <p>Revise &amp; Resubmit 或 major/minor revision：<b>+10%</b>。Reject 或 desk reject：<b>+5%</b>。</p>
-      <p>合格期刊：<abbr class="tt" tabindex="0" data-term="SSCI" title="社會科學引文索引（Social Sciences Citation Index）；本課期刊加分須投 SSCI 收錄期刊。">SSCI</abbr> 收錄的政治學或社會科學期刊。</p></div>
+      <p>合格期刊：<abbr class="tt" tabindex="0" data-term="SSCI" data-full="Social Sciences Citation Index" data-tip="社會科學引文索引（Social Sciences Citation Index）；本課期刊加分須投 SSCI 收錄期刊。" title="Social Sciences Citation Index — 社會科學引文索引（Social Sciences Citation Index）；本課期刊加分須投 SSCI 收錄期刊。">SSCI</abbr> 收錄的政治學或社會科學期刊。</p></div>
   </div>
   <p>兩種都拿到可以都申請，<strong>上限 15%</strong>。<span class="slideref">投影片 26</span></p>
-  <div class="callout note"><div class="ct">大綱的補充細節（課程大綱 §8.2，大綱 PDF 第 42–43 頁）</div>
+  <div class="callout note"><div class="ct">大綱的補充細節（課程大綱 §8.2，大綱 <abbr class="tt" tabindex="0" data-term="PDF" data-full="Portable Document Format" data-tip="可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。" title="Portable Document Format — 可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。">PDF</abbr> 第 42–43 頁）</div>
     <ul><li>期刊加分 +10% 的類別在大綱中寫作 “Acceptance, Revise &amp; Resubmit, or Major/Minor Revision”。</li>
-      <li>加分申請截止 TBA（公告於 <abbr class="tt" tabindex="0" data-term="NTU COOL" title="臺大的線上教學平台，課程公告與繳交在此進行。">NTU COOL</abbr>）；截止時仍在等待決定的投稿<strong>沒有暫定加分</strong>，截止後才收到的決定不計入本學期。</li>
+      <li>加分申請截止 <abbr class="tt" tabindex="0" data-term="TBA" data-full="to be announced" data-tip="待公布：日期或內容尚未決定。" title="to be announced — 待公布：日期或內容尚未決定。">TBA</abbr>（公告於 <abbr class="tt" tabindex="0" data-term="NTU COOL" data-tip="臺大的線上教學平台，課程公告與繳交在此進行。" title="臺大的線上教學平台，課程公告與繳交在此進行。">NTU COOL</abbr>）；截止時仍在等待決定的投稿<strong>沒有暫定加分</strong>，截止後才收到的決定不計入本學期。</li>
       <li>研討會投稿但未被接受，不符合研討會加分。</li></ul></div>
 
   <h2 id="c8-proof">要拿出什麼證明？什麼情況不合格？ <span class="slideref">投影片 27</span></h2>
   <ul>
     <li><b>證明</b>：顯示投稿的確認信，以及決定信（decision letter）。</li>
-    <li><b>不合格</b>：違反臺大關於學術誠信、研究倫理、學生行為、作者資格、著作權、資料保護或生成式 AI 使用的規定，或違反該研討會／期刊規則的投稿；也可能依臺大相關程序處理。</li>
-    <li><b>寫碩士論文？</b>鼓勵與指導教授發展與論文相關的投稿。<b><abbr class="tt" tabindex="0" data-term="GIND" title="臺大國家發展研究所（Graduate Institute of National Development）。">國發所</abbr>學生</b>：與論文相關的共同作者投稿，必須與國發所的專任教師共同撰寫。任何與論文相關的共同作者投稿，你必須<strong>同時是第一作者與通訊作者</strong>才能申請加分。<span class="slideref">投影片 27</span></li>
+    <li><b>不合格</b>：違反臺大關於學術誠信、研究倫理、學生行為、作者資格、著作權、資料保護或生成式 <abbr class="tt" tabindex="0" data-term="AI" data-full="artificial intelligence" data-tip="人工智慧：讓電腦執行需要「智慧」的任務（如理解語言、分類）的技術統稱。" title="artificial intelligence — 人工智慧：讓電腦執行需要「智慧」的任務（如理解語言、分類）的技術統稱。">AI</abbr> 使用的規定，或違反該研討會／期刊規則的投稿；也可能依臺大相關程序處理。</li>
+    <li><b>寫碩士論文？</b>鼓勵與指導教授發展與論文相關的投稿。<b><abbr class="tt" tabindex="0" data-term="GIND" data-full="Graduate Institute of National Development (NTU)" data-tip="臺大國家發展研究所（Graduate Institute of National Development）。" title="Graduate Institute of National Development (NTU) — 臺大國家發展研究所（Graduate Institute of National Development）。">國發所</abbr>學生</b>：與論文相關的共同作者投稿，必須與國發所的專任教師共同撰寫。任何與論文相關的共同作者投稿，你必須<strong>同時是第一作者與通訊作者</strong>才能申請加分。<span class="slideref">投影片 27</span></li>
   </ul>
 
   <h2 id="c8-aff">機構與地理名稱：每一份加分投稿都必須遵守 <span class="slideref">投影片 28</span></h2>
@@ -1074,7 +1083,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <li>在稿件正文、投稿系統資料、cover letter、致謝、投影片、海報與任何公開材料中，使用正式名稱 <b>National Taiwan University</b>。</li>
     <li>不得更改、省略或降格校名，不得使用貶抑或錯誤呈現臺灣地位的措辭；需要地點時用 “Taipei, Taiwan” 或 “Taipei, Taiwan (R.O.C.)”。</li>
     <li>這不禁止以證據為基礎批評臺灣的政治、制度或公共政策；規範的是正確的機構與地理描述、專業行為與不誤導的呈現。</li>
-    <li>若研討會、期刊、投稿系統或編輯要求更改 NTU 或 Taiwan 的措辭，<strong>必須先諮詢老師</strong>再繼續；也強烈建議事先與老師討論投稿計畫。<span class="slideref">投影片 28</span></li>
+    <li>若研討會、期刊、投稿系統或編輯要求更改 <abbr class="tt" tabindex="0" data-term="NTU" data-full="National Taiwan University" data-tip="國立臺灣大學。" title="National Taiwan University — 國立臺灣大學。">NTU</abbr> 或 Taiwan 的措辭，<strong>必須先諮詢老師</strong>再繼續；也強烈建議事先與老師討論投稿計畫。<span class="slideref">投影片 28</span></li>
   </ul>
 
   <h2 id="c8-lab">互動：我的投稿能加幾分？ <span class="slideref">投影片 26–28</span></h2>
@@ -1128,9 +1137,9 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <div class="pagetoc"><div class="tt">本章內容</div><a href="#c9-ai">使用生成式 AI 的三條規則</a><a href="#c9-decl">互動：AI 揭露聲明</a><a href="#c9-int">學術誠信</a><a href="#c9-dl">期限</a><a href="#c9-sc">練習：情境判斷</a><a href="#c9-quiz">自我檢查</a></div>
 
   <h2 id="c9-ai">使用生成式 AI <span class="slideref">投影片 29</span></h2>
-  <p>本課遵循臺大的《生成式 AI 使用與研究誠信指引》。AI 是輔助工具：<strong>它不取代你的判斷，也不取代你對繳交內容的責任</strong>。</p>
+  <p>本課遵循臺大的《生成式 <abbr class="tt" tabindex="0" data-term="AI" data-full="artificial intelligence" data-tip="人工智慧：讓電腦執行需要「智慧」的任務（如理解語言、分類）的技術統稱。" title="artificial intelligence — 人工智慧：讓電腦執行需要「智慧」的任務（如理解語言、分類）的技術統稱。">AI</abbr> 使用與研究誠信指引》。AI 是輔助工具：<strong>它不取代你的判斷，也不取代你對繳交內容的責任</strong>。</p>
   <ol>
-    <li><b>作業中允許的用途</b>：發想概念（conceptualisation）；初步文獻篩選（須由人<abbr class="tt" tabindex="0" data-term="validation" title="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。">驗證</abbr>）；輔助寫作與編修；影音與互動元件。<strong>論證與分析必須是你自己的。</strong></li>
+    <li><b>作業中允許的用途</b>：發想概念（conceptualisation）；初步文獻篩選（須由人<abbr class="tt" tabindex="0" data-term="validation" data-tip="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。" title="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。">驗證</abbr>）；輔助寫作與編修；影音與互動元件。<strong>論證與分析必須是你自己的。</strong></li>
     <li><b>每一份繳交都要揭露 AI 使用</b>：研究摘要、期中報告、海報、期末論文、加分投稿。說明用了<strong>哪個工具與版本、請它做什麼、怎麼使用它的輸出、怎麼檢查</strong>。沒用 AI？寫：“No generative AI tools were used in the preparation of this assignment.”</li>
     <li><b>沒有聲明，就不受理</b>：沒有聲明的作業在補上完整聲明之前不予受理。錯誤陳述 AI 使用、未驗證 AI 輸出、透過 AI 捏造來源或資料、用 AI 繞過學習目標，可能被視為學術不當行為。<span class="slideref">投影片 29</span></li>
   </ol>
@@ -1165,7 +1174,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <li>期限就是期限。如果無法趕上，<strong>盡早通知老師</strong>並走臺大學生請假程序；緊急情況先寄信給老師。</li>
     <li>核准的請假或延期<strong>不會自動免除作業</strong>；老師會視情況安排合理的補做。</li>
     <li>沒有核准的請假、也沒有事先同意：錯過的課堂活動以缺席計；遲交可能不給分。<span class="slideref">投影片 30</span></li>
-    <li>大綱補充：書面作業與加分申請的截止時間是當天 23:59（臺灣時間，UTC+8）（大綱 §8.1）。</li>
+    <li>大綱補充：書面作業與加分申請的截止時間是當天 23:59（臺灣時間，<abbr class="tt" tabindex="0" data-term="UTC" data-full="Coordinated Universal Time" data-tip="世界協調時間；臺灣時間是 UTC+8。" title="Coordinated Universal Time — 世界協調時間；臺灣時間是 UTC+8。">UTC</abbr>+8）（大綱 §8.1）。</li>
   </ul>
 
   <h2 id="c9-sc">練習：這樣做可以嗎？</h2>
@@ -1226,15 +1235,15 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <p><strong>現在就把 24 小時的號碼存進手機，在需要之前。</strong><span class="slideref">投影片 32</span></p>
 
   <h2 id="c10-survey">離開前：背景問卷 <span class="slideref">投影片 33</span></h2>
-  <p>花五分鐘填「Student Background and Course Expectations」：你在 R、Python 與文本分析的程度；你想從這門課得到什麼、正在做什麼研究。老師用這些答案決定 lab 的步調、挑選貼近你們專題的例子。（問卷 QR code 在投影片 33。）</p>
+  <p>花五分鐘填「Student Background and Course Expectations」：你在 R、Python 與文本分析的程度；你想從這門課得到什麼、正在做什麼研究。老師用這些答案決定 lab 的步調、挑選貼近你們專題的例子。（問卷 <abbr class="tt" tabindex="0" data-term="QR" data-full="Quick Response (code)" data-tip="QR code：用手機相機掃描就能開啟網址的二維條碼。" title="Quick Response (code) — QR code：用手機相機掃描就能開啟網址的二維條碼。">QR</abbr> code 在投影片 33。）</p>
 
   <h2 id="c10-next">下週之前 <span class="slideref">投影片 34</span></h2>
-  <div class="callout warn"><div class="ct">W2：R, Python, <abbr class="tt" tabindex="0" data-term="GitHub" title="以 Git 為基礎的程式碼託管平台；本課教材與程式碼放在 GitHub。">GitHub</abbr>, and Collaborative Workflow</div><ul>
+  <div class="callout warn"><div class="ct">W2：R, Python, <abbr class="tt" tabindex="0" data-term="GitHub" data-tip="以 Git 為基礎的程式碼託管平台；本課教材與程式碼放在 GitHub。" title="以 Git 為基礎的程式碼託管平台；本課教材與程式碼放在 GitHub。">GitHub</abbr>, and Collaborative Workflow</div><ul>
     <li>帶一台已經裝好開發環境的筆電──之後每週都會用。</li>
-    <li>安裝 <abbr class="tt" tabindex="0" data-term="RStudio" title="Posit 公司的 R 整合開發環境（IDE）。">RStudio</abbr>（R）或 <abbr class="tt" tabindex="0" data-term="Positron" title="Posit 公司的新一代 IDE，支援 Python、R 等多種語言。">Positron</abbr>（Python 與跨語言）；設定指南會在課前寄出。</li>
-    <li>建立免費 GitHub 帳號並安裝 <abbr class="tt" tabindex="0" data-term="GitHub Desktop" title="GitHub 的圖形介面程式，不用指令就能下載（clone）與同步 repo。">GitHub Desktop</abbr>（不需要命令列 Git）。</li>
-    <li>建議：用 NTU 信箱申請免費的 GitHub Student Developer Pack。</li></ul></div>
-  <p><b>W2 閱讀</b>：<abbr class="tt" tabindex="0" data-term="quanteda" title="R 的計量文本分析套件，提供 corpus、tokens、dfm 等物件與函式；本課主要工具。">quanteda</abbr> tutorials Ch. 1 · Grimmer, Roberts &amp; Stewart (2022) Ch. 4（提供節錄）· <abbr class="tt" tabindex="0" data-term="Quarto" title="Posit 的開源出版系統，可把程式碼、結果與文字組成文件、網頁或簡報。">Quarto</abbr> “Get Started” 文件 · Posit blog 的 Privacy and AI Assistants（略讀）。</p>
+    <li>安裝 <abbr class="tt" tabindex="0" data-term="RStudio" data-tip="Posit 公司的 R 整合開發環境（IDE）。" title="Posit 公司的 R 整合開發環境（IDE）。">RStudio</abbr>（R）或 <abbr class="tt" tabindex="0" data-term="Positron" data-tip="Posit 公司的新一代 IDE，支援 Python、R 等多種語言。" title="Posit 公司的新一代 IDE，支援 Python、R 等多種語言。">Positron</abbr>（Python 與跨語言）；設定指南會在課前寄出。</li>
+    <li>建立免費 GitHub 帳號並安裝 <abbr class="tt" tabindex="0" data-term="GitHub Desktop" data-tip="GitHub 的圖形介面程式，不用指令就能下載（clone）與同步 repo。" title="GitHub 的圖形介面程式，不用指令就能下載（clone）與同步 repo。">GitHub Desktop</abbr>（不需要命令列 Git）。</li>
+    <li>建議：用 <abbr class="tt" tabindex="0" data-term="NTU" data-full="National Taiwan University" data-tip="國立臺灣大學。" title="National Taiwan University — 國立臺灣大學。">NTU</abbr> 信箱申請免費的 GitHub Student Developer Pack。</li></ul></div>
+  <p><b>W2 閱讀</b>：<abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的計量文本分析套件，提供 corpus、tokens、dfm 等物件與函式；本課主要工具。" title="R 的計量文本分析套件，提供 corpus、tokens、dfm 等物件與函式；本課主要工具。">quanteda</abbr> tutorials Ch. 1 · Grimmer, Roberts &amp; Stewart (2022) Ch. 4（提供節錄）· <abbr class="tt" tabindex="0" data-term="Quarto" data-tip="Posit 的開源出版系統，可把程式碼、結果與文字組成文件、網頁或簡報。" title="Posit 的開源出版系統，可把程式碼、結果與文字組成文件、網頁或簡報。">Quarto</abbr> “Get Started” 文件 · Posit blog 的 Privacy and <abbr class="tt" tabindex="0" data-term="AI" data-full="artificial intelligence" data-tip="人工智慧：讓電腦執行需要「智慧」的任務（如理解語言、分類）的技術統稱。" title="artificial intelligence — 人工智慧：讓電腦執行需要「智慧」的任務（如理解語言、分類）的技術統稱。">AI</abbr> Assistants（略讀）。</p>
   <p><b>補 W1 進度？</b>Benoit (2020) · Grimmer &amp; Stewart (2013) · Nielbo et al. (2024) · Egami et al. (2022)。<span class="slideref">投影片 34</span></p>
   <p class="hint">注意：大綱 W1 的核心閱讀是 Benoit (2020)、Grimmer &amp; Stewart (2013)、Baden et al. (2022)；Nielbo et al. (2024)、Egami et al. (2022) 列在補充閱讀。<code>W1/papers/</code> 裡有的是前三篇，第 12 章做導讀。</p>
 
@@ -1253,7 +1262,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 <section class="chapter" id="ch11" data-slides="4">
   <div class="crumb">11 · 補充實作</div>
   <h1 class="ch">補充實作：把本週投影片變成資料（R）</h1>
-  <div class="callout warn"><div class="ct">補充（非講義內容）</div><p>W1 沒有 classroom 或 lab R 腳本（第一個 take-home lab 從 W2 開始）。本章是助教寫的小示範：把 <code>week1.pdf</code> 用 <code>pdftotext -layout</code> 抽出文字，<strong>一頁投影片＝一份文件</strong>，用 <abbr class="tt" tabindex="0" data-term="quanteda" title="R 的計量文本分析套件，提供 corpus、tokens、dfm 等物件與函式；本課主要工具。">quanteda</abbr> 走一遍投影片 4 的前兩步（<abbr class="tt" tabindex="0" data-term="corpus" title="為特定研究目的選出、要分析的文件集合。">corpus</abbr> → representation）。所有輸出都是本機實際執行的結果（R 4.5.3（aarch64-conda-linux-gnu）、quanteda 4.5.1、<abbr class="tt" tabindex="0" data-term="quanteda.textstats" title="quanteda 的延伸套件，提供 textstat_keyness() 等文本統計函式。">quanteda.textstats</abbr> 0.97.2、<abbr class="tt" tabindex="0" data-term="stopwords" title="R 套件 stopwords：提供多種語言的停用詞表（stop words），第 11 章用它移除英文功能字。">stopwords</abbr> 2.3、<abbr class="tt" tabindex="0" data-term="jsonlite" title="在 R 中讀寫 JSON 的套件；第 11 章用它把結果匯出給網頁互動元件。">jsonlite</abbr> 2.0.0），完整紀錄在 <code>tad/labs/W1/run_output.txt</code>。這些函式在 W2、W4 才會正式教，現在看不懂沒關係。</p></div>
+  <div class="callout warn"><div class="ct">補充（非講義內容）</div><p>W1 沒有 classroom 或 lab R 腳本（第一個 take-home lab 從 W2 開始）。本章是助教寫的小示範：把 <code>week1.pdf</code> 用 <code>pdftotext -layout</code> 抽出文字，<strong>一頁投影片＝一份文件</strong>，用 <abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的計量文本分析套件，提供 corpus、tokens、dfm 等物件與函式；本課主要工具。" title="R 的計量文本分析套件，提供 corpus、tokens、dfm 等物件與函式；本課主要工具。">quanteda</abbr> 走一遍投影片 4 的前兩步（<abbr class="tt" tabindex="0" data-term="corpus" data-tip="為特定研究目的選出、要分析的文件集合。" title="為特定研究目的選出、要分析的文件集合。">corpus</abbr> → representation）。所有輸出都是本機實際執行的結果（R 4.5.3（aarch64-conda-linux-gnu）、quanteda 4.5.1、<abbr class="tt" tabindex="0" data-term="quanteda.textstats" data-tip="quanteda 的延伸套件，提供 textstat_keyness() 等文本統計函式。" title="quanteda 的延伸套件，提供 textstat_keyness() 等文本統計函式。">quanteda.textstats</abbr> 0.97.2、<abbr class="tt" tabindex="0" data-term="stopwords" data-tip="R 套件 stopwords：提供多種語言的停用詞表（stop words），第 11 章用它移除英文功能字。" title="R 套件 stopwords：提供多種語言的停用詞表（stop words），第 11 章用它移除英文功能字。">stopwords</abbr> 2.3、<abbr class="tt" tabindex="0" data-term="jsonlite" data-tip="在 R 中讀寫 JSON 的套件；第 11 章用它把結果匯出給網頁互動元件。" title="在 R 中讀寫 JSON 的套件；第 11 章用它把結果匯出給網頁互動元件。">jsonlite</abbr> 2.0.0），完整紀錄在 <code>tad/labs/W1/run_output.txt</code>。這些函式在 W2、W4 才會正式教，現在看不懂沒關係。</p></div>
   <div class="pagetoc"><div class="tt">本章內容</div><a href="#c11-read">S00–S01 讀檔</a><a href="#c11-tok">S02 四種前處理</a><a href="#c11-dfm">S03 DFM</a><a href="#c11-lab">互動：投影片語料瀏覽器</a><a href="#c11-trim">S04 修剪</a><a href="#c11-key">S05 keyness</a><a href="#c11-lesson">這個小實驗說明了什麼</a></div>
 
   <h2 id="c11-read">S00–S01：載入套件、讀檔 <span class="slideref">投影片 4</span></h2>
@@ -1339,10 +1348,10 @@ C       C   2215  1061
 D       D   2215   896</pre></div>
   <div class="linebyline">
     <div class="lr"><code>tokens</code></div><div>文本被切成的「字」的總數。</div>
-    <div class="lr"><code>types</code></div><div>不重複的字有幾種（＝<abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：列是文件、欄是特徵（字詞）、格子是次數；quanteda 的核心資料結構。">DFM</abbr> 的欄數）。</div>
-    <div class="lr"><code>A → B</code></div><div>去掉標點、數字、符號、網址：4,499 → 3,123 個 <abbr class="tt" tabindex="0" data-term="token" title="切字後的最小單位，通常是一個字或標點；計算 tokens 時同一個字每次出現都算。">token</abbr>。</div>
-    <div class="lr"><code>B → C</code></div><div>轉小寫、去掉英文<abbr class="tt" tabindex="0" data-term="stop words" title="the、of、and 這類高頻功能字，常在前處理時移除。">停用詞</abbr>：3,123 → 2,215 個 token；<abbr class="tt" tabindex="0" data-term="types" title="不重複的 token 種類數；同一個字出現多次只算一個 type。">types</abbr> 1,328 → 1,061。</div>
-    <div class="lr"><code>C → D</code></div><div>取詞幹（<abbr class="tt" tabindex="0" data-term="stemming" title="切掉字尾、把不同字形併成同一字根（如 family、families → famili）；lemmatization 的粗略近似。">stemming</abbr>）：token 數不變（2,215），但 types 從 1,061 降到 896，因為 <i>method</i> 和 <i>methods</i> 這類字被併成同一欄。</div>
+    <div class="lr"><code>types</code></div><div>不重複的字有幾種（＝<abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件-特徵矩陣：列是文件、欄是特徵（字詞）、格子是次數；quanteda 的核心資料結構。" title="document-feature matrix — 文件-特徵矩陣：列是文件、欄是特徵（字詞）、格子是次數；quanteda 的核心資料結構。">DFM</abbr> 的欄數）。</div>
+    <div class="lr"><code>A → B</code></div><div>去掉標點、數字、符號、網址：4,499 → 3,123 個 <abbr class="tt" tabindex="0" data-term="token" data-tip="切字後的最小單位，通常是一個字或標點；計算 tokens 時同一個字每次出現都算。" title="切字後的最小單位，通常是一個字或標點；計算 tokens 時同一個字每次出現都算。">token</abbr>。</div>
+    <div class="lr"><code>B → C</code></div><div>轉小寫、去掉英文<abbr class="tt" tabindex="0" data-term="stop words" data-tip="the、of、and 這類高頻功能字，常在前處理時移除。" title="the、of、and 這類高頻功能字，常在前處理時移除。">停用詞</abbr>：3,123 → 2,215 個 token；<abbr class="tt" tabindex="0" data-term="types" data-tip="不重複的 token 種類數；同一個字出現多次只算一個 type。" title="不重複的 token 種類數；同一個字出現多次只算一個 type。">types</abbr> 1,328 → 1,061。</div>
+    <div class="lr"><code>C → D</code></div><div>取詞幹（<abbr class="tt" tabindex="0" data-term="stemming" data-tip="切掉字尾、把不同字形併成同一字根（如 family、families → famili）；lemmatization 的粗略近似。" title="切掉字尾、把不同字形併成同一字根（如 family、families → famili）；lemmatization 的粗略近似。">stemming</abbr>）：token 數不變（2,215），但 types 從 1,061 降到 896，因為 <i>method</i> 和 <i>methods</i> 這類字被併成同一欄。</div>
   </div>
 
   <h2 id="c11-dfm">S03：文件-特徵矩陣（DFM）</h2>
@@ -1371,7 +1380,7 @@ docs text data computational methods social science research can use yen-chieh
         15         15         14         13         13         12         12         12         12 
       code         ai 
         12         11 </pre></div>
-  <p>38 份文件 × 1,061 個特徵，95.50% 的格子是 0（<abbr class="tt" tabindex="0" data-term="sparsity" title="DFM 中為 0 的格子比例；文本矩陣通常非常稀疏。">sparsity</abbr>）。最常出現的字裡，<i>research</i>、<i>political</i>、<i>text</i>、<i>data</i> 來自 Part 1；<i>course</i>、<i>submission</i>、<i>poster</i>、<i><abbr class="tt" tabindex="0" data-term="GitHub" title="以 Git 為基礎的程式碼託管平台；本課教材與程式碼放在 GitHub。">github</abbr></i> 來自 Part 2；<i>grimmer</i>、<i>stewart</i>、<i>et</i>、<i>al</i> 主要來自引用與參考文獻頁──這提醒你：<strong>文件裡有什麼「雜訊」（引用格式、頁尾、網址），會直接進到你的資料</strong>。</p>
+  <p>38 份文件 × 1,061 個特徵，95.50% 的格子是 0（<abbr class="tt" tabindex="0" data-term="sparsity" data-tip="DFM 中為 0 的格子比例；文本矩陣通常非常稀疏。" title="DFM 中為 0 的格子比例；文本矩陣通常非常稀疏。">sparsity</abbr>）。最常出現的字裡，<i>research</i>、<i>political</i>、<i>text</i>、<i>data</i> 來自 Part 1；<i>course</i>、<i>submission</i>、<i>poster</i>、<i><abbr class="tt" tabindex="0" data-term="GitHub" data-tip="以 Git 為基礎的程式碼託管平台；本課教材與程式碼放在 GitHub。" title="以 Git 為基礎的程式碼託管平台；本課教材與程式碼放在 GitHub。">github</abbr></i> 來自 Part 2；<i>grimmer</i>、<i>stewart</i>、<i>et</i>、<i>al</i> 主要來自引用與參考文獻頁──這提醒你：<strong>文件裡有什麼「雜訊」（引用格式、頁尾、網址），會直接進到你的資料</strong>。</p>
 
   <h2 id="c11-lab">互動：投影片語料瀏覽器</h2>
   <div class="lab" id="labCorp">
@@ -1451,7 +1460,7 @@ tail(key, 12)</pre></div>
 991 submission -3.598904 0.05781768        0          16
 992     course -5.097171 0.02396489        0          21</pre></div>
   <div class="lab" id="labKey">
-    <div class="lab-h"><span class="ic">⚖️</span><span class="lt"><abbr class="tt" tabindex="0" data-term="keyness" title="比較目標組與參照組文件用字差異的統計量；第 11 章以 χ² 計算。">Keyness</abbr>：<abbr class="tt" tabindex="0" data-term="χ²" title="卡方統計量：比較觀察次數與期望次數的差距；keyness 預設用它衡量字在兩組間的差異。">χ²</abbr> 統計量</span><span class="ls">真實資料：<abbr class="tt" tabindex="0" data-term="textstat_keyness()" title="quanteda.textstats 函式：計算目標組相對參照組的 keyness（預設 χ²）。">textstat_keyness</abbr> 的輸出</span></div>
+    <div class="lab-h"><span class="ic">⚖️</span><span class="lt"><abbr class="tt" tabindex="0" data-term="keyness" data-tip="比較目標組與參照組文件用字差異的統計量；第 11 章以 χ² 計算。" title="比較目標組與參照組文件用字差異的統計量；第 11 章以 χ² 計算。">Keyness</abbr>：<abbr class="tt" tabindex="0" data-term="χ²" data-tip="卡方統計量：比較觀察次數與期望次數的差距；keyness 預設用它衡量字在兩組間的差異。" title="卡方統計量：比較觀察次數與期望次數的差距；keyness 預設用它衡量字在兩組間的差異。">χ²</abbr> 統計量</span><span class="ls">真實資料：<abbr class="tt" tabindex="0" data-term="textstat_keyness()" data-tip="quanteda.textstats 函式：計算目標組相對參照組的 keyness（預設 χ²）。" title="quanteda.textstats 函式：計算目標組相對參照組的 keyness（預設 χ²）。">textstat_keyness</abbr> 的輸出</span></div>
     <div class="lab-b">
       <p class="hint">右邊（綠）＝在 Part 1（研究內容）相對常用；左邊（紅）＝在 Part 2（課程規則）相對常用。只有 9 頁對 25 頁，次數都很小，χ² 只是描述用字差異，<b>不要當成嚴肅的統計檢定</b>。</p>
       <div class="seg" id="kyN"><button data-n="8">各 8 個</button><button data-n="12" class="on">各 12 個</button></div>
@@ -1463,7 +1472,7 @@ tail(key, 12)</pre></div>
   <ul>
     <li><b>文件的定義是研究者的決定</b>：一頁一份文件，所以封面、標題頁、參考文獻頁也都是「文件」，而且會影響最常見字。</li>
     <li><b>前處理會改變資料</b>：同一份投影片，特徵數可以是 1,422、1,328、1,061 或 896，看你怎麼處理。Baden et al. (2022, p. 6) 正是批評這類前處理與建模選擇很少被討論與說明理由。</li>
-    <li><b>粗糙但有用</b>：只靠字數，keyness 就分得出「研究內容」（factors、measurement、<abbr class="tt" tabindex="0" data-term="validation" title="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。">validation</abbr>、causal…）和「課程規則」（course、submission、poster、github…）。這是 Grimmer &amp; Stewart 第一原則「all models are wrong — but some are useful」的小例子。</li>
+    <li><b>粗糙但有用</b>：只靠字數，keyness 就分得出「研究內容」（factors、measurement、<abbr class="tt" tabindex="0" data-term="validation" data-tip="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。" title="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。">validation</abbr>、causal…）和「課程規則」（course、submission、poster、github…）。這是 Grimmer &amp; Stewart 第一原則「all models are wrong — but some are useful」的小例子。</li>
   </ul>
 
   <h2 id="c11-quiz">自我檢查</h2>
@@ -1494,20 +1503,20 @@ tail(key, 12)</pre></div>
   <h2 id="c12-note">頁碼怎麼標</h2>
   <div class="callout plain"><ul>
     <li>三篇都在 <code>W1/papers/</code>，是大綱 W1 的三篇核心閱讀。</li>
-    <li><b>Grimmer &amp; Stewart (2013)</b>：期刊排版 PDF，頁碼是期刊頁（267–297）。</li>
+    <li><b>Grimmer &amp; Stewart (2013)</b>：期刊排版 <abbr class="tt" tabindex="0" data-term="PDF" data-full="Portable Document Format" data-tip="可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。" title="Portable Document Format — 可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。">PDF</abbr>，頁碼是期刊頁（267–297）。</li>
     <li><b>Benoit (2020)</b>：Singapore Management University 機構典藏的版本（典藏頁標示 pp. 1–55），不是 SAGE 印刷版頁碼（461–497）；本教材寫作「repo PDF 第 N 頁」（含典藏封面）。</li>
-    <li><b>Baden et al. (2022)</b>：Open Access 期刊版（CC BY-NC-ND），頁碼是期刊頁（1–18）。</li>
+    <li><b>Baden et al. (2022)</b>：Open Access 期刊版（<abbr class="tt" tabindex="0" data-term="CC" data-full="Creative Commons" data-tip="創用 CC 授權；BY＝需標示作者、NC＝非商業使用、ND＝禁止改作。" title="Creative Commons — 創用 CC 授權；BY＝需標示作者、NC＝非商業使用、ND＝禁止改作。">CC</abbr> BY-NC-ND），頁碼是期刊頁（1–18）。</li>
   </ul></div>
 
   <div class="reading" id="r-gs">
     <h2>Grimmer &amp; Stewart (2013). Text as Data: The Promise and Pitfalls of Automatic Content Analysis Methods for Political Texts. <em>Political Analysis</em> 21(3): 267–297. <span class="slideref">投影片 5、35</span></h2>
     <div class="rgrid">
-      <div><b>核心主張</b>自動化文本分析大幅降低分析大量文本的成本，但有陷阱：它們<strong>不能取代仔細思考與細讀</strong>，而且需要大量、針對問題的<abbr class="tt" tabindex="0" data-term="validation" title="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。">驗證</abbr>（摘要，p. 267）。</div>
+      <div><b>核心主張</b>自動化文本分析大幅降低分析大量文本的成本，但有陷阱：它們<strong>不能取代仔細思考與細讀</strong>，而且需要大量、針對問題的<abbr class="tt" tabindex="0" data-term="validation" data-tip="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。" title="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。">驗證</abbr>（摘要，p. 267）。</div>
       <div><b>四個原則（Table 1，p. 269）</b>(1) 所有語言的量化模型都是錯的──但有些有用；(2) 量化方法放大資源、輔助人，而不是取代人；(3) 沒有全域最佳的方法；(4) Validate, Validate, Validate。</div>
       <div><b>原則 1 的意思</b>語言的生成過程連語言學家都不清楚；模型應該用它能否完成有用的社會科學任務來評估，而不是模型配適度（pp. 269–270）。</div>
-      <div><b>原則 4 的意思</b>已知類別時，要證明<abbr class="tt" tabindex="0" data-term="supervised" title="用已標註答案的資料訓練模型（如分類器）；非監督式則不需標註（如主題模型）。">監督式</abbr>方法能可靠地重現人工編碼；非監督式方法的驗證較間接，要結合實驗、實質與統計證據；要避免的是「沒有驗證步驟就盲目使用任何方法」（p. 271）。</div>
-      <div><b>前處理食譜</b>丟掉語序（<abbr class="tt" tabindex="0" data-term="bag of words" title="只保留每個字在文件中出現幾次、丟掉語序的文本表示法。">bag of words</abbr>）、必要時加入 <abbr class="tt" tabindex="0" data-term="bigram" title="相鄰兩個字組成的特徵（如 flies_like），能保留一點語序。">bigrams</abbr>；<abbr class="tt" tabindex="0" data-term="stemming" title="切掉字尾、把不同字形併成同一字根（如 family、families → famili）；lemmatization 的粗略近似。">stemming</abbr> 是 <abbr class="tt" tabindex="0" data-term="lemmatization" title="依字典與詞性把字還原成原形（如 was → be），比 stemming 精確但較耗費資源。">lemmatization</abbr> 的粗略近似；作者也強調任何一步都可以、而且常常應該修改（p. 272）。</div>
-      <div><b>與本週的連結</b>投影片 5 把這篇放在 “Validation” 階段的起點：“the four principles — and ‘validate’”。全文也概覽了字典、監督式分類、主題／分群與<abbr class="tt" tabindex="0" data-term="scaling" title="把文本放到一條（政策）維度上估計位置的方法，例如 Wordscores、Wordfish（W7）。">縮放</abbr>，這些分別是 W4–W8 的主題。</div>
+      <div><b>原則 4 的意思</b>已知類別時，要證明<abbr class="tt" tabindex="0" data-term="supervised" data-tip="用已標註答案的資料訓練模型（如分類器）；非監督式則不需標註（如主題模型）。" title="用已標註答案的資料訓練模型（如分類器）；非監督式則不需標註（如主題模型）。">監督式</abbr>方法能可靠地重現人工編碼；非監督式方法的驗證較間接，要結合實驗、實質與統計證據；要避免的是「沒有驗證步驟就盲目使用任何方法」（p. 271）。</div>
+      <div><b>前處理食譜</b>丟掉語序（<abbr class="tt" tabindex="0" data-term="bag of words" data-tip="只保留每個字在文件中出現幾次、丟掉語序的文本表示法。" title="只保留每個字在文件中出現幾次、丟掉語序的文本表示法。">bag of words</abbr>）、必要時加入 <abbr class="tt" tabindex="0" data-term="bigram" data-tip="相鄰兩個字組成的特徵（如 flies_like），能保留一點語序。" title="相鄰兩個字組成的特徵（如 flies_like），能保留一點語序。">bigrams</abbr>；<abbr class="tt" tabindex="0" data-term="stemming" data-tip="切掉字尾、把不同字形併成同一字根（如 family、families → famili）；lemmatization 的粗略近似。" title="切掉字尾、把不同字形併成同一字根（如 family、families → famili）；lemmatization 的粗略近似。">stemming</abbr> 是 <abbr class="tt" tabindex="0" data-term="lemmatization" data-tip="依字典與詞性把字還原成原形（如 was → be），比 stemming 精確但較耗費資源。" title="依字典與詞性把字還原成原形（如 was → be），比 stemming 精確但較耗費資源。">lemmatization</abbr> 的粗略近似；作者也強調任何一步都可以、而且常常應該修改（p. 272）。</div>
+      <div><b>與本週的連結</b>投影片 5 把這篇放在 “Validation” 階段的起點：“the four principles — and ‘validate’”。全文也概覽了字典、監督式分類、主題／分群與<abbr class="tt" tabindex="0" data-term="scaling" data-tip="把文本放到一條（政策）維度上估計位置的方法，例如 Wordscores、Wordfish（W7）。" title="把文本放到一條（政策）維度上估計位置的方法，例如 Wordscores、Wordfish（W7）。">縮放</abbr>，這些分別是 W4–W8 的主題。</div>
     </div>
     <p class="src">來源：<code>W1/papers/Grimmer2013.pdf</code>（Cambridge Core 下載版）；doi:10.1093/pan/mps028。</p>
   </div>
@@ -1518,7 +1527,7 @@ tail(key, 12)</pre></div>
       <div><b>出發點</b>政治學與國關面對文本資料的「豐富到令人尷尬」：立法辯論、政見、委員會逐字稿、演說、遊說文件、法院意見、法律，今天都有紀錄、很多容易轉成結構化資料（repo PDF 第 2 頁）。</div>
       <div><b>潛在 vs. 外顯特徵</b>政治學常關心的不是文本本身，而是它透露的、無法直接觀察的<strong>潛在（latent）</strong>特質，例如意識形態、對政策的偏好；政治傳播則常關心<strong>外顯（manifest）</strong>特徵，也就是溝通的形式與內容本身（第 8 頁）。</div>
       <div><b>分析取向的光譜（Table 26.1，第 12 頁）</b>依自動化程度與「關注目標」，從 literary、qualitative、hybrid quantitative 到 purely quantitative。分界在於分析是直接作用在文本上，還是先抽出特徵再分析。（表格的欄位對應請看 PDF，文字抽取版面不完整。）</div>
-      <div><b>七個階段（Table 26.2，第 27 頁）</b>選文本與定義 <abbr class="tt" tabindex="0" data-term="corpus" title="為特定研究目的選出、要分析的文件集合。">corpus</abbr> → 轉成共同電子格式 → 定義文件與分析單位 → 定義與修整特徵 → 轉成量化矩陣 → 用適當的統計程序分析 → 詮釋與報告。</div>
+      <div><b>七個階段（Table 26.2，第 27 頁）</b>選文本與定義 <abbr class="tt" tabindex="0" data-term="corpus" data-tip="為特定研究目的選出、要分析的文件集合。" title="為特定研究目的選出、要分析的文件集合。">corpus</abbr> → 轉成共同電子格式 → 定義文件與分析單位 → 定義與修整特徵 → 轉成量化矩陣 → 用適當的統計程序分析 → 詮釋與報告。</div>
       <div><b>結論</b>把文本當資料，是把它轉成特徵、分析特徵的模式，而不是直接理解文本；這讓文本變成無法直接解讀的資料，但分析它能以結構化規則、在不可能靠人工達成的規模上產生洞見。推動力之一是規模（第 46 頁）。</div>
       <div><b>與本週的連結</b>七個階段幾乎就是投影片 4 那條鏈的展開版；第 11 章的補充實作做的正是第 1–5 階段。</div>
     </div>
@@ -1528,7 +1537,7 @@ tail(key, 12)</pre></div>
   <div class="reading" id="r-bad">
     <h2>Baden, Pipal, Schoonvelde &amp; van der Velden (2022). Three Gaps in Computational Text Analysis Methods for Social Sciences: A Research Agenda. <em>Communication Methods and Measures</em> 16(1): 1–18.</h2>
     <div class="rgrid">
-      <div><b>研究問題</b>為什麼社會科學對計算文本分析方法（<abbr class="tt" tabindex="0" data-term="CTAM" title="計算文本分析方法；Baden et al. (2022) 對這類方法的統稱。">CTAM</abbr>）的採用不均？作者認為不只是社會科學家計算能力不足，很多時候<strong>選擇不用是有道理的</strong>（pp. 1–2）。</div>
+      <div><b>研究問題</b>為什麼社會科學對計算文本分析方法（<abbr class="tt" tabindex="0" data-term="CTAM" data-full="computational text analysis methods" data-tip="計算文本分析方法；Baden et al. (2022) 對這類方法的統稱。" title="computational text analysis methods — 計算文本分析方法；Baden et al. (2022) 對這類方法的統稱。">CTAM</abbr>）的採用不均？作者認為不只是社會科學家計算能力不足，很多時候<strong>選擇不用是有道理的</strong>（pp. 1–2）。</div>
       <div><b>Gap I：Technology before validity</b>CTAM 的發展重技術與統計性質，輕操作化與量測效度（p. 3 起）。受調查的作者中 40% 把效度視為主要顧慮、35% 視為次要顧慮；（非）監督式 CTAM 的前處理與建模選擇很少被討論、幾乎不以既有方法論知識說明理由（p. 6）。</div>
       <div><b>Gap II：Specialization before integration</b>多數工具只抽取<strong>一種</strong>文本意義（例如情感分數），但社會科學常需要同時量測多個、內部複雜的內容（例如針對特定對象的評價、框架），只好把多個工具串接起來（p. 6 起）。</div>
       <div><b>Gap III：English before everything</b>頂尖期刊中，政治學 69%、傳播學 59% 的文本研究只研究英文；跨語言比較研究在傳播學不到 16%、政治學 18%；加入第二種語言後，使用計算方法的比例在傳播學從 36% 降到 28%、政治學從 64% 降到 41%（p. 11）。</div>
@@ -1595,11 +1604,11 @@ tail(key, 12)</pre></div>
   <h2 id="c13-pit">常見誤解（點開看說明）</h2>
   <div class="pitfalls">
     <details class="quiz"><summary>「這門課會教我 transformer 的架構與最佳化。」</summary><div class="qa"><p>不會。投影片 11：這是社會科學課，不是技術課；目標是用這些方法寫出你自己的論文。<span class="slideref">投影片 11</span></p></div></details>
-    <details class="quiz"><summary>「方法越新，貢獻越大。」</summary><div class="qa"><p>Catalinac (2016) 用的是 2003 年的 <abbr class="tt" tabindex="0" data-term="LDA" title="潛在狄利克雷分配（2003）：最常見的主題模型，假設每份文件是多個主題的混合。">LDA</abbr>，貢獻在政治學。Application 型研究的主角是研究設計與<abbr class="tt" tabindex="0" data-term="identification" title="讓資料能支持因果或實質主張的研究設計條件；本課 application 型研究的主角。">識別</abbr>。<span class="slideref">投影片 6–7</span></p></div></details>
-    <details class="quiz"><summary>「模型跑出來就是結果，不用驗證。」</summary><div class="qa"><p><abbr class="tt" tabindex="0" data-term="validation" title="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。">Validation</abbr> 是唯一從未消失的要求；Grimmer &amp; Stewart 的第四原則是 Validate, Validate, Validate。<span class="slideref">投影片 5</span></p></div></details>
+    <details class="quiz"><summary>「方法越新，貢獻越大。」</summary><div class="qa"><p>Catalinac (2016) 用的是 2003 年的 <abbr class="tt" tabindex="0" data-term="LDA" data-full="Latent Dirichlet Allocation" data-tip="潛在狄利克雷分配（2003）：最常見的主題模型，假設每份文件是多個主題的混合。" title="Latent Dirichlet Allocation — 潛在狄利克雷分配（2003）：最常見的主題模型，假設每份文件是多個主題的混合。">LDA</abbr>，貢獻在政治學。Application 型研究的主角是研究設計與<abbr class="tt" tabindex="0" data-term="identification" data-tip="讓資料能支持因果或實質主張的研究設計條件；本課 application 型研究的主角。" title="讓資料能支持因果或實質主張的研究設計條件；本課 application 型研究的主角。">識別</abbr>。<span class="slideref">投影片 6–7</span></p></div></details>
+    <details class="quiz"><summary>「模型跑出來就是結果，不用驗證。」</summary><div class="qa"><p><abbr class="tt" tabindex="0" data-term="validation" data-tip="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。" title="檢查量到的東西是否就是要的概念：與人工編碼比較、專家判斷、外部標準。">Validation</abbr> 是唯一從未消失的要求；Grimmer &amp; Stewart 的第四原則是 Validate, Validate, Validate。<span class="slideref">投影片 5</span></p></div></details>
     <details class="quiz"><summary>「Lab 練習沒交會被扣分。」</summary><div class="qa"><p>Lab 練習不計分、不需繳交。但它是你做專題的練習場。<span class="slideref">投影片 19</span></p></div></details>
-    <details class="quiz"><summary>「沒用 AI 就不用寫聲明。」</summary><div class="qa"><p>每一份繳交都要聲明；沒用也要寫 “No generative AI tools were used in the preparation of this assignment.” 沒有聲明就不受理。<span class="slideref">投影片 29</span></p></div></details>
-    <details class="quiz"><summary>「研討會投稿就有加分。」</summary><div class="qa"><p>研討會加分要「被接受」（acceptance）；期刊才有投稿被拒也有 +5% 的規則，而且要 <abbr class="tt" tabindex="0" data-term="SSCI" title="社會科學引文索引（Social Sciences Citation Index）；本課期刊加分須投 SSCI 收錄期刊。">SSCI</abbr> 期刊、有確認信與決定信。<span class="slideref">投影片 26–27</span></p></div></details>
+    <details class="quiz"><summary>「沒用 AI 就不用寫聲明。」</summary><div class="qa"><p>每一份繳交都要聲明；沒用也要寫 “No generative <abbr class="tt" tabindex="0" data-term="AI" data-full="artificial intelligence" data-tip="人工智慧：讓電腦執行需要「智慧」的任務（如理解語言、分類）的技術統稱。" title="artificial intelligence — 人工智慧：讓電腦執行需要「智慧」的任務（如理解語言、分類）的技術統稱。">AI</abbr> tools were used in the preparation of this assignment.” 沒有聲明就不受理。<span class="slideref">投影片 29</span></p></div></details>
+    <details class="quiz"><summary>「研討會投稿就有加分。」</summary><div class="qa"><p>研討會加分要「被接受」（acceptance）；期刊才有投稿被拒也有 +5% 的規則，而且要 <abbr class="tt" tabindex="0" data-term="SSCI" data-full="Social Sciences Citation Index" data-tip="社會科學引文索引（Social Sciences Citation Index）；本課期刊加分須投 SSCI 收錄期刊。" title="Social Sciences Citation Index — 社會科學引文索引（Social Sciences Citation Index）；本課期刊加分須投 SSCI 收錄期刊。">SSCI</abbr> 期刊、有確認信與決定信。<span class="slideref">投影片 26–27</span></p></div></details>
     <details class="quiz"><summary>「Overleaf 給老師檢視權限就算繳交。」</summary><div class="qa"><p>大綱 §8.1：必須邀請為 Editor (can edit)，view-only 不算繳交。</p></div></details>
     <details class="quiz"><summary>「核准請假就不用交作業了。」</summary><div class="qa"><p>核准的請假或延期不會自動免除作業，老師會安排合理的補做。<span class="slideref">投影片 30</span></p></div></details>
   </div>
@@ -1626,7 +1635,7 @@ tail(key, 12)</pre></div>
   </div></div>
 
   <h2 id="c14-plan">研究構想填寫器：為 10/23 的研究摘要暖身 <span class="slideref">投影片 6、22、24</span></h2>
-  <p>研究摘要（10%，10/23 截止）要交標題與最多 1,000 字，介紹你打算在期中與期末論文發展的研究（大綱 §8.1）。下面的欄位依投影片 4 的流程、投影片 6 的兩種任務、投影片 22 的期中報告必備元素整理（欄位安排屬補充）；填好可匯出 <abbr class="tt" tabindex="0" data-term="Markdown" title="以簡單符號（# 標題、** 粗體）標記格式的純文字語法。">Markdown</abbr> 當草稿。</p>
+  <p>研究摘要（10%，10/23 截止）要交標題與最多 1,000 字，介紹你打算在期中與期末論文發展的研究（大綱 §8.1）。下面的欄位依投影片 4 的流程、投影片 6 的兩種任務、投影片 22 的期中報告必備元素整理（欄位安排屬補充）；填好可匯出 <abbr class="tt" tabindex="0" data-term="Markdown" data-tip="以簡單符號（# 標題、** 粗體）標記格式的純文字語法。" title="以簡單符號（# 標題、** 粗體）標記格式的純文字語法。">Markdown</abbr> 當草稿。</p>
   <div class="lab" id="labPlan">
     <div class="lab-h"><span class="ic">🗒</span><span class="lt">研究構想</span><span class="ls">自動存檔・可匯出</span></div>
     <div class="lab-b">
@@ -1639,7 +1648,7 @@ tail(key, 12)</pre></div>
       <label class="f">7. 可行性與預期貢獻（投影片 22）<textarea id="pl7" rows="2"></textarea></label>
       <div class="row" style="margin-top:8px"><button class="btn primary" id="plCopy">複製成 Markdown</button><span class="hint" id="plMsg" style="margin:0"></span></div>
       <pre id="planOut" class="explain" style="white-space:pre-wrap"></pre>
-      <p class="hint">提醒：繳交時要附 AI 使用聲明（第 09 章）。</p>
+      <p class="hint">提醒：繳交時要附 <abbr class="tt" tabindex="0" data-term="AI" data-full="artificial intelligence" data-tip="人工智慧：讓電腦執行需要「智慧」的任務（如理解語言、分類）的技術統稱。" title="artificial intelligence — 人工智慧：讓電腦執行需要「智慧」的任務（如理解語言、分類）的技術統稱。">AI</abbr> 使用聲明（第 09 章）。</p>
     </div>
   </div>
 
@@ -1653,30 +1662,30 @@ tail(key, 12)</pre></div>
   <h2 id="c14-ref">參考文獻 <span class="slideref">投影片 35–38</span></h2>
   <h3>投影片 35–38 列出的文獻</h3>
   <ul>
-    <li>Benoit, K. (2020). <abbr class="tt" tabindex="0" data-term="text as data" title="把非結構化的語言轉成可分析的量化資訊，用來回答社會科學問題（投影片 4）。">Text as Data</abbr>: An Overview. In L. Curini &amp; R. Franzese (eds.), <em>The SAGE Handbook of Research Methods in Political Science and International Relations</em>: 461–497. Sage. doi:10.4135/9781526486387.n29</li>
+    <li>Benoit, K. (2020). <abbr class="tt" tabindex="0" data-term="text as data" data-tip="把非結構化的語言轉成可分析的量化資訊，用來回答社會科學問題（投影片 4）。" title="把非結構化的語言轉成可分析的量化資訊，用來回答社會科學問題（投影片 4）。">Text as Data</abbr>: An Overview. In L. Curini &amp; R. Franzese (eds.), <em>The SAGE Handbook of Research Methods in Political Science and International Relations</em>: 461–497. Sage. doi:10.4135/9781526486387.n29</li>
     <li>Egami, N., Fong, C. J., Grimmer, J., Roberts, M. E. &amp; Stewart, B. M. (2022). How to Make Causal Inferences Using Texts. <em>Science Advances</em> 8(42): eabg2652. doi:10.1126/sciadv.abg2652</li>
-    <li>Grimmer, J. (2010). A Bayesian Hierarchical <abbr class="tt" tabindex="0" data-term="topic model" title="從字的共現找出潛在主題的非監督式模型，例如 LDA、STM（W8）。">Topic Model</abbr> for Political Texts: Measuring Expressed Agendas in Senate Press Releases. <em>Political Analysis</em> 18(1): 1–35. doi:10.1093/pan/mpp034</li>
+    <li>Grimmer, J. (2010). A Bayesian Hierarchical <abbr class="tt" tabindex="0" data-term="topic model" data-tip="從字的共現找出潛在主題的非監督式模型，例如 LDA、STM（W8）。" title="從字的共現找出潛在主題的非監督式模型，例如 LDA、STM（W8）。">Topic Model</abbr> for Political Texts: Measuring Expressed Agendas in Senate Press Releases. <em>Political Analysis</em> 18(1): 1–35. doi:10.1093/pan/mpp034</li>
     <li>Grimmer, J. &amp; Stewart, B. M. (2013). Text as Data: The Promise and Pitfalls of Automatic Content Analysis Methods for Political Texts. <em>Political Analysis</em> 21(3): 267–297.</li>
     <li>Grimmer, J., Roberts, M. E. &amp; Stewart, B. M. (2022). <em>Text as Data: A New Framework for Machine Learning and the Social Sciences</em>. Princeton University Press.</li>
     <li>Heseltine, M. &amp; Clemm von Hohenberg, B. (2024). Large Language Models as a Substitute for Human Experts in Annotating Political Text. <em>Research &amp; Politics</em> 11(1). doi:10.1177/20531680241236239</li>
     <li>Jankin, S., Liao, Y.-C. &amp; Tang, L. (2026). Folk Theories of Partisan Conflict. Working paper.</li>
     <li>Jurafsky, D. &amp; Martin, J. H. (2026). <em>Speech and Language Processing</em> (3rd ed., online draft). https://web.stanford.edu/~jurafsky/slp3/</li>
     <li>Laver, M., Benoit, K. &amp; Garry, J. (2003). Extracting Policy Positions from Political Texts Using Words as Data. <em>American Political Science Review</em> 97(2): 311–331. doi:10.1017/s0003055403000698</li>
-    <li>Nielbo, K. L. et al. (2024). <abbr class="tt" tabindex="0" data-term="QTA" title="計量文本分析：以量化方式分析文本內容。">Quantitative Text Analysis</abbr>. <em>Nature Reviews Methods Primers</em> 4(1): 25. doi:10.1038/s43586-024-00302-w</li>
+    <li>Nielbo, K. L. et al. (2024). <abbr class="tt" tabindex="0" data-term="QTA" data-full="quantitative text analysis" data-tip="計量文本分析：以量化方式分析文本內容。" title="quantitative text analysis — 計量文本分析：以量化方式分析文本內容。">Quantitative Text Analysis</abbr>. <em>Nature Reviews Methods Primers</em> 4(1): 25. doi:10.1038/s43586-024-00302-w</li>
     <li>Roberts, M. E., Stewart, B. M., Tingley, D. et al. (2014). Structural Topic Models for Open-Ended Survey Responses. <em>American Journal of Political Science</em> 58(4): 1064–1082. doi:10.1111/ajps.12103</li>
     <li>Rodríguez, P. L., Spirling, A. &amp; Stewart, B. M. (2023). Embedding Regression: Models for Context-Specific Description and Inference. <em>American Political Science Review</em>. doi:10.1017/s0003055422001228</li>
-    <li>Slapin, J. B. &amp; Proksch, S.-O. (2008). A <abbr class="tt" tabindex="0" data-term="scaling" title="把文本放到一條（政策）維度上估計位置的方法，例如 Wordscores、Wordfish（W7）。">Scaling</abbr> Model for Estimating Time-Series Party Positions from Texts. <em>American Journal of Political Science</em> 52(3): 705–722. doi:10.1111/j.1540-5907.2008.00338.x</li>
-    <li>Watanabe, K. &amp; Müller, S. (2023). <abbr class="tt" tabindex="0" data-term="quanteda" title="R 的計量文本分析套件，提供 corpus、tokens、dfm 等物件與函式；本課主要工具。">Quanteda</abbr> Tutorials. https://tutorials.quanteda.io</li>
+    <li>Slapin, J. B. &amp; Proksch, S.-O. (2008). A <abbr class="tt" tabindex="0" data-term="scaling" data-tip="把文本放到一條（政策）維度上估計位置的方法，例如 Wordscores、Wordfish（W7）。" title="把文本放到一條（政策）維度上估計位置的方法，例如 Wordscores、Wordfish（W7）。">Scaling</abbr> Model for Estimating Time-Series Party Positions from Texts. <em>American Journal of Political Science</em> 52(3): 705–722. doi:10.1111/j.1540-5907.2008.00338.x</li>
+    <li>Watanabe, K. &amp; Müller, S. (2023). <abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的計量文本分析套件，提供 corpus、tokens、dfm 等物件與函式；本課主要工具。" title="R 的計量文本分析套件，提供 corpus、tokens、dfm 等物件與函式；本課主要工具。">Quanteda</abbr> Tutorials. https://tutorials.quanteda.io</li>
   </ul>
   <h3>投影片引用、但不在參考文獻頁</h3>
   <ul><li>Catalinac, A. (2016). From Pork to Policy. <em>The Journal of Politics</em> 78(1): 1–18.（投影片 7）</li></ul>
   <h3>本教材另外使用</h3>
   <ul>
-    <li>Baden, C., Pipal, C., Schoonvelde, M. &amp; van der Velden, M. A. C. G. (2022). Three Gaps in <abbr class="tt" tabindex="0" data-term="CTAM" title="計算文本分析方法；Baden et al. (2022) 對這類方法的統稱。">Computational Text Analysis Methods</abbr> for Social Sciences: A Research Agenda. <em>Communication Methods and Measures</em> 16(1): 1–18. doi:10.1080/19312458.2021.2015574（大綱 W1 核心閱讀）</li>
+    <li>Baden, C., Pipal, C., Schoonvelde, M. &amp; van der Velden, M. A. C. G. (2022). Three Gaps in <abbr class="tt" tabindex="0" data-term="CTAM" data-full="computational text analysis methods" data-tip="計算文本分析方法；Baden et al. (2022) 對這類方法的統稱。" title="computational text analysis methods — 計算文本分析方法；Baden et al. (2022) 對這類方法的統稱。">Computational Text Analysis Methods</abbr> for Social Sciences: A Research Agenda. <em>Communication Methods and Measures</em> 16(1): 1–18. doi:10.1080/19312458.2021.2015574（大綱 W1 核心閱讀）</li>
     <li>NTLDEV 7191 課程大綱（<code>NTLDEV_7191_1151.pdf</code>）：§4、§7.1 課表、§8.1–8.2。</li>
-    <li>軟體：quanteda、<abbr class="tt" tabindex="0" data-term="quanteda.textstats" title="quanteda 的延伸套件，提供 textstat_keyness() 等文本統計函式。">quanteda.textstats</abbr>、<abbr class="tt" tabindex="0" data-term="stopwords" title="R 套件 stopwords：提供多種語言的停用詞表（stop words），第 11 章用它移除英文功能字。">stopwords</abbr>、<abbr class="tt" tabindex="0" data-term="jsonlite" title="在 R 中讀寫 JSON 的套件；第 11 章用它把結果匯出給網頁互動元件。">jsonlite</abbr>（第 11 章補充實作）。</li>
+    <li>軟體：quanteda、<abbr class="tt" tabindex="0" data-term="quanteda.textstats" data-tip="quanteda 的延伸套件，提供 textstat_keyness() 等文本統計函式。" title="quanteda 的延伸套件，提供 textstat_keyness() 等文本統計函式。">quanteda.textstats</abbr>、<abbr class="tt" tabindex="0" data-term="stopwords" data-tip="R 套件 stopwords：提供多種語言的停用詞表（stop words），第 11 章用它移除英文功能字。" title="R 套件 stopwords：提供多種語言的停用詞表（stop words），第 11 章用它移除英文功能字。">stopwords</abbr>、<abbr class="tt" tabindex="0" data-term="jsonlite" data-tip="在 R 中讀寫 JSON 的套件；第 11 章用它把結果匯出給網頁互動元件。" title="在 R 中讀寫 JSON 的套件；第 11 章用它把結果匯出給網頁互動元件。">jsonlite</abbr>（第 11 章補充實作）。</li>
   </ul>
-  <div class="pagemeta">本教材依據 NTLDEV 7191 W1 投影片（Yen-Chieh Liao 廖彥傑，2026-09-11 課程；PDF 共 38 頁，2026-09-20 編譯版）、課程大綱 <code>NTLDEV_7191_1151.pdf</code> 與 <code>W1/papers/</code> 的三篇論文製作。W1 沒有課堂 R 腳本；第 11 章是補充實作，R 輸出為本機執行（R 4.5.3（aarch64-conda-linux-gnu）、quanteda 4.5.1、quanteda.textstats 0.97.2、stopwords 2.3、jsonlite 2.0.0）。標示「補充（非講義內容）」的段落與玩具示範為額外說明。製作日期 2026-11-06。</div>
+  <div class="pagemeta">本教材依據 NTLDEV 7191 W1 投影片（Yen-Chieh Liao 廖彥傑，2026-09-11 課程；<abbr class="tt" tabindex="0" data-term="PDF" data-full="Portable Document Format" data-tip="可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。" title="Portable Document Format — 可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。">PDF</abbr> 共 38 頁，2026-09-20 編譯版）、課程大綱 <code>NTLDEV_7191_1151.pdf</code> 與 <code>W1/papers/</code> 的三篇論文製作。W1 沒有課堂 R 腳本；第 11 章是補充實作，R 輸出為本機執行（R 4.5.3（aarch64-conda-linux-gnu）、quanteda 4.5.1、quanteda.textstats 0.97.2、stopwords 2.3、jsonlite 2.0.0）。標示「補充（非講義內容）」的段落與玩具示範為額外說明。製作日期 2026-11-06。</div>
 </section>
 
     <div class="foot">NTLDEV 7191 Text as Data · W1 互動自學教材 · 依據 2026-09-11 投影片製作（2026-11-06）</div>
@@ -1685,7 +1694,7 @@ tail(key, 12)</pre></div>
     <div class="sp-h"><span class="sp-t">投影片對照</span><span class="sp-l" id="spLabel">p. 1 / 38</span><button class="btn" id="spClose">隱藏</button></div>
     <div class="sp-img" id="spImgBox" title="點擊放大"><img id="spImg" alt="投影片頁面"></div>
     <div class="sp-nav"><button class="btn arrow" id="spPrev" aria-label="上一頁投影片">‹</button><div class="sp-tabs" id="spTabs"></div><button class="btn arrow" id="spNext" aria-label="下一頁投影片">›</button></div>
-    <label class="sp-follow"><input type="checkbox" id="spFollow" checked> 跟著捲動自動切換頁面</label>
+    <label class="sp-follow"><input type="checkbox" id="spFollow" checked> 跟著捲動自動切換頁面</label><label class="sp-follow sp-rev"><input type="checkbox" id="spRev" checked> 換投影片時，講義跟著跳到對應段落</label><form class="sp-goto" id="spGoto" autocomplete="off"><label for="spGotoN">跳到投影片 p.</label><input type="number" id="spGotoN" min="1" inputmode="numeric" placeholder="頁碼"><button class="btn" type="submit">前往</button></form>
     <div class="sp-note" id="spNote"></div>
     <div class="sp-strip" id="spStrip"></div>
   </aside>
@@ -1963,6 +1972,7 @@ function spChapterDefault(){
     spSet(parsePages(sec.dataset.slides),"本章開頭：先顯示最相關的投影片；捲動到標有「投影片」的段落時會自動切換。");return true;}
   return false;
 }
+try{window.__spApi={page:function(){return spPage;},setPage:function(n){spSetPage(n);},show:function(id){show(id,true);},badge:function(b){spFromBadge(b);},cur:function(){return spBadge;},chapter:function(){return current;},n:function(){return SLIDES.length;}};}catch(__e){}
 function spTrack(){
   if(!$("#spFollow").checked)return;
   var sec=$("section.chapter.show");if(!sec)return;
@@ -2423,6 +2433,78 @@ else if(window.__w8fail)window.__w8fail("no chapter shown");}catch(__e){__w8e("i
 })();
 
 </script>
+<script id="series-revsync">
+(function(){try{
+  var A=window.__spApi;if(!A)return;
+  var M={"exact": "講義已跳到引用投影片 p.%s 的段落：", "chapter": "講義已跳到涵蓋投影片 p.%s 的章節開頭：", "near": "講義沒有直接引用投影片 p.%s，已跳到最接近的段落（%s）：", "none": "講義沒有引用投影片 p.%s 附近的段落。", "stay": "目前段落已涵蓋投影片 p.%s。"};
+  function $(s,r){return (r||document).querySelector(s);}
+  function $$(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));}
+  var rev=$("#spRev"),follow=$("#spFollow");
+  try{var v=localStorage.getItem("tad:revsync");if(v==="0")rev.checked=false;}catch(e){}
+  rev.addEventListener("change",function(){try{localStorage.setItem("tad:revsync",rev.checked?"1":"0");}catch(e){}});
+  function pages(t){var out=[];(String(t).match(/\d+\s*[–-]\s*\d+|\d+/g)||[]).forEach(function(m){var r=m.split(/[–-]/).map(function(x){return +x;});
+    if(r.length===2&&r[1]>=r[0]&&r[1]-r[0]<200){for(var i=r[0];i<=r[1];i++)out.push(i);}else out.push(r[0]);});
+    var N=A.n();return out.filter(function(n){return n>=1&&n<=N;});}
+  var IDX=null;
+  function index(){if(IDX)return IDX;IDX=[];var k=0;
+    $$("section.chapter").forEach(function(sec){
+      $$(".slideref",sec).forEach(function(b){if(b.closest("aside,.fb,#ttPop"))return;var pg=pages(b.textContent);if(!pg.length)return;
+        IDX.push({b:b,sec:sec,lo:Math.min.apply(null,pg),hi:Math.max.apply(null,pg),pg:pg,k:k++});});});
+    return IDX;}
+  function ctx(b){var h=b.closest("h2,h3,h4");if(h)return h.textContent.replace(b.textContent,"").trim();
+    var c=b.closest(".callout,.card,li,p,td,div");var t=c?c.textContent.replace(/\s+/g," ").trim():"";return t.length>60?t.slice(0,58)+"…":t;}
+  function secTitle(sec){var h=$("h2",sec)||$("h1",sec);if(!h)return sec.id;var c=h.cloneNode(true);$$(".slideref",c).forEach(function(x){x.parentNode.removeChild(x);});return c.textContent.replace(/\s+/g," ").trim();}
+  function block(b){return b.closest("h2,h3,h4,.callout,li,p,tr,.card,figure,div")||b;}
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+  function setNote(h){var n=$("#spNote");if(n)n.innerHTML=h;}
+  function flash(el){if(!el)return;el.classList.remove("sp-hit");void el.offsetWidth;el.classList.add("sp-hit");setTimeout(function(){el.classList.remove("sp-hit");},2400);}
+  function vis(e){return !!(e&&e.offsetParent);}
+  function goSec(sec){if(A.chapter()!==sec.id)A.show(sec.id);}
+  function scrollTo(el){var r=el.getBoundingClientRect();var y=r.top+(window.pageYOffset||document.documentElement.scrollTop)-Math.round(innerHeight*0.26);
+    window.scrollTo(0,Math.max(0,y));}
+  var lockT=null,wasFollow=true;
+  function lock(){if(lockT){clearTimeout(lockT);}else{wasFollow=follow?follow.checked:false;}if(follow)follow.checked=false;
+    lockT=setTimeout(function(){if(follow)follow.checked=wasFollow;lockT=null;},450);}
+  function jump(p){
+    if(!rev.checked)return;
+    var cur=A.cur();if(cur&&vis(cur)&&pages(cur.textContent).indexOf(p)>=0){return;}
+    var I=index(),chap=A.chapter();
+    var ex=I.filter(function(x){return x.pg.indexOf(p)>=0;});
+    /* chapter that walks through this part of the deck: density of nearby citations (+ current-chapter bonus) */
+    var sc={};I.forEach(function(x){var d=1e9;x.pg.forEach(function(q){d=Math.min(d,Math.abs(q-p));});if(d<=2)sc[x.sec.id]=(sc[x.sec.id]||0)+(d===0?2:1)/x.pg.length;});
+    $$("section.chapter").forEach(function(s){if(s.dataset.slides&&pages(s.dataset.slides).indexOf(p)>=0)sc[s.id]=(sc[s.id]||0)+1;});
+    if(sc[chap])sc[chap]+=1.5;
+    ex.sort(function(a,b){return ((sc[b.sec.id]||0)-(sc[a.sec.id]||0))||(a.pg.length-b.pg.length)||(a.k-b.k);});
+    lock();
+    for(var i=0;i<ex.length;i++){goSec(ex[i].sec);if(vis(ex[i].b)){land(ex[i].b,p,"exact");return;}}
+    var secs=$$("section.chapter").filter(function(s){return s.dataset.slides&&pages(s.dataset.slides).indexOf(p)>=0;});
+    secs.sort(function(a,b){return (a.id===chap?0:1)-(b.id===chap?0:1);});
+    if(secs.length){goSec(secs[0]);window.scrollTo(0,0);A.setPage(p);setNote(M.chapter.replace("%s",p)+"<b>"+esc(secTitle(secs[0]))+"</b>");flash($("h2",secs[0]));return;}
+    var near=I.slice().sort(function(a,b){
+      var da=a.hi<p?p-a.hi:(a.lo-p)+0.5,db=b.hi<p?p-b.hi:(b.lo-p)+0.5;return (da-db)||((a.hi-a.lo)-(b.hi-b.lo))||(a.k-b.k);});
+    for(var j=0;j<near.length&&j<40;j++){goSec(near[j].sec);if(vis(near[j].b)){land(near[j].b,p,"near");return;}}
+    setNote(M.none.replace("%s",p));
+  }
+  function land(b,p,kind){
+    setTimeout(function(){
+      scrollTo(b);
+      if(kind==="exact"){A.badge(b);}
+      A.setPage(p);
+      var lab=b.textContent.replace(/\s+/g," ").trim();
+      setNote((kind==="exact"?M.exact.replace("%s",p):M.near.replace("%s",p).replace("%s",esc(lab)))+"<b>"+esc(ctx(b)||secTitle(b.closest("section.chapter")))+"</b>");
+      flash(block(b));
+    },40);
+  }
+  document.addEventListener("click",function(e){
+    var t=e.target.closest("#spPrev,#spNext,#spTabs button,#spStrip button");if(!t)return;
+    setTimeout(function(){jump(A.page());},0);
+  });
+  var f=$("#spGoto"),inp=$("#spGotoN");
+  if(inp)inp.max=A.n();
+  if(f)f.addEventListener("submit",function(e){e.preventDefault();var n=parseInt(inp.value,10);if(!(n>=1&&n<=A.n()))return;
+    A.setPage(n);jump(n);inp.blur();});
+}catch(e){if(window.console)console.warn("revsync",e);(window.__w8errs=window.__w8errs||[]).push("revsync: "+(e&&e.message));}})();
+</script>
 <script id="series-js">
 (function(){try{
   var pop=null,cur=null;
@@ -2430,7 +2512,7 @@ else if(window.__w8fail)window.__w8fail("no chapter shown");}catch(__e){__w8e("i
   function show(el){
     var p=mk(),tip=el.getAttribute("data-tip")||"";cur=el;
     p.innerHTML="";var b=document.createElement("b");b.appendChild(document.createTextNode(el.getAttribute("data-term")||el.textContent));
-    p.appendChild(b);p.appendChild(document.createTextNode(tip));p.style.display="block";
+    p.appendChild(b);var fu=el.getAttribute("data-full");if(fu){var fi=document.createElement("i");fi.className="full";fi.appendChild(document.createTextNode(fu));p.appendChild(fi);}p.appendChild(document.createTextNode(tip));p.style.display="block";
     var r=el.getBoundingClientRect(),w=p.offsetWidth,h=p.offsetHeight,vw=document.documentElement.clientWidth,vh=window.innerHeight;
     var x=r.left+r.width/2-w/2;if(x<12)x=12;if(x+w>vw-12)x=vw-12-w;
     var y=r.bottom+8;if(y+h>vh-8&&r.top-h-8>8)y=r.top-h-8;
@@ -2439,7 +2521,7 @@ else if(window.__w8fail)window.__w8fail("no chapter shown");}catch(__e){__w8e("i
   function hide(){if(pop)pop.style.display="none";cur=null;}
   var els=document.querySelectorAll("abbr.tt");
   for(var i=0;i<els.length;i++){(function(el){
-    var t=el.getAttribute("title");if(t){el.setAttribute("data-tip",t);el.removeAttribute("title");}
+    var t=el.getAttribute("title");if(t){if(!el.getAttribute("data-tip"))el.setAttribute("data-tip",t);el.removeAttribute("title");}
     el.addEventListener("mouseenter",function(){show(el);});
     el.addEventListener("mouseleave",function(){if(document.activeElement!==el)hide();});
     el.addEventListener("focus",function(){show(el);});

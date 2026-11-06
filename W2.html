@@ -372,6 +372,13 @@
   .lab label.f input[type=text]{width:100%;}
   @media (max-width:860px){ .cardgrid{grid-template-columns:1fr 1fr;} }
 </style>
+<style id="series-revsync-css">
+.sp-goto{display:flex;align-items:center;gap:6px;margin:4px 0 6px;font-size:.82rem;flex-wrap:wrap;}
+.sp-goto input{width:5.2em;padding:4px 6px;border-radius:8px;border:1px solid var(--border,#3a4456);background:transparent;color:inherit;font:inherit;}
+.sp-goto .btn{padding:3px 10px;}
+.sp-hit{animation:spHit 2.2s ease-out 1;border-radius:6px;}
+@keyframes spHit{0%,35%{background:rgba(255,196,0,.32);box-shadow:0 0 0 4px rgba(255,196,0,.32);}100%{background:transparent;box-shadow:0 0 0 4px transparent;}}
+</style>
 <style id="series-css">
 .topbar .homebtn,.topbar .langbtn{text-decoration:none;display:inline-flex;align-items:center;}
 .topbar .langbtn{font-weight:600;}
@@ -382,7 +389,9 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 #ttPop{position:fixed;z-index:9999;max-width:min(340px,calc(100vw - 24px));padding:10px 12px;border-radius:10px;
   background:var(--surface-2,#1d2330);color:var(--text,#e8ecf3);border:1px solid var(--border,#3a4456);box-shadow:0 8px 28px rgba(0,0,0,.35);
   font-size:.86rem;line-height:1.55;display:none;pointer-events:none;word-wrap:break-word;overflow-wrap:anywhere;}
-#ttPop b{display:block;margin-bottom:3px;color:var(--accent,#6aa9ff);}
+#ttPop b{display:block;margin-bottom:1px;color:var(--accent,#6aa9ff);}
+#ttPop i.full{display:block;font-style:normal;font-weight:600;margin-bottom:5px;opacity:.95;}
+#ttPop b+span{display:block;margin-top:3px;}
 </style>
 </head>
 <body>
@@ -437,7 +446,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 <section class="chapter" id="ch00" data-slides="1,2,61,62">
   <div class="crumb">00 · 本週導覽</div>
   <h1 class="ch">W2：R 與 Python 的文本前處理與協作流程（Text Preparation in R and Python）</h1>
-  <p class="lead">W1 談「文本可以當作資料」；W2 動手把文字<strong>變成</strong>資料：挑文件、清理、切字（<abbr class="tt" tabindex="0" data-term="tokenization" title="把文字切成 token；英文靠空白與標點，中文、日文、泰文需要斷詞模型。">tokenize</abbr>）、建 DFM（<abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。">document-feature matrix</abbr>），並且每一步都問：「這個選擇讓我的量測<strong>失去了什麼</strong>？」</p>
+  <p class="lead">W1 談「文本可以當作資料」；W2 動手把文字<strong>變成</strong>資料：挑文件、清理、切字（<abbr class="tt" tabindex="0" data-term="tokenization" data-tip="把文字切成 token；英文靠空白與標點，中文、日文、泰文需要斷詞模型。" title="把文字切成 token；英文靠空白與標點，中文、日文、泰文需要斷詞模型。">tokenize</abbr>）、建 DFM（<abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。" title="document-feature matrix — 文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。">document-feature matrix</abbr>），並且每一步都問：「這個選擇讓我的量測<strong>失去了什麼</strong>？」</p>
 
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c0-obj">本週學習目標</a><a href="#c0-map">概念地圖</a><a href="#c0-data">兩份練習資料</a><a href="#c0-how">怎麼使用</a><a href="#c0-quiz">自我檢查</a>
@@ -446,9 +455,9 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <h2 id="c0-obj">本週學習目標 <span class="slideref">投影片 2</span></h2>
   <p>投影片 2 列了四個目標，最後一個（清理、切字、建 DFM、評估前處理選擇）是本教材的主軸。老師也提醒：這是<strong>提前介紹 W4 的內容</strong>，W4 會在這個基礎上做字典、情緒分析與驗證。</p>
   <ol class="objlist" id="objList">
-    <li data-o="1">在 <abbr class="tt" tabindex="0" data-term="RStudio" title="Posit 的 R 整合開發環境；本週 Lab 可在 RStudio 或 Positron 開 .R 檔執行。">RStudio</abbr> 與 <abbr class="tt" tabindex="0" data-term="Positron" title="Posit 開發的多語言 IDE，內建 R 與 Python 的 console 與資料檢視。">Positron</abbr> 設定好 R 與 Python 的文本分析環境。</li>
+    <li data-o="1">在 <abbr class="tt" tabindex="0" data-term="RStudio" data-tip="Posit 的 R 整合開發環境；本週 Lab 可在 RStudio 或 Positron 開 .R 檔執行。" title="Posit 的 R 整合開發環境；本週 Lab 可在 RStudio 或 Positron 開 .R 檔執行。">RStudio</abbr> 與 <abbr class="tt" tabindex="0" data-term="Positron" data-tip="Posit 開發的多語言 IDE，內建 R 與 Python 的 console 與資料檢視。" title="Posit 開發的多語言 IDE，內建 R 與 Python 的 console 與資料檢視。">Positron</abbr> 設定好 R 與 Python 的文本分析環境。</li>
     <li data-o="2">用 GitHub 管理程式碼，用共用的 Overleaf 專案繳交書面作業。</li>
-    <li data-o="3">檢查給定<abbr class="tt" tabindex="0" data-term="corpus" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">語料</abbr>與自己專題資料的可行性：涵蓋範圍（coverage）、<abbr class="tt" tabindex="0" data-term="metadata" title="描述文本的資料，例如日期、講者、政黨、議程；應存成文件變數，不要混進文字特徵。">metadata</abbr>、取得方式（access）。</li>
+    <li data-o="3">檢查給定<abbr class="tt" tabindex="0" data-term="corpus" data-tip="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">語料</abbr>與自己專題資料的可行性：涵蓋範圍（coverage）、<abbr class="tt" tabindex="0" data-term="metadata" data-tip="描述文本的資料，例如日期、講者、政黨、議程；應存成文件變數，不要混進文字特徵。" title="描述文本的資料，例如日期、講者、政黨、議程；應存成文件變數，不要混進文字特徵。">metadata</abbr>、取得方式（access）。</li>
     <li data-o="4">清理並切字、建立 DFM，並評估前處理選擇對量測的影響。</li>
   </ol>
   <p class="hint">讀完一章後，回來勾選你覺得已經做得到的目標（只存在這台瀏覽器）：</p>
@@ -464,7 +473,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
       <div class="explain" id="cmapTxt">點擊任一方塊開始。</div>
     </div>
   </div>
-  <p class="hint">靜態摘要：研究問題與母體 → 選文件（<abbr class="tt" tabindex="0" data-term="observed corpus" title="實際拿到的文本（例如 API＋關鍵字回傳的貼文）；它與目標母體之間的落差就是要檢查的選擇偏誤。">觀察到的語料</abbr>）→ 匯入與<abbr class="tt" tabindex="0" data-term="encoding" title="位元與字元的對應方式；認錯編碼會產生亂碼，例如 Sinn Féin 變成 sinn fã。">編碼</abbr>檢查 → 字串清理（<abbr class="tt" tabindex="0" data-term="stringr" title="R 的字串處理套件，str_detect()、str_extract()、str_remove_all() 等函式都以 str_ 開頭。">stringr</abbr>）→ corpus（文字＋metadata）→ <abbr class="tt" tabindex="0" data-term="token" title="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。">tokens</abbr>（切字、片語、<abbr class="tt" tabindex="0" data-term="stopwords" title="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。">停用字</abbr>）→ DFM（計數、二元、<abbr class="tt" tabindex="0" data-term="TF-IDF" title="本課公式 count × log10(N/df)：字在文件中的次數，乘上它在語料中有多罕見；出現在每份文件的字權重為 0。">TF-IDF</abbr>；修剪）→ 分析（字典、分類、主題模型、縮放、相似度）；<abbr class="tt" tabindex="0" data-term="KWIC" title="keyword-in-context：列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。">KWIC</abbr> 讓你隨時回到原文檢查。<span class="slideref">投影片 14–15</span></p>
+  <p class="hint">靜態摘要：研究問題與母體 → 選文件（<abbr class="tt" tabindex="0" data-term="observed corpus" data-tip="實際拿到的文本（例如 API＋關鍵字回傳的貼文）；它與目標母體之間的落差就是要檢查的選擇偏誤。" title="實際拿到的文本（例如 API＋關鍵字回傳的貼文）；它與目標母體之間的落差就是要檢查的選擇偏誤。">觀察到的語料</abbr>）→ 匯入與<abbr class="tt" tabindex="0" data-term="encoding" data-tip="位元與字元的對應方式；認錯編碼會產生亂碼，例如 Sinn Féin 變成 sinn fã。" title="位元與字元的對應方式；認錯編碼會產生亂碼，例如 Sinn Féin 變成 sinn fã。">編碼</abbr>檢查 → 字串清理（<abbr class="tt" tabindex="0" data-term="stringr" data-tip="R 的字串處理套件，str_detect()、str_extract()、str_remove_all() 等函式都以 str_ 開頭。" title="R 的字串處理套件，str_detect()、str_extract()、str_remove_all() 等函式都以 str_ 開頭。">stringr</abbr>）→ corpus（文字＋metadata）→ <abbr class="tt" tabindex="0" data-term="token" data-tip="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。" title="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。">tokens</abbr>（切字、片語、<abbr class="tt" tabindex="0" data-term="stopwords" data-tip="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。" title="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。">停用字</abbr>）→ DFM（計數、二元、<abbr class="tt" tabindex="0" data-term="TF-IDF" data-full="term frequency–inverse document frequency" data-tip="本課公式 count × log10(N/df)：字在文件中的次數，乘上它在語料中有多罕見；出現在每份文件的字權重為 0。" title="term frequency–inverse document frequency — 本課公式 count × log10(N/df)：字在文件中的次數，乘上它在語料中有多罕見；出現在每份文件的字權重為 0。">TF-IDF</abbr>；修剪）→ 分析（字典、分類、主題模型、縮放、相似度）；<abbr class="tt" tabindex="0" data-term="KWIC" data-full="keyword in context" data-tip="列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。" title="keyword in context — 列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。">KWIC</abbr> 讓你隨時回到原文檢查。<span class="slideref">投影片 14–15</span></p>
 
   <h2 id="c0-data">兩份練習資料</h2>
   <div class="grid2">
@@ -490,7 +499,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <h2 id="c0-how">怎麼使用這份教材</h2>
   <ul>
     <li>左側是 15 章；右側（寬螢幕）是<strong>投影片對照面板</strong>，捲到標有「投影片 N」的段落會自動翻到那一頁；點徽章也可以。</li>
-    <li>第 10–12 章的 R 程式碼與輸出是<strong>本機實際執行</strong> <code>Lab_Session_W2_Answers.R</code> 的結果（R 4.5.3、<abbr class="tt" tabindex="0" data-term="quanteda" title="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。">quanteda</abbr> 4.5.1、quanteda.textstats 0.97.2、quanteda.textplots 0.96.1、stringr 1.6.0、dplyr 1.2.1、ggplot2 4.0.3；Linux aarch64），並與老師答案 HTML 裡的輸出逐一對照。</li>
+    <li>第 10–12 章的 R 程式碼與輸出是<strong>本機實際執行</strong> <code>Lab_Session_W2_Answers.R</code> 的結果（R 4.5.3、<abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。" title="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。">quanteda</abbr> 4.5.1、quanteda.textstats 0.97.2、quanteda.textplots 0.96.1、stringr 1.6.0、dplyr 1.2.1、ggplot2 4.0.3；Linux aarch64），並與老師答案 <abbr class="tt" tabindex="0" data-term="HTML" data-full="HyperText Markup Language" data-tip="網頁標記語言；網頁原始碼的格式。" title="HyperText Markup Language — 網頁標記語言；網頁原始碼的格式。">HTML</abbr> 裡的輸出逐一對照。</li>
     <li>標示「補充（非講義內容）」的段落、玩具示範是額外說明，不是投影片內容。</li>
     <li>互動元件分三種：<b>真實資料型</b>（直接用 Lab 的 5,000 筆資料匯出）、<b>玩具直覺型</b>（小例子）、<b>練習型</b>（作答區、翻牌卡、判斷題、填寫器）。</li>
     <li>老師的自學建議：逐段跑 Lab、讀每一個輸出；有問題時帶著<strong>練習題號、相關程式碼、輸出或錯誤訊息</strong>來問。<span class="slideref">投影片 62</span></li>
@@ -539,9 +548,9 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <p>課堂例子：量測「對咖啡表達的偏好」。</p>
   <div class="tablewrap"><table>
     <tr><th>設計選擇</th><th>例子</th></tr>
-    <tr><td>目標母體（<abbr class="tt" tabindex="0" data-term="target population" title="研究真正關心的文本範圍，例如某月份所有泰文公開的咖啡貼文（投影片 4）。">Target population</abbr>）</td><td>某個月份、泰文、公開、與咖啡有關的貼文</td></tr>
+    <tr><td>目標母體（<abbr class="tt" tabindex="0" data-term="target population" data-tip="研究真正關心的文本範圍，例如某月份所有泰文公開的咖啡貼文（投影片 4）。" title="研究真正關心的文本範圍，例如某月份所有泰文公開的咖啡貼文（投影片 4）。">Target population</abbr>）</td><td>某個月份、泰文、公開、與咖啡有關的貼文</td></tr>
     <tr><td>關心的量（Quantity of interest）</td><td>這些貼文中表達正面咖啡偏好的比例</td></tr>
-    <tr><td>觀察到的<abbr class="tt" tabindex="0" data-term="corpus" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">語料</abbr>（<abbr class="tt" tabindex="0" data-term="observed corpus" title="實際拿到的文本（例如 API＋關鍵字回傳的貼文）；它與目標母體之間的落差就是要檢查的選擇偏誤。">Observed corpus</abbr>）</td><td>一個平台 <abbr class="tt" tabindex="0" data-term="API" title="應用程式介面：程式存取軟體或平台服務的管道；用平台 API＋關鍵字取得的是「觀察到的語料」，不是母體。">API</abbr> 加上一組指定關鍵字搜尋所回傳的貼文</td></tr>
+    <tr><td>觀察到的<abbr class="tt" tabindex="0" data-term="corpus" data-tip="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">語料</abbr>（<abbr class="tt" tabindex="0" data-term="observed corpus" data-tip="實際拿到的文本（例如 API＋關鍵字回傳的貼文）；它與目標母體之間的落差就是要檢查的選擇偏誤。" title="實際拿到的文本（例如 API＋關鍵字回傳的貼文）；它與目標母體之間的落差就是要檢查的選擇偏誤。">Observed corpus</abbr>）</td><td>一個平台 <abbr class="tt" tabindex="0" data-term="API" data-full="application programming interface" data-tip="應用程式介面：程式存取軟體或平台服務的管道；用平台 API＋關鍵字取得的是「觀察到的語料」，不是母體。" title="application programming interface — 應用程式介面：程式存取軟體或平台服務的管道；用平台 API＋關鍵字取得的是「觀察到的語料」，不是母體。">API</abbr> 加上一組指定關鍵字搜尋所回傳的貼文</td></tr>
   </table></div>
   <p><strong>Found data</strong>（現成資料）：要記錄文字是怎麼產生、保存、取回的。下一步是檢查「蒐集過程漏掉了什麼」。<span class="slideref">投影片 4</span></p>
 
@@ -556,7 +565,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 
   <h2 id="c1-bias-lab">互動：這是哪一種選擇偏誤？</h2>
   <div class="lab" id="labBias">
-    <div class="lab-h"><span class="ic">🔎</span><span class="lt"><abbr class="tt" tabindex="0" data-term="selection bias" title="資源、誘因、媒介、檢索讓某些文本比較容易被留下或找到，使現有文本不代表母體（投影片 5）。">選擇偏誤</abbr>偵測</span><span class="ls">練習型・情境為補充（非講義內容）</span></div>
+    <div class="lab-h"><span class="ic">🔎</span><span class="lt"><abbr class="tt" tabindex="0" data-term="selection bias" data-tip="資源、誘因、媒介、檢索讓某些文本比較容易被留下或找到，使現有文本不代表母體（投影片 5）。" title="資源、誘因、媒介、檢索讓某些文本比較容易被留下或找到，使現有文本不代表母體（投影片 5）。">選擇偏誤</abbr>偵測</span><span class="ls">練習型・情境為補充（非講義內容）</span></div>
     <div class="lab-b">
       <p class="hint">下面的情境是本教材自擬的練習（補充，非講義內容）；分類依投影片 5 的四種來源。選一個答案就會顯示說明。</p>
       <div id="biasList"></div>
@@ -570,7 +579,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <tr><td>母體（Population）</td><td>國會發言（Parliamentary speech contributions）</td><td>院別、行動者、日期</td></tr>
     <tr><td>納入規則（Inclusion）</td><td>選定辯論中的所有發言</td><td>規則與排除項目</td></tr>
     <tr><td>文件單位（Document unit）</td><td>每列一筆發言</td><td>段落是怎麼切的</td></tr>
-    <tr><td>識別碼（Identifier）</td><td>持久的 <code>doc_id</code></td><td>連回原始來源與 <abbr class="tt" tabindex="0" data-term="metadata" title="描述文本的資料，例如日期、講者、政黨、議程；應存成文件變數，不要混進文字特徵。">metadata</abbr></td></tr>
+    <tr><td>識別碼（Identifier）</td><td>持久的 <code>doc_id</code></td><td>連回原始來源與 <abbr class="tt" tabindex="0" data-term="metadata" data-tip="描述文本的資料，例如日期、講者、政黨、議程；應存成文件變數，不要混進文字特徵。" title="描述文本的資料，例如日期、講者、政黨、議程；應存成文件變數，不要混進文字特徵。">metadata</abbr></td></tr>
   </table></div>
   <p>把單位改成「講者 × 日」或「政黨 × 年」，<strong>比較本身就改變了</strong>。<span class="slideref">投影片 6</span>　第 10 章的 Lab 會實際示範：81 篇 Engagements 發言改成句子單位後變成 364 份「文件」。</p>
 
@@ -578,12 +587,12 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <div class="tablewrap"><table>
     <tr><th>來源</th><th>常見路徑（R 套件）</th><th>第一個要檢查的事</th></tr>
     <tr><td>現成語料</td><td>下載＋codebook</td><td>涵蓋範圍與抽樣</td></tr>
-    <tr><td>TXT、CSV、TSV</td><td>readr、data.table、base R</td><td><abbr class="tt" tabindex="0" data-term="encoding" title="位元與字元的對應方式；認錯編碼會產生亂碼，例如 Sinn Féin 變成 sinn fã。">編碼</abbr>與欄位</td></tr>
-    <tr><td>JSON 或 API</td><td>jsonlite、httr2</td><td>分頁與識別碼</td></tr>
-    <tr><td>HTML 或 XML</td><td>rvest、xml2</td><td>版型雜訊（boilerplate）與結構</td></tr>
-    <tr><td>PDF 或 DOCX</td><td>pdftools、readtext</td><td>閱讀順序與文件邊界</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="TXT" data-full="plain text file" data-tip="純文字檔（.txt），沒有格式資訊。" title="plain text file — 純文字檔（.txt），沒有格式資訊。">TXT</abbr>、<abbr class="tt" tabindex="0" data-term="CSV" data-full="comma-separated values" data-tip="以逗號分隔欄位的純文字表格檔。" title="comma-separated values — 以逗號分隔欄位的純文字表格檔。">CSV</abbr>、<abbr class="tt" tabindex="0" data-term="TSV" data-full="tab-separated values" data-tip="以 tab 分隔欄位的純文字表格檔。" title="tab-separated values — 以 tab 分隔欄位的純文字表格檔。">TSV</abbr></td><td>readr、data.table、base R</td><td><abbr class="tt" tabindex="0" data-term="encoding" data-tip="位元與字元的對應方式；認錯編碼會產生亂碼，例如 Sinn Féin 變成 sinn fã。" title="位元與字元的對應方式；認錯編碼會產生亂碼，例如 Sinn Féin 變成 sinn fã。">編碼</abbr>與欄位</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="JSON" data-full="JavaScript Object Notation" data-tip="以鍵值與陣列表示結構化資料的文字格式，API 常用。" title="JavaScript Object Notation — 以鍵值與陣列表示結構化資料的文字格式，API 常用。">JSON</abbr> 或 API</td><td>jsonlite、httr2</td><td>分頁與識別碼</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="HTML" data-full="HyperText Markup Language" data-tip="網頁標記語言；網頁原始碼的格式。" title="HyperText Markup Language — 網頁標記語言；網頁原始碼的格式。">HTML</abbr> 或 <abbr class="tt" tabindex="0" data-term="XML" data-full="Extensible Markup Language" data-tip="以標籤包住內容的結構化文字格式。" title="Extensible Markup Language — 以標籤包住內容的結構化文字格式。">XML</abbr></td><td>rvest、xml2</td><td>版型雜訊（boilerplate）與結構</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="PDF" data-full="Portable Document Format" data-tip="可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。" title="Portable Document Format — 可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。">PDF</abbr> 或 <abbr class="tt" tabindex="0" data-term="DOCX" data-full="Office Open XML word-processing document" data-tip="Microsoft Word 的檔案格式（.docx）。" title="Office Open XML word-processing document — Microsoft Word 的檔案格式（.docx）。">DOCX</abbr></td><td>pdftools、readtext</td><td>閱讀順序與文件邊界</td></tr>
   </table></div>
-  <p class="hint">掃描的 PDF 可能要先 OCR 才有可用的文字。<span class="slideref">投影片 7</span></p>
+  <p class="hint">掃描的 PDF 可能要先 <abbr class="tt" tabindex="0" data-term="OCR" data-full="optical character recognition" data-tip="光學字元辨識：把掃描影像中的文字轉成可搜尋的文字。" title="optical character recognition — 光學字元辨識：把掃描影像中的文字轉成可搜尋的文字。">OCR</abbr> 才有可用的文字。<span class="slideref">投影片 7</span></p>
 
   <h2 id="c1-quiz">自我檢查</h2>
   <div class="mcq" data-ans="3" data-q="c1q1">
@@ -619,12 +628,12 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   </div>
 
   <h2 id="c2-2017">2017 年的 R 文本分析工具箱 <span class="slideref">投影片 8</span></h2>
-  <p>投影片 8 重製了 Welbers, Van Atteveldt &amp; Benoit (2017) 的 Table 1（文本分析操作與對應 R 套件），並註明：<strong>這是 2017 年的歷史概覽</strong>，套件分工與 <abbr class="tt" tabindex="0" data-term="API" title="應用程式介面：程式存取軟體或平台服務的管道；用平台 API＋關鍵字取得的是「觀察到的語料」，不是母體。">API</abbr> 之後已經改變。原文 Table 1 把操作分三段：資料準備（importing text、string operations、preprocessing、<abbr class="tt" tabindex="0" data-term="DTM" title="文件-詞矩陣，Welbers et al. (2017) 的說法，與 quanteda 的 DFM 是同一種東西。">DTM</abbr>、filtering and weighting）、分析（dictionary、supervised／unsupervised machine learning、text statistics）、進階主題（advanced <abbr class="tt" tabindex="0" data-term="NLP" title="自然語言處理：讓電腦處理人類語言的技術，例如斷詞、詞性標註、依存剖析、命名實體辨識。">NLP</abbr>、word positions and syntax）。（Welbers et al. 2017, p. 247）</p>
+  <p>投影片 8 重製了 Welbers, Van Atteveldt &amp; Benoit (2017) 的 Table 1（文本分析操作與對應 R 套件），並註明：<strong>這是 2017 年的歷史概覽</strong>，套件分工與 <abbr class="tt" tabindex="0" data-term="API" data-full="application programming interface" data-tip="應用程式介面：程式存取軟體或平台服務的管道；用平台 API＋關鍵字取得的是「觀察到的語料」，不是母體。" title="application programming interface — 應用程式介面：程式存取軟體或平台服務的管道；用平台 API＋關鍵字取得的是「觀察到的語料」，不是母體。">API</abbr> 之後已經改變。原文 Table 1 把操作分三段：資料準備（importing text、string operations、preprocessing、<abbr class="tt" tabindex="0" data-term="DTM" data-full="document-term matrix" data-tip="文件-詞矩陣，Welbers et al. (2017) 的說法，與 quanteda 的 DFM 是同一種東西。" title="document-term matrix — 文件-詞矩陣，Welbers et al. (2017) 的說法，與 quanteda 的 DFM 是同一種東西。">DTM</abbr>、filtering and weighting）、分析（dictionary、supervised／unsupervised machine learning、text statistics）、進階主題（advanced <abbr class="tt" tabindex="0" data-term="NLP" data-full="natural language processing" data-tip="自然語言處理：讓電腦處理人類語言的技術，例如斷詞、詞性標註、依存剖析、命名實體辨識。" title="natural language processing — 自然語言處理：讓電腦處理人類語言的技術，例如斷詞、詞性標註、依存剖析、命名實體辨識。">NLP</abbr>、word positions and syntax）。（Welbers et al. 2017, p. 247）</p>
   <div class="tablewrap"><table>
     <tr><th>操作（Welbers et al. 2017, Table 1）</th><th>文中示範套件</th><th>替代套件（節錄）</th></tr>
-    <tr><td>importing text</td><td>readtext</td><td>jsonlite, XML, antiword, readxl, pdftools</td></tr>
-    <tr><td>string operations</td><td>stringi</td><td><abbr class="tt" tabindex="0" data-term="stringr" title="R 的字串處理套件，str_detect()、str_extract()、str_remove_all() 等函式都以 str_ 開頭。">stringr</abbr></td></tr>
-    <tr><td>preprocessing／DTM／filtering and weighting</td><td><abbr class="tt" tabindex="0" data-term="quanteda" title="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。">quanteda</abbr></td><td>tm, tidytext, Matrix 等</td></tr>
+    <tr><td>importing text</td><td>readtext</td><td>jsonlite, <abbr class="tt" tabindex="0" data-term="XML" data-full="Extensible Markup Language" data-tip="以標籤包住內容的結構化文字格式。" title="Extensible Markup Language — 以標籤包住內容的結構化文字格式。">XML</abbr>, antiword, readxl, pdftools</td></tr>
+    <tr><td>string operations</td><td>stringi</td><td><abbr class="tt" tabindex="0" data-term="stringr" data-tip="R 的字串處理套件，str_detect()、str_extract()、str_remove_all() 等函式都以 str_ 開頭。" title="R 的字串處理套件，str_detect()、str_extract()、str_remove_all() 等函式都以 str_ 開頭。">stringr</abbr></td></tr>
+    <tr><td>preprocessing／DTM／filtering and weighting</td><td><abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。" title="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。">quanteda</abbr></td><td>tm, tidytext, Matrix 等</td></tr>
     <tr><td>unsupervised machine learning</td><td>topicmodels</td><td>quanteda, stm, austin, text2vec</td></tr>
     <tr><td>advanced NLP</td><td>spacyr</td><td>coreNLP, cleanNLP, koRpus</td></tr>
   </table></div>
@@ -632,18 +641,18 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <h2 id="c2-beyond">2017 之後：標註與 embeddings <span class="slideref">投影片 9</span></h2>
   <div class="tablewrap"><table>
     <tr><th>工具／從 R 存取</th><th>模型類型</th><th>輸出與用途</th></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="UDPipe" title="以 UD treebank 訓練的標註工具：斷詞、lemma、POS、依存關係；有 R 套件與 UDPipe 2 API。">UDPipe</abbr> 1：R 套件 udpipe</td><td>以 <abbr class="tt" tabindex="0" data-term="treebank" title="人工標好句法結構的語料庫，用來訓練與評估剖析模型（例如 Chinese GSD、Japanese GSD）。">treebank</abbr> 訓練的監督式標註管線</td><td><abbr class="tt" tabindex="0" data-term="token" title="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。">tokens</abbr>、<abbr class="tt" tabindex="0" data-term="lemmatization" title="以字典與上下文還原基本形，例如 studies → study；準確度取決於語言與模型。">lemmas</abbr>、<abbr class="tt" tabindex="0" data-term="POS" title="詞性標記，例如 NOUN、VERB、ADV、ADP、AUX、PART；只留 NOUN／VERB 會丟掉否定詞。">POS</abbr>、<abbr class="tt" tabindex="0" data-term="dependency parsing" title="每個 token 指向它的 head（0＝root），並標上關係，例如 nsubj、obj、advmod。">依存關係</abbr>標籤</td></tr>
-    <tr><td>UDPipe 2：R＋REST API</td><td>使用 contextual <abbr class="tt" tabindex="0" data-term="embeddings" title="把字、句或文件表示成稠密的數值向量，語意相近者向量也相近。">embeddings</abbr> 的神經網路標註</td><td>語言標註；現行模型使用 BERT 類表示</td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="Flair" title="Python 的 embeddings 與神經網路任務模型框架；flaiR 是它的 R 介面（Liao et al. 2023）。">Flair</abbr>：R <abbr class="tt" tabindex="0" data-term="reticulate" title="在 R session 裡匯入 Python 模組、呼叫函式並轉換物件的 R 套件；交接時要檢查列順序、編碼與型別。">reticulate</abbr>＋Python（flaiR；Liao et al., 2023）</td><td>contextual string embeddings 或 Transformer embeddings</td><td>字／文件向量；NER、tagging、分類模型</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="UDPipe" data-tip="以 UD treebank 訓練的標註工具：斷詞、lemma、POS、依存關係；有 R 套件與 UDPipe 2 API。" title="以 UD treebank 訓練的標註工具：斷詞、lemma、POS、依存關係；有 R 套件與 UDPipe 2 API。">UDPipe</abbr> 1：R 套件 udpipe</td><td>以 <abbr class="tt" tabindex="0" data-term="treebank" data-tip="人工標好句法結構的語料庫，用來訓練與評估剖析模型（例如 Chinese GSD、Japanese GSD）。" title="人工標好句法結構的語料庫，用來訓練與評估剖析模型（例如 Chinese GSD、Japanese GSD）。">treebank</abbr> 訓練的監督式標註管線</td><td><abbr class="tt" tabindex="0" data-term="token" data-tip="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。" title="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。">tokens</abbr>、<abbr class="tt" tabindex="0" data-term="lemmatization" data-tip="以字典與上下文還原基本形，例如 studies → study；準確度取決於語言與模型。" title="以字典與上下文還原基本形，例如 studies → study；準確度取決於語言與模型。">lemmas</abbr>、<abbr class="tt" tabindex="0" data-term="POS" data-full="part of speech" data-tip="詞性標記，例如 NOUN、VERB、ADV、ADP、AUX、PART；只留 NOUN／VERB 會丟掉否定詞。" title="part of speech — 詞性標記，例如 NOUN、VERB、ADV、ADP、AUX、PART；只留 NOUN／VERB 會丟掉否定詞。">POS</abbr>、<abbr class="tt" tabindex="0" data-term="dependency parsing" data-tip="每個 token 指向它的 head（0＝root），並標上關係，例如 nsubj、obj、advmod。" title="每個 token 指向它的 head（0＝root），並標上關係，例如 nsubj、obj、advmod。">依存關係</abbr>標籤</td></tr>
+    <tr><td>UDPipe 2：R＋<abbr class="tt" tabindex="0" data-term="REST" data-full="Representational State Transfer" data-tip="一種以 HTTP 網址存取服務的 API 設計風格。" title="Representational State Transfer — 一種以 HTTP 網址存取服務的 API 設計風格。">REST</abbr> API</td><td>使用 contextual <abbr class="tt" tabindex="0" data-term="embeddings" data-tip="把字、句或文件表示成稠密的數值向量，語意相近者向量也相近。" title="把字、句或文件表示成稠密的數值向量，語意相近者向量也相近。">embeddings</abbr> 的神經網路標註</td><td>語言標註；現行模型使用 <abbr class="tt" tabindex="0" data-term="BERT" data-full="Bidirectional Encoder Representations from Transformers" data-tip="Google 2018 年提出的 transformer 語言模型，常微調用於文本分類。" title="Bidirectional Encoder Representations from Transformers — Google 2018 年提出的 transformer 語言模型，常微調用於文本分類。">BERT</abbr> 類表示</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="Flair" data-tip="Python 的 embeddings 與神經網路任務模型框架；flaiR 是它的 R 介面（Liao et al. 2023）。" title="Python 的 embeddings 與神經網路任務模型框架；flaiR 是它的 R 介面（Liao et al. 2023）。">Flair</abbr>：R <abbr class="tt" tabindex="0" data-term="reticulate" data-tip="在 R session 裡匯入 Python 模組、呼叫函式並轉換物件的 R 套件；交接時要檢查列順序、編碼與型別。" title="在 R session 裡匯入 Python 模組、呼叫函式並轉換物件的 R 套件；交接時要檢查列順序、編碼與型別。">reticulate</abbr>＋Python（flaiR；Liao et al., 2023）</td><td>contextual string embeddings 或 Transformer embeddings</td><td>字／文件向量；<abbr class="tt" tabindex="0" data-term="NER" data-full="named entity recognition" data-tip="命名實體辨識：找出文本中的人名、組織、地名等並標上類型。" title="named entity recognition — 命名實體辨識：找出文本中的人名、組織、地名等並標上類型。">NER</abbr>、tagging、分類模型</td></tr>
   </table></div>
   <p class="hint">FlairEmbeddings 用字元語言模型；TransformerWordEmbeddings 用 BERT 之類的模型。<span class="slideref">投影片 9</span></p>
 
   <h2 id="c2-four">quanteda、UDPipe、spaCy、Flair <span class="slideref">投影片 10</span></h2>
   <div class="tablewrap"><table>
     <tr><th>工具／存取</th><th>主要重點</th><th>典型輸出</th></tr>
-    <tr><td>quanteda（R）</td><td><abbr class="tt" tabindex="0" data-term="corpus" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">語料</abbr>管理與特徵分析</td><td>corpus、tokens、<abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。">DFM</abbr>；<abbr class="tt" tabindex="0" data-term="KWIC" title="keyword-in-context：列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。">KWIC</abbr> 與 <abbr class="tt" tabindex="0" data-term="TF-IDF" title="本課公式 count × log10(N/df)：字在文件中的次數，乘上它在語料中有多罕見；出現在每份文件的字權重為 0。">TF-IDF</abbr></td></tr>
-    <tr><td>UDPipe（R／API）</td><td>用訓練好的模型做語言標註</td><td>tokens、lemmas、POS、<abbr class="tt" tabindex="0" data-term="Universal Dependencies" title="跨語言一致的詞性與依存關係標註規範與 treebank 集合，UDPipe 的模型由此訓練。">UD</abbr> 依存標籤</td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="spaCy" title="Python 的可設定 NLP 管線：tokens、POS、依存關係、命名實體。">spaCy</abbr>（Python）</td><td>可設定的 NLP 管線</td><td>tokens、POS、依存關係、命名實體</td></tr>
+    <tr><td>quanteda（R）</td><td><abbr class="tt" tabindex="0" data-term="corpus" data-tip="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">語料</abbr>管理與特徵分析</td><td>corpus、tokens、<abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。" title="document-feature matrix — 文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。">DFM</abbr>；<abbr class="tt" tabindex="0" data-term="KWIC" data-full="keyword in context" data-tip="列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。" title="keyword in context — 列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。">KWIC</abbr> 與 <abbr class="tt" tabindex="0" data-term="TF-IDF" data-full="term frequency–inverse document frequency" data-tip="本課公式 count × log10(N/df)：字在文件中的次數，乘上它在語料中有多罕見；出現在每份文件的字權重為 0。" title="term frequency–inverse document frequency — 本課公式 count × log10(N/df)：字在文件中的次數，乘上它在語料中有多罕見；出現在每份文件的字權重為 0。">TF-IDF</abbr></td></tr>
+    <tr><td>UDPipe（R／API）</td><td>用訓練好的模型做語言標註</td><td>tokens、lemmas、POS、<abbr class="tt" tabindex="0" data-term="Universal Dependencies" data-full="Universal Dependencies (UD)" data-tip="跨語言一致的詞性與依存關係標註規範與 treebank 集合，UDPipe 的模型由此訓練。" title="Universal Dependencies (UD) — 跨語言一致的詞性與依存關係標註規範與 treebank 集合，UDPipe 的模型由此訓練。">UD</abbr> 依存標籤</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="spaCy" data-tip="Python 的可設定 NLP 管線：tokens、POS、依存關係、命名實體。" title="Python 的可設定 NLP 管線：tokens、POS、依存關係、命名實體。">spaCy</abbr>（Python）</td><td>可設定的 NLP 管線</td><td>tokens、POS、依存關係、命名實體</td></tr>
     <tr><td>Flair（Python；flaiR 是 R wrapper）</td><td>embeddings 與神經網路任務模型</td><td>向量；實體標籤、POS、文本類別</td></tr>
   </table></div>
   <p>這些工具可以合作：例如把 lemma 或挑選過的標註變成 quanteda DFM 的特徵（第 07 章投影片 44 有程式示意）。<span class="slideref">投影片 10</span></p>
@@ -667,7 +676,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <button class="st"><span class="sn">3 · 回 R 評估</span>統計模型與圖<span class="sd">驗證相似度、詮釋型態</span></button>
   </div>
   <div class="explain jsonly" id="flowRpyTxt"></div>
-  <p class="hint">靜態版：Prepare in R（stringr、quanteda：清理文字並保留 document ID）→ Represent in Python（<abbr class="tt" tabindex="0" data-term="sentence-transformers" title="Python 套件，把句子或文件編成語意向量（embeddings），可用來比較相似度。">sentence-transformers</abbr>：把文本編成語意向量）→ Evaluate in R（統計模型與圖：驗證相似度並詮釋型態）。每一階段都跟著研究問題走。<span class="slideref">投影片 11</span></p>
+  <p class="hint">靜態版：Prepare in R（stringr、quanteda：清理文字並保留 document <abbr class="tt" tabindex="0" data-term="ID" data-full="identifier" data-tip="識別碼：唯一標示一份文件或一筆資料的編號。" title="identifier — 識別碼：唯一標示一份文件或一筆資料的編號。">ID</abbr>）→ Represent in Python（<abbr class="tt" tabindex="0" data-term="sentence-transformers" data-tip="Python 套件，把句子或文件編成語意向量（embeddings），可用來比較相似度。" title="Python 套件，把句子或文件編成語意向量（embeddings），可用來比較相似度。">sentence-transformers</abbr>：把文本編成語意向量）→ Evaluate in R（統計模型與圖：驗證相似度並詮釋型態）。每一階段都跟著研究問題走。<span class="slideref">投影片 11</span></p>
   <div class="grid2">
     <div class="callout note"><div class="ct">在 R session 裡用 Python <span class="slideref">投影片 12</span></div><ul>
       <li>R 的 <code>reticulate</code> 匯入 Python 模組、呼叫它的函式。</li>
@@ -675,16 +684,16 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
       <li>它會在 R 與 Python 之間轉換支援的物件。</li>
       <li>除了 R 套件，也要記錄 Python 環境。</li></ul></div>
     <div class="callout note"><div class="ct">分開的腳本、共享資料 <span class="slideref">投影片 12</span></div><ul>
-      <li>R 與 Python 腳本透過 CSV 或 Parquet 等檔案交換資料。</li>
+      <li>R 與 Python 腳本透過 <abbr class="tt" tabindex="0" data-term="CSV" data-full="comma-separated values" data-tip="以逗號分隔欄位的純文字表格檔。" title="comma-separated values — 以逗號分隔欄位的純文字表格檔。">CSV</abbr> 或 Parquet 等檔案交換資料。</li>
       <li>穩定的 document ID 把輸入與輸出連起來。</li>
-      <li>每次交接都要檢查<strong>列順序、<abbr class="tt" tabindex="0" data-term="encoding" title="位元與字元的對應方式；認錯編碼會產生亂碼，例如 Sinn Féin 變成 sinn fã。">編碼</abbr>與資料型別</strong>。</li></ul></div>
+      <li>每次交接都要檢查<strong>列順序、<abbr class="tt" tabindex="0" data-term="encoding" data-tip="位元與字元的對應方式；認錯編碼會產生亂碼，例如 Sinn Féin 變成 sinn fã。" title="位元與字元的對應方式；認錯編碼會產生亂碼，例如 Sinn Féin 變成 sinn fã。">編碼</abbr>與資料型別</strong>。</li></ul></div>
   </div>
-  <p class="hint">投影片 12 的結語：<abbr class="tt" tabindex="0" data-term="IDE" title="整合開發環境：把編輯器、console、資料檢視等放在一起的軟體，例如 RStudio、Positron。">IDE</abbr> 負責組織工作；物件或檔案交換負責連接兩種語言。</p>
+  <p class="hint">投影片 12 的結語：<abbr class="tt" tabindex="0" data-term="IDE" data-full="integrated development environment" data-tip="整合開發環境：把編輯器、console、資料檢視等放在一起的軟體，例如 RStudio、Positron。" title="integrated development environment — 整合開發環境：把編輯器、console、資料檢視等放在一起的軟體，例如 RStudio、Positron。">IDE</abbr> 負責組織工作；物件或檔案交換負責連接兩種語言。</p>
 
   <h2 id="c2-pos">Positron：一個 IDE 給 R 與 Python <span class="slideref">投影片 13</span></h2>
   <ul>
-    <li>2022 年 <abbr class="tt" tabindex="0" data-term="RStudio" title="Posit 的 R 整合開發環境；本週 Lab 可在 RStudio 或 Positron 開 .R 檔執行。">RStudio</abbr> 公司改名 Posit，反映它對跨語言資料科學的支援。</li>
-    <li>Posit 開發了 <abbr class="tt" tabindex="0" data-term="Positron" title="Posit 開發的多語言 IDE，內建 R 與 Python 的 console 與資料檢視。">Positron</abbr>，用於多語言資料科學；R 與 Python 內建支援，有 console 與資料檢視。</li>
+    <li>2022 年 <abbr class="tt" tabindex="0" data-term="RStudio" data-tip="Posit 的 R 整合開發環境；本週 Lab 可在 RStudio 或 Positron 開 .R 檔執行。" title="Posit 的 R 整合開發環境；本週 Lab 可在 RStudio 或 Positron 開 .R 檔執行。">RStudio</abbr> 公司改名 Posit，反映它對跨語言資料科學的支援。</li>
+    <li>Posit 開發了 <abbr class="tt" tabindex="0" data-term="Positron" data-tip="Posit 開發的多語言 IDE，內建 R 與 Python 的 console 與資料檢視。" title="Posit 開發的多語言 IDE，內建 R 與 Python 的 console 與資料檢視。">Positron</abbr>，用於多語言資料科學；R 與 Python 內建支援，有 console 與資料檢視。</li>
     <li>RStudio IDE 仍是另外持續維護的產品。</li>
     <li>本課的課堂範例使用 R。</li>
   </ul>
@@ -709,23 +718,23 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 <section class="chapter" id="ch03" data-slides="14,15,16,17">
   <div class="crumb">03 · 流程與物件</div>
   <h1 class="ch">文本分析的步驟、四種物件與匯入檢查</h1>
-  <p class="lead">分析可以走「矩陣」路線（<abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。">DFM</abbr>），也可以保留 <abbr class="tt" tabindex="0" data-term="token" title="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。">token</abbr> 的位置或其他表示。先搞清楚你手上是哪一種物件。</p>
+  <p class="lead">分析可以走「矩陣」路線（<abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。" title="document-feature matrix — 文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。">DFM</abbr>），也可以保留 <abbr class="tt" tabindex="0" data-term="token" data-tip="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。" title="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。">token</abbr> 的位置或其他表示。先搞清楚你手上是哪一種物件。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c3-seq">操作順序</a><a href="#c3-obj">四種物件</a><a href="#c3-imp">匯入檢查與編碼</a><a href="#c3-parl">國會發言例子</a><a href="#c3-sort">互動：分類練習</a><a href="#c3-quiz">自我檢查</a>
   </div>
 
   <h2 id="c3-seq">文本分析操作的順序 <span class="slideref">投影片 14</span></h2>
-  <p>投影片 14 重製 Welbers et al. (2017) 的 Figure 1（Order of text analysis operations for data preparation and analysis, p. 247）。投影片的提醒：<strong>分支很重要</strong>——分析可以用矩陣、token 位置或其他表示。Welbers 等人主要談 <abbr class="tt" tabindex="0" data-term="bag-of-words" title="只看字的出現次數、不看順序的文本表示；DFM 就是詞袋表示。">bag-of-words</abbr>，即「只用每篇文字的字頻、忽略字的位置」（p. 246），並在進階主題談保留字位置與句法的做法（pp. 258–261）。</p>
+  <p>投影片 14 重製 Welbers et al. (2017) 的 Figure 1（Order of text analysis operations for data preparation and analysis, p. 247）。投影片的提醒：<strong>分支很重要</strong>——分析可以用矩陣、token 位置或其他表示。Welbers 等人主要談 <abbr class="tt" tabindex="0" data-term="bag-of-words" data-tip="只看字的出現次數、不看順序的文本表示；DFM 就是詞袋表示。" title="只看字的出現次數、不看順序的文本表示；DFM 就是詞袋表示。">bag-of-words</abbr>，即「只用每篇文字的字頻、忽略字的位置」（p. 246），並在進階主題談保留字位置與句法的做法（pp. 258–261）。</p>
 
   <h2 id="c3-obj">本課使用的四種物件 <span class="slideref">投影片 15</span></h2>
   <div class="tablewrap"><table>
     <tr><th>物件</th><th>內容</th><th>用途</th></tr>
-    <tr><td>Data frame</td><td>文字、識別碼、<abbr class="tt" tabindex="0" data-term="metadata" title="描述文本的資料，例如日期、講者、政黨、議程；應存成文件變數，不要混進文字特徵。">metadata</abbr></td><td>匯入檢查與合併（joins）</td></tr>
-    <tr><td><code>corpus</code></td><td>文字＋文件變數（<abbr class="tt" tabindex="0" data-term="docvars" title="corpus 中每份文件的 metadata，例如 party、year、agenda_clean，可用來取子集或分組。">docvars</abbr>）</td><td>取子集、讀 metadata</td></tr>
-    <tr><td><code>tokens</code></td><td>token 序列（保留順序）</td><td>片語比對、上下文檢查（<abbr class="tt" tabindex="0" data-term="KWIC" title="keyword-in-context：列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。">KWIC</abbr>）</td></tr>
+    <tr><td>Data frame</td><td>文字、識別碼、<abbr class="tt" tabindex="0" data-term="metadata" data-tip="描述文本的資料，例如日期、講者、政黨、議程；應存成文件變數，不要混進文字特徵。" title="描述文本的資料，例如日期、講者、政黨、議程；應存成文件變數，不要混進文字特徵。">metadata</abbr></td><td>匯入檢查與合併（joins）</td></tr>
+    <tr><td><code>corpus</code></td><td>文字＋文件變數（<abbr class="tt" tabindex="0" data-term="docvars" data-tip="corpus 中每份文件的 metadata，例如 party、year、agenda_clean，可用來取子集或分組。" title="corpus 中每份文件的 metadata，例如 party、year、agenda_clean，可用來取子集或分組。">docvars</abbr>）</td><td>取子集、讀 metadata</td></tr>
+    <tr><td><code>tokens</code></td><td>token 序列（保留順序）</td><td>片語比對、上下文檢查（<abbr class="tt" tabindex="0" data-term="KWIC" data-full="keyword in context" data-tip="列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。" title="keyword in context — 列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。">KWIC</abbr>）</td></tr>
     <tr><td><code>dfm</code></td><td>文件 × 特徵</td><td>計數與加權表示</td></tr>
   </table></div>
-  <p><abbr class="tt" tabindex="0" data-term="stringr" title="R 的字串處理套件，str_detect()、str_extract()、str_remove_all() 等函式都以 str_ 開頭。">stringr</abbr> 處理字串；<abbr class="tt" tabindex="0" data-term="quanteda" title="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。">quanteda</abbr> 提供 <abbr class="tt" tabindex="0" data-term="corpus" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">corpus</abbr> → tokens → DFM 的流程。<span class="slideref">投影片 15</span></p>
+  <p><abbr class="tt" tabindex="0" data-term="stringr" data-tip="R 的字串處理套件，str_detect()、str_extract()、str_remove_all() 等函式都以 str_ 開頭。" title="R 的字串處理套件，str_detect()、str_extract()、str_remove_all() 等函式都以 str_ 開頭。">stringr</abbr> 處理字串；<abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。" title="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。">quanteda</abbr> 提供 <abbr class="tt" tabindex="0" data-term="corpus" data-tip="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">corpus</abbr> → tokens → DFM 的流程。<span class="slideref">投影片 15</span></p>
   <div class="flow jsonly" id="flowObj">
     <button class="st on"><span class="sn">data.frame</span><span class="sd">hoc（5,000 列）</span></button><span class="ar">→</span>
     <button class="st"><span class="sn">corpus</span><span class="sd">corpus(hoc, text_field = "text")</span></button><span class="ar">→</span>
@@ -745,13 +754,13 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 length(texts)
 head(texts)</pre></div>
   <ul>
-    <li>確認來源的<abbr class="tt" tabindex="0" data-term="encoding" title="位元與字元的對應方式；認錯編碼會產生亂碼，例如 Sinn Féin 變成 sinn fã。">編碼</abbr>，不要看起來對就猜。</li>
+    <li>確認來源的<abbr class="tt" tabindex="0" data-term="encoding" data-tip="位元與字元的對應方式；認錯編碼會產生亂碼，例如 Sinn Féin 變成 sinn fã。" title="位元與字元的對應方式；認錯編碼會產生亂碼，例如 Sinn Féin 變成 sinn fã。">編碼</abbr>，不要看起來對就猜。</li>
     <li>匯入後檢查重音字母與中文字。</li>
     <li>數一數缺漏的文字與重複的識別碼。</li>
     <li>確認一列是一行、一段，還是一整份文件。</li>
   </ul>
   <div class="callout warn"><div class="ct">投影片 16 的關鍵提醒</div><p>加上 <code>encoding = "UTF-8"</code> 參數，<strong>不能修復</strong>來源編碼被認錯的文字。<span class="slideref">投影片 16</span></p></div>
-  <div class="callout example"><div class="ct">Lab 資料裡的真實例子（本機 R 輸出）</div><p>Lab 的<abbr class="tt" tabindex="0" data-term="collocation" title="比偶然更常一起出現的字串；textstat_collocations() 依 λ 或 z 排序，結果只是候選特徵，要先檢查用法。">搭配詞</abbr>輸出裡出現 <code>sinn fã</code>（count 15），同一份表也有 <code>sinn fein</code>（count 17）。「Féin」的 é 很可能在資料的上游處理時被以錯誤的編碼解讀而變成亂碼（mojibake），結果同一個政黨名稱被拆成兩個特徵。這正是投影片 16 要你匯入後「檢查重音字母」的原因。（輸出見第 11 章 <code>find_collocations</code>；成因判斷為本教材推論，非講義內容。）</p></div>
+  <div class="callout example"><div class="ct">Lab 資料裡的真實例子（本機 R 輸出）</div><p>Lab 的<abbr class="tt" tabindex="0" data-term="collocation" data-tip="比偶然更常一起出現的字串；textstat_collocations() 依 λ 或 z 排序，結果只是候選特徵，要先檢查用法。" title="比偶然更常一起出現的字串；textstat_collocations() 依 λ 或 z 排序，結果只是候選特徵，要先檢查用法。">搭配詞</abbr>輸出裡出現 <code>sinn fã</code>（count 15），同一份表也有 <code>sinn fein</code>（count 17）。「Féin」的 é 很可能在資料的上游處理時被以錯誤的編碼解讀而變成亂碼（mojibake），結果同一個政黨名稱被拆成兩個特徵。這正是投影片 16 要你匯入後「檢查重音字母」的原因。（輸出見第 11 章 <code>find_collocations</code>；成因判斷為本教材推論，非講義內容。）</p></div>
 
   <h2 id="c3-parl">一個國會發言例子 <span class="slideref">投影片 17–18</span></h2>
   <div class="tablewrap"><table>
@@ -759,7 +768,7 @@ head(texts)</pre></div>
     <tr><td>Date</td><td>1997-01-20</td></tr><tr><td>Speaker</td><td>William Hague</td></tr><tr><td>Party</td><td>Conservative</td></tr>
     <tr><td>Agenda</td><td>Public Expenditure [Oral Answers To Questions &gt; Wales]</td></tr>
   </table></div>
-  <p>文字中包含 <code>[Interruption.]</code>、<code>DRAMATICALLY</code> 與 <code>!!!</code>。投影片問：哪些是 metadata、哪些是有意義的語言、哪些是<strong><abbr class="tt" tabindex="0" data-term="recording conventions" title="書記官加入的標記，例如 [Interruption.]、欄位編號；不是講者說的話，處理方式取決於研究問題。">記錄慣例</abbr></strong>（recording conventions）？<span class="slideref">投影片 17</span></p>
+  <p>文字中包含 <code>[Interruption.]</code>、<code>DRAMATICALLY</code> 與 <code>!!!</code>。投影片問：哪些是 metadata、哪些是有意義的語言、哪些是<strong><abbr class="tt" tabindex="0" data-term="recording conventions" data-tip="書記官加入的標記，例如 [Interruption.]、欄位編號；不是講者說的話，處理方式取決於研究問題。" title="書記官加入的標記，例如 [Interruption.]、欄位編號；不是講者說的話，處理方式取決於研究問題。">記錄慣例</abbr></strong>（recording conventions）？<span class="slideref">投影片 17</span></p>
 
   <h2 id="c3-sort">互動：metadata、語言，還是記錄慣例？</h2>
   <div class="lab" id="labSort">
@@ -791,7 +800,7 @@ head(texts)</pre></div>
     <button class="opt">轉成小寫就會修好</button>
     <button class="opt">移除停用字就會修好</button>
     <button class="opt">亂碼不影響計數，可以忽略</button>
-    <div class="fb">“A <abbr class="tt" tabindex="0" data-term="UTF-8" title="最常用的 Unicode 編碼；R 裡應確保文字都是 UTF-8，但 UTF-8 參數修不好一開始就認錯的編碼。">UTF-8</abbr> argument does not repair a wrongly identified source encoding.”<span class="slideref">投影片 16</span></div>
+    <div class="fb">“A <abbr class="tt" tabindex="0" data-term="UTF-8" data-full="Unicode Transformation Format, 8-bit" data-tip="最常用的 Unicode 編碼；R 裡應確保文字都是 UTF-8，但 UTF-8 參數修不好一開始就認錯的編碼。" title="Unicode Transformation Format, 8-bit — 最常用的 Unicode 編碼；R 裡應確保文字都是 UTF-8，但 UTF-8 參數修不好一開始就認錯的編碼。">UTF-8</abbr> argument does not repair a wrongly identified source encoding.”<span class="slideref">投影片 16</span></div>
   </div>
   <div class="mcq" data-ans="3" data-q="c3q3">
     <div class="q">3. 研究「議會中的互動與打斷」時，<code>[Interruption.]</code> 最合理的處理是？</div>
@@ -802,7 +811,7 @@ head(texts)</pre></div>
 
 <!-- ===================== CH04 ===================== -->
 <section class="chapter" id="ch04" data-slides="18,19,20,21">
-  <div class="crumb">04 · 清理與 <abbr class="tt" tabindex="0" data-term="regex" title="描述文字模式的語言：\d 數字、\b 字界、. 任意字元、+ 一個以上、* 零個以上。">regex</abbr></div>
+  <div class="crumb">04 · 清理與 <abbr class="tt" tabindex="0" data-term="regex" data-tip="描述文字模式的語言：\d 數字、\b 字界、. 任意字元、+ 一個以上、* 零個以上。" title="描述文字模式的語言：\d 數字、\b 字界、. 任意字元、+ 一個以上、* 零個以上。">regex</abbr></div>
   <h1 class="ch">清理取決於研究問題：stringr 與正規表示式</h1>
   <p class="lead">清理不是中性的。每一條規則都會留下某些資訊、丟掉某些資訊；所以要有「稽核軌跡」（audit trail）。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
@@ -831,7 +840,7 @@ str_remove_all(s, "\\[[^\\[\\]]*\\]") |&gt; str_squish()</pre></div>
 &gt; str_remove_all(s, "\\[[^\\[\\]]*\\]") |&gt; str_squish()
 [1] "Trade and jobs"</pre></div>
   <div class="linebyline">
-    <div class="lr"><code>"\\[.*\\]"</code><div><code>.*</code> 是<strong><abbr class="tt" tabindex="0" data-term="greedy" title=".* 會盡量多吃字元：\[.*\] 從第一個 [ 一路比到最後一個 ]，連中間的正常文字也刪掉。">貪婪</abbr></strong>的：從第一個 <code>[</code> 一路吃到<strong>最後一個</strong> <code>]</code>，把中間的 “and jobs” 也刪掉，只剩 <code>"Trade "</code>。</div></div>
+    <div class="lr"><code>"\\[.*\\]"</code><div><code>.*</code> 是<strong><abbr class="tt" tabindex="0" data-term="greedy" data-tip=".* 會盡量多吃字元：\[.*\] 從第一個 [ 一路比到最後一個 ]，連中間的正常文字也刪掉。" title=".* 會盡量多吃字元：\[.*\] 從第一個 [ 一路比到最後一個 ]，連中間的正常文字也刪掉。">貪婪</abbr></strong>的：從第一個 <code>[</code> 一路吃到<strong>最後一個</strong> <code>]</code>，把中間的 “and jobs” 也刪掉，只剩 <code>"Trade "</code>。</div></div>
     <div class="lr"><code>"\\[[^\\[\\]]*\\]"</code><div><code>[^\\[\\]]*</code> 的意思是「任意個<strong>不是</strong>中括號的字元」，所以每組中括號各自被刪掉；再用 <code>str_squish()</code> 收掉多餘空白 → <code>"Trade and jobs"</code>。</div></div>
   </div>
   <p class="hint">投影片：第二個 pattern 可以處理分開、<strong>沒有巢狀</strong>的中括號群組。<span class="slideref">投影片 20</span></p>
@@ -880,7 +889,7 @@ agenda_clean</pre></div>
   <div class="lab" id="labRegex">
     <div class="lab-h"><span class="ic">🔤</span><span class="lt">regex 遊樂場</span><span class="ls">真實資料型・5,000 筆 agenda</span></div>
     <div class="lab-b">
-      <p class="hint">資料是 Lab 的 <code>hoc$agenda</code>（R 匯出的 4,000 多個不同標籤與次數；另有 206 筆 NA）。輸入 pattern，看看有幾筆發言符合，並列出前 12 個標籤（符合處加底色）。JS 的 regex 與 R/<abbr class="tt" tabindex="0" data-term="stringr" title="R 的字串處理套件，str_detect()、str_extract()、str_remove_all() 等函式都以 str_ 開頭。">stringr</abbr>（ICU）大致相同，但<strong>不完全一樣</strong>（例如 POSIX 類 <code>[:alnum:]</code> 在 JS 不支援）；正式結果以 R 為準。在這裡輸入一個反斜線就好（JS 寫法），R 字串裡要寫兩個。</p>
+      <p class="hint">資料是 Lab 的 <code>hoc$agenda</code>（R 匯出的 4,000 多個不同標籤與次數；另有 206 筆 NA）。輸入 pattern，看看有幾筆發言符合，並列出前 12 個標籤（符合處加底色）。<abbr class="tt" tabindex="0" data-term="JS" data-full="JavaScript" data-tip="瀏覽器執行的程式語言；本講義的互動示範用它寫成。" title="JavaScript — 瀏覽器執行的程式語言；本講義的互動示範用它寫成。">JS</abbr> 的 regex 與 R/<abbr class="tt" tabindex="0" data-term="stringr" data-tip="R 的字串處理套件，str_detect()、str_extract()、str_remove_all() 等函式都以 str_ 開頭。" title="R 的字串處理套件，str_detect()、str_extract()、str_remove_all() 等函式都以 str_ 開頭。">stringr</abbr>（<abbr class="tt" tabindex="0" data-term="ICU" data-full="International Components for Unicode" data-tip="處理 Unicode 文字（斷字、正規表示式等）的函式庫；R 的 stringr／stringi 以它為基礎。" title="International Components for Unicode — 處理 Unicode 文字（斷字、正規表示式等）的函式庫；R 的 stringr／stringi 以它為基礎。">ICU</abbr>）大致相同，但<strong>不完全一樣</strong>（例如 <abbr class="tt" tabindex="0" data-term="POSIX" data-full="Portable Operating System Interface" data-tip="作業系統介面標準；正規表示式的 [:alnum:] 這類字元類別來自這裡。" title="Portable Operating System Interface — 作業系統介面標準；正規表示式的 [:alnum:] 這類字元類別來自這裡。">POSIX</abbr> 類 <code>[:alnum:]</code> 在 JS 不支援）；正式結果以 R 為準。在這裡輸入一個反斜線就好（JS 寫法），R 字串裡要寫兩個。</p>
       <div class="row">
         <label class="f" style="flex:1">pattern<input type="text" id="reP" value="war" style="width:100%"></label>
         <label class="f"><input type="checkbox" id="reLower" checked> 先 str_to_lower()</label>
@@ -921,7 +930,7 @@ agenda_clean</pre></div>
 
 <!-- ===================== CH05 ===================== -->
 <section class="chapter" id="ch05" data-slides="22,23,24,25,26">
-  <div class="crumb">05 · 小<abbr class="tt" tabindex="0" data-term="corpus" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">語料</abbr></div>
+  <div class="crumb">05 · 小<abbr class="tt" tabindex="0" data-term="corpus" data-tip="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">語料</abbr></div>
   <h1 class="ch">四句小語料：corpus、tokens 與 types</h1>
   <p class="lead">用四句短到可以逐字檢查的文字，看清楚每一步 R 做了什麼。本章所有 R 輸出都是本機實際執行投影片原始碼（week2.qmd 的 setup chunk）得到的。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
@@ -959,13 +968,13 @@ See https://quanteda.io for tutorials and examples.
 &gt; corp &lt;- corpus(raw, docid_field = "doc_id", text_field = "text")
 &gt; docnames(corp)
 [1] "d1" "d2" "d3" "d4"</pre></div>
-  <p>每一列提供一份文字；其餘欄位變成文件變數（<abbr class="tt" tabindex="0" data-term="docvars" title="corpus 中每份文件的 metadata，例如 party、year、agenda_clean，可用來取子集或分組。">document variables</abbr>, docvars）。這裡 <code>docid_field = "doc_id"</code> 讓文件名稱就是 d1–d4，而不是預設的 text1–text4。<span class="slideref">投影片 23</span></p>
-  <div class="callout note"><div class="ct">對照 Lab</div><p>Lab 的 <code>corpus(hoc, text_field = "text")</code> 沒有指定 <code>docid_field</code>，所以文件名稱是 <code>text1</code>…<code>text5000</code>（見第 10 章 summary 輸出）。如果之後要跟 Python 或其他檔案交接，投影片 12 建議用穩定的 document ID。</p></div>
+  <p>每一列提供一份文字；其餘欄位變成文件變數（<abbr class="tt" tabindex="0" data-term="docvars" data-tip="corpus 中每份文件的 metadata，例如 party、year、agenda_clean，可用來取子集或分組。" title="corpus 中每份文件的 metadata，例如 party、year、agenda_clean，可用來取子集或分組。">document variables</abbr>, docvars）。這裡 <code>docid_field = "doc_id"</code> 讓文件名稱就是 d1–d4，而不是預設的 text1–text4。<span class="slideref">投影片 23</span></p>
+  <div class="callout note"><div class="ct">對照 Lab</div><p>Lab 的 <code>corpus(hoc, text_field = "text")</code> 沒有指定 <code>docid_field</code>，所以文件名稱是 <code>text1</code>…<code>text5000</code>（見第 10 章 summary 輸出）。如果之後要跟 Python 或其他檔案交接，投影片 12 建議用穩定的 document <abbr class="tt" tabindex="0" data-term="ID" data-full="identifier" data-tip="識別碼：唯一標示一份文件或一筆資料的編號。" title="identifier — 識別碼：唯一標示一份文件或一筆資料的編號。">ID</abbr>。</p></div>
 
   <h2 id="c5-tt">tokens、types 與詞彙 <span class="slideref">投影片 24</span></h2>
   <p>文字：“Health services need health workers.”</p>
   <div class="tablewrap"><table>
-    <tr><th>表示方式</th><th><abbr class="tt" tabindex="0" data-term="token" title="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。">Tokens</abbr></th><th>不同的 types</th></tr>
+    <tr><th>表示方式</th><th><abbr class="tt" tabindex="0" data-term="token" data-tip="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。" title="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。">Tokens</abbr></th><th>不同的 types</th></tr>
     <tr><td>保留大小寫與標點</td><td>6</td><td>6</td></tr>
     <tr><td>轉小寫、移除標點</td><td>5</td><td>4</td></tr>
   </table></div>
@@ -1006,16 +1015,16 @@ tokens.text1  types.text1
         <div class="stat"><div class="sl">type／token 比</div><div class="sv" id="ttR">–</div></div>
       </div>
       <div class="chips" id="ttChips" style="margin-top:8px"></div>
-      <p class="hint">JS 用簡化的<abbr class="tt" tabindex="0" data-term="tokenization" title="把文字切成 token；英文靠空白與標點，中文、日文、泰文需要斷詞模型。">切字</abbr>規則（以空白與標點切開；連字號、縮寫的處理與 <abbr class="tt" tabindex="0" data-term="quanteda" title="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。">quanteda</abbr> 不同），只用來建立直覺。兩個勾都不勾 = 6／6；兩個都勾 = 5／4。</p>
+      <p class="hint"><abbr class="tt" tabindex="0" data-term="JS" data-full="JavaScript" data-tip="瀏覽器執行的程式語言；本講義的互動示範用它寫成。" title="JavaScript — 瀏覽器執行的程式語言；本講義的互動示範用它寫成。">JS</abbr> 用簡化的<abbr class="tt" tabindex="0" data-term="tokenization" data-tip="把文字切成 token；英文靠空白與標點，中文、日文、泰文需要斷詞模型。" title="把文字切成 token；英文靠空白與標點，中文、日文、泰文需要斷詞模型。">切字</abbr>規則（以空白與標點切開；連字號、縮寫的處理與 <abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。" title="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。">quanteda</abbr> 不同），只用來建立直覺。兩個勾都不勾 = 6／6；兩個都勾 = 5／4。</p>
     </div>
   </div>
 
   <h2 id="c5-llm">R 文本分析的 token vs. LLM 的 token <span class="slideref">投影片 25</span></h2>
   <div class="tablewrap"><table>
-    <tr><th>比較</th><th>常見的 R 文本分析流程</th><th>典型的 <abbr class="tt" tabindex="0" data-term="LLM" title="大型語言模型；它們的 token 多半是子詞（subword），不同於 R 文本分析常用的整字 token。">LLM</abbr> 流程</th></tr>
+    <tr><th>比較</th><th>常見的 R 文本分析流程</th><th>典型的 <abbr class="tt" tabindex="0" data-term="LLM" data-full="large language model" data-tip="大型語言模型；它們的 token 多半是子詞（subword），不同於 R 文本分析常用的整字 token。" title="large language model — 大型語言模型；它們的 token 多半是子詞（subword），不同於 R 文本分析常用的整字 token。">LLM</abbr> 流程</th></tr>
     <tr><td>常見單位</td><td>字；也可以是字元或句子</td><td>常是子詞（subwords）；也可能是整個字、字元或位元組單位</td></tr>
     <tr><td>切法取決於</td><td>套件、tokenizer 與你的設定</td><td>模型的 tokenizer 與詞彙表</td></tr>
-    <tr><td>主要用途</td><td>字數計數、<abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。">DFM</abbr>、<abbr class="tt" tabindex="0" data-term="TF-IDF" title="本課公式 count × log10(N/df)：字在文件中的次數，乘上它在語料中有多罕見；出現在每份文件的字權重為 0。">TF-IDF</abbr>、主題模型</td><td>當作模型輸入與文字生成的 token ID</td></tr>
+    <tr><td>主要用途</td><td>字數計數、<abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。" title="document-feature matrix — 文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。">DFM</abbr>、<abbr class="tt" tabindex="0" data-term="TF-IDF" data-full="term frequency–inverse document frequency" data-tip="本課公式 count × log10(N/df)：字在文件中的次數，乘上它在語料中有多罕見；出現在每份文件的字權重為 0。" title="term frequency–inverse document frequency — 本課公式 count × log10(N/df)：字在文件中的次數，乘上它在語料中有多罕見；出現在每份文件的字權重為 0。">TF-IDF</abbr>、主題模型</td><td>當作模型輸入與文字生成的 token ID</td></tr>
   </table></div>
   <p>一個字可以變成好幾個 LLM token。R 可以呼叫任一種 tokenizer；<strong>流程決定單位</strong>。<span class="slideref">投影片 25</span></p>
 
@@ -1055,8 +1064,8 @@ as.list(toks)[[1]]</pre></div>
   <div class="tablewrap"><table>
     <tr><th>選擇</th><th>可能的好處</th><th>可能的損失</th></tr>
     <tr><td>轉小寫</td><td>合併 Health 與 health</td><td>專有名詞的區分</td></tr>
-    <tr><td>移除<abbr class="tt" tabindex="0" data-term="stopwords" title="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。">停用字</abbr></td><td>減少高頻的功能字</td><td>否定、寫作風格</td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="stemming" title="以規則切掉字尾，例如 studies → studi；用完整字建的字典可能比不到 stem 後的特徵。">stemming</abbr> 或 <abbr class="tt" tabindex="0" data-term="lemmatization" title="以字典與上下文還原基本形，例如 studies → study；準確度取決於語言與模型。">lemmatization</abbr></td><td>合併某些詞形</td><td>意義上的差別</td></tr>
+    <tr><td>移除<abbr class="tt" tabindex="0" data-term="stopwords" data-tip="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。" title="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。">停用字</abbr></td><td>減少高頻的功能字</td><td>否定、寫作風格</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="stemming" data-tip="以規則切掉字尾，例如 studies → studi；用完整字建的字典可能比不到 stem 後的特徵。" title="以規則切掉字尾，例如 studies → studi；用完整字建的字典可能比不到 stem 後的特徵。">stemming</abbr> 或 <abbr class="tt" tabindex="0" data-term="lemmatization" data-tip="以字典與上下文還原基本形，例如 studies → study；準確度取決於語言與模型。" title="以字典與上下文還原基本形，例如 studies → study；準確度取決於語言與模型。">lemmatization</abbr></td><td>合併某些詞形</td><td>意義上的差別</td></tr>
     <tr><td>修剪罕見特徵</td><td>縮小詞彙量</td><td>罕見但重要的概念</td></tr>
   </table></div>
 
@@ -1075,14 +1084,14 @@ length(stopwords("en"))</pre></div>
 &gt; length(stopwords("en"))
 [1] 175</pre></div>
   <div class="tablewrap"><table>
-    <tr><th>套用在 d3 的規則</th><th>剩下的 <abbr class="tt" tabindex="0" data-term="token" title="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。">tokens</abbr></th></tr>
+    <tr><th>套用在 d3 的規則</th><th>剩下的 <abbr class="tt" tabindex="0" data-term="token" data-tip="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。" title="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。">tokens</abbr></th></tr>
     <tr><td>標準英文停用字表</td><td>workers support policy</td></tr>
     <tr><td>保留否定的停用字表</td><td>workers not support policy</td></tr>
   </table></div>
-  <p>保留 <code>not</code> 保住了一個線索；但 <abbr class="tt" tabindex="0" data-term="unigram" title="單一 token 的特徵；unigram DFM 分不出「誰支持誰」，因為順序不見了。">unigram</abbr> 模型仍需要某種方式使用它的<strong>作用範圍</strong>（scope）。<span class="slideref">投影片 28</span>　本機輸出確認 <code>stopwords("en")</code> 有 175 個字，<code>not</code>、<code>no</code>、<code>nor</code> 都在裡面。</p>
+  <p>保留 <code>not</code> 保住了一個線索；但 <abbr class="tt" tabindex="0" data-term="unigram" data-tip="單一 token 的特徵；unigram DFM 分不出「誰支持誰」，因為順序不見了。" title="單一 token 的特徵；unigram DFM 分不出「誰支持誰」，因為順序不見了。">unigram</abbr> 模型仍需要某種方式使用它的<strong>作用範圍</strong>（scope）。<span class="slideref">投影片 28</span>　本機輸出確認 <code>stopwords("en")</code> 有 175 個字，<code>not</code>、<code>no</code>、<code>nor</code> 都在裡面。</p>
 
   <h2 id="c6-bow">詞袋（bag-of-words）表示法 <span class="slideref">投影片 29</span></h2>
-  <p><abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。">DFM</abbr> 每份文件一列、每個特徵一欄。下面是用「保留否定」的 tokens 建出的計數 DFM 中選出的幾欄：</p>
+  <p><abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。" title="document-feature matrix — 文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。">DFM</abbr> 每份文件一列、每個特徵一欄。下面是用「保留否定」的 tokens 建出的計數 DFM 中選出的幾欄：</p>
   <div class="codeblock"><span class="lang">R · S07 Selected DFM columns (slide 29)（W2 投影片 week2.qmd／本教材依投影片重建）</span><button class="copyb jsonly">複製</button><pre>x &lt;- dfm(toks_content)
 as.matrix(x[, c("health", "workers", "government", "policy", "not")])</pre></div>
   <div class="outbox"><div class="ohead">R console output（本機實跑：R 4.5.3、quanteda 4.5.1、quanteda.textstats 0.97.2、quanteda.textplots 0.96.1、stringr 1.6.0、dplyr 1.2.1、ggplot2 4.0.3；Linux aarch64）</div><pre>&gt; x &lt;- dfm(toks_content)
@@ -1113,7 +1122,7 @@ docs workers support government
     <li>有歧義的字需要上下文。</li>
     <li>反諷可能取決於句子以外的語境。</li>
   </ul>
-  <p><abbr class="tt" tabindex="0" data-term="n-gram" title="連續 n 個 token；要在刪停用字之前產生，否則會造出原文中不相鄰的配對。">N-grams</abbr> 與句法能保留一些額外資訊。<span class="slideref">投影片 30</span>（上面兩列計數相同的 R 驗證是本教材補充執行的。）</p>
+  <p><abbr class="tt" tabindex="0" data-term="n-gram" data-tip="連續 n 個 token；要在刪停用字之前產生，否則會造出原文中不相鄰的配對。" title="連續 n 個 token；要在刪停用字之前產生，否則會造出原文中不相鄰的配對。">N-grams</abbr> 與句法能保留一些額外資訊。<span class="slideref">投影片 30</span>（上面兩列計數相同的 R 驗證是本教材補充執行的。）</p>
 
   <h2 id="c6-mwe">多字詞（multiword expressions） <span class="slideref">投影片 31</span></h2>
   <div class="codeblock"><span class="lang">R · S09 Multiword expressions (slide 31)（W2 投影片 week2.qmd／本教材依投影片重建）</span><button class="copyb jsonly">複製</button><pre>phrase_toks &lt;- tokens(
@@ -1163,14 +1172,14 @@ text1 :
 tokens of 1 document (2 tokens, 2 types).
 text1 :
 [1] "workers_support" "support_policy" </pre></div>
-  <p>投影片的 <abbr class="tt" tabindex="0" data-term="bigram" title="連續兩個 token 組成的特徵，例如 do_not、not_support。">bigram</abbr>：workers_do, do_not, not_support, support_the, the_policy。<strong>如果原本的相鄰關係重要，要在移除停用字之前產生 bigram。</strong>先刪字會造出原本並不相鄰的配對。<span class="slideref">投影片 32</span>　上面第二段輸出（本教材補充執行）示範反過來做的後果：標準停用字表刪掉 do、not、the 之後，產生了原文中不存在的 <code>workers_support</code>，否定完全消失。</p>
+  <p>投影片的 <abbr class="tt" tabindex="0" data-term="bigram" data-tip="連續兩個 token 組成的特徵，例如 do_not、not_support。" title="連續兩個 token 組成的特徵，例如 do_not、not_support。">bigram</abbr>：workers_do, do_not, not_support, support_the, the_policy。<strong>如果原本的相鄰關係重要，要在移除停用字之前產生 bigram。</strong>先刪字會造出原本並不相鄰的配對。<span class="slideref">投影片 32</span>　上面第二段輸出（本教材補充執行）示範反過來做的後果：標準停用字表刪掉 do、not、the 之後，產生了原文中不存在的 <code>workers_support</code>，否定完全消失。</p>
 
   <h2 id="c6-col">搭配詞與語法特徵 <span class="slideref">投影片 33</span></h2>
   <div class="tablewrap"><table>
     <tr><th>特徵策略</th><th>例子</th><th>需要的判斷</th></tr>
     <tr><td>已知片語</td><td><code>armed_forces</code></td><td>哪些片語重要？</td></tr>
-    <tr><td>統計搭配詞（<abbr class="tt" tabindex="0" data-term="collocation" title="比偶然更常一起出現的字串；textstat_collocations() 依 λ 或 z 排序，結果只是候選特徵，要先檢查用法。">collocation</abbr>）</td><td>候選如 <code>northern_ireland</code></td><td>這個關聯在實質上有用嗎？</td></tr>
-    <tr><td>依詞性（<abbr class="tt" tabindex="0" data-term="POS" title="詞性標記，例如 NOUN、VERB、ADV、ADP、AUX、PART；只留 NOUN／VERB 會丟掉否定詞。">POS</abbr>）挑選</td><td>名詞、動詞、形容詞</td><td>哪些語法角色符合任務？</td></tr>
+    <tr><td>統計搭配詞（<abbr class="tt" tabindex="0" data-term="collocation" data-tip="比偶然更常一起出現的字串；textstat_collocations() 依 λ 或 z 排序，結果只是候選特徵，要先檢查用法。" title="比偶然更常一起出現的字串；textstat_collocations() 依 λ 或 z 排序，結果只是候選特徵，要先檢查用法。">collocation</abbr>）</td><td>候選如 <code>northern_ireland</code></td><td>這個關聯在實質上有用嗎？</td></tr>
+    <tr><td>依詞性（<abbr class="tt" tabindex="0" data-term="POS" data-full="part of speech" data-tip="詞性標記，例如 NOUN、VERB、ADV、ADP、AUX、PART；只留 NOUN／VERB 會丟掉否定詞。" title="part of speech — 詞性標記，例如 NOUN、VERB、ADV、ADP、AUX、PART；只留 NOUN／VERB 會丟掉否定詞。">POS</abbr>）挑選</td><td>名詞、動詞、形容詞</td><td>哪些語法角色符合任務？</td></tr>
   </table></div>
   <p>高頻或高關聯的字對只是<strong>候選</strong>特徵；加進量測規則之前要先檢查它的用法。<span class="slideref">投影片 33</span>　Lab 的真實輸出裡，<code>northern ireland</code> 出現 338 次、λ ≈ 12.41（第 11 章）。</p>
 
@@ -1185,9 +1194,9 @@ text1 :
 
   <h2 id="c6-lab">互動：前處理開關實驗室（四句小語料）</h2>
   <div class="lab" id="labPrep">
-    <div class="lab-h"><span class="ic">🎛</span><span class="lt">前處理開關 → 即時 DFM</span><span class="ls">玩具直覺型・補充（非講義內容）；<abbr class="tt" tabindex="0" data-term="corpus" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">語料</abbr>來自投影片 22</span></div>
+    <div class="lab-h"><span class="ic">🎛</span><span class="lt">前處理開關 → 即時 DFM</span><span class="ls">玩具直覺型・補充（非講義內容）；<abbr class="tt" tabindex="0" data-term="corpus" data-tip="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">語料</abbr>來自投影片 22</span></div>
     <div class="lab-b">
-      <p class="hint">每個開關對應一個 <abbr class="tt" tabindex="0" data-term="quanteda" title="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。">quanteda</abbr> 步驟。預設設定 = 投影片 26–28、46 的設定（移除標點、轉小寫、移除「保留否定」的停用字表），應得到 4 × 9 的 DFM。停用字表是 R 匯出的 <code>stopwords("en")</code>（175 字）。JS 只是重現示範，正式結果以 R 為準。</p>
+      <p class="hint">每個開關對應一個 <abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。" title="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。">quanteda</abbr> 步驟。預設設定 = 投影片 26–28、46 的設定（移除標點、轉小寫、移除「保留否定」的停用字表），應得到 4 × 9 的 DFM。停用字表是 R 匯出的 <code>stopwords("en")</code>（175 字）。<abbr class="tt" tabindex="0" data-term="JS" data-full="JavaScript" data-tip="瀏覽器執行的程式語言；本講義的互動示範用它寫成。" title="JavaScript — 瀏覽器執行的程式語言；本講義的互動示範用它寫成。">JS</abbr> 只是重現示範，正式結果以 R 為準。</p>
       <div class="grid2">
         <div>
           <label class="f"><input type="checkbox" id="prPunct" checked> remove_punct = TRUE</label>
@@ -1236,25 +1245,25 @@ text1 :
 
 <!-- ===================== CH07 ===================== -->
 <section class="chapter" id="ch07" data-slides="35,36,37,38,39,40,41,42,43,44,45">
-  <div class="crumb">07 · 多語言與 <abbr class="tt" tabindex="0" data-term="UDPipe" title="以 UD treebank 訓練的標註工具：斷詞、lemma、POS、依存關係；有 R 套件與 UDPipe 2 API。">UDPipe</abbr></div>
+  <div class="crumb">07 · 多語言與 <abbr class="tt" tabindex="0" data-term="UDPipe" data-tip="以 UD treebank 訓練的標註工具：斷詞、lemma、POS、依存關係；有 R 套件與 UDPipe 2 API。" title="以 UD treebank 訓練的標註工具：斷詞、lemma、POS、依存關係；有 R 套件與 UDPipe 2 API。">UDPipe</abbr></div>
   <h1 class="ch">多語言：英文的空白不是通用的字界</h1>
-  <p class="lead">中文、日文、泰文需要<abbr class="tt" tabindex="0" data-term="tokenization" title="把文字切成 token；英文靠空白與標點，中文、日文、泰文需要斷詞模型。">斷詞</abbr>模型；<abbr class="tt" tabindex="0" data-term="stopwords" title="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。">停用字</abbr>與詞形工具都跟語言綁在一起。UDPipe 給你 <abbr class="tt" tabindex="0" data-term="token" title="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。">token</abbr>、詞性（<abbr class="tt" tabindex="0" data-term="POS" title="詞性標記，例如 NOUN、VERB、ADV、ADP、AUX、PART；只留 NOUN／VERB 會丟掉否定詞。">POS</abbr>）與依存關係（<abbr class="tt" tabindex="0" data-term="dependency parsing" title="每個 token 指向它的 head（0＝root），並標上關係，例如 nsubj、obj、advmod。">dependency</abbr>）。</p>
+  <p class="lead">中文、日文、泰文需要<abbr class="tt" tabindex="0" data-term="tokenization" data-tip="把文字切成 token；英文靠空白與標點，中文、日文、泰文需要斷詞模型。" title="把文字切成 token；英文靠空白與標點，中文、日文、泰文需要斷詞模型。">斷詞</abbr>模型；<abbr class="tt" tabindex="0" data-term="stopwords" data-tip="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。" title="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。">停用字</abbr>與詞形工具都跟語言綁在一起。UDPipe 給你 <abbr class="tt" tabindex="0" data-term="token" data-tip="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。" title="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。">token</abbr>、詞性（<abbr class="tt" tabindex="0" data-term="POS" data-full="part of speech" data-tip="詞性標記，例如 NOUN、VERB、ADV、ADP、AUX、PART；只留 NOUN／VERB 會丟掉否定詞。" title="part of speech — 詞性標記，例如 NOUN、VERB、ADV、ADP、AUX、PART；只留 NOUN／VERB 會丟掉否定詞。">POS</abbr>）與依存關係（<abbr class="tt" tabindex="0" data-term="dependency parsing" data-tip="每個 token 指向它的 head（0＝root），並標上關係，例如 nsubj、obj、advmod。" title="每個 token 指向它的 head（0＝root），並標上關係，例如 nsubj、obj、advmod。">dependency</abbr>）。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c7-req">語言與模型的要求</a><a href="#c7-ud">UDPipe 模型</a><a href="#c7-code">標註程式</a><a href="#c7-dep">互動：斷詞與依存檢視器</a><a href="#c7-err">模型錯誤與否定</a><a href="#c7-thai">從句法到研究量測</a><a href="#c7-dfm">標註變成 DFM 特徵</a><a href="#c7-quiz">自我檢查</a>
   </div>
-  <div class="callout warn"><div class="ct">本章的資料來源（照實說明）</div><p>投影片 38–42 的 UDPipe 輸出是老師在投影片原始檔（week2.qmd）裡<strong>轉錄自先前簡報 HTML 的模型預測</strong>，投影片 36 也註明是「講者示範：詮釋準備好的模型輸出」。本教材<strong>沒有</strong>重新執行 UDPipe（需要另外下載語言模型，泰文還要呼叫 UDPipe 2 的 REST <abbr class="tt" tabindex="0" data-term="API" title="應用程式介面：程式存取軟體或平台服務的管道；用平台 API＋關鍵字取得的是「觀察到的語料」，不是母體。">API</abbr>），以下互動用的就是投影片上的這些輸出，每一筆都標了頁碼。</p></div>
+  <div class="callout warn"><div class="ct">本章的資料來源（照實說明）</div><p>投影片 38–42 的 UDPipe 輸出是老師在投影片原始檔（week2.qmd）裡<strong>轉錄自先前簡報 <abbr class="tt" tabindex="0" data-term="HTML" data-full="HyperText Markup Language" data-tip="網頁標記語言；網頁原始碼的格式。" title="HyperText Markup Language — 網頁標記語言；網頁原始碼的格式。">HTML</abbr> 的模型預測</strong>，投影片 36 也註明是「講者示範：詮釋準備好的模型輸出」。本教材<strong>沒有</strong>重新執行 UDPipe（需要另外下載語言模型，泰文還要呼叫 UDPipe 2 的 <abbr class="tt" tabindex="0" data-term="REST" data-full="Representational State Transfer" data-tip="一種以 HTTP 網址存取服務的 API 設計風格。" title="Representational State Transfer — 一種以 HTTP 網址存取服務的 API 設計風格。">REST</abbr> <abbr class="tt" tabindex="0" data-term="API" data-full="application programming interface" data-tip="應用程式介面：程式存取軟體或平台服務的管道；用平台 API＋關鍵字取得的是「觀察到的語料」，不是母體。" title="application programming interface — 應用程式介面：程式存取軟體或平台服務的管道；用平台 API＋關鍵字取得的是「觀察到的語料」，不是母體。">API</abbr>），以下互動用的就是投影片上的這些輸出，每一筆都標了頁碼。</p></div>
 
   <h2 id="c7-req">語言與模型的要求 <span class="slideref">投影片 35</span></h2>
   <div class="grid2">
-    <div class="callout plain"><div class="ct">語言</div><ul><li>英文的空白不是通用的<abbr class="tt" tabindex="0" data-term="word boundary" title="字與非字字元之間的位置（regex 的 \b）；\bwar\b 不比到 towards，但會比到 post-war。">字界</abbr>。</li><li>中文斷詞需要檢查。</li><li>停用字與詞形工具都是語言專屬的。</li></ul></div>
-    <div class="callout plain"><div class="ct">模型</div><ul><li><abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。">DFM</abbr> 可以用字或片語特徵。</li><li>預訓練模型期待它自己的 tokenizer。</li><li>保留那個模型需要的輸入區分。</li></ul></div>
+    <div class="callout plain"><div class="ct">語言</div><ul><li>英文的空白不是通用的<abbr class="tt" tabindex="0" data-term="word boundary" data-tip="字與非字字元之間的位置（regex 的 \b）；\bwar\b 不比到 towards，但會比到 post-war。" title="字與非字字元之間的位置（regex 的 \b）；\bwar\b 不比到 towards，但會比到 post-war。">字界</abbr>。</li><li>中文斷詞需要檢查。</li><li>停用字與詞形工具都是語言專屬的。</li></ul></div>
+    <div class="callout plain"><div class="ct">模型</div><ul><li><abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。" title="document-feature matrix — 文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。">DFM</abbr> 可以用字或片語特徵。</li><li>預訓練模型期待它自己的 tokenizer。</li><li>保留那個模型需要的輸入區分。</li></ul></div>
   </div>
-  <p><strong>BoW 的前處理配方不應自動變成 <abbr class="tt" tabindex="0" data-term="LLM" title="大型語言模型；它們的 token 多半是子詞（subword），不同於 R 文本分析常用的整字 token。">LLM</abbr> 的輸入配方。</strong><span class="slideref">投影片 35</span></p>
+  <p><strong>BoW 的前處理配方不應自動變成 <abbr class="tt" tabindex="0" data-term="LLM" data-full="large language model" data-tip="大型語言模型；它們的 token 多半是子詞（subword），不同於 R 文本分析常用的整字 token。" title="large language model — 大型語言模型；它們的 token 多半是子詞（subword），不同於 R 文本分析常用的整字 token。">LLM</abbr> 的輸入配方。</strong><span class="slideref">投影片 35</span></p>
 
   <h2 id="c7-ud">UDPipe 模型：日文、中文、泰文 <span class="slideref">投影片 36</span></h2>
   <div class="tablewrap"><table>
     <tr><th>輸入語言</th><th>從 R 存取</th><th>模型</th></tr>
-    <tr><td>日文</td><td>udpipe：本機 UDPipe 1</td><td>japanese-gsd（<abbr class="tt" tabindex="0" data-term="Universal Dependencies" title="跨語言一致的詞性與依存關係標註規範與 treebank 集合，UDPipe 的模型由此訓練。">UD</abbr> 2.5）</td></tr>
+    <tr><td>日文</td><td>udpipe：本機 UDPipe 1</td><td>japanese-gsd（<abbr class="tt" tabindex="0" data-term="Universal Dependencies" data-full="Universal Dependencies (UD)" data-tip="跨語言一致的詞性與依存關係標註規範與 treebank 集合，UDPipe 的模型由此訓練。" title="Universal Dependencies (UD) — 跨語言一致的詞性與依存關係標註規範與 treebank 集合，UDPipe 的模型由此訓練。">UD</abbr> 2.5）</td></tr>
     <tr><td>繁體中文</td><td>udpipe：本機 UDPipe 1</td><td>chinese-gsd（UD 2.5）</td></tr>
     <tr><td>泰文</td><td>httr2：UDPipe 2 API</td><td>thai-tud（UD 2.17）</td></tr>
   </table></div>
@@ -1300,13 +1309,13 @@ ann_zh[c("token_id", "token", "upos",
       <div class="explain" id="depNote"></div>
     </div>
   </div>
-  <p class="hint">投影片 38 的斷詞比較（不計標點）：泰文 3 個 token（ฉัน PRON／ชอบ VERB／กาแฟ NOUN），模型找出了字界；日文 6 個 token（私 PRON／は ADP／コーヒー NOUN／が ADP／好き ADJ／です AUX），助詞與助動詞是獨立的 token；中文 3 個 token（我 PRON／喜歡 VERB／咖啡 NOUN），多字元的詞可以是單一 token。投影片 39：三種語言的「我喜歡咖啡」都是 <abbr class="tt" tabindex="0" data-term="nsubj" title="UD 依存關係：名詞性主詞，例如「我喜歡咖啡」裡的「我」。">nsubj</abbr>／root／obj，head IDs 都是 2 / 0 / 2。<span class="slideref">投影片 38–39</span></p>
+  <p class="hint">投影片 38 的斷詞比較（不計標點）：泰文 3 個 token（ฉัน <abbr class="tt" tabindex="0" data-term="PRON" data-full="pronoun (UD part-of-speech tag)" data-tip="代名詞；Universal Dependencies 的詞性標籤（UPOS）。" title="pronoun (UD part-of-speech tag) — 代名詞；Universal Dependencies 的詞性標籤（UPOS）。">PRON</abbr>／ชอบ <abbr class="tt" tabindex="0" data-term="VERB" data-full="verb (UD part-of-speech tag)" data-tip="動詞；Universal Dependencies 的詞性標籤（UPOS）。" title="verb (UD part-of-speech tag) — 動詞；Universal Dependencies 的詞性標籤（UPOS）。">VERB</abbr>／กาแฟ <abbr class="tt" tabindex="0" data-term="NOUN" data-full="noun (UD part-of-speech tag)" data-tip="名詞；Universal Dependencies 的詞性標籤（UPOS）。" title="noun (UD part-of-speech tag) — 名詞；Universal Dependencies 的詞性標籤（UPOS）。">NOUN</abbr>），模型找出了字界；日文 6 個 token（私 PRON／は <abbr class="tt" tabindex="0" data-term="ADP" data-full="adposition (UD part-of-speech tag)" data-tip="介詞（前置詞／後置詞）；Universal Dependencies 的詞性標籤（UPOS）。" title="adposition (UD part-of-speech tag) — 介詞（前置詞／後置詞）；Universal Dependencies 的詞性標籤（UPOS）。">ADP</abbr>／コーヒー NOUN／が ADP／好き <abbr class="tt" tabindex="0" data-term="ADJ" data-full="adjective (UD part-of-speech tag)" data-tip="形容詞；Universal Dependencies 的詞性標籤（UPOS）。" title="adjective (UD part-of-speech tag) — 形容詞；Universal Dependencies 的詞性標籤（UPOS）。">ADJ</abbr>／です <abbr class="tt" tabindex="0" data-term="AUX" data-full="auxiliary (UD part-of-speech tag)" data-tip="助動詞；Universal Dependencies 的詞性標籤（UPOS）。" title="auxiliary (UD part-of-speech tag) — 助動詞；Universal Dependencies 的詞性標籤（UPOS）。">AUX</abbr>），助詞與助動詞是獨立的 token；中文 3 個 token（我 PRON／喜歡 VERB／咖啡 NOUN），多字元的詞可以是單一 token。投影片 39：三種語言的「我喜歡咖啡」都是 <abbr class="tt" tabindex="0" data-term="nsubj" data-tip="UD 依存關係：名詞性主詞，例如「我喜歡咖啡」裡的「我」。" title="UD 依存關係：名詞性主詞，例如「我喜歡咖啡」裡的「我」。">nsubj</abbr>／root／obj，head IDs 都是 2 / 0 / 2。<span class="slideref">投影片 38–39</span></p>
 
   <h2 id="c7-err">模型錯誤與否定 <span class="slideref">投影片 40–42</span></h2>
   <ul>
     <li><strong>日文</strong>「政府は医療従事者を支援する。」：政府（NOUN, nsubj → 6）、医療（compound → 4）、従事者（obj → 6）、支援（VERB, root）、する（AUX）。<span class="slideref">投影片 40</span></li>
-    <li><strong>繁體中文</strong>「政府支持醫療工作者。」：模型錯誤——<code>支持</code> 被標成 NOUN，<code>者</code>（PART）被預測為 root。投影片的提醒：<strong>詮釋這些輸出之前，先讀原句</strong>。<span class="slideref">投影片 41</span></li>
-    <li><strong>否定</strong>「政府不支持刪減醫療預算。」：<code>不</code>（ADV）以 <abbr class="tt" tabindex="0" data-term="advmod" title="UD 依存關係：副詞修飾語；投影片 42 的「不」以 advmod 連到「支持」。">advmod</abbr> 連到 <code>支持</code>（ID 3）。<strong>只保留 NOUN 與 VERB</strong> 會移除「不」，特徵清單就失去了否定。<span class="slideref">投影片 42</span>（在上面的檢視器選這一句，取消勾選 ADV 試試。）</li>
+    <li><strong>繁體中文</strong>「政府支持醫療工作者。」：模型錯誤——<code>支持</code> 被標成 NOUN，<code>者</code>（<abbr class="tt" tabindex="0" data-term="PART" data-full="particle (UD part-of-speech tag)" data-tip="小品詞／語助詞（如中文的「的」、英文的 not）；Universal Dependencies 的詞性標籤（UPOS）。" title="particle (UD part-of-speech tag) — 小品詞／語助詞（如中文的「的」、英文的 not）；Universal Dependencies 的詞性標籤（UPOS）。">PART</abbr>）被預測為 root。投影片的提醒：<strong>詮釋這些輸出之前，先讀原句</strong>。<span class="slideref">投影片 41</span></li>
+    <li><strong>否定</strong>「政府不支持刪減醫療預算。」：<code>不</code>（<abbr class="tt" tabindex="0" data-term="ADV" data-full="adverb (UD part-of-speech tag)" data-tip="副詞；Universal Dependencies 的詞性標籤（UPOS）。" title="adverb (UD part-of-speech tag) — 副詞；Universal Dependencies 的詞性標籤（UPOS）。">ADV</abbr>）以 <abbr class="tt" tabindex="0" data-term="advmod" data-tip="UD 依存關係：副詞修飾語；投影片 42 的「不」以 advmod 連到「支持」。" title="UD 依存關係：副詞修飾語；投影片 42 的「不」以 advmod 連到「支持」。">advmod</abbr> 連到 <code>支持</code>（<abbr class="tt" tabindex="0" data-term="ID" data-full="identifier" data-tip="識別碼：唯一標示一份文件或一筆資料的編號。" title="identifier — 識別碼：唯一標示一份文件或一筆資料的編號。">ID</abbr> 3）。<strong>只保留 NOUN 與 VERB</strong> 會移除「不」，特徵清單就失去了否定。<span class="slideref">投影片 42</span>（在上面的檢視器選這一句，取消勾選 ADV 試試。）</li>
   </ul>
 
   <h2 id="c7-thai">從泰文句法到研究量測 <span class="slideref">投影片 43</span></h2>
@@ -1317,7 +1326,7 @@ ann_zh[c("token_id", "token", "upos",
     <button class="st"><span class="sn">4 · 研究問題</span>哪些對象得到更多正面偏好？<span class="sd">Research question</span></button>
   </div>
   <div class="explain jsonly" id="flowThaiTxt"></div>
-  <p class="hint">靜態版：POS 標出詞類，依存關係把主詞連到述語與對象 → 把主詞連到「like」與它的受詞，並確認陳述是肯定句 → 這個例子：咖啡的正面偏好 = 1 → 研究問題：哪些對象得到更多正面偏好的表達？<abbr class="tt" tabindex="0" data-term="corpus" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">語料</abbr>層次的量測：提到某對象的文件中，表達正面偏好的比例。箭頭由 head 指向 dependent。<span class="slideref">投影片 43</span>　這也呼應第 01 章投影片 4 的「咖啡偏好」研究設計。</p>
+  <p class="hint">靜態版：POS 標出詞類，依存關係把主詞連到述語與對象 → 把主詞連到「like」與它的受詞，並確認陳述是肯定句 → 這個例子：咖啡的正面偏好 = 1 → 研究問題：哪些對象得到更多正面偏好的表達？<abbr class="tt" tabindex="0" data-term="corpus" data-tip="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">語料</abbr>層次的量測：提到某對象的文件中，表達正面偏好的比例。箭頭由 head 指向 dependent。<span class="slideref">投影片 43</span>　這也呼應第 01 章投影片 4 的「咖啡偏好」研究設計。</p>
 
   <h2 id="c7-dfm">UDPipe 標註變成 quanteda tokens 與 DFM <span class="slideref">投影片 44–45</span></h2>
   <div class="codeblock nohl"><span class="lang">R · 投影片 44（程式示意；ann_multi 是標註表）</span><pre># Assume ann_multi contains an annotation table.
@@ -1359,7 +1368,7 @@ ja_dfm &lt;- dfm(as.tokens(ja_tokens), tolower = FALSE)</pre></div>
 
 <!-- ===================== CH08 ===================== -->
 <section class="chapter" id="ch08" data-slides="46,47,48,49,50,51">
-  <div class="crumb">08 · <abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。">DFM</abbr>、修剪、<abbr class="tt" tabindex="0" data-term="TF-IDF" title="本課公式 count × log10(N/df)：字在文件中的次數，乘上它在語料中有多罕見；出現在每份文件的字權重為 0。">TF-IDF</abbr>、<abbr class="tt" tabindex="0" data-term="KWIC" title="keyword-in-context：列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。">KWIC</abbr></div>
+  <div class="crumb">08 · <abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。" title="document-feature matrix — 文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。">DFM</abbr>、修剪、<abbr class="tt" tabindex="0" data-term="TF-IDF" data-full="term frequency–inverse document frequency" data-tip="本課公式 count × log10(N/df)：字在文件中的次數，乘上它在語料中有多罕見；出現在每份文件的字權重為 0。" title="term frequency–inverse document frequency — 本課公式 count × log10(N/df)：字在文件中的次數，乘上它在語料中有多罕見；出現在每份文件的字權重為 0。">TF-IDF</abbr>、<abbr class="tt" tabindex="0" data-term="KWIC" data-full="keyword in context" data-tip="列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。" title="keyword in context — 列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。">KWIC</abbr></div>
   <h1 class="ch">建 DFM、看字頻與文件頻率、TF-IDF、回到上下文</h1>
   <p class="lead">DFM 是之後所有方法（字典、分類、主題模型、縮放）的共同輸入。本章的數字都可以手算驗證。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
@@ -1378,8 +1387,8 @@ featnames(x)</pre></div>
 &gt; featnames(x)
 [1] "health"     "workers"    "need"       "services"   "government"
 [6] "supports"   "not"        "support"    "policy"    </pre></div>
-  <p>4 份文件 × 9 個特徵；最常見的是 health 3、workers 2、services 2、government 2、supports 2、policy 2。列保留文件 ID；完整 DFM 包含第 06 章那 5 欄以外的特徵（need、supports、support、services）。<span class="slideref">投影片 46</span></p>
-  <div class="callout note"><div class="ct">注意 supports 與 support</div><p>9 個特徵裡 <code>supports</code>（d2、d4）與 <code>support</code>（d3）是<strong>兩個不同的特徵</strong>。如果要合併，得靠 <abbr class="tt" tabindex="0" data-term="stemming" title="以規則切掉字尾，例如 studies → studi；用完整字建的字典可能比不到 stem 後的特徵。">stemming</abbr>、<abbr class="tt" tabindex="0" data-term="lemmatization" title="以字典與上下文還原基本形，例如 studies → study；準確度取決於語言與模型。">lemmatization</abbr> 或明確替換（第 06 章投影片 34）——而每種方法都有代價。</p></div>
+  <p>4 份文件 × 9 個特徵；最常見的是 health 3、workers 2、services 2、government 2、supports 2、policy 2。列保留文件 <abbr class="tt" tabindex="0" data-term="ID" data-full="identifier" data-tip="識別碼：唯一標示一份文件或一筆資料的編號。" title="identifier — 識別碼：唯一標示一份文件或一筆資料的編號。">ID</abbr>；完整 DFM 包含第 06 章那 5 欄以外的特徵（need、supports、support、services）。<span class="slideref">投影片 46</span></p>
+  <div class="callout note"><div class="ct">注意 supports 與 support</div><p>9 個特徵裡 <code>supports</code>（d2、d4）與 <code>support</code>（d3）是<strong>兩個不同的特徵</strong>。如果要合併，得靠 <abbr class="tt" tabindex="0" data-term="stemming" data-tip="以規則切掉字尾，例如 studies → studi；用完整字建的字典可能比不到 stem 後的特徵。" title="以規則切掉字尾，例如 studies → studi；用完整字建的字典可能比不到 stem 後的特徵。">stemming</abbr>、<abbr class="tt" tabindex="0" data-term="lemmatization" data-tip="以字典與上下文還原基本形，例如 studies → study；準確度取決於語言與模型。" title="以字典與上下文還原基本形，例如 studies → study；準確度取決於語言與模型。">lemmatization</abbr> 或明確替換（第 06 章投影片 34）——而每種方法都有代價。</p></div>
 
   <h2 id="c8-tf">term frequency 與 document frequency <span class="slideref">投影片 47</span></h2>
   <div class="codeblock"><span class="lang">R · S12 Term and document frequency; trimming (slide 47)（W2 投影片 week2.qmd／本教材依投影片重建）</span><button class="copyb jsonly">複製</button><pre>colSums(x)[c("health", "workers", "not")]
@@ -1409,7 +1418,7 @@ featnames(x_trim)</pre></div>
     <tr><th>表示</th><th>格子的意思</th><th>可能用途</th></tr>
     <tr><td>Count</td><td>出現次數</td><td>以頻率為基礎的量測</td></tr>
     <tr><td>Binary</td><td>特徵是否出現</td><td>以「有沒有出現」比較</td></tr>
-    <tr><td>TF-IDF</td><td>依<abbr class="tt" tabindex="0" data-term="corpus" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">語料</abbr>中的普遍程度調整後的計數</td><td>文件檢索或比較</td></tr>
+    <tr><td>TF-IDF</td><td>依<abbr class="tt" tabindex="0" data-term="corpus" data-tip="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">語料</abbr>中的普遍程度調整後的計數</td><td>文件檢索或比較</td></tr>
   </table></div>
   <p>選擇會改變「重複出現的字」貢獻多少。模型的要求可能限制哪一種表示適合。<span class="slideref">投影片 48</span></p>
 
@@ -1418,7 +1427,7 @@ featnames(x_trim)</pre></div>
   <p style="text-align:center;font-size:1.1em"><code>TF-IDF(d, t) = count(d, t) × log10(N / df(t))</code></p>
   <ul>
     <li>N 是參考語料的文件數；df(t) 是包含特徵 t 的文件數。</li>
-    <li>出現在<strong>每一份</strong>文件的特徵，在這個公式下 <abbr class="tt" tabindex="0" data-term="IDF" title="逆文件頻率 log(N/df)：包含該字的文件越少，值越大。">IDF</abbr> = 0。</li>
+    <li>出現在<strong>每一份</strong>文件的特徵，在這個公式下 <abbr class="tt" tabindex="0" data-term="IDF" data-full="inverse document frequency" data-tip="逆文件頻率 log(N/df)：包含該字的文件越少，值越大。" title="inverse document frequency — 逆文件頻率 log(N/df)：包含該字的文件越少，值越大。">IDF</abbr> = 0。</li>
     <li>不同的正規化與平滑規則會產生不同的權重。<span class="slideref">投影片 49</span></li>
   </ul>
   <div class="codeblock"><span class="lang">R · S13 TF-IDF in the worked example (slides 49-50)（W2 投影片 week2.qmd／本教材依投影片重建）</span><button class="copyb jsonly">複製</button><pre>x_weighted &lt;- dfm_tfidf(x, scheme_tf = "count",
@@ -1472,7 +1481,7 @@ Keyword-in-context with 3 matches.
  [d3, 4] workers do not | support  | the policy     
  [d4, 3] the government | supports | the policy     </pre></div>
   <p>三筆符合：d2「the government <b>supports</b> health services」、d3「workers do not <b>support</b> the policy」、d4「the government <b>supports</b> the policy」。<strong>在把一個字的計數當成「支持某政策」的證據之前，先讀它周圍的字</strong>——d3 的 support 前面就是 not。<span class="slideref">投影片 51</span></p>
-  <p class="hint">注意：KWIC 用的是 <code>toks</code>（還沒移除<abbr class="tt" tabindex="0" data-term="stopwords" title="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。">停用字</abbr>的 <abbr class="tt" tabindex="0" data-term="token" title="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。">tokens</abbr>），所以看得到 not 與 the。pattern <code>"support*"</code> 是 glob 萬用字元，比到 support 與 supports。</p>
+  <p class="hint">注意：KWIC 用的是 <code>toks</code>（還沒移除<abbr class="tt" tabindex="0" data-term="stopwords" data-tip="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。" title="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。">停用字</abbr>的 <abbr class="tt" tabindex="0" data-term="token" data-tip="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。" title="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。">tokens</abbr>），所以看得到 not 與 the。pattern <code>"support*"</code> 是 glob 萬用字元，比到 support 與 supports。</p>
 
   <h2 id="c8-quiz">自我檢查</h2>
   <div class="mcq" data-ans="2" data-q="c8q1">
@@ -1496,7 +1505,7 @@ Keyword-in-context with 3 matches.
 <section class="chapter" id="ch09" data-slides="52,53,54,55,56,57,58,59">
   <div class="crumb">09 · 研究用途與敏感度</div>
   <h1 class="ch">DFM 拿來做什麼？以及：結果對前處理有多敏感？</h1>
-  <p class="lead">同一張 <abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。">DFM</abbr> 可以接到很多方法，但每個方法對輸入有不同要求：<abbr class="tt" tabindex="0" data-term="Wordfish" title="非監督的一維文本縮放模型，從字數計數估計文件相對位置（Slapin &amp; Proksch 2008）；輸入是計數，不是 TF-IDF。">Wordfish</abbr> 與主題模型要<strong>計數</strong>，分類要<strong>訓練標籤</strong>，<abbr class="tt" tabindex="0" data-term="Wordscores" title="用已知分數的參考文本替其他文本評分的縮放方法（Laver et al. 2003）。">Wordscores</abbr> 要<strong>參考分數</strong>，相似度可以用 <abbr class="tt" tabindex="0" data-term="TF-IDF" title="本課公式 count × log10(N/df)：字在文件中的次數，乘上它在語料中有多罕見；出現在每份文件的字權重為 0。">TF-IDF</abbr>。</p>
+  <p class="lead">同一張 <abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。" title="document-feature matrix — 文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。">DFM</abbr> 可以接到很多方法，但每個方法對輸入有不同要求：<abbr class="tt" tabindex="0" data-term="Wordfish" data-tip="非監督的一維文本縮放模型，從字數計數估計文件相對位置（Slapin &amp; Proksch 2008）；輸入是計數，不是 TF-IDF。" title="非監督的一維文本縮放模型，從字數計數估計文件相對位置（Slapin &amp; Proksch 2008）；輸入是計數，不是 TF-IDF。">Wordfish</abbr> 與主題模型要<strong>計數</strong>，分類要<strong>訓練標籤</strong>，<abbr class="tt" tabindex="0" data-term="Wordscores" data-tip="用已知分數的參考文本替其他文本評分的縮放方法（Laver et al. 2003）。" title="用已知分數的參考文本替其他文本評分的縮放方法（Laver et al. 2003）。">Wordscores</abbr> 要<strong>參考分數</strong>，相似度可以用 <abbr class="tt" tabindex="0" data-term="TF-IDF" data-full="term frequency–inverse document frequency" data-tip="本課公式 count × log10(N/df)：字在文件中的次數，乘上它在語料中有多罕見；出現在每份文件的字權重為 0。" title="term frequency–inverse document frequency — 本課公式 count × log10(N/df)：字在文件中的次數，乘上它在語料中有多罕見；出現在每份文件的字權重為 0。">TF-IDF</abbr>。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c9-wrap">DFM、KWIC、TF-IDF 小結</a><a href="#c9-app">研究應用總表</a><a href="#c9-match">互動：方法配對</a><a href="#c9-ex">應用研究</a><a href="#c9-sens">敏感度檢查</a><a href="#c9-quiz">自我檢查</a>
   </div>
@@ -1505,7 +1514,7 @@ Keyword-in-context with 3 matches.
   <div class="tablewrap"><table>
     <tr><th>工具</th><th>讓你做什麼</th></tr>
     <tr><td>DFM</td><td>表示文件特徵，用於比較與建模</td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="KWIC" title="keyword-in-context：列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。">KWIC</abbr></td><td>在上下文中讀字，檢查特徵計數的意義</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="KWIC" data-full="keyword in context" data-tip="列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。" title="keyword in context — 列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。">KWIC</abbr></td><td>在上下文中讀字，檢查特徵計數的意義</td></tr>
     <tr><td>TF-IDF</td><td>強調有區辨力的字，用於檢索與相似度</td></tr>
   </table></div>
   <p>Wordfish 是把文本放到<strong>一條維度</strong>上的非監督方法：字數 DFM → Wordfish → 文件的相對位置。用途：比較政黨宣言或演說。<strong>輸入是計數，不是 TF-IDF 權重。</strong>在稱它為「意識形態」之前，要先詮釋並驗證這條量尺。<span class="slideref">投影片 52</span></p>
@@ -1515,9 +1524,9 @@ Keyword-in-context with 3 matches.
     <tr><th>研究目標</th><th>方法</th><th>輸出</th></tr>
     <tr><td>估計位置</td><td>Wordfish／Wordscores</td><td>文件的相對位置</td></tr>
     <tr><td>預測類別</td><td>監督式分類器</td><td>議題或立場標籤</td></tr>
-    <tr><td>研究議題注意力</td><td><abbr class="tt" tabindex="0" data-term="LDA" title="Latent Dirichlet Allocation：非監督主題模型，輸出主題與主題比例；輸入是計數。">LDA</abbr>／<abbr class="tt" tabindex="0" data-term="STM" title="Structural Topic Model：可以把 metadata 放進模型的主題模型（Roberts et al. 2014）。">STM</abbr>／<abbr class="tt" tabindex="0" data-term="keyATM" title="Keyword Assisted Topic Model：用選定的關鍵字引導主題的主題模型（Eshima et al. 2024）。">keyATM</abbr></td><td>主題與主題比例</td></tr>
+    <tr><td>研究議題注意力</td><td><abbr class="tt" tabindex="0" data-term="LDA" data-full="Latent Dirichlet Allocation" data-tip="非監督主題模型，輸出主題與主題比例；輸入是計數。" title="Latent Dirichlet Allocation — 非監督主題模型，輸出主題與主題比例；輸入是計數。">LDA</abbr>／<abbr class="tt" tabindex="0" data-term="STM" data-full="Structural Topic Model" data-tip="可以把 metadata 放進模型的主題模型（Roberts et al. 2014）。" title="Structural Topic Model — 可以把 metadata 放進模型的主題模型（Roberts et al. 2014）。">STM</abbr>／<abbr class="tt" tabindex="0" data-term="keyATM" data-full="keyword assisted topic model" data-tip="用選定的關鍵字引導主題的主題模型（Eshima et al. 2024）。" title="keyword assisted topic model — 用選定的關鍵字引導主題的主題模型（Eshima et al. 2024）。">keyATM</abbr></td><td>主題與主題比例</td></tr>
     <tr><td>量測一個概念</td><td>字典</td><td>類別計數或比例</td></tr>
-    <tr><td>比較文件</td><td><abbr class="tt" tabindex="0" data-term="cosine similarity" title="以兩個向量夾角的餘弦衡量文件相似度；可以搭配 TF-IDF 權重使用。">餘弦相似度</abbr>／分群</td><td>相似度或文件群</td></tr>
+    <tr><td>比較文件</td><td><abbr class="tt" tabindex="0" data-term="cosine similarity" data-tip="以兩個向量夾角的餘弦衡量文件相似度；可以搭配 TF-IDF 權重使用。" title="以兩個向量夾角的餘弦衡量文件相似度；可以搭配 TF-IDF 權重使用。">餘弦相似度</abbr>／分群</td><td>相似度或文件群</td></tr>
   </table></div>
   <p class="hint">輸入很重要：Wordfish 與這些主題模型用計數；分類需要訓練標籤；Wordscores 需要參考分數；相似度可以用 TF-IDF。<span class="slideref">投影片 53</span>　這些方法分別在 W4（字典）、W7（縮放）、W8（主題模型）等週深入。</p>
 
@@ -1536,22 +1545,22 @@ Keyword-in-context with 3 matches.
     <tr><th>類別</th><th>研究</th><th>投影片上的一句話</th></tr>
     <tr><td>主題模型</td><td>STM：Roberts et al. (2014)</td><td>比較不同受訪者群體在問卷回答中的主題。<span class="slideref">投影片 54</span></td></tr>
     <tr><td>主題模型</td><td>keyATM：Eshima et al. (2024)</td><td>用選定的關鍵字引導主題，研究政策注意力。<span class="slideref">投影片 54</span></td></tr>
-    <tr><td>文本縮放</td><td>Wordfish：Slapin &amp; Proksch (2008)</td><td>從政黨宣言的字數估計政黨相對位置。<abbr class="tt" tabindex="0" data-term="corpus" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">語料</abbr>：五個政黨、五次選舉（1990–2005）共 25 份德國政黨宣言；發現：綠黨隨時間往中間移動；讀軸：較高的值代表左，正負號是慣例（Figure 1A, p. 714）。<span class="slideref">投影片 55–56</span></td></tr>
+    <tr><td>文本縮放</td><td>Wordfish：Slapin &amp; Proksch (2008)</td><td>從政黨宣言的字數估計政黨相對位置。<abbr class="tt" tabindex="0" data-term="corpus" data-tip="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">語料</abbr>：五個政黨、五次選舉（1990–2005）共 25 份德國政黨宣言；發現：綠黨隨時間往中間移動；讀軸：較高的值代表左，正負號是慣例（Figure 1A, p. 714）。<span class="slideref">投影片 55–56</span></td></tr>
     <tr><td>文本縮放</td><td>Wordscores：Lowe (2008)；Laver et al. (2003)</td><td>用已知分數的參考文本定位新文本。愛爾蘭信任案辯論：3 篇參考演說（+1／−1）→ 為其他 55 篇演說評分，分數越高越支持政府（Laver et al. 2003, Figure 3, p. 328）。<span class="slideref">投影片 55、57</span></td></tr>
     <tr><td>TF-IDF</td><td>文本相似度：Blumenau (2021)</td><td>追蹤後來的發言者在下議院辯論中使用了誰的語言。<span class="slideref">投影片 58</span></td></tr>
-    <tr><td>TF-IDF</td><td>立場分類：Bestvater &amp; Monroe (2023)</td><td>用 TF-IDF 加 <abbr class="tt" tabindex="0" data-term="SVM" title="支持向量機，一種監督式分類器；Bestvater &amp; Monroe (2023) 用 TF-IDF＋SVM 分類立場。">SVM</abbr> 分類政治上的支持或反對。<span class="slideref">投影片 58</span></td></tr>
+    <tr><td>TF-IDF</td><td>立場分類：Bestvater &amp; Monroe (2023)</td><td>用 TF-IDF 加 <abbr class="tt" tabindex="0" data-term="SVM" data-full="support vector machine" data-tip="支持向量機，一種監督式分類器；Bestvater &amp; Monroe (2023) 用 TF-IDF＋SVM 分類立場。" title="support vector machine — 支持向量機，一種監督式分類器；Bestvater &amp; Monroe (2023) 用 TF-IDF＋SVM 分類立場。">SVM</abbr> 分類政治上的支持或反對。<span class="slideref">投影片 58</span></td></tr>
   </table></div>
   <p class="hint">TF-IDF 提供加權後的特徵；<strong>分析</strong>決定我們量到什麼。<span class="slideref">投影片 58</span>　這些論文的全文不在課程 repo 裡，本教材只轉述投影片上的內容（見第 13 章）。</p>
 
   <h2 id="c9-sens">對前處理的敏感度 <span class="slideref">投影片 59</span></h2>
   <div class="tablewrap"><table>
     <tr><th>比較</th><th>檢查</th><th>解釋</th></tr>
-    <tr><td>有／沒有<abbr class="tt" tabindex="0" data-term="stopwords" title="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。">停用字</abbr></td><td>否定與語法脈絡</td><td>哪些區分消失了？</td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="unigram" title="單一 token 的特徵；unigram DFM 分不出「誰支持誰」，因為順序不見了。">unigram</abbr>／片語</td><td>複合概念</td><td>哪些比對結果改變了？</td></tr>
+    <tr><td>有／沒有<abbr class="tt" tabindex="0" data-term="stopwords" data-tip="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。" title="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。">停用字</abbr></td><td>否定與語法脈絡</td><td>哪些區分消失了？</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="unigram" data-tip="單一 token 的特徵；unigram DFM 分不出「誰支持誰」，因為順序不見了。" title="單一 token 的特徵；unigram DFM 分不出「誰支持誰」，因為順序不見了。">unigram</abbr>／片語</td><td>複合概念</td><td>哪些比對結果改變了？</td></tr>
     <tr><td>完整／修剪後的詞彙</td><td>被刪掉的特徵與空白列</td><td>哪些文件失去了證據？</td></tr>
     <tr><td>計數／TF-IDF</td><td>特徵的相對貢獻</td><td>結果是否取決於加權？</td></tr>
   </table></div>
-  <p><strong>比較某一條規則時，固定語料與研究問題不變。</strong><span class="slideref">投影片 59</span>　第 06 章的「前處理開關實驗室」與第 11 章的「修剪門檻」「<abbr class="tt" tabindex="0" data-term="keyness" title="比較目標組與參考組用字的統計量（本週用 χ²）；正值＝目標組相對多用，不是情緒或立場分數。">keyness</abbr> 探索器」都可以拿來實際做這四種比較。</p>
+  <p><strong>比較某一條規則時，固定語料與研究問題不變。</strong><span class="slideref">投影片 59</span>　第 06 章的「前處理開關實驗室」與第 11 章的「修剪門檻」「<abbr class="tt" tabindex="0" data-term="keyness" data-tip="比較目標組與參考組用字的統計量（本週用 χ²）；正值＝目標組相對多用，不是情緒或立場分數。" title="比較目標組與參考組用字的統計量（本週用 χ²）；正值＝目標組相對多用，不是情緒或立場分數。">keyness</abbr> 探索器」都可以拿來實際做這四種比較。</p>
 
   <h2 id="c9-quiz">自我檢查</h2>
   <div class="mcq" data-ans="1" data-q="c9q1">
@@ -1575,20 +1584,20 @@ Keyword-in-context with 3 matches.
 <section class="chapter" id="ch10" data-slides="60,61,17,19,20,6">
   <div class="crumb">10 · Lab 1–2</div>
   <h1 class="ch">Lab 第 1–2 節：字串、regex、清理議程標籤、建立 corpus</h1>
-  <p class="lead">以下程式碼來自 <code>W2/lab/answers/Lab_Session_W2_Answers.R</code>（範例部分與學生版 <code>Lab_Session_W2.R</code> 相同），輸出是本機實際執行的結果（R 4.5.3、<abbr class="tt" tabindex="0" data-term="quanteda" title="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。">quanteda</abbr> 4.5.1、quanteda.textstats 0.97.2、quanteda.textplots 0.96.1、<abbr class="tt" tabindex="0" data-term="stringr" title="R 的字串處理套件，str_detect()、str_extract()、str_remove_all() 等函式都以 str_ 開頭。">stringr</abbr> 1.6.0、dplyr 1.2.1、ggplot2 4.0.3；Linux aarch64）。</p>
+  <p class="lead">以下程式碼來自 <code>W2/lab/answers/Lab_Session_W2_Answers.R</code>（範例部分與學生版 <code>Lab_Session_W2.R</code> 相同），輸出是本機實際執行的結果（R 4.5.3、<abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。" title="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。">quanteda</abbr> 4.5.1、quanteda.textstats 0.97.2、quanteda.textplots 0.96.1、<abbr class="tt" tabindex="0" data-term="stringr" data-tip="R 的字串處理套件，str_detect()、str_extract()、str_remove_all() 等函式都以 str_ 開頭。" title="R 的字串處理套件，str_detect()、str_extract()、str_remove_all() 等函式都以 str_ 開頭。">stringr</abbr> 1.6.0、dplyr 1.2.1、ggplot2 4.0.3；Linux aarch64）。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c10-setup">安裝與開啟</a><a href="#c10-cmp">與老師輸出的對照</a><a href="#c10-read">讀資料、建 year</a><a href="#c10-str">字串：extract／which／locate</a><a href="#c10-regex">regex 與字界</a><a href="#c10-clean">清理議程標籤</a><a href="#c10-cleanlab">互動：議程清理管線</a><a href="#c10-corp">建立 corpus</a><a href="#c10-sub">取子集與改變文件單位</a><a href="#c10-run">R 執行清單</a><a href="#c10-quiz">自我檢查</a>
   </div>
 
   <h2 id="c10-setup">課堂設定：安裝、開啟、執行 <span class="slideref">投影片 60–61</span></h2>
   <ul>
-    <li>下載並安裝：R 與 Python 3，再安裝 <abbr class="tt" tabindex="0" data-term="RStudio" title="Posit 的 R 整合開發環境；本週 Lab 可在 RStudio 或 Positron 開 .R 檔執行。">RStudio</abbr> Desktop 與 <abbr class="tt" tabindex="0" data-term="Positron" title="Posit 開發的多語言 IDE，內建 R 與 Python 的 console 與資料檢視。">Positron</abbr>。</li>
+    <li>下載並安裝：R 與 Python 3，再安裝 <abbr class="tt" tabindex="0" data-term="RStudio" data-tip="Posit 的 R 整合開發環境；本週 Lab 可在 RStudio 或 Positron 開 .R 檔執行。" title="Posit 的 R 整合開發環境；本週 Lab 可在 RStudio 或 Positron 開 .R 檔執行。">RStudio</abbr> Desktop 與 <abbr class="tt" tabindex="0" data-term="Positron" data-tip="Posit 開發的多語言 IDE，內建 R 與 Python 的 console 與資料檢視。" title="Posit 開發的多語言 IDE，內建 R 與 Python 的 console 與資料檢視。">Positron</abbr>。</li>
     <li>試試 console：R 輸入 <code>1 + 1</code>；Python 輸入 <code>print(1 + 1)</code>，兩者都回傳 2。</li>
     <li>在 <code>lab/</code> 開啟 <code>Lab_Session_W2.R</code>，在 R console 安裝套件（只需一次）：</li>
   </ul>
   <div class="codeblock nohl"><span class="lang">R · 投影片 60</span><pre>install.packages(c("dplyr", "stringr", "ggplot2",
                    "quanteda", "quanteda.textstats", "quanteda.textplots"))</pre></div>
-  <p>把工作目錄設成 <code>W2/lab/</code>，<code>Data/</code> 資料夾放在腳本旁邊。<strong>帶回家的技能：在 RStudio 或 Positron 開一個 .R 檔，自己跑完 Lab。</strong><span class="slideref">投影片 60</span>　Lab 不計分、不用繳交；不需要 Python、語言模型或 <abbr class="tt" tabindex="0" data-term="API" title="應用程式介面：程式存取軟體或平台服務的管道；用平台 API＋關鍵字取得的是「觀察到的語料」，不是母體。">API</abbr>。<span class="slideref">投影片 61</span></p>
+  <p>把工作目錄設成 <code>W2/lab/</code>，<code>Data/</code> 資料夾放在腳本旁邊。<strong>帶回家的技能：在 RStudio 或 Positron 開一個 .R 檔，自己跑完 Lab。</strong><span class="slideref">投影片 60</span>　Lab 不計分、不用繳交；不需要 Python、語言模型或 <abbr class="tt" tabindex="0" data-term="API" data-full="application programming interface" data-tip="應用程式介面：程式存取軟體或平台服務的管道；用平台 API＋關鍵字取得的是「觀察到的語料」，不是母體。" title="application programming interface — 應用程式介面：程式存取軟體或平台服務的管道；用平台 API＋關鍵字取得的是「觀察到的語料」，不是母體。">API</abbr>。<span class="slideref">投影片 61</span></p>
   <div class="codeblock"><span class="lang">R · load_packages（W2/lab/answers/Lab_Session_W2_Answers.R）</span><button class="copyb jsonly">複製</button><pre># First use only: uncomment these lines to install the packages.
 # install.packages(c("dplyr", "stringr", "ggplot2", "quanteda",
 #                    "quanteda.textstats", "quanteda.textplots"))
@@ -1618,14 +1627,14 @@ The following objects are masked from ‘package:base’:
 &gt; library(quanteda)
 &gt; library(quanteda.textstats)
 &gt; library(quanteda.textplots)</pre></div>
-  <p class="hint">載入 dplyr 時出現的 “masked” 訊息是正常的：dplyr 的 <code>filter()</code> 蓋過了 stats 的同名函式。（老師的 HTML 用 <code>message: false</code> 隱藏了這些訊息。）</p>
+  <p class="hint">載入 dplyr 時出現的 “masked” 訊息是正常的：dplyr 的 <code>filter()</code> 蓋過了 stats 的同名函式。（老師的 <abbr class="tt" tabindex="0" data-term="HTML" data-full="HyperText Markup Language" data-tip="網頁標記語言；網頁原始碼的格式。" title="HyperText Markup Language — 網頁標記語言；網頁原始碼的格式。">HTML</abbr> 用 <code>message: false</code> 隱藏了這些訊息。）</p>
 
   <h2 id="c10-cmp">本機輸出與老師答案 HTML 的對照</h2>
   <div class="callout note"><div class="ct">對照結果（逐段比對 50 個 chunk）</div>
     <p>我們把本機輸出與 <code>answers/Lab_Session_W2_Answers.html</code> 中老師的輸出逐段比對（空白正規化後；比對紀錄在 <code>tad/labs/W2/compare_with_instructor_html.txt</code>）：</p>
     <ul>
-      <li><strong>所有數字與表格內容都一致</strong>：5000、271、81、364、368、2995、279、23 × 30640、23 × 5474、23 × 3424、所有<abbr class="tt" tabindex="0" data-term="collocation" title="比偶然更常一起出現的字串；textstat_collocations() 依 λ 或 z 排序，結果只是候選特徵，要先檢查用法。">搭配詞</abbr>的 λ 與 z、所有 <abbr class="tt" tabindex="0" data-term="keyness" title="比較目標組與參考組用字的統計量（本週用 χ²）；正值＝目標組相對多用，不是情緒或立場分數。">keyness</abbr> 的 <abbr class="tt" tabindex="0" data-term="χ²" title="卡方統計量；keyness 用 2 × 2 列聯表的 χ² 衡量一個字在目標組與參考組之間的頻率差異。">χ²</abbr>。</li>
-      <li>唯一的文字差異：<code>summary()</code> 的標題，本機（quanteda 4.5.1）印 “<abbr class="tt" tabindex="0" data-term="corpus" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">corpus</abbr> of 5,000 documents”，老師的 HTML 印 “Corpus consisting of 5000 documents”。這是套件版本的列印格式差異，內容相同。</li>
+      <li><strong>所有數字與表格內容都一致</strong>：5000、271、81、364、368、2995、279、23 × 30640、23 × 5474、23 × 3424、所有<abbr class="tt" tabindex="0" data-term="collocation" data-tip="比偶然更常一起出現的字串；textstat_collocations() 依 λ 或 z 排序，結果只是候選特徵，要先檢查用法。" title="比偶然更常一起出現的字串；textstat_collocations() 依 λ 或 z 排序，結果只是候選特徵，要先檢查用法。">搭配詞</abbr>的 λ 與 z、所有 <abbr class="tt" tabindex="0" data-term="keyness" data-tip="比較目標組與參考組用字的統計量（本週用 χ²）；正值＝目標組相對多用，不是情緒或立場分數。" title="比較目標組與參考組用字的統計量（本週用 χ²）；正值＝目標組相對多用，不是情緒或立場分數。">keyness</abbr> 的 <abbr class="tt" tabindex="0" data-term="χ²" data-tip="卡方統計量；keyness 用 2 × 2 列聯表的 χ² 衡量一個字在目標組與參考組之間的頻率差異。" title="卡方統計量；keyness 用 2 × 2 列聯表的 χ² 衡量一個字在目標組與參考組之間的頻率差異。">χ²</abbr>。</li>
+      <li>唯一的文字差異：<code>summary()</code> 的標題，本機（quanteda 4.5.1）印 “<abbr class="tt" tabindex="0" data-term="corpus" data-tip="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">corpus</abbr> of 5,000 documents”，老師的 HTML 印 “Corpus consisting of 5000 documents”。這是套件版本的列印格式差異，內容相同。</li>
       <li>投影片本身沒有 Lab 的數字（只有 5,000 筆與 1945–2025），所以沒有需要並列說明的不一致。</li>
     </ul>
   </div>
@@ -1716,7 +1725,7 @@ str_extract(str_to_lower(agenda_labels), "war")</pre></div>
   <div class="callout plain"><div class="ct">輸出怎麼讀</div><ul>
     <li><code>NA</code> 代表那個標籤裡<strong>找不到</strong> pattern，不是整份文件缺失。</li>
     <li>pattern 預設區分大小寫：<code>"war"</code> 在原始標籤裡一個都比不到；先 <code>str_to_lower()</code> 後，第 3、5、7 個標籤都比到了。</li>
-    <li>注意第 5 個是 “ROYAL NAVY (GERMAN SUBMARINE <b>WAR</b>FARE)”——比到的是 warfare 的一部分。下一段的字界（<abbr class="tt" tabindex="0" data-term="word boundary" title="字與非字字元之間的位置（regex 的 \b）；\bwar\b 不比到 towards，但會比到 post-war。">word boundary</abbr>）就是處理這件事。</li>
+    <li>注意第 5 個是 “ROYAL NAVY (GERMAN SUBMARINE <b>WAR</b>FARE)”——比到的是 warfare 的一部分。下一段的字界（<abbr class="tt" tabindex="0" data-term="word boundary" data-tip="字與非字字元之間的位置（regex 的 \b）；\bwar\b 不比到 towards，但會比到 post-war。" title="字與非字字元之間的位置（regex 的 \b）；\bwar\b 不比到 towards，但會比到 post-war。">word boundary</abbr>）就是處理這件事。</li>
   </ul></div>
   <div class="codeblock"><span class="lang">R · locate_matching_strings（W2/lab/answers/Lab_Session_W2_Answers.R）</span><button class="copyb jsonly">複製</button><pre>str_which(str_to_lower(agenda_labels), "war")
 str_which(str_to_lower(agenda_labels), "trade")</pre></div>
@@ -1903,14 +1912,14 @@ hoc |&gt;
 15                      Amendment Of The Law   8</pre></div>
   <div class="linebyline">
     <div class="lr"><code>str_to_lower() |&gt; str_squish()</code><div>統一大小寫、收空白。</div></div>
-    <div class="lr"><code>str_replace_all("\\s*\\[.*\\]", "")</code><div>刪掉中括號脈絡（注意這裡用的是<strong><abbr class="tt" tabindex="0" data-term="greedy" title=".* 會盡量多吃字元：\[.*\] 從第一個 [ 一路比到最後一個 ]，連中間的正常文字也刪掉。">貪婪</abbr></strong>的 <code>.*</code>，第 04 章投影片 20 的情況；對議程標籤通常只有一組中括號，所以影響不大）。</div></div>
+    <div class="lr"><code>str_replace_all("\\s*\\[.*\\]", "")</code><div>刪掉中括號脈絡（注意這裡用的是<strong><abbr class="tt" tabindex="0" data-term="greedy" data-tip=".* 會盡量多吃字元：\[.*\] 從第一個 [ 一路比到最後一個 ]，連中間的正常文字也刪掉。" title=".* 會盡量多吃字元：\[.*\] 從第一個 [ 一路比到最後一個 ]，連中間的正常文字也刪掉。">貪婪</abbr></strong>的 <code>.*</code>，第 04 章投影片 20 的情況；對議程標籤通常只有一組中括號，所以影響不大）。</div></div>
     <div class="lr"><code>case_when(…)</code><div>四個常見議程指定統一寫法；所有以 engagements 開頭的標籤合成 “Engagements”；其他用 <code>str_to_title()</code>。</div></div>
   </div>
   <div class="callout warn"><div class="ct">Lab 的提醒：清理不是中性的</div><p>把所有以 Engagements 開頭的標籤合併，對描述性的圖可能有幫助，但也移除了細節。清理選擇要記錄下來。另外注意輸出第一列：<strong>206 筆 agenda 是 NA</strong>，清理不會替它們補上任何東西。</p></div>
 
   <h2 id="c10-cleanlab">互動：議程清理管線（真實 5,000 筆）</h2>
   <div class="lab" id="labClean">
-    <div class="lab-h"><span class="ic">🧽</span><span class="lt">議程清理管線</span><span class="ls">真實資料型・JS 重現 R 規則</span></div>
+    <div class="lab-h"><span class="ic">🧽</span><span class="lt">議程清理管線</span><span class="ls">真實資料型・<abbr class="tt" tabindex="0" data-term="JS" data-full="JavaScript" data-tip="瀏覽器執行的程式語言；本講義的互動示範用它寫成。" title="JavaScript — 瀏覽器執行的程式語言；本講義的互動示範用它寫成。">JS</abbr> 重現 R 規則</span></div>
     <div class="lab-b">
       <p class="hint">資料：R 匯出的 <code>hoc$agenda</code>（4,083 個不同的非 NA 標籤＋206 筆 NA）。一次開關一個步驟，看前 15 名與「不同標籤數」怎麼變。全部開啟 = Lab 的 <code>clean_agenda_labels</code>，前 15 名應與上方 R 輸出一致（下方會自動比對）。<code>str_to_title()</code> 在 JS 是近似實作。</p>
       <div class="row">
@@ -2007,7 +2016,7 @@ corpus of 5,000 documents, showing 10 documents:
                                 Water Bill
                       Committee Of Inquiry
            Ministry Of Fuel And Power Bill</pre></div>
-  <p class="hint">summary 的 Types／<abbr class="tt" tabindex="0" data-term="token" title="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。">Tokens</abbr>／Sentences 是 quanteda 即時算的（含標點）；例如 text6 有 529 個 tokens、16 個句子。這和資料裡的 <code>terms</code> 欄（489）定義不同。</p>
+  <p class="hint">summary 的 Types／<abbr class="tt" tabindex="0" data-term="token" data-tip="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。" title="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。">Tokens</abbr>／Sentences 是 quanteda 即時算的（含標點）；例如 text6 有 529 個 tokens、16 個句子。這和資料裡的 <code>terms</code> 欄（489）定義不同。</p>
   <div class="codeblock"><span class="lang">R · count_documents（W2/lab/answers/Lab_Session_W2_Answers.R）</span><button class="copyb jsonly">複製</button><pre>ndoc(hoc_corpus)</pre></div>
   <div class="outbox"><div class="ohead">R console output（本機實跑：R 4.5.3、quanteda 4.5.1、quanteda.textstats 0.97.2、quanteda.textplots 0.96.1、stringr 1.6.0、dplyr 1.2.1、ggplot2 4.0.3；Linux aarch64）</div><pre>&gt; ndoc(hoc_corpus)
 [1] 5000</pre></div>
@@ -2157,7 +2166,7 @@ ndoc(engagements_sentences)</pre></div>
 "I stress that the Government have kept 413 the pension slightly ahead of the rise in the cost of living, and our first increase actually provided an additional amount to make up for the shortfall of the previous Government." </pre></div>
   <div class="callout pit"><div class="ct">讀輸出：句子邊界切錯了</div><ul>
     <li>text2238.1 只有 “With regard to the right hon.”，下一句從 “Gentleman's question…” 開始：<code>hon.</code> 的句點是<strong>縮寫</strong>，不是句尾。Lab 的提醒正是這個。</li>
-    <li>text2238.5 裡有 “the Government have kept <b>413</b> the pension”：這個 413 看起來是 <abbr class="tt" tabindex="0" data-term="Hansard" title="英國國會議事的官方逐字紀錄；本週 Lab 的下議院發言樣本來自這裡，含 [Interruption.] 等記錄慣例。">Hansard</abbr> 的<strong>欄位編號</strong>混進了正文（本教材的觀察，非講義內容）——第 03 章說的「<abbr class="tt" tabindex="0" data-term="recording conventions" title="書記官加入的標記，例如 [Interruption.]、欄位編號；不是講者說的話，處理方式取決於研究問題。">記錄慣例</abbr>」，它會變成一個數字 token。</li>
+    <li>text2238.5 裡有 “the Government have kept <b>413</b> the pension”：這個 413 看起來是 <abbr class="tt" tabindex="0" data-term="Hansard" data-tip="英國國會議事的官方逐字紀錄；本週 Lab 的下議院發言樣本來自這裡，含 [Interruption.] 等記錄慣例。" title="英國國會議事的官方逐字紀錄；本週 Lab 的下議院發言樣本來自這裡，含 [Interruption.] 等記錄慣例。">Hansard</abbr> 的<strong>欄位編號</strong>混進了正文（本教材的觀察，非講義內容）——第 03 章說的「<abbr class="tt" tabindex="0" data-term="recording conventions" data-tip="書記官加入的標記，例如 [Interruption.]、欄位編號；不是講者說的話，處理方式取決於研究問題。" title="書記官加入的標記，例如 [Interruption.]、欄位編號；不是講者說的話，處理方式取決於研究問題。">記錄慣例</abbr>」，它會變成一個數字 token。</li>
   </ul></div>
 
   <h2 id="c10-run">R 執行清單</h2>
@@ -2185,7 +2194,7 @@ ndoc(engagements_sentences)</pre></div>
 <section class="chapter" id="ch11" data-slides="31,33,46,47,51,59">
   <div class="crumb">11 · Lab 3–4</div>
   <h1 class="ch">Lab 第 3–4 節：tokens、片語、KWIC、搭配詞、DFM、keyness、時間趨勢</h1>
-  <p class="lead">Lab 建了<strong>兩份</strong> <abbr class="tt" tabindex="0" data-term="token" title="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。">tokens</abbr>：一份保留原貌給 <abbr class="tt" tabindex="0" data-term="KWIC" title="keyword-in-context：列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。">KWIC</abbr> 讀上下文，另一份轉小寫、去<abbr class="tt" tabindex="0" data-term="stopwords" title="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。">停用字</abbr>給 <abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。">DFM</abbr> 計數。這正是投影片 14 說的「分支」。</p>
+  <p class="lead">Lab 建了<strong>兩份</strong> <abbr class="tt" tabindex="0" data-term="token" data-tip="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。" title="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。">tokens</abbr>：一份保留原貌給 <abbr class="tt" tabindex="0" data-term="KWIC" data-full="keyword in context" data-tip="列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。" title="keyword in context — 列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。">KWIC</abbr> 讀上下文，另一份轉小寫、去<abbr class="tt" tabindex="0" data-term="stopwords" data-tip="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。" title="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。">停用字</abbr>給 <abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。" title="document-feature matrix — 文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。">DFM</abbr> 計數。這正是投影片 14 說的「分支」。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c11-tok">切字與合併片語</a><a href="#c11-kwic">KWIC</a><a href="#c11-kwiclab">互動：KWIC 探索器</a><a href="#c11-dfmtok">DFM 用的 tokens</a><a href="#c11-col">搭配詞</a><a href="#c11-dfm">政黨層級 DFM</a><a href="#c11-trim">修剪</a><a href="#c11-trimlab">互動：修剪門檻</a><a href="#c11-vis">文字雲與頻率圖</a><a href="#c11-key">keyness</a><a href="#c11-keylab">互動：keyness 探索器</a><a href="#c11-time">時間趨勢</a><a href="#c11-timelab">互動：特徵時間序列</a><a href="#c11-quiz">自我檢查</a>
   </div>
@@ -2289,7 +2298,7 @@ Keyword-in-context with 10 matches.
   <div class="lab" id="labKwic">
     <div class="lab-h"><span class="ic">🔍</span><span class="lt">KWIC 探索器</span><span class="ls">真實資料型・700 篇抽樣</span></div>
     <div class="lab-b">
-      <p class="hint">為了控制檔案大小，這裡內嵌的是從 5,000 篇中以固定種子（20261106）抽出的 <b id="kwN">700</b> 篇發言，每篇最多前 1,400 個字元（R 匯出）。<abbr class="tt" tabindex="0" data-term="tokenization" title="把文字切成 token；英文靠空白與標點，中文、日文、泰文需要斷詞模型。">切字</abbr>是 JS 的簡化版（以空白與標點切開），結果只用來練習「讀上下文」，數量不等於 R 對全部 5,000 篇的結果。</p>
+      <p class="hint">為了控制檔案大小，這裡內嵌的是從 5,000 篇中以固定種子（20261106）抽出的 <b id="kwN">700</b> 篇發言，每篇最多前 1,400 個字元（R 匯出）。<abbr class="tt" tabindex="0" data-term="tokenization" data-tip="把文字切成 token；英文靠空白與標點，中文、日文、泰文需要斷詞模型。" title="把文字切成 token；英文靠空白與標點，中文、日文、泰文需要斷詞模型。">切字</abbr>是 <abbr class="tt" tabindex="0" data-term="JS" data-full="JavaScript" data-tip="瀏覽器執行的程式語言；本講義的互動示範用它寫成。" title="JavaScript — 瀏覽器執行的程式語言；本講義的互動示範用它寫成。">JS</abbr> 的簡化版（以空白與標點切開），結果只用來練習「讀上下文」，數量不等於 R 對全部 5,000 篇的結果。</p>
       <div class="row">
         <label class="f" style="flex:1">關鍵字（可用 * 萬用字元，例如 econom*）<input type="text" id="kwQ" value="economy" style="width:100%"></label>
         <label class="f">window <input type="range" id="kwW" min="2" max="12" value="6"> <b id="kwWV">6</b></label>
@@ -2321,7 +2330,7 @@ Keyword-in-context with 10 matches.
   tokens_tolower() |&gt;
   tokens_remove(stopwords("en"), padding = TRUE)</pre></div>
   <div class="linebyline">
-    <div class="lr"><code>padding = TRUE</code><div>刪掉的字留下空白佔位，<strong>原本的相鄰關係不會被接起來</strong>——避開投影片 32 的「造出不存在的配對」問題，對找<abbr class="tt" tabindex="0" data-term="collocation" title="比偶然更常一起出現的字串；textstat_collocations() 依 λ 或 z 排序，結果只是候選特徵，要先檢查用法。">搭配詞</abbr>特別重要。</div></div>
+    <div class="lr"><code>padding = TRUE</code><div>刪掉的字留下空白佔位，<strong>原本的相鄰關係不會被接起來</strong>——避開投影片 32 的「造出不存在的配對」問題，對找<abbr class="tt" tabindex="0" data-term="collocation" data-tip="比偶然更常一起出現的字串；textstat_collocations() 依 λ 或 z 排序，結果只是候選特徵，要先檢查用法。" title="比偶然更常一起出現的字串；textstat_collocations() 依 λ 或 z 排序，結果只是候選特徵，要先檢查用法。">搭配詞</abbr>特別重要。</div></div>
     <div class="lr"><code>remove_url = TRUE, split_hyphens = FALSE</code><div>移除網址；post-war 這類連字號字保持一個 token。</div></div>
     <div class="lr"><code>tokens_tolower() |&gt; tokens_remove(stopwords("en"), padding = TRUE)</code><div>轉小寫、刪 175 個英文停用字（含 not）。</div></div>
   </div>
@@ -2364,7 +2373,7 @@ head(hoc_collocations, 20)</pre></div>
   <div class="callout plain"><div class="ct">輸出怎麼讀</div><ul>
     <li><code>lambda</code>（λ）是關聯強度，<code>z</code> 是它的標準化值；這裡依 λ 排序。hong kong（λ ≈ 18.02）、sri lanka、per cent（724 次）排最前面。</li>
     <li><code>northern ireland</code> 出現 338 次，λ ≈ 12.41——投影片 33 的「統計搭配詞候選」例子。</li>
-    <li><code>sinn fein</code>（17）與 <code>sinn fã</code>（15）同時出現：同一個政黨名稱因<abbr class="tt" tabindex="0" data-term="encoding" title="位元與字元的對應方式；認錯編碼會產生亂碼，例如 Sinn Féin 變成 sinn fã。">編碼</abbr>問題被拆成兩個特徵（第 03 章）。</li>
+    <li><code>sinn fein</code>（17）與 <code>sinn fã</code>（15）同時出現：同一個政黨名稱因<abbr class="tt" tabindex="0" data-term="encoding" data-tip="位元與字元的對應方式；認錯編碼會產生亂碼，例如 Sinn Féin 變成 sinn fã。" title="位元與字元的對應方式；認錯編碼會產生亂碼，例如 Sinn Féin 變成 sinn fã。">編碼</abbr>問題被拆成兩個特徵（第 03 章）。</li>
     <li>高關聯不等於有用：投影片 33 要你先檢查用法，再加進量測規則。</li>
   </ul></div>
   <div class="codeblock"><span class="lang">R · compound_collocations_for_dfm（W2/lab/answers/Lab_Session_W2_Answers.R）</span><button class="copyb jsonly">複製</button><pre>hoc_collocation_phrases &lt;- hoc_collocations |&gt;
@@ -2378,7 +2387,7 @@ hoc_tokens_dfm &lt;- tokens_compound(
 )
 
 hoc_tokens_dfm &lt;- tokens_remove(hoc_tokens_dfm, "")</pre></div>
-  <p class="hint">把 λ &gt; 10 的搭配詞黏成一個 token，再用 <code>tokens_remove(hoc_tokens_dfm, "")</code> 移除 <abbr class="tt" tabindex="0" data-term="padding" title="tokens_remove(…, padding = TRUE)：刪字時留下空白佔位，避免把原本不相鄰的字接成配對。">padding</abbr> 留下的空字串。</p>
+  <p class="hint">把 λ &gt; 10 的搭配詞黏成一個 token，再用 <code>tokens_remove(hoc_tokens_dfm, "")</code> 移除 <abbr class="tt" tabindex="0" data-term="padding" data-tip="tokens_remove(…, padding = TRUE)：刪字時留下空白佔位，避免把原本不相鄰的字接成配對。" title="tokens_remove(…, padding = TRUE)：刪字時留下空白佔位，避免把原本不相鄰的字接成配對。">padding</abbr> 留下的空字串。</p>
   <details class="quiz"><summary>看前 40 個搭配詞（真實 R 輸出）</summary><div class="qa"><div class="tablewrap"><table id="collTable"></table></div><p class="hint">由 R 匯出：<code>head(hoc_collocations, 40)</code>。</p></div></details>
 
   <h2 id="c11-dfm">建立政黨層級的 DFM <span class="slideref">投影片 46</span></h2>
@@ -2408,7 +2417,7 @@ dim(hoc_dfm_party)</pre></div>
       1484       1484       1372       1351       1343       1340       1322 
      state         mr         us        say 
       1314       1310       1247       1237 </pre></div>
-  <p class="hint">最常見的是 hon（6,569）、government、right、member、friend……很多是<strong>議會禮儀用語</strong>（“my right hon. Friend”）。W8 的主題模型就另外建了「議會停用字」把它們刪掉——停用字表要看<abbr class="tt" tabindex="0" data-term="corpus" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">語料</abbr>。</p>
+  <p class="hint">最常見的是 hon（6,569）、government、right、member、friend……很多是<strong>議會禮儀用語</strong>（“my right hon. Friend”）。W8 的主題模型就另外建了「議會停用字」把它們刪掉——停用字表要看<abbr class="tt" tabindex="0" data-term="corpus" data-tip="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">語料</abbr>。</p>
 
   <h2 id="c11-trim">修剪罕見特徵 <span class="slideref">投影片 47</span></h2>
   <div class="codeblock"><span class="lang">R · trim_party_dfm（W2/lab/answers/Lab_Session_W2_Answers.R）</span><button class="copyb jsonly">複製</button><pre>hoc_dfm_party_trimmed &lt;- dfm_trim(
@@ -2437,7 +2446,7 @@ dim(hoc_dfm_party_trimmed)</pre></div>
       <div class="grid3" style="margin-top:8px">
         <div class="stat"><div class="sl">保留特徵</div><div class="sv" id="trFeat">–</div><div class="meter"><i id="trFeatM"></i></div></div>
         <div class="stat"><div class="sl">保留 token（占全部）</div><div class="sv" id="trTok">–</div><div class="meter"><i id="trTokM"></i></div></div>
-        <div class="stat"><div class="sl">只出現 1 次的特徵（<abbr class="tt" tabindex="0" data-term="hapax" title="在整個語料中只出現一次的字；修剪門檻會最先刪掉它們。">hapax</abbr>）</div><div class="sv" id="trHapax">–</div></div>
+        <div class="stat"><div class="sl">只出現 1 次的特徵（<abbr class="tt" tabindex="0" data-term="hapax" data-tip="在整個語料中只出現一次的字；修剪門檻會最先刪掉它們。" title="在整個語料中只出現一次的字；修剪門檻會最先刪掉它們。">hapax</abbr>）</div><div class="sv" id="trHapax">–</div></div>
       </div>
       <canvas id="trCanvas" width="760" height="220" style="width:100%;margin-top:8px"></canvas>
       <div class="explain" id="trNote"></div>
@@ -2509,7 +2518,7 @@ textplot_keyness(conservative_keyness, n = 20)</pre></div>
 &gt; textplot_keyness(conservative_keyness, n = 20)</pre></div>
   <div class="figbox"><img src="data:image/webp;base64,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" alt="Conservative keyness 圖（本機 R 產生）"><div class="fcap"><code>textplot_keyness(conservative_keyness, n = 20)</code>（本機 R 產生）。</div></div>
   <div class="callout plain"><div class="ct">輸出怎麼讀</div><ul>
-    <li><abbr class="tt" tabindex="0" data-term="keyness" title="比較目標組與參考組用字的統計量（本週用 χ²）；正值＝目標組相對多用，不是情緒或立場分數。">keyness</abbr> 比較「目標組」（Conservative）與「參考組」（其他 22 個政黨合併）的用字。正的 <abbr class="tt" tabindex="0" data-term="χ²" title="卡方統計量；keyness 用 2 × 2 列聯表的 χ² 衡量一個字在目標組與參考組之間的頻率差異。">χ²</abbr> = 在 Conservative 發言中相對<strong>過度出現</strong>；負的 = 偏向參考組。<strong>這是用字的比較，不是情緒分數。</strong>（Lab 說明）</li>
+    <li><abbr class="tt" tabindex="0" data-term="keyness" data-tip="比較目標組與參考組用字的統計量（本週用 χ²）；正值＝目標組相對多用，不是情緒或立場分數。" title="比較目標組與參考組用字的統計量（本週用 χ²）；正值＝目標組相對多用，不是情緒或立場分數。">keyness</abbr> 比較「目標組」（Conservative）與「參考組」（其他 22 個政黨合併）的用字。正的 <abbr class="tt" tabindex="0" data-term="χ²" data-tip="卡方統計量；keyness 用 2 × 2 列聯表的 χ² 衡量一個字在目標組與參考組之間的頻率差異。" title="卡方統計量；keyness 用 2 × 2 列聯表的 χ² 衡量一個字在目標組與參考組之間的頻率差異。">χ²</abbr> = 在 Conservative 發言中相對<strong>過度出現</strong>；負的 = 偏向參考組。<strong>這是用字的比較，不是情緒分數。</strong>（Lab 說明）</li>
     <li>hon（3,303 vs. 3,266）與 friend 排前面：這兩個字主要來自 “my hon. Friend” 這類議會稱呼，可能反映發言角色與議會慣例，而不是議題立場（本教材解讀）。</li>
     <li>cyberstalking（42 vs. 0）、stalking、icmp（25 vs. 0）、badger 這類字只靠少數發言就衝上前面——在 5,000 筆樣本裡，一兩篇長發言就能主導 keyness。讀它們之前，先用 KWIC 看是哪幾篇。</li>
   </ul></div>
@@ -2609,7 +2618,7 @@ ggplot(economy_by_year, aes(x = as.integer(year), y = economy)) +
   <h2 id="c12-how">怎麼用這一章 <span class="slideref">投影片 62</span></h2>
   <ul>
     <li>每題有作答區（自動存在這台瀏覽器）。寫完按「複製成 R 註解」，可以直接貼進你的 .R 檔。</li>
-    <li>「看參考答案」展開的是 <code>answers/Lab_Session_W2_Answers.R</code> 的程式碼與<strong>本機實際輸出</strong>（與老師 HTML 一致）。</li>
+    <li>「看參考答案」展開的是 <code>answers/Lab_Session_W2_Answers.R</code> 的程式碼與<strong>本機實際輸出</strong>（與老師 <abbr class="tt" tabindex="0" data-term="HTML" data-full="HyperText Markup Language" data-tip="網頁標記語言；網頁原始碼的格式。" title="HyperText Markup Language — 網頁標記語言；網頁原始碼的格式。">HTML</abbr> 一致）。</li>
     <li>老師的提醒：光是讓腳本跑完<strong>不算完成</strong>練習；要能解釋你的程式改變了什麼、怎麼影響證據。<span class="slideref">投影片 62</span></li>
   </ul>
 
@@ -2724,10 +2733,10 @@ sum(hoc$mentions_prime_minister)</pre></div><div class="outbox"><div class="ohea
 +     )
 +   )
 &gt; sum(hoc$mentions_prime_minister)
-[1] 279</pre></div><p class="hint">279 篇（不分大小寫、<abbr class="tt" tabindex="0" data-term="word boundary" title="字與非字字元之間的位置（regex 的 \b）；\bwar\b 不比到 towards，但會比到 post-war。">字界</abbr>）。注意這是「至少提到一次」的發言數，不是總次數。</p></div></details></div>
+[1] 279</pre></div><p class="hint">279 篇（不分大小寫、<abbr class="tt" tabindex="0" data-term="word boundary" data-tip="字與非字字元之間的位置（regex 的 \b）；\bwar\b 不比到 towards，但會比到 post-war。" title="字與非字字元之間的位置（regex 的 \b）；\bwar\b 不比到 towards，但會比到 post-war。">字界</abbr>）。注意這是「至少提到一次」的發言數，不是總次數。</p></div></details></div>
 
   <div class="callout plain ex" data-ex="4"><div class="ct">練習 4 · <code>corpus_subset()</code></div>
-    <p>用 <code>corpus_subset()</code> 建一個 2016 年起的 Conservative 發言 <abbr class="tt" tabindex="0" data-term="corpus" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">corpus</abbr>。有幾份文件？</p>
+    <p>用 <code>corpus_subset()</code> 建一個 2016 年起的 Conservative 發言 <abbr class="tt" tabindex="0" data-term="corpus" data-tip="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">corpus</abbr>。有幾份文件？</p>
     <textarea class="exans" id="ex4" rows="3"></textarea>
     <details class="quiz"><summary>看參考答案</summary><div class="qa"><div class="codeblock"><span class="lang">R · exercise_subset_conservative（W2/lab/answers/Lab_Session_W2_Answers.R）</span><button class="copyb jsonly">複製</button><pre>conservative_since_2016 &lt;- corpus_subset(
   hoc_corpus,
@@ -2802,8 +2811,8 @@ as.character(conservative_sentences)[1:5]</pre></div><div class="outbox"><div cl
   text4384.2 
   "In the context of soft power, may I apologise on behalf of my right hon." </pre></div><p class="hint">368 篇 → 2,995 個句子，平均每篇約 8 句。</p></div></details></div>
 
-  <div class="callout plain ex" data-ex="6"><div class="ct">練習 6 · 片語＋<abbr class="tt" tabindex="0" data-term="KWIC" title="keyword-in-context：列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。">KWIC</abbr></div>
-    <p><abbr class="tt" tabindex="0" data-term="tokenization" title="把文字切成 token；英文靠空白與標點，中文、日文、泰文需要斷詞模型。">切字</abbr>並保留 <code>Prime Minister</code>、<code>European Union</code>、<code>House of Commons</code> 三個<abbr class="tt" tabindex="0" data-term="multiword expression" title="意義上是一個單位的片語，例如 Prime Minister；用 tokens_compound() 黏成一個 token。">多字詞</abbr>，再用 <code>kwic()</code> 檢查 <code>Prime_Minister</code>。</p>
+  <div class="callout plain ex" data-ex="6"><div class="ct">練習 6 · 片語＋<abbr class="tt" tabindex="0" data-term="KWIC" data-full="keyword in context" data-tip="列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。" title="keyword in context — 列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。">KWIC</abbr></div>
+    <p><abbr class="tt" tabindex="0" data-term="tokenization" data-tip="把文字切成 token；英文靠空白與標點，中文、日文、泰文需要斷詞模型。" title="把文字切成 token；英文靠空白與標點，中文、日文、泰文需要斷詞模型。">切字</abbr>並保留 <code>Prime Minister</code>、<code>European Union</code>、<code>House of Commons</code> 三個<abbr class="tt" tabindex="0" data-term="multiword expression" data-tip="意義上是一個單位的片語，例如 Prime Minister；用 tokens_compound() 黏成一個 token。" title="意義上是一個單位的片語，例如 Prime Minister；用 tokens_compound() 黏成一個 token。">多字詞</abbr>，再用 <code>kwic()</code> 檢查 <code>Prime_Minister</code>。</p>
     <textarea class="exans" id="ex6" rows="3"></textarea>
     <details class="quiz"><summary>看參考答案</summary><div class="qa"><div class="codeblock"><span class="lang">R · exercise_kwic_prime_minister（W2/lab/answers/Lab_Session_W2_Answers.R）</span><button class="copyb jsonly">複製</button><pre>hoc_tokens_exercise &lt;- tokens(
   hoc_corpus,
@@ -2928,7 +2937,7 @@ hoc |&gt;
 &gt; # collapses agenda labels beginning with "Engagements" into a common
 &gt; # "Engagements" category.</pre></div><p class="hint">清理把 “BUSINESS OF THE HOUSE”（56）、“Business of the House”（54）、“Business Of The House”（34）等合成一個標籤（151），也把 Engagements 開頭的變體合成 81 筆。NA 206 筆不變。</p></div></details></div>
 
-  <div class="callout plain ex" data-ex="8"><div class="ct">練習 8 · 三個特徵的<abbr class="tt" tabindex="0" data-term="collocation" title="比偶然更常一起出現的字串；textstat_collocations() 依 λ 或 z 排序，結果只是候選特徵，要先檢查用法。">搭配詞</abbr></div>
+  <div class="callout plain ex" data-ex="8"><div class="ct">練習 8 · 三個特徵的<abbr class="tt" tabindex="0" data-term="collocation" data-tip="比偶然更常一起出現的字串；textstat_collocations() 依 λ 或 z 排序，結果只是候選特徵，要先檢查用法。" title="比偶然更常一起出現的字串；textstat_collocations() 依 λ 或 z 排序，結果只是候選特徵，要先檢查用法。">搭配詞</abbr></div>
     <p>在 <code>hoc_tokens_dfm</code> 中顯示最強的三特徵搭配詞（依 <code>lambda</code> 排序）。有些特徵已經是合併過的字，所以不一定是三個原始字。</p>
     <textarea class="exans" id="ex8" rows="3"></textarea>
     <details class="quiz"><summary>看參考答案</summary><div class="qa"><div class="codeblock"><span class="lang">R · exercise_three_word_collocations（W2/lab/answers/Lab_Session_W2_Answers.R）</span><button class="copyb jsonly">複製</button><pre>textstat_collocations(
@@ -2964,9 +2973,9 @@ hoc |&gt;
 30                bill now read     6            0      3 5.864393 3.445057
 55        asked president board    29            0      3 5.768125 2.852030
 9    minister pensions national    10            0      3 5.610909 4.647448
-38      hold government account     5            0      3 5.527632 3.193026</pre></div><p class="hint">transport general workers、european economic community、state home department……注意「state home department」很可能是 “Secretary of State for the Home Department” 刪掉<abbr class="tt" tabindex="0" data-term="stopwords" title="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。">停用字</abbr>後的殘留：到了練習 8，<code>hoc_tokens_dfm</code> 已經在 <code>compound_collocations_for_dfm</code> 那一步用 <code>tokens_remove(hoc_tokens_dfm, "")</code> 移除了 <abbr class="tt" tabindex="0" data-term="padding" title="tokens_remove(…, padding = TRUE)：刪字時留下空白佔位，避免把原本不相鄰的字接成配對。">padding</abbr>，所以原本隔著 for、the 的字變成相鄰——正是投影片 32 警告的情況（本教材的解讀，非講義內容）。<span class="slideref">投影片 32</span></p></div></details></div>
+38      hold government account     5            0      3 5.527632 3.193026</pre></div><p class="hint">transport general workers、european economic community、state home department……注意「state home department」很可能是 “Secretary of State for the Home Department” 刪掉<abbr class="tt" tabindex="0" data-term="stopwords" data-tip="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。" title="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。">停用字</abbr>後的殘留：到了練習 8，<code>hoc_tokens_dfm</code> 已經在 <code>compound_collocations_for_dfm</code> 那一步用 <code>tokens_remove(hoc_tokens_dfm, "")</code> 移除了 <abbr class="tt" tabindex="0" data-term="padding" data-tip="tokens_remove(…, padding = TRUE)：刪字時留下空白佔位，避免把原本不相鄰的字接成配對。" title="tokens_remove(…, padding = TRUE)：刪字時留下空白佔位，避免把原本不相鄰的字接成配對。">padding</abbr>，所以原本隔著 for、the 的字變成相鄰——正是投影片 32 警告的情況（本教材的解讀，非講義內容）。<span class="slideref">投影片 32</span></p></div></details></div>
 
-  <div class="callout plain ex" data-ex="9"><div class="ct">練習 9 · 分組 <abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。">DFM</abbr></div>
+  <div class="callout plain ex" data-ex="9"><div class="ct">練習 9 · 分組 <abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。" title="document-feature matrix — 文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。">DFM</abbr></div>
     <p>從 <code>hoc_tokens_dfm</code> 建 DFM 並依 <code>party</code> 分組，命名為 <code>hoc_dfm_exercise</code>。有幾份文件、幾個特徵？</p>
     <textarea class="exans" id="ex9" rows="3"></textarea>
     <details class="quiz"><summary>看參考答案</summary><div class="qa"><div class="codeblock"><span class="lang">R · exercise_create_grouped_dfm（W2/lab/answers/Lab_Session_W2_Answers.R）</span><button class="copyb jsonly">複製</button><pre>hoc_dfm_exercise &lt;- dfm(hoc_tokens_dfm)
@@ -3010,7 +3019,7 @@ dim(hoc_dfm_exercise_trimmed)</pre></div><div class="outbox"><div class="ohead">
 &gt; dim(hoc_dfm_exercise_trimmed)
 [1]   23 3424</pre></div><p class="hint">30,640 → 3,424。第 11 章的修剪互動可以拖到 20 驗證。</p></div></details></div>
 
-  <div class="callout plain ex" data-ex="11"><div class="ct">練習 11 · Labour <abbr class="tt" tabindex="0" data-term="keyness" title="比較目標組與參考組用字的統計量（本週用 χ²）；正值＝目標組相對多用，不是情緒或立場分數。">keyness</abbr>（接練習 10）</div>
+  <div class="callout plain ex" data-ex="11"><div class="ct">練習 11 · Labour <abbr class="tt" tabindex="0" data-term="keyness" data-tip="比較目標組與參考組用字的統計量（本週用 χ²）；正值＝目標組相對多用，不是情緒或立場分數。" title="比較目標組與參考組用字的統計量（本週用 χ²）；正值＝目標組相對多用，不是情緒或立場分數。">keyness</abbr>（接練習 10）</div>
     <p>用 <code>textstat_keyness()</code> 顯示 Labour 相對於其他所有政黨最有區辨力的特徵。</p>
     <textarea class="exans" id="ex11" rows="3"></textarea>
     <details class="quiz"><summary>看參考答案</summary><div class="qa"><div class="codeblock"><span class="lang">R · exercise_labour_keyness（W2/lab/answers/Lab_Session_W2_Answers.R）</span><button class="copyb jsonly">複製</button><pre>labour_keyness &lt;- textstat_keyness(
@@ -3047,7 +3056,7 @@ textplot_keyness(labour_keyness, n = 10)</pre></div><div class="outbox"><div cla
     <tr><td>4／5</td><td>2016 起 Conservative：368 篇 → 2,995 句</td></tr>
     <tr><td>7</td><td>Business of the House：清理前分散成 56／54／34…，清理後 151</td></tr>
     <tr><td>9／10</td><td>23 × 30,640 → 23 × 3,424（min_termfreq = 20）</td></tr>
-    <tr><td>11</td><td>Labour 前三：waste（<abbr class="tt" tabindex="0" data-term="χ²" title="卡方統計量；keyness 用 2 × 2 列聯表的 χ² 衡量一個字在目標組與參考組之間的頻率差異。">χ²</abbr> 73.18）、advertising（51.96）、giro（44.04）</td></tr>
+    <tr><td>11</td><td>Labour 前三：waste（<abbr class="tt" tabindex="0" data-term="χ²" data-tip="卡方統計量；keyness 用 2 × 2 列聯表的 χ² 衡量一個字在目標組與參考組之間的頻率差異。" title="卡方統計量；keyness 用 2 × 2 列聯表的 χ² 衡量一個字在目標組與參考組之間的頻率差異。">χ²</abbr> 73.18）、advertising（51.96）、giro（44.04）</td></tr>
   </table></div>
 
   <h2 id="c12-quiz">自我檢查</h2>
@@ -3067,7 +3076,7 @@ textplot_keyness(labour_keyness, n = 10)</pre></div><div class="outbox"><div cla
 <section class="chapter" id="ch13" data-slides="63,8,14,64">
   <div class="crumb">13 · 文獻與討論</div>
   <h1 class="ch">文獻導讀與課堂討論</h1>
-  <p class="lead">課程 repo 的 <code>W2/papers/</code> 有兩篇全文：Welbers, Van Atteveldt &amp; Benoit (2017) 與 Benoit et al. (2018)。導讀卡只根據這兩份 PDF，頁碼是期刊頁碼。其他投影片提到的研究，本教材沒有全文，只轉述投影片。</p>
+  <p class="lead">課程 repo 的 <code>W2/papers/</code> 有兩篇全文：Welbers, Van Atteveldt &amp; Benoit (2017) 與 Benoit et al. (2018)。導讀卡只根據這兩份 <abbr class="tt" tabindex="0" data-term="PDF" data-full="Portable Document Format" data-tip="可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。" title="Portable Document Format — 可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。">PDF</abbr>，頁碼是期刊頁碼。其他投影片提到的研究，本教材沒有全文，只轉述投影片。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c13-wel">Welbers et al. (2017)</a><a href="#c13-ben">Benoit et al. (2018)</a><a href="#c13-other">其他研究（無全文）</a><a href="#c13-disc">課堂討論</a><a href="#c13-claim">互動：主張判斷</a><a href="#c13-prep">互動：討論準備卡</a><a href="#c13-quiz">自我檢查</a>
   </div>
@@ -3075,15 +3084,15 @@ textplot_keyness(labour_keyness, n = 10)</pre></div><div class="outbox"><div cla
   <div class="reading" id="c13-wel">
     <h2>Welbers, K., Van Atteveldt, W., &amp; Benoit, K. (2017). Text Analysis in R. <em>Communication Methods and Measures</em> 11(4): 245–265. <span class="slideref">投影片 8、14、64</span></h2>
     <div class="rgrid">
-      <div><b>文章性質</b>Teacher’s corner（教學導論）：概覽一個計算文本分析專案的一般步驟與操作，並示範每一步怎麼在 R 裡做（p. 245 摘要）。主要聚焦 <abbr class="tt" tabindex="0" data-term="bag-of-words" title="只看字的出現次數、不看順序的文本表示；DFM 就是詞袋表示。">bag-of-words</abbr>：只用每篇文字的字頻、忽略字的位置（p. 246）。</div>
+      <div><b>文章性質</b>Teacher’s corner（教學導論）：概覽一個計算文本分析專案的一般步驟與操作，並示範每一步怎麼在 R 裡做（p. 245 摘要）。主要聚焦 <abbr class="tt" tabindex="0" data-term="bag-of-words" data-tip="只看字的出現次數、不看順序的文本表示；DFM 就是詞袋表示。" title="只看字的出現次數、不看順序的文本表示；DFM 就是詞袋表示。">bag-of-words</abbr>：只用每篇文字的字頻、忽略字的位置（p. 246）。</div>
       <div><b>結構</b>Table 1 把操作分成三段：資料準備、分析、進階主題，並列出示範套件與替代套件（p. 247）；Figure 1 是操作順序圖（p. 247）——投影片 8 與 14 重製的就是這兩個。</div>
-      <div><b>資料準備的五步</b>importing text、string operations、preprocessing、<abbr class="tt" tabindex="0" data-term="DTM" title="文件-詞矩陣，Welbers et al. (2017) 的說法，與 quanteda 的 DFM 是同一種東西。">document-term matrix</abbr>、filtering and weighting（p. 248）。並強調準備文字所做的選擇，對準確度、效度與發現的影響，可能和分析技術本身一樣大（p. 248）。</div>
-      <div><b><abbr class="tt" tabindex="0" data-term="encoding" title="位元與字元的對應方式；認錯編碼會產生亂碼，例如 Sinn Féin 變成 sinn fã。">編碼</abbr></b>建議在 R 裡確保所有文字都是 <abbr class="tt" tabindex="0" data-term="UTF-8" title="最常用的 Unicode 編碼；R 裡應確保文字都是 UTF-8，但 UTF-8 參數修不好一開始就認錯的編碼。">UTF-8</abbr>：直接讀 UTF-8，或在匯入時從<strong>已知</strong>編碼轉換；編碼未知時可以用 readtext 的函式猜（p. 249）。對照投影片 16。</div>
-      <div><b>前處理</b><abbr class="tt" tabindex="0" data-term="tokenization" title="把文字切成 token；英文靠空白與標點，中文、日文、泰文需要斷詞模型。">tokenization</abbr>（“Dr.” 的句點、中文與日文沒有空白<abbr class="tt" tabindex="0" data-term="word boundary" title="字與非字字元之間的位置（regex 的 \b）；\bwar\b 不比到 towards，但會比到 post-war。">字界</abbr>，p. 250）；lowercasing 與 <abbr class="tt" tabindex="0" data-term="stemming" title="以規則切掉字尾，例如 studies → studi；用完整字建的字典可能比不到 stem 後的特徵。">stemming</abbr>（SnowballC；p. 251）；<abbr class="tt" tabindex="0" data-term="stopwords" title="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。">停用字</abbr>（p. 251）；順序問題：先 stem 再去停用字，“during” 會變成 “dure”，比不到停用字表（p. 252）。</div>
-      <div><b>DTM、修剪與加權</b>DTM 的列是文件、欄是詞、格是次數（p. 252）；<abbr class="tt" tabindex="0" data-term="quanteda" title="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。">quanteda</abbr> 的 dfm 以 Matrix 套件為後端（p. 252）；<abbr class="tt" tabindex="0" data-term="docvars" title="corpus 中每份文件的 metadata，例如 party、year、agenda_clean，可用來取子集或分組。">文件變數</abbr>可用來分組聚合（例如推文依使用者或日期，p. 253）；以<abbr class="tt" tabindex="0" data-term="document frequency" title="包含某特徵的文件數 df；與總出現次數（term frequency）不同。">文件頻率</abbr>門檻過濾、或用 <abbr class="tt" tabindex="0" data-term="TF-IDF" title="本課公式 count × log10(N/df)：字在文件中的次數，乘上它在語料中有多罕見；出現在每份文件的字權重為 0。">tf-idf</abbr> 給較普遍的詞較低權重（p. 253）。</div>
-      <div><b>分析</b>沿用 Boumans &amp; Trilling (2016)：counting and dictionary、supervised ML、unsupervised ML，由演繹到歸納排列，另加 text statistics（pp. 254–255）。</div>
-      <div><b>進階主題</b>advanced <abbr class="tt" tabindex="0" data-term="NLP" title="自然語言處理：讓電腦處理人類語言的技術，例如斷詞、詞性標註、依存剖析、命名實體辨識。">NLP</abbr>（<abbr class="tt" tabindex="0" data-term="lemmatization" title="以字典與上下文還原基本形，例如 studies → study；準確度取決於語言與模型。">lemmatization</abbr>、<abbr class="tt" tabindex="0" data-term="POS" title="詞性標記，例如 NOUN、VERB、ADV、ADP、AUX、PART；只留 NOUN／VERB 會丟掉否定詞。">POS</abbr>、<abbr class="tt" tabindex="0" data-term="dependency parsing" title="每個 token 指向它的 head（0＝root），並標上關係，例如 nsubj、obj、advmod。">依存句法</abbr>；spacyr 等，pp. 258–259）；保留字位置與句法、<abbr class="tt" tabindex="0" data-term="n-gram" title="連續 n 個 token；要在刪停用字之前產生，否則會造出原文中不相鄰的配對。">n-grams</abbr> 與 skipgrams——n-grams 可處理 “not good” 這類否定，但計算更重、需要更多資料（pp. 260–261）。</div>
-      <div><b>與本週的連結</b>投影片 8 特別註明 Table 1 是 <strong>2017 年的歷史概覽</strong>：套件分工與 <abbr class="tt" tabindex="0" data-term="API" title="應用程式介面：程式存取軟體或平台服務的管道；用平台 API＋關鍵字取得的是「觀察到的語料」，不是母體。">API</abbr> 之後改變了（例如本週改用 <abbr class="tt" tabindex="0" data-term="stringr" title="R 的字串處理套件，str_detect()、str_extract()、str_remove_all() 等函式都以 str_ 開頭。">stringr</abbr>、<abbr class="tt" tabindex="0" data-term="UDPipe" title="以 UD treebank 訓練的標註工具：斷詞、lemma、POS、依存關係；有 R 套件與 UDPipe 2 API。">UDPipe</abbr>、<abbr class="tt" tabindex="0" data-term="Flair" title="Python 的 embeddings 與神經網路任務模型框架；flaiR 是它的 R 介面（Liao et al. 2023）。">Flair</abbr>）。</div>
+      <div><b>資料準備的五步</b>importing text、string operations、preprocessing、<abbr class="tt" tabindex="0" data-term="DTM" data-full="document-term matrix" data-tip="文件-詞矩陣，Welbers et al. (2017) 的說法，與 quanteda 的 DFM 是同一種東西。" title="document-term matrix — 文件-詞矩陣，Welbers et al. (2017) 的說法，與 quanteda 的 DFM 是同一種東西。">document-term matrix</abbr>、filtering and weighting（p. 248）。並強調準備文字所做的選擇，對準確度、效度與發現的影響，可能和分析技術本身一樣大（p. 248）。</div>
+      <div><b><abbr class="tt" tabindex="0" data-term="encoding" data-tip="位元與字元的對應方式；認錯編碼會產生亂碼，例如 Sinn Féin 變成 sinn fã。" title="位元與字元的對應方式；認錯編碼會產生亂碼，例如 Sinn Féin 變成 sinn fã。">編碼</abbr></b>建議在 R 裡確保所有文字都是 <abbr class="tt" tabindex="0" data-term="UTF-8" data-full="Unicode Transformation Format, 8-bit" data-tip="最常用的 Unicode 編碼；R 裡應確保文字都是 UTF-8，但 UTF-8 參數修不好一開始就認錯的編碼。" title="Unicode Transformation Format, 8-bit — 最常用的 Unicode 編碼；R 裡應確保文字都是 UTF-8，但 UTF-8 參數修不好一開始就認錯的編碼。">UTF-8</abbr>：直接讀 UTF-8，或在匯入時從<strong>已知</strong>編碼轉換；編碼未知時可以用 readtext 的函式猜（p. 249）。對照投影片 16。</div>
+      <div><b>前處理</b><abbr class="tt" tabindex="0" data-term="tokenization" data-tip="把文字切成 token；英文靠空白與標點，中文、日文、泰文需要斷詞模型。" title="把文字切成 token；英文靠空白與標點，中文、日文、泰文需要斷詞模型。">tokenization</abbr>（“Dr.” 的句點、中文與日文沒有空白<abbr class="tt" tabindex="0" data-term="word boundary" data-tip="字與非字字元之間的位置（regex 的 \b）；\bwar\b 不比到 towards，但會比到 post-war。" title="字與非字字元之間的位置（regex 的 \b）；\bwar\b 不比到 towards，但會比到 post-war。">字界</abbr>，p. 250）；lowercasing 與 <abbr class="tt" tabindex="0" data-term="stemming" data-tip="以規則切掉字尾，例如 studies → studi；用完整字建的字典可能比不到 stem 後的特徵。" title="以規則切掉字尾，例如 studies → studi；用完整字建的字典可能比不到 stem 後的特徵。">stemming</abbr>（SnowballC；p. 251）；<abbr class="tt" tabindex="0" data-term="stopwords" data-tip="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。" title="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。">停用字</abbr>（p. 251）；順序問題：先 stem 再去停用字，“during” 會變成 “dure”，比不到停用字表（p. 252）。</div>
+      <div><b>DTM、修剪與加權</b>DTM 的列是文件、欄是詞、格是次數（p. 252）；<abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。" title="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。">quanteda</abbr> 的 dfm 以 Matrix 套件為後端（p. 252）；<abbr class="tt" tabindex="0" data-term="docvars" data-tip="corpus 中每份文件的 metadata，例如 party、year、agenda_clean，可用來取子集或分組。" title="corpus 中每份文件的 metadata，例如 party、year、agenda_clean，可用來取子集或分組。">文件變數</abbr>可用來分組聚合（例如推文依使用者或日期，p. 253）；以<abbr class="tt" tabindex="0" data-term="document frequency" data-tip="包含某特徵的文件數 df；與總出現次數（term frequency）不同。" title="包含某特徵的文件數 df；與總出現次數（term frequency）不同。">文件頻率</abbr>門檻過濾、或用 <abbr class="tt" tabindex="0" data-term="TF-IDF" data-full="term frequency–inverse document frequency" data-tip="本課公式 count × log10(N/df)：字在文件中的次數，乘上它在語料中有多罕見；出現在每份文件的字權重為 0。" title="term frequency–inverse document frequency — 本課公式 count × log10(N/df)：字在文件中的次數，乘上它在語料中有多罕見；出現在每份文件的字權重為 0。">tf-idf</abbr> 給較普遍的詞較低權重（p. 253）。</div>
+      <div><b>分析</b>沿用 Boumans &amp; Trilling (2016)：counting and dictionary、supervised <abbr class="tt" tabindex="0" data-term="ML" data-full="machine learning" data-tip="機器學習：讓模型從資料中學出規則（如分類器），而不是由人寫死規則。" title="machine learning — 機器學習：讓模型從資料中學出規則（如分類器），而不是由人寫死規則。">ML</abbr>、unsupervised ML，由演繹到歸納排列，另加 text statistics（pp. 254–255）。</div>
+      <div><b>進階主題</b>advanced <abbr class="tt" tabindex="0" data-term="NLP" data-full="natural language processing" data-tip="自然語言處理：讓電腦處理人類語言的技術，例如斷詞、詞性標註、依存剖析、命名實體辨識。" title="natural language processing — 自然語言處理：讓電腦處理人類語言的技術，例如斷詞、詞性標註、依存剖析、命名實體辨識。">NLP</abbr>（<abbr class="tt" tabindex="0" data-term="lemmatization" data-tip="以字典與上下文還原基本形，例如 studies → study；準確度取決於語言與模型。" title="以字典與上下文還原基本形，例如 studies → study；準確度取決於語言與模型。">lemmatization</abbr>、<abbr class="tt" tabindex="0" data-term="POS" data-full="part of speech" data-tip="詞性標記，例如 NOUN、VERB、ADV、ADP、AUX、PART；只留 NOUN／VERB 會丟掉否定詞。" title="part of speech — 詞性標記，例如 NOUN、VERB、ADV、ADP、AUX、PART；只留 NOUN／VERB 會丟掉否定詞。">POS</abbr>、<abbr class="tt" tabindex="0" data-term="dependency parsing" data-tip="每個 token 指向它的 head（0＝root），並標上關係，例如 nsubj、obj、advmod。" title="每個 token 指向它的 head（0＝root），並標上關係，例如 nsubj、obj、advmod。">依存句法</abbr>；spacyr 等，pp. 258–259）；保留字位置與句法、<abbr class="tt" tabindex="0" data-term="n-gram" data-tip="連續 n 個 token；要在刪停用字之前產生，否則會造出原文中不相鄰的配對。" title="連續 n 個 token；要在刪停用字之前產生，否則會造出原文中不相鄰的配對。">n-grams</abbr> 與 skipgrams——n-grams 可處理 “not good” 這類否定，但計算更重、需要更多資料（pp. 260–261）。</div>
+      <div><b>與本週的連結</b>投影片 8 特別註明 Table 1 是 <strong>2017 年的歷史概覽</strong>：套件分工與 <abbr class="tt" tabindex="0" data-term="API" data-full="application programming interface" data-tip="應用程式介面：程式存取軟體或平台服務的管道；用平台 API＋關鍵字取得的是「觀察到的語料」，不是母體。" title="application programming interface — 應用程式介面：程式存取軟體或平台服務的管道；用平台 API＋關鍵字取得的是「觀察到的語料」，不是母體。">API</abbr> 之後改變了（例如本週改用 <abbr class="tt" tabindex="0" data-term="stringr" data-tip="R 的字串處理套件，str_detect()、str_extract()、str_remove_all() 等函式都以 str_ 開頭。" title="R 的字串處理套件，str_detect()、str_extract()、str_remove_all() 等函式都以 str_ 開頭。">stringr</abbr>、<abbr class="tt" tabindex="0" data-term="UDPipe" data-tip="以 UD treebank 訓練的標註工具：斷詞、lemma、POS、依存關係；有 R 套件與 UDPipe 2 API。" title="以 UD treebank 訓練的標註工具：斷詞、lemma、POS、依存關係；有 R 套件與 UDPipe 2 API。">UDPipe</abbr>、<abbr class="tt" tabindex="0" data-term="Flair" data-tip="Python 的 embeddings 與神經網路任務模型框架；flaiR 是它的 R 介面（Liao et al. 2023）。" title="Python 的 embeddings 與神經網路任務模型框架；flaiR 是它的 R 介面（Liao et al. 2023）。">Flair</abbr>）。</div>
     </div>
     <p class="src">來源：課程 repo <code>W2/papers/Welbers2017.pdf</code>（Taylor &amp; Francis 版，22 頁 PDF；頁碼為期刊頁碼）。doi:10.1080/19312458.2017.1387238。</p>
   </div>
@@ -3091,20 +3100,20 @@ textplot_keyness(labour_keyness, n = 10)</pre></div><div class="outbox"><div cla
   <div class="reading" id="c13-ben">
     <h2>Benoit, K., Watanabe, K., Wang, H., Nulty, P., Obeng, A., Müller, S., &amp; Matsuo, A. (2018). quanteda: An R package for the quantitative analysis of textual data. <em>Journal of Open Source Software</em> 3(30): 774. <span class="slideref">投影片 10、25、50、53</span></h2>
     <div class="rgrid">
-      <div><b>是什麼</b>一個提供完整流程的 R 套件：<abbr class="tt" tabindex="0" data-term="corpus" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">語料</abbr>管理、tokenization、分析與視覺化；包含字典分析、<abbr class="tt" tabindex="0" data-term="KWIC" title="keyword-in-context：列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。">KWIC</abbr>、文件與特徵相似度、用<abbr class="tt" tabindex="0" data-term="collocation" title="比偶然更常一起出現的字串；textstat_collocations() 依 λ 或 z 排序，結果只是候選特徵，要先檢查用法。">搭配詞</abbr>評分找<abbr class="tt" tabindex="0" data-term="multiword expression" title="意義上是一個單位的片語，例如 Prime Minister；用 tokens_compound() 黏成一個 token。">多字詞</abbr>（p. 1）。</div>
-      <div><b>corpus 的定義</b>一組文字，包含每份文字的文件層級變數，以及文件與整個集合的 <abbr class="tt" tabindex="0" data-term="metadata" title="描述文本的資料，例如日期、講者、政黨、議程；應存成文件變數，不要混進文字特徵。">metadata</abbr>；可以依字、段落、句子切分，依文件變數分組或取子集（p. 1）。對照投影片 15、23 與 Lab 的 corpus_subset／<abbr class="tt" tabindex="0" data-term="corpus_reshape()" title="改變文件單位，例如 to = &quot;sentences&quot;；改單位是研究設計選擇，可能改變結論。">corpus_reshape</abbr>。</div>
-      <div><b>技術</b>透過 stringi 使用 ICU 函式庫處理 Unicode 的 <abbr class="tt" tabindex="0" data-term="regex" title="描述文字模式的語言：\d 數字、\b 字界、. 任意字元、+ 一個以上、* 零個以上。">regex</abbr> 與字界；<abbr class="tt" tabindex="0" data-term="token" title="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。">token</abbr> 會對應到整數雜湊表以加速並省記憶體；<abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。">DFM</abbr> 常常超過 90% 稀疏（p. 2）。</div>
-      <div><b>模型與統計</b><code>textmodel_*</code> 實作 <abbr class="tt" tabindex="0" data-term="Wordscores" title="用已知分數的參考文本替其他文本評分的縮放方法（Laver et al. 2003）。">Wordscores</abbr>、<abbr class="tt" tabindex="0" data-term="Wordfish" title="非監督的一維文本縮放模型，從字數計數估計文件相對位置（Slapin &amp; Proksch 2008）；輸入是計數，不是 TF-IDF。">Wordfish</abbr>、class affinity scaling、對應分析、Naive Bayes、LSA；文字統計包含頻率、<abbr class="tt" tabindex="0" data-term="keyness" title="比較目標組與參考組用字的統計量（本週用 χ²）；正值＝目標組相對多用，不是情緒或立場分數。">keyness</abbr>、詞彙多樣性、可讀性、相似度與距離（p. 2）。</div>
+      <div><b>是什麼</b>一個提供完整流程的 R 套件：<abbr class="tt" tabindex="0" data-term="corpus" data-tip="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">語料</abbr>管理、tokenization、分析與視覺化；包含字典分析、<abbr class="tt" tabindex="0" data-term="KWIC" data-full="keyword in context" data-tip="列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。" title="keyword in context — 列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。">KWIC</abbr>、文件與特徵相似度、用<abbr class="tt" tabindex="0" data-term="collocation" data-tip="比偶然更常一起出現的字串；textstat_collocations() 依 λ 或 z 排序，結果只是候選特徵，要先檢查用法。" title="比偶然更常一起出現的字串；textstat_collocations() 依 λ 或 z 排序，結果只是候選特徵，要先檢查用法。">搭配詞</abbr>評分找<abbr class="tt" tabindex="0" data-term="multiword expression" data-tip="意義上是一個單位的片語，例如 Prime Minister；用 tokens_compound() 黏成一個 token。" title="意義上是一個單位的片語，例如 Prime Minister；用 tokens_compound() 黏成一個 token。">多字詞</abbr>（p. 1）。</div>
+      <div><b>corpus 的定義</b>一組文字，包含每份文字的文件層級變數，以及文件與整個集合的 <abbr class="tt" tabindex="0" data-term="metadata" data-tip="描述文本的資料，例如日期、講者、政黨、議程；應存成文件變數，不要混進文字特徵。" title="描述文本的資料，例如日期、講者、政黨、議程；應存成文件變數，不要混進文字特徵。">metadata</abbr>；可以依字、段落、句子切分，依文件變數分組或取子集（p. 1）。對照投影片 15、23 與 Lab 的 corpus_subset／<abbr class="tt" tabindex="0" data-term="corpus_reshape()" data-tip="改變文件單位，例如 to = &quot;sentences&quot;；改單位是研究設計選擇，可能改變結論。" title="改變文件單位，例如 to = &quot;sentences&quot;；改單位是研究設計選擇，可能改變結論。">corpus_reshape</abbr>。</div>
+      <div><b>技術</b>透過 stringi 使用 <abbr class="tt" tabindex="0" data-term="ICU" data-full="International Components for Unicode" data-tip="處理 Unicode 文字（斷字、正規表示式等）的函式庫；R 的 stringr／stringi 以它為基礎。" title="International Components for Unicode — 處理 Unicode 文字（斷字、正規表示式等）的函式庫；R 的 stringr／stringi 以它為基礎。">ICU</abbr> 函式庫處理 Unicode 的 <abbr class="tt" tabindex="0" data-term="regex" data-tip="描述文字模式的語言：\d 數字、\b 字界、. 任意字元、+ 一個以上、* 零個以上。" title="描述文字模式的語言：\d 數字、\b 字界、. 任意字元、+ 一個以上、* 零個以上。">regex</abbr> 與字界；<abbr class="tt" tabindex="0" data-term="token" data-tip="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。" title="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。">token</abbr> 會對應到整數雜湊表以加速並省記憶體；<abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。" title="document-feature matrix — 文件-特徵矩陣：每列一份文件、每欄一個特徵、格子是次數或權重；字的順序資訊消失。">DFM</abbr> 常常超過 90% 稀疏（p. 2）。</div>
+      <div><b>模型與統計</b><code>textmodel_*</code> 實作 <abbr class="tt" tabindex="0" data-term="Wordscores" data-tip="用已知分數的參考文本替其他文本評分的縮放方法（Laver et al. 2003）。" title="用已知分數的參考文本替其他文本評分的縮放方法（Laver et al. 2003）。">Wordscores</abbr>、<abbr class="tt" tabindex="0" data-term="Wordfish" data-tip="非監督的一維文本縮放模型，從字數計數估計文件相對位置（Slapin &amp; Proksch 2008）；輸入是計數，不是 TF-IDF。" title="非監督的一維文本縮放模型，從字數計數估計文件相對位置（Slapin &amp; Proksch 2008）；輸入是計數，不是 TF-IDF。">Wordfish</abbr>、class affinity scaling、對應分析、Naive Bayes、LSA；文字統計包含頻率、<abbr class="tt" tabindex="0" data-term="keyness" data-tip="比較目標組與參考組用字的統計量（本週用 χ²）；正值＝目標組相對多用，不是情緒或立場分數。" title="比較目標組與參考組用字的統計量（本週用 χ²）；正值＝目標組相對多用，不是情緒或立場分數。">keyness</abbr>、詞彙多樣性、可讀性、相似度與距離（p. 2）。</div>
       <div><b>設計原則</b>一致的命名（<code>corpus()</code>、<code>tokens()</code>、<code>dfm()</code> 建立物件；<code>corpus_*()</code>、<code>tokens_*()</code>、<code>dfm_*()</code> 回傳修改後的物件）、易用、效能、透明與可重現、與 stm、text2vec、spacyr 等套件相容（p. 3）。</div>
       <div><b>與本週的連結</b>Lab 用到的幾乎都在這套命名規則裡：<code>tokens_compound</code>、<code>dfm_group</code>、<code>dfm_trim</code>、<code>textstat_keyness</code>、<code>textplot_keyness</code>。看到前綴就知道輸入與輸出是什麼物件。</div>
     </div>
-    <p class="src">來源：課程 repo <code>W2/papers/Benoit2018.pdf</code>（<abbr class="tt" tabindex="0" data-term="JOSS" title="Journal of Open Source Software，研究軟體期刊；quanteda 論文（Benoit et al. 2018）發表於此。">JOSS</abbr>，4 頁，CC BY 4.0）。doi:10.21105/joss.00774。</p>
+    <p class="src">來源：課程 repo <code>W2/papers/Benoit2018.pdf</code>（<abbr class="tt" tabindex="0" data-term="JOSS" data-full="Journal of Open Source Software" data-tip="研究軟體期刊；quanteda 論文（Benoit et al. 2018）發表於此。" title="Journal of Open Source Software — 研究軟體期刊；quanteda 論文（Benoit et al. 2018）發表於此。">JOSS</abbr>，4 頁，<abbr class="tt" tabindex="0" data-term="CC" data-full="Creative Commons" data-tip="創用 CC 授權；BY＝需標示作者、NC＝非商業使用、ND＝禁止改作。" title="Creative Commons — 創用 CC 授權；BY＝需標示作者、NC＝非商業使用、ND＝禁止改作。">CC</abbr> BY 4.0）。doi:10.21105/joss.00774。</p>
   </div>
 
   <h2 id="c13-other">投影片提到、但本教材沒有全文的研究</h2>
-  <p>下列研究的 PDF 不在課程 repo 裡，本教材<strong>沒有讀到全文</strong>，只轉述投影片 54–58、63 的內容（見第 09 章表格）。若要寫導讀卡，請 Jerry 用學校 VPN 下載後再補：</p>
+  <p>下列研究的 PDF 不在課程 repo 裡，本教材<strong>沒有讀到全文</strong>，只轉述投影片 54–58、63 的內容（見第 09 章表格）。若要寫導讀卡，請 Jerry 用學校 <abbr class="tt" tabindex="0" data-term="VPN" data-full="virtual private network" data-tip="虛擬私人網路；用台大 VPN 才能從校外下載付費期刊全文。" title="virtual private network — 虛擬私人網路；用台大 VPN 才能從校外下載付費期刊全文。">VPN</abbr> 下載後再補：</p>
   <ul>
-    <li>Roberts et al. (2014) <abbr class="tt" tabindex="0" data-term="STM" title="Structural Topic Model：可以把 metadata 放進模型的主題模型（Roberts et al. 2014）。">STM</abbr>；Eshima et al. (2024) <abbr class="tt" tabindex="0" data-term="keyATM" title="Keyword Assisted Topic Model：用選定的關鍵字引導主題的主題模型（Eshima et al. 2024）。">keyATM</abbr>。<span class="slideref">投影片 54</span></li>
+    <li>Roberts et al. (2014) <abbr class="tt" tabindex="0" data-term="STM" data-full="Structural Topic Model" data-tip="可以把 metadata 放進模型的主題模型（Roberts et al. 2014）。" title="Structural Topic Model — 可以把 metadata 放進模型的主題模型（Roberts et al. 2014）。">STM</abbr>；Eshima et al. (2024) <abbr class="tt" tabindex="0" data-term="keyATM" data-full="keyword assisted topic model" data-tip="用選定的關鍵字引導主題的主題模型（Eshima et al. 2024）。" title="keyword assisted topic model — 用選定的關鍵字引導主題的主題模型（Eshima et al. 2024）。">keyATM</abbr>。<span class="slideref">投影片 54</span></li>
     <li>Slapin &amp; Proksch (2008) Wordfish；Lowe (2008)、Laver et al. (2003) Wordscores。<span class="slideref">投影片 55–57</span></li>
     <li>Blumenau (2021)；Bestvater &amp; Monroe (2023)。<span class="slideref">投影片 58</span></li>
     <li>Grimmer, Roberts &amp; Stewart (2022) <em>Text as Data</em> 第 4 章（書籍）。<span class="slideref">投影片 4、64</span></li>
@@ -3147,7 +3156,7 @@ textplot_keyness(labour_keyness, n = 10)</pre></div><div class="outbox"><div cla
   <div class="mcq" data-ans="2" data-q="c13q1">
     <div class="q">1. 依 Welbers et al. (2017, p. 252)，為什麼要在 stemming 之前移除停用字？</div>
     <button class="opt">stemming 會刪掉所有停用字</button><button class="opt">停用字表只有 stem 過的字</button><button class="opt">先 stem 的話 “during” 會變成 “dure”，就比不到停用字表裡的 “during”</button><button class="opt">順序無所謂</button>
-    <div class="fb">操作順序會改變結果；這和投影片 32 的 <abbr class="tt" tabindex="0" data-term="bigram" title="連續兩個 token 組成的特徵，例如 do_not、not_support。">bigram</abbr> 順序是同一類問題。<span class="slideref">投影片 32</span></div>
+    <div class="fb">操作順序會改變結果；這和投影片 32 的 <abbr class="tt" tabindex="0" data-term="bigram" data-tip="連續兩個 token 組成的特徵，例如 do_not、not_support。" title="連續兩個 token 組成的特徵，例如 do_not、not_support。">bigram</abbr> 順序是同一類問題。<span class="slideref">投影片 32</span></div>
   </div>
   <div class="mcq" data-ans="0" data-q="c13q2">
     <div class="q">2. Benoit et al. (2018) 說 quanteda 的函式命名規則是？</div>
@@ -3170,14 +3179,14 @@ textplot_keyness(labour_keyness, n = 10)</pre></div><div class="outbox"><div cla
     <tr><th>陷阱</th><th>為什麼是問題</th><th>本週的證據</th></tr>
     <tr><td>把可取得的文本當成母體</td><td>資源、誘因、媒介、檢索都會造成偏誤</td><td>投影片 4–5 <span class="slideref">投影片 5</span></td></tr>
     <tr><td>覆蓋原始文字</td><td>無法檢查清理改了什麼</td><td>Lab 另存 <code>agenda_clean</code> <span class="slideref">投影片 18</span></td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="greedy" title=".* 會盡量多吃字元：\[.*\] 從第一個 [ 一路比到最後一個 ]，連中間的正常文字也刪掉。">貪婪</abbr>的 <abbr class="tt" tabindex="0" data-term="regex" title="描述文字模式的語言：\d 數字、\b 字界、. 任意字元、+ 一個以上、* 零個以上。">regex</abbr></td><td><code>\[.*\]</code> 一路刪到最後一個 ]</td><td>“Trade ” <span class="slideref">投影片 20</span></td></tr>
-    <tr><td>沒加<abbr class="tt" tabindex="0" data-term="word boundary" title="字與非字字元之間的位置（regex 的 \b）；\bwar\b 不比到 towards，但會比到 post-war。">字界</abbr></td><td>war 比到 warfare、towards</td><td>Lab word_boundary_examples</td></tr>
-    <tr><td>標準<abbr class="tt" tabindex="0" data-term="stopwords" title="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。">停用字</abbr>表刪掉否定</td><td>d3 的句意反轉</td><td>workers support policy <span class="slideref">投影片 28</span></td></tr>
-    <tr><td>先刪字再做 <abbr class="tt" tabindex="0" data-term="bigram" title="連續兩個 token 組成的特徵，例如 do_not、not_support。">bigram</abbr></td><td>造出不存在的配對</td><td>workers_support <span class="slideref">投影片 32</span></td></tr>
-    <tr><td>只留 NOUN／VERB</td><td>否定詞「不」（ADV）消失</td><td>投影片 42 <span class="slideref">投影片 42</span></td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="greedy" data-tip=".* 會盡量多吃字元：\[.*\] 從第一個 [ 一路比到最後一個 ]，連中間的正常文字也刪掉。" title=".* 會盡量多吃字元：\[.*\] 從第一個 [ 一路比到最後一個 ]，連中間的正常文字也刪掉。">貪婪</abbr>的 <abbr class="tt" tabindex="0" data-term="regex" data-tip="描述文字模式的語言：\d 數字、\b 字界、. 任意字元、+ 一個以上、* 零個以上。" title="描述文字模式的語言：\d 數字、\b 字界、. 任意字元、+ 一個以上、* 零個以上。">regex</abbr></td><td><code>\[.*\]</code> 一路刪到最後一個 ]</td><td>“Trade ” <span class="slideref">投影片 20</span></td></tr>
+    <tr><td>沒加<abbr class="tt" tabindex="0" data-term="word boundary" data-tip="字與非字字元之間的位置（regex 的 \b）；\bwar\b 不比到 towards，但會比到 post-war。" title="字與非字字元之間的位置（regex 的 \b）；\bwar\b 不比到 towards，但會比到 post-war。">字界</abbr></td><td>war 比到 warfare、towards</td><td>Lab word_boundary_examples</td></tr>
+    <tr><td>標準<abbr class="tt" tabindex="0" data-term="stopwords" data-tip="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。" title="預先決定要刪的高頻功能字；stopwords(&quot;en&quot;) 有 175 個，包含 not、no、nor，刪掉可能失去否定。">停用字</abbr>表刪掉否定</td><td>d3 的句意反轉</td><td>workers support policy <span class="slideref">投影片 28</span></td></tr>
+    <tr><td>先刪字再做 <abbr class="tt" tabindex="0" data-term="bigram" data-tip="連續兩個 token 組成的特徵，例如 do_not、not_support。" title="連續兩個 token 組成的特徵，例如 do_not、not_support。">bigram</abbr></td><td>造出不存在的配對</td><td>workers_support <span class="slideref">投影片 32</span></td></tr>
+    <tr><td>只留 <abbr class="tt" tabindex="0" data-term="NOUN" data-full="noun (UD part-of-speech tag)" data-tip="名詞；Universal Dependencies 的詞性標籤（UPOS）。" title="noun (UD part-of-speech tag) — 名詞；Universal Dependencies 的詞性標籤（UPOS）。">NOUN</abbr>／<abbr class="tt" tabindex="0" data-term="VERB" data-full="verb (UD part-of-speech tag)" data-tip="動詞；Universal Dependencies 的詞性標籤（UPOS）。" title="verb (UD part-of-speech tag) — 動詞；Universal Dependencies 的詞性標籤（UPOS）。">VERB</abbr></td><td>否定詞「不」（<abbr class="tt" tabindex="0" data-term="ADV" data-full="adverb (UD part-of-speech tag)" data-tip="副詞；Universal Dependencies 的詞性標籤（UPOS）。" title="adverb (UD part-of-speech tag) — 副詞；Universal Dependencies 的詞性標籤（UPOS）。">ADV</abbr>）消失</td><td>投影片 42 <span class="slideref">投影片 42</span></td></tr>
     <tr><td>修剪掉罕見但關鍵的字</td><td>min_docfreq = 2 刪掉 not</td><td>投影片 47 <span class="slideref">投影片 47</span></td></tr>
-    <tr><td>把原始次數當成關注程度</td><td>分母（發言數、<abbr class="tt" tabindex="0" data-term="token" title="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。">token</abbr> 數）每年不同</td><td>economy 逐年圖（第 11 章）</td></tr>
-    <tr><td>把 <abbr class="tt" tabindex="0" data-term="keyness" title="比較目標組與參考組用字的統計量（本週用 χ²）；正值＝目標組相對多用，不是情緒或立場分數。">keyness</abbr> 當成立場或情緒</td><td>它只是用字比較，常被議會用語與少數長發言主導</td><td>hon、friend、cyberstalking（第 11 章）</td></tr>
+    <tr><td>把原始次數當成關注程度</td><td>分母（發言數、<abbr class="tt" tabindex="0" data-term="token" data-tip="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。" title="切字後的一次出現；“health” 出現兩次＝2 個 token、1 個 type。">token</abbr> 數）每年不同</td><td>economy 逐年圖（第 11 章）</td></tr>
+    <tr><td>把 <abbr class="tt" tabindex="0" data-term="keyness" data-tip="比較目標組與參考組用字的統計量（本週用 χ²）；正值＝目標組相對多用，不是情緒或立場分數。" title="比較目標組與參考組用字的統計量（本週用 χ²）；正值＝目標組相對多用，不是情緒或立場分數。">keyness</abbr> 當成立場或情緒</td><td>它只是用字比較，常被議會用語與少數長發言主導</td><td>hon、friend、cyberstalking（第 11 章）</td></tr>
   </table></div>
 
   <h2 id="c14-gloss">詞彙表（可搜尋）</h2>
@@ -3194,7 +3203,7 @@ textplot_keyness(labour_keyness, n = 10)</pre></div><div class="outbox"><div cla
   </div></div>
 
   <h2 id="c14-plan">前處理決策紀錄（為你的專題） <span class="slideref">投影片 2、59</span></h2>
-  <p>投影片 2 的目標 3 要你檢查專題資料的可行性（coverage、<abbr class="tt" tabindex="0" data-term="metadata" title="描述文本的資料，例如日期、講者、政黨、議程；應存成文件變數，不要混進文字特徵。">metadata</abbr>、access）；投影片 59 要你對選定的規則做敏感度比較。把答案寫下來，之後可以直接放進專題的資料與方法段落。</p>
+  <p>投影片 2 的目標 3 要你檢查專題資料的可行性（coverage、<abbr class="tt" tabindex="0" data-term="metadata" data-tip="描述文本的資料，例如日期、講者、政黨、議程；應存成文件變數，不要混進文字特徵。" title="描述文本的資料，例如日期、講者、政黨、議程；應存成文件變數，不要混進文字特徵。">metadata</abbr>、access）；投影片 59 要你對選定的規則做敏感度比較。把答案寫下來，之後可以直接放進專題的資料與方法段落。</p>
   <div class="lab" id="labPlan">
     <div class="lab-h"><span class="ic">🗒</span><span class="lt">前處理決策紀錄填寫器</span><span class="ls">自動存檔・可匯出 Markdown</span></div>
     <div class="lab-b">
@@ -3221,23 +3230,23 @@ textplot_keyness(labour_keyness, n = 10)</pre></div><div class="outbox"><div cla
   <h2 id="c14-ref">參考文獻與軟體 <span class="slideref">投影片 64</span></h2>
   <h3>投影片 64 列出的</h3>
   <ul>
-    <li>Schoonvelde, M. (2026). <abbr class="tt" tabindex="0" data-term="QTA" title="量化文本分析：把文字轉成可以計數與建模的資料；本週介紹它的五項原則。">Quantitative text analysis</abbr> – Essex Summer School: Principles of QTA, cleaning text, and preprocessing text. Supplied slides, 38 pages.（主要講課來源）</li>
+    <li>Schoonvelde, M. (2026). <abbr class="tt" tabindex="0" data-term="QTA" data-full="quantitative text analysis" data-tip="量化文本分析：把文字轉成可以計數與建模的資料；本週介紹它的五項原則。" title="quantitative text analysis — 量化文本分析：把文字轉成可以計數與建模的資料；本週介紹它的五項原則。">Quantitative text analysis</abbr> – Essex Summer School: Principles of QTA, cleaning text, and preprocessing text. Supplied slides, 38 pages.（主要講課來源）</li>
     <li>Welbers, K., Van Atteveldt, W., &amp; Benoit, K. (2017). Text Analysis in R. <em>Communication Methods and Measures</em>, 11(4), 245–265. doi:10.1080/19312458.2017.1387238.（閱讀與重製的圖表）</li>
     <li>Grimmer, J., Roberts, M. E., &amp; Stewart, B. M. (2022). <em>Text as Data: A New Framework for Machine Learning and the Social Sciences</em>. Princeton University Press. Chapter 4: “Selecting Documents.”</li>
-    <li>軟體文件：<abbr class="tt" tabindex="0" data-term="quanteda" title="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。">quanteda</abbr>（tokens、<abbr class="tt" tabindex="0" data-term="TF-IDF" title="本課公式 count × log10(N/df)：字在文件中的次數，乘上它在語料中有多罕見；出現在每份文件的字權重為 0。">TF-IDF</abbr>、<abbr class="tt" tabindex="0" data-term="KWIC" title="keyword-in-context：列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。">KWIC</abbr>）、<abbr class="tt" tabindex="0" data-term="stringr" title="R 的字串處理套件，str_detect()、str_extract()、str_remove_all() 等函式都以 str_ 開頭。">stringr</abbr>（pattern removal）；<abbr class="tt" tabindex="0" data-term="UDPipe" title="以 UD treebank 訓練的標註工具：斷詞、lemma、POS、依存關係；有 R 套件與 UDPipe 2 API。">UDPipe</abbr> guide、Japanese <abbr class="tt" tabindex="0" data-term="GSD" title="UD 中的一組 treebank 名稱；投影片的中文與日文 UDPipe 模型是 chinese-gsd 與 japanese-gsd。">GSD</abbr>、Chinese GSD。</li>
+    <li>軟體文件：<abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。" title="R 的量化文本分析套件，提供 corpus、tokens、dfm 物件與一致的函式命名（Benoit et al. 2018）。">quanteda</abbr>（tokens、<abbr class="tt" tabindex="0" data-term="TF-IDF" data-full="term frequency–inverse document frequency" data-tip="本課公式 count × log10(N/df)：字在文件中的次數，乘上它在語料中有多罕見；出現在每份文件的字權重為 0。" title="term frequency–inverse document frequency — 本課公式 count × log10(N/df)：字在文件中的次數，乘上它在語料中有多罕見；出現在每份文件的字權重為 0。">TF-IDF</abbr>、<abbr class="tt" tabindex="0" data-term="KWIC" data-full="keyword in context" data-tip="列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。" title="keyword in context — 列出關鍵字前後的字，用來在把計數當證據之前回到上下文檢查意義。">KWIC</abbr>）、<abbr class="tt" tabindex="0" data-term="stringr" data-tip="R 的字串處理套件，str_detect()、str_extract()、str_remove_all() 等函式都以 str_ 開頭。" title="R 的字串處理套件，str_detect()、str_extract()、str_remove_all() 等函式都以 str_ 開頭。">stringr</abbr>（pattern removal）；<abbr class="tt" tabindex="0" data-term="UDPipe" data-tip="以 UD treebank 訓練的標註工具：斷詞、lemma、POS、依存關係；有 R 套件與 UDPipe 2 API。" title="以 UD treebank 訓練的標註工具：斷詞、lemma、POS、依存關係；有 R 套件與 UDPipe 2 API。">UDPipe</abbr> guide、Japanese <abbr class="tt" tabindex="0" data-term="GSD" data-tip="UD 中的一組 treebank 名稱；投影片的中文與日文 UDPipe 模型是 chinese-gsd 與 japanese-gsd。" title="UD 中的一組 treebank 名稱；投影片的中文與日文 UDPipe 模型是 chinese-gsd 與 japanese-gsd。">GSD</abbr>、Chinese GSD。</li>
     <li>投影片中的英文、泰文、日文與中文例句是<strong>合成的教學例子</strong>。</li>
   </ul>
   <h3>投影片其他頁引用的</h3>
   <ul>
-    <li>Benoit, K., et al. (2018). quanteda: An R package for the quantitative analysis of textual data. <em><abbr class="tt" tabindex="0" data-term="JOSS" title="Journal of Open Source Software，研究軟體期刊；quanteda 論文（Benoit et al. 2018）發表於此。">JOSS</abbr></em> 3(30): 774. doi:10.21105/joss.00774.</li>
-    <li>Straka, M., &amp; Straková, J. (2017)；Straka, M. (2018)（UDPipe）；Wijffels, J., &amp; Straka, M. (2026)（R udpipe）；<abbr class="tt" tabindex="0" data-term="Universal Dependencies" title="跨語言一致的詞性與依存關係標註規範與 treebank 集合，UDPipe 的模型由此訓練。">Universal Dependencies</abbr> contributors (n.d.)。</li>
-    <li>Akbik, A., et al. (2018, 2019)（<abbr class="tt" tabindex="0" data-term="Flair" title="Python 的 embeddings 與神經網路任務模型框架；flaiR 是它的 R 介面（Liao et al. 2023）。">Flair</abbr>）；Liao, Y.-C., et al. (2023)（flaiR）；Wolf, T., et al. (2020)（Transformers）；Sentence Transformers contributors (n.d.)；Explosion (n.d.)（<abbr class="tt" tabindex="0" data-term="spaCy" title="Python 的可設定 NLP 管線：tokens、POS、依存關係、命名實體。">spaCy</abbr>）。</li>
-    <li>Ushey, K., et al. (2026)（<abbr class="tt" tabindex="0" data-term="reticulate" title="在 R session 裡匯入 Python 模組、呼叫函式並轉換物件的 R 套件；交接時要檢查列順序、編碼與型別。">reticulate</abbr>）；Posit (2022, n.d.)；Altman (2025)；R Core Team (n.d.)；Python Software Foundation (n.d.)；Wickham, H. (2025)（stringr）。</li>
+    <li>Benoit, K., et al. (2018). quanteda: An R package for the quantitative analysis of textual data. <em><abbr class="tt" tabindex="0" data-term="JOSS" data-full="Journal of Open Source Software" data-tip="研究軟體期刊；quanteda 論文（Benoit et al. 2018）發表於此。" title="Journal of Open Source Software — 研究軟體期刊；quanteda 論文（Benoit et al. 2018）發表於此。">JOSS</abbr></em> 3(30): 774. doi:10.21105/joss.00774.</li>
+    <li>Straka, M., &amp; Straková, J. (2017)；Straka, M. (2018)（UDPipe）；Wijffels, J., &amp; Straka, M. (2026)（R udpipe）；<abbr class="tt" tabindex="0" data-term="Universal Dependencies" data-full="Universal Dependencies (UD)" data-tip="跨語言一致的詞性與依存關係標註規範與 treebank 集合，UDPipe 的模型由此訓練。" title="Universal Dependencies (UD) — 跨語言一致的詞性與依存關係標註規範與 treebank 集合，UDPipe 的模型由此訓練。">Universal Dependencies</abbr> contributors (n.d.)。</li>
+    <li>Akbik, A., et al. (2018, 2019)（<abbr class="tt" tabindex="0" data-term="Flair" data-tip="Python 的 embeddings 與神經網路任務模型框架；flaiR 是它的 R 介面（Liao et al. 2023）。" title="Python 的 embeddings 與神經網路任務模型框架；flaiR 是它的 R 介面（Liao et al. 2023）。">Flair</abbr>）；Liao, Y.-C., et al. (2023)（flaiR）；Wolf, T., et al. (2020)（Transformers）；Sentence Transformers contributors (n.d.)；Explosion (n.d.)（<abbr class="tt" tabindex="0" data-term="spaCy" data-tip="Python 的可設定 NLP 管線：tokens、POS、依存關係、命名實體。" title="Python 的可設定 NLP 管線：tokens、POS、依存關係、命名實體。">spaCy</abbr>）。</li>
+    <li>Ushey, K., et al. (2026)（<abbr class="tt" tabindex="0" data-term="reticulate" data-tip="在 R session 裡匯入 Python 模組、呼叫函式並轉換物件的 R 套件；交接時要檢查列順序、編碼與型別。" title="在 R session 裡匯入 Python 模組、呼叫函式並轉換物件的 R 套件；交接時要檢查列順序、編碼與型別。">reticulate</abbr>）；Posit (2022, n.d.)；Altman (2025)；R Core Team (n.d.)；Python Software Foundation (n.d.)；Wickham, H. (2025)（stringr）。</li>
     <li>Roberts, M. E., et al. (2014)；Eshima, S., et al. (2024)；Slapin, J. B., &amp; Proksch, S.-O. (2008)；Laver, M., Benoit, K., &amp; Garry, J. (2003)；Lowe, W. (2008)；Lowe &amp; Benoit (2013)；Blei, Ng &amp; Jordan (2003)；Roberts et al. (2019)；Blumenau, J. (2021)；Bestvater, S., &amp; Monroe, B. (2023)。</li>
   </ul>
   <h3>Lab 來源</h3>
-  <ul><li>改編自 Martijn Schoonvelde (2026), <em>QTA Lab 02: String Operations and Inspecting the House of Commons <abbr class="tt" tabindex="0" data-term="corpus" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">Corpus</abbr></em>，並致謝 Stefan Müller 的早期材料；保留原始分析範例與 11 題練習。</li></ul>
-  <div class="pagemeta">本教材依據 NTLDEV 7191 W2 投影片（Yen-Chieh Liao 廖彥傑，2026-09-18；PDF 共 64 頁，Last compiled 2026-09-20）、<code>W2/slide/week2.qmd</code>、<code>W2/lab/Lab_Session_W2.R</code>、<code>W2/lab/answers/Lab_Session_W2_Answers.R</code>／<code>.html</code>、<code>W2/lab/README.md</code> 與 <code>W2/papers/</code> 兩篇 PDF 製作。R 輸出為本機重新執行（R 4.5.3、quanteda 4.5.1、quanteda.textstats 0.97.2、quanteda.textplots 0.96.1、stringr 1.6.0、dplyr 1.2.1、ggplot2 4.0.3；Linux aarch64），與老師答案 HTML 的輸出逐段比對一致。UDPipe 示範未重新執行（使用投影片上的輸出）。標示「補充（非講義內容）」的段落與玩具示範為額外說明。製作日期 2026-11-06。</div>
+  <ul><li>改編自 Martijn Schoonvelde (2026), <em>QTA Lab 02: String Operations and Inspecting the House of Commons <abbr class="tt" tabindex="0" data-term="corpus" data-tip="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。" title="文字加上文件變數的集合；quanteda 用 corpus() 建立，建 corpus 只改變儲存方式，不會選擇或分類文件。">Corpus</abbr></em>，並致謝 Stefan Müller 的早期材料；保留原始分析範例與 11 題練習。</li></ul>
+  <div class="pagemeta">本教材依據 NTLDEV 7191 W2 投影片（Yen-Chieh Liao 廖彥傑，2026-09-18；<abbr class="tt" tabindex="0" data-term="PDF" data-full="Portable Document Format" data-tip="可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。" title="Portable Document Format — 可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。">PDF</abbr> 共 64 頁，Last compiled 2026-09-20）、<code>W2/slide/week2.qmd</code>、<code>W2/lab/Lab_Session_W2.R</code>、<code>W2/lab/answers/Lab_Session_W2_Answers.R</code>／<code>.html</code>、<code>W2/lab/README.md</code> 與 <code>W2/papers/</code> 兩篇 PDF 製作。R 輸出為本機重新執行（R 4.5.3、quanteda 4.5.1、quanteda.textstats 0.97.2、quanteda.textplots 0.96.1、stringr 1.6.0、dplyr 1.2.1、ggplot2 4.0.3；Linux aarch64），與老師答案 <abbr class="tt" tabindex="0" data-term="HTML" data-full="HyperText Markup Language" data-tip="網頁標記語言；網頁原始碼的格式。" title="HyperText Markup Language — 網頁標記語言；網頁原始碼的格式。">HTML</abbr> 的輸出逐段比對一致。UDPipe 示範未重新執行（使用投影片上的輸出）。標示「補充（非講義內容）」的段落與玩具示範為額外說明。製作日期 2026-11-06。</div>
 </section>
 
     <div class="foot">NTLDEV 7191 Text as Data · W2 互動自學教材 · 依據 2026-09-18 投影片製作（2026-11-06）</div>
@@ -3246,7 +3255,7 @@ textplot_keyness(labour_keyness, n = 10)</pre></div><div class="outbox"><div cla
     <div class="sp-h"><span class="sp-t">投影片對照</span><span class="sp-l" id="spLabel">p. 1 / 64</span><button class="btn" id="spClose">隱藏</button></div>
     <div class="sp-img" id="spImgBox" title="點擊放大"><img id="spImg" alt="投影片頁面"></div>
     <div class="sp-nav"><button class="btn arrow" id="spPrev" aria-label="上一頁投影片">‹</button><div class="sp-tabs" id="spTabs"></div><button class="btn arrow" id="spNext" aria-label="下一頁投影片">›</button></div>
-    <label class="sp-follow"><input type="checkbox" id="spFollow" checked> 跟著捲動自動切換頁面</label>
+    <label class="sp-follow"><input type="checkbox" id="spFollow" checked> 跟著捲動自動切換頁面</label><label class="sp-follow sp-rev"><input type="checkbox" id="spRev" checked> 換投影片時，講義跟著跳到對應段落</label><form class="sp-goto" id="spGoto" autocomplete="off"><label for="spGotoN">跳到投影片 p.</label><input type="number" id="spGotoN" min="1" inputmode="numeric" placeholder="頁碼"><button class="btn" type="submit">前往</button></form>
     <div class="sp-note" id="spNote"></div>
     <div class="sp-strip" id="spStrip"></div>
   </aside>
@@ -3524,6 +3533,7 @@ function spChapterDefault(){
     spSet(parsePages(sec.dataset.slides),"本章開頭：先顯示最相關的投影片；捲動到標有「投影片」的段落時會自動切換。");return true;}
   return false;
 }
+try{window.__spApi={page:function(){return spPage;},setPage:function(n){spSetPage(n);},show:function(id){show(id,true);},badge:function(b){spFromBadge(b);},cur:function(){return spBadge;},chapter:function(){return current;},n:function(){return SLIDES.length;}};}catch(__e){}
 function spTrack(){
   if(!$("#spFollow").checked)return;
   var sec=$("section.chapter.show");if(!sec)return;
@@ -4021,6 +4031,78 @@ else if(window.__w8fail)window.__w8fail("no chapter shown");}catch(__e){__w8e("i
 })();
 
 </script>
+<script id="series-revsync">
+(function(){try{
+  var A=window.__spApi;if(!A)return;
+  var M={"exact": "講義已跳到引用投影片 p.%s 的段落：", "chapter": "講義已跳到涵蓋投影片 p.%s 的章節開頭：", "near": "講義沒有直接引用投影片 p.%s，已跳到最接近的段落（%s）：", "none": "講義沒有引用投影片 p.%s 附近的段落。", "stay": "目前段落已涵蓋投影片 p.%s。"};
+  function $(s,r){return (r||document).querySelector(s);}
+  function $$(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));}
+  var rev=$("#spRev"),follow=$("#spFollow");
+  try{var v=localStorage.getItem("tad:revsync");if(v==="0")rev.checked=false;}catch(e){}
+  rev.addEventListener("change",function(){try{localStorage.setItem("tad:revsync",rev.checked?"1":"0");}catch(e){}});
+  function pages(t){var out=[];(String(t).match(/\d+\s*[–-]\s*\d+|\d+/g)||[]).forEach(function(m){var r=m.split(/[–-]/).map(function(x){return +x;});
+    if(r.length===2&&r[1]>=r[0]&&r[1]-r[0]<200){for(var i=r[0];i<=r[1];i++)out.push(i);}else out.push(r[0]);});
+    var N=A.n();return out.filter(function(n){return n>=1&&n<=N;});}
+  var IDX=null;
+  function index(){if(IDX)return IDX;IDX=[];var k=0;
+    $$("section.chapter").forEach(function(sec){
+      $$(".slideref",sec).forEach(function(b){if(b.closest("aside,.fb,#ttPop"))return;var pg=pages(b.textContent);if(!pg.length)return;
+        IDX.push({b:b,sec:sec,lo:Math.min.apply(null,pg),hi:Math.max.apply(null,pg),pg:pg,k:k++});});});
+    return IDX;}
+  function ctx(b){var h=b.closest("h2,h3,h4");if(h)return h.textContent.replace(b.textContent,"").trim();
+    var c=b.closest(".callout,.card,li,p,td,div");var t=c?c.textContent.replace(/\s+/g," ").trim():"";return t.length>60?t.slice(0,58)+"…":t;}
+  function secTitle(sec){var h=$("h2",sec)||$("h1",sec);if(!h)return sec.id;var c=h.cloneNode(true);$$(".slideref",c).forEach(function(x){x.parentNode.removeChild(x);});return c.textContent.replace(/\s+/g," ").trim();}
+  function block(b){return b.closest("h2,h3,h4,.callout,li,p,tr,.card,figure,div")||b;}
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+  function setNote(h){var n=$("#spNote");if(n)n.innerHTML=h;}
+  function flash(el){if(!el)return;el.classList.remove("sp-hit");void el.offsetWidth;el.classList.add("sp-hit");setTimeout(function(){el.classList.remove("sp-hit");},2400);}
+  function vis(e){return !!(e&&e.offsetParent);}
+  function goSec(sec){if(A.chapter()!==sec.id)A.show(sec.id);}
+  function scrollTo(el){var r=el.getBoundingClientRect();var y=r.top+(window.pageYOffset||document.documentElement.scrollTop)-Math.round(innerHeight*0.26);
+    window.scrollTo(0,Math.max(0,y));}
+  var lockT=null,wasFollow=true;
+  function lock(){if(lockT){clearTimeout(lockT);}else{wasFollow=follow?follow.checked:false;}if(follow)follow.checked=false;
+    lockT=setTimeout(function(){if(follow)follow.checked=wasFollow;lockT=null;},450);}
+  function jump(p){
+    if(!rev.checked)return;
+    var cur=A.cur();if(cur&&vis(cur)&&pages(cur.textContent).indexOf(p)>=0){return;}
+    var I=index(),chap=A.chapter();
+    var ex=I.filter(function(x){return x.pg.indexOf(p)>=0;});
+    /* chapter that walks through this part of the deck: density of nearby citations (+ current-chapter bonus) */
+    var sc={};I.forEach(function(x){var d=1e9;x.pg.forEach(function(q){d=Math.min(d,Math.abs(q-p));});if(d<=2)sc[x.sec.id]=(sc[x.sec.id]||0)+(d===0?2:1)/x.pg.length;});
+    $$("section.chapter").forEach(function(s){if(s.dataset.slides&&pages(s.dataset.slides).indexOf(p)>=0)sc[s.id]=(sc[s.id]||0)+1;});
+    if(sc[chap])sc[chap]+=1.5;
+    ex.sort(function(a,b){return ((sc[b.sec.id]||0)-(sc[a.sec.id]||0))||(a.pg.length-b.pg.length)||(a.k-b.k);});
+    lock();
+    for(var i=0;i<ex.length;i++){goSec(ex[i].sec);if(vis(ex[i].b)){land(ex[i].b,p,"exact");return;}}
+    var secs=$$("section.chapter").filter(function(s){return s.dataset.slides&&pages(s.dataset.slides).indexOf(p)>=0;});
+    secs.sort(function(a,b){return (a.id===chap?0:1)-(b.id===chap?0:1);});
+    if(secs.length){goSec(secs[0]);window.scrollTo(0,0);A.setPage(p);setNote(M.chapter.replace("%s",p)+"<b>"+esc(secTitle(secs[0]))+"</b>");flash($("h2",secs[0]));return;}
+    var near=I.slice().sort(function(a,b){
+      var da=a.hi<p?p-a.hi:(a.lo-p)+0.5,db=b.hi<p?p-b.hi:(b.lo-p)+0.5;return (da-db)||((a.hi-a.lo)-(b.hi-b.lo))||(a.k-b.k);});
+    for(var j=0;j<near.length&&j<40;j++){goSec(near[j].sec);if(vis(near[j].b)){land(near[j].b,p,"near");return;}}
+    setNote(M.none.replace("%s",p));
+  }
+  function land(b,p,kind){
+    setTimeout(function(){
+      scrollTo(b);
+      if(kind==="exact"){A.badge(b);}
+      A.setPage(p);
+      var lab=b.textContent.replace(/\s+/g," ").trim();
+      setNote((kind==="exact"?M.exact.replace("%s",p):M.near.replace("%s",p).replace("%s",esc(lab)))+"<b>"+esc(ctx(b)||secTitle(b.closest("section.chapter")))+"</b>");
+      flash(block(b));
+    },40);
+  }
+  document.addEventListener("click",function(e){
+    var t=e.target.closest("#spPrev,#spNext,#spTabs button,#spStrip button");if(!t)return;
+    setTimeout(function(){jump(A.page());},0);
+  });
+  var f=$("#spGoto"),inp=$("#spGotoN");
+  if(inp)inp.max=A.n();
+  if(f)f.addEventListener("submit",function(e){e.preventDefault();var n=parseInt(inp.value,10);if(!(n>=1&&n<=A.n()))return;
+    A.setPage(n);jump(n);inp.blur();});
+}catch(e){if(window.console)console.warn("revsync",e);(window.__w8errs=window.__w8errs||[]).push("revsync: "+(e&&e.message));}})();
+</script>
 <script id="series-js">
 (function(){try{
   var pop=null,cur=null;
@@ -4028,7 +4110,7 @@ else if(window.__w8fail)window.__w8fail("no chapter shown");}catch(__e){__w8e("i
   function show(el){
     var p=mk(),tip=el.getAttribute("data-tip")||"";cur=el;
     p.innerHTML="";var b=document.createElement("b");b.appendChild(document.createTextNode(el.getAttribute("data-term")||el.textContent));
-    p.appendChild(b);p.appendChild(document.createTextNode(tip));p.style.display="block";
+    p.appendChild(b);var fu=el.getAttribute("data-full");if(fu){var fi=document.createElement("i");fi.className="full";fi.appendChild(document.createTextNode(fu));p.appendChild(fi);}p.appendChild(document.createTextNode(tip));p.style.display="block";
     var r=el.getBoundingClientRect(),w=p.offsetWidth,h=p.offsetHeight,vw=document.documentElement.clientWidth,vh=window.innerHeight;
     var x=r.left+r.width/2-w/2;if(x<12)x=12;if(x+w>vw-12)x=vw-12-w;
     var y=r.bottom+8;if(y+h>vh-8&&r.top-h-8>8)y=r.top-h-8;
@@ -4037,7 +4119,7 @@ else if(window.__w8fail)window.__w8fail("no chapter shown");}catch(__e){__w8e("i
   function hide(){if(pop)pop.style.display="none";cur=null;}
   var els=document.querySelectorAll("abbr.tt");
   for(var i=0;i<els.length;i++){(function(el){
-    var t=el.getAttribute("title");if(t){el.setAttribute("data-tip",t);el.removeAttribute("title");}
+    var t=el.getAttribute("title");if(t){if(!el.getAttribute("data-tip"))el.setAttribute("data-tip",t);el.removeAttribute("title");}
     el.addEventListener("mouseenter",function(){show(el);});
     el.addEventListener("mouseleave",function(){if(document.activeElement!==el)hide();});
     el.addEventListener("focus",function(){show(el);});

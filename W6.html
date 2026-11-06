@@ -363,6 +363,13 @@
   .reading h2{font-size:1.05rem;}
   @media (max-width:860px){ .lab .grid2,.lab .grid3{grid-template-columns:1fr;} }
 </style>
+<style id="series-revsync-css">
+.sp-goto{display:flex;align-items:center;gap:6px;margin:4px 0 6px;font-size:.82rem;flex-wrap:wrap;}
+.sp-goto input{width:5.2em;padding:4px 6px;border-radius:8px;border:1px solid var(--border,#3a4456);background:transparent;color:inherit;font:inherit;}
+.sp-goto .btn{padding:3px 10px;}
+.sp-hit{animation:spHit 2.2s ease-out 1;border-radius:6px;}
+@keyframes spHit{0%,35%{background:rgba(255,196,0,.32);box-shadow:0 0 0 4px rgba(255,196,0,.32);}100%{background:transparent;box-shadow:0 0 0 4px transparent;}}
+</style>
 <style id="series-css">
 .topbar .homebtn,.topbar .langbtn{text-decoration:none;display:inline-flex;align-items:center;}
 .topbar .langbtn{font-weight:600;}
@@ -373,7 +380,9 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 #ttPop{position:fixed;z-index:9999;max-width:min(340px,calc(100vw - 24px));padding:10px 12px;border-radius:10px;
   background:var(--surface-2,#1d2330);color:var(--text,#e8ecf3);border:1px solid var(--border,#3a4456);box-shadow:0 8px 28px rgba(0,0,0,.35);
   font-size:.86rem;line-height:1.55;display:none;pointer-events:none;word-wrap:break-word;overflow-wrap:anywhere;}
-#ttPop b{display:block;margin-bottom:3px;color:var(--accent,#6aa9ff);}
+#ttPop b{display:block;margin-bottom:1px;color:var(--accent,#6aa9ff);}
+#ttPop i.full{display:block;font-style:normal;font-weight:600;margin-bottom:5px;opacity:.95;}
+#ttPop b+span{display:block;margin-top:3px;}
 </style>
 </head>
 <body>
@@ -430,7 +439,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 <section class="chapter" id="ch00" data-slides="1,2,3">
   <div class="crumb">00 · 本週導覽</div>
   <h1 class="ch">W6：人工編碼與文件分類（Human Coding and Document Classification）</h1>
-  <p class="lead">W4 用<strong>字典</strong>：研究者自己挑字、寫規則。W6 換一條路：先讓<strong>人</strong>替一批文本貼上標籤，再讓<strong>機器學習分類器</strong>從這些標籤學會分類新的文本。本週的兩個實作：台灣政治<abbr class="tt" tabindex="0" data-term="hate speech" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr>（<abbr class="tt" tabindex="0" data-term="NB" title="Naive Bayes：假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。">Naive Bayes</abbr>）與美國國會聽證會的 <abbr class="tt" tabindex="0" data-term="grandstanding" title="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。">grandstanding</abbr>（<abbr class="tt" tabindex="0" data-term="SVM" title="支持向量機：找一條間隔最大的分界；線性核下每個詞有一個權重。本週以 mlr3 的 classif.svm（e1071）擬合 grandstanding。">線性 SVM</abbr>）。</p>
+  <p class="lead">W4 用<strong>字典</strong>：研究者自己挑字、寫規則。W6 換一條路：先讓<strong>人</strong>替一批文本貼上標籤，再讓<strong>機器學習分類器</strong>從這些標籤學會分類新的文本。本週的兩個實作：台灣政治<abbr class="tt" tabindex="0" data-term="hate speech" data-tip="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr>（<abbr class="tt" tabindex="0" data-term="NB" data-full="Naive Bayes" data-tip="假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。" title="Naive Bayes — 假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。">Naive Bayes</abbr>）與美國國會聽證會的 <abbr class="tt" tabindex="0" data-term="grandstanding" data-tip="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。" title="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。">grandstanding</abbr>（<abbr class="tt" tabindex="0" data-term="SVM" data-full="support vector machine" data-tip="支持向量機：找一條間隔最大的分界；線性核下每個詞有一個權重。本週以 mlr3 的 classif.svm（e1071）擬合 grandstanding。" title="support vector machine — 支持向量機：找一條間隔最大的分界；線性核下每個詞有一個權重。本週以 mlr3 的 classif.svm（e1071）擬合 grandstanding。">線性 SVM</abbr>）。</p>
 
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c0-w4">從 W4 到 W6</a><a href="#c0-obj">本週要能說明的事</a><a href="#c0-flow">一條工作流程</a><a href="#c0-cases">六個研究案例</a><a href="#c0-data">兩份練習資料</a><a href="#c0-how">怎麼使用本教材</a><a href="#c0-due">期限</a>
@@ -442,7 +451,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <tr><th>任務</th><th>W4：字典</th><th>W6：分類</th></tr>
     <tr><td>建立量測（build a measure）</td><td>挑字、寫規則</td><td>從<strong>已標註</strong>的留言中學習</td></tr>
     <tr><td>使用人的證據（human evidence）</td><td>驗證字典輸出</td><td>訓練並評估分類器</td></tr>
-    <tr><td>發展方法</td><td>看 KWIC、修規則</td><td>擬合 ML 演算法並預測新文本</td></tr>
+    <tr><td>發展方法</td><td>看 <abbr class="tt" tabindex="0" data-term="KWIC" data-full="keyword in context" data-tip="列出關鍵字前後文字的檢視方式，用來確認字詞實際怎麼被使用。" title="keyword in context — 列出關鍵字前後文字的檢視方式，用來確認字詞實際怎麼被使用。">KWIC</abbr>、修規則</td><td>擬合 <abbr class="tt" tabindex="0" data-term="ML" data-full="machine learning" data-tip="機器學習：讓模型從資料中學出規則（如分類器），而不是由人寫死規則。" title="machine learning — 機器學習：讓模型從資料中學出規則（如分類器），而不是由人寫死規則。">ML</abbr> 演算法並預測新文本</td></tr>
     <tr><td>評估結果</td><td>讀錯誤與敏感度</td><td>保留的測試集＋人工參照集（human benchmark）</td></tr>
   </table></div>
   <div class="callout tip"><div class="ct">白話翻譯（補充）</div><p>字典像是你親手寫的「判斷清單」：出現「滾」「垃圾」就算仇恨。分類器則像是請一位新助理<strong>看過幾千則已經被人判好的留言</strong>，讓他自己歸納出「什麼樣的字常出現在仇恨留言裡」。所以 W6 的關鍵不是演算法有多聰明，而是<strong>那幾千個人工標籤是怎麼來的、可不可信</strong>——這就是本週前半段「human coding」的重點。</p></div>
@@ -450,9 +459,9 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <h2 id="c0-obj">本週要能說明的事 <span class="slideref">投影片 2、94</span></h2>
   <p>整理自投影片 2 的學習目標與投影片 94 的課堂練習要求。讀完一章後，回來勾選你已經做得到的：</p>
   <ol class="objlist" id="objList">
-    <li data-o="1"><strong>標籤先於演算法</strong>：說明一份 <abbr class="tt" tabindex="0" data-term="codebook" title="定義類別、編碼單位、邊界例子與可用證據的規則書；例如 Boydstun 只看標題與前三段。">codebook</abbr> 要定義什麼（<abbr class="tt" tabindex="0" data-term="coding unit" title="一個標籤所對應的文本範圍，例如句子、段落、留言或整篇演說。">編碼單位</abbr>、邊界、可用證據），以及「一致性高」不等於「量到你要的概念」。</li>
+    <li data-o="1"><strong>標籤先於演算法</strong>：說明一份 <abbr class="tt" tabindex="0" data-term="codebook" data-tip="定義類別、編碼單位、邊界例子與可用證據的規則書；例如 Boydstun 只看標題與前三段。" title="定義類別、編碼單位、邊界例子與可用證據的規則書；例如 Boydstun 只看標題與前三段。">codebook</abbr> 要定義什麼（<abbr class="tt" tabindex="0" data-term="coding unit" data-tip="一個標籤所對應的文本範圍，例如句子、段落、留言或整篇演說。" title="一個標籤所對應的文本範圍，例如句子、段落、留言或整篇演說。">編碼單位</abbr>、邊界、可用證據），以及「一致性高」不等於「量到你要的概念」。</li>
     <li data-o="2"><strong>切分與詞彙</strong>（C03–C04、G01b–G02a）：說明為什麼要<strong>先</strong>保留測試集，再只用訓練資料選詞彙，並讓測試矩陣對齊同一組欄位。</li>
-    <li data-o="3"><strong>讀評估指標</strong>（C06、C08、G02d）：從<abbr class="tt" tabindex="0" data-term="confusion matrix" title="預測 × 真實的次數表；mlr3 的 $confusion 中列是 response（預測）、欄是 truth（真實）。">混淆矩陣</abbr>讀出<abbr class="tt" tabindex="0" data-term="FP" title="偽陽性：預測為正類，實際不是；會拉低 precision。C06 中為 140。">偽陽性</abbr>、<abbr class="tt" tabindex="0" data-term="FN" title="偽陰性：實際是正類卻被判為負類；會拉低 recall。C06 中為 105。">偽陰性</abbr>，並解釋 <abbr class="tt" tabindex="0" data-term="accuracy" title="全部預測中判對的比例；類別不平衡時容易被多數類撐高。">accuracy</abbr>、<abbr class="tt" tabindex="0" data-term="precision" title="被判為正類的文本中真的是正類的比例，TP/(TP+FP)。">precision</abbr>、<abbr class="tt" tabindex="0" data-term="recall" title="真正的正類中被模型抓到的比例，TP/(TP+FN)。">recall</abbr>、<abbr class="tt" tabindex="0" data-term="F1" title="precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。">F1</abbr> 各在說什麼。</li>
+    <li data-o="3"><strong>讀評估指標</strong>（C06、C08、G02d）：從<abbr class="tt" tabindex="0" data-term="confusion matrix" data-tip="預測 × 真實的次數表；mlr3 的 $confusion 中列是 response（預測）、欄是 truth（真實）。" title="預測 × 真實的次數表；mlr3 的 $confusion 中列是 response（預測）、欄是 truth（真實）。">混淆矩陣</abbr>讀出<abbr class="tt" tabindex="0" data-term="FP" data-full="false positive" data-tip="偽陽性：預測為正類，實際不是；會拉低 precision。C06 中為 140。" title="false positive — 偽陽性：預測為正類，實際不是；會拉低 precision。C06 中為 140。">偽陽性</abbr>、<abbr class="tt" tabindex="0" data-term="FN" data-full="false negative" data-tip="偽陰性：實際是正類卻被判為負類；會拉低 recall。C06 中為 105。" title="false negative — 偽陰性：實際是正類卻被判為負類；會拉低 recall。C06 中為 105。">偽陰性</abbr>，並解釋 <abbr class="tt" tabindex="0" data-term="accuracy" data-tip="全部預測中判對的比例；類別不平衡時容易被多數類撐高。" title="全部預測中判對的比例；類別不平衡時容易被多數類撐高。">accuracy</abbr>、<abbr class="tt" tabindex="0" data-term="precision" data-tip="被判為正類的文本中真的是正類的比例，TP/(TP+FP)。" title="被判為正類的文本中真的是正類的比例，TP/(TP+FP)。">precision</abbr>、<abbr class="tt" tabindex="0" data-term="recall" data-tip="真正的正類中被模型抓到的比例，TP/(TP+FN)。" title="真正的正類中被模型抓到的比例，TP/(TP+FN)。">recall</abbr>、<abbr class="tt" tabindex="0" data-term="F1" data-full="F1 score (F-measure with β = 1)" data-tip="precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。" title="F1 score (F-measure with β = 1) — precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。">F1</abbr> 各在說什麼。</li>
     <li data-o="4"><strong>讀錯誤文本</strong>（C07、G03、error reading）：挑一則分類錯誤的文本，用類別定義說明邊界在哪裡、缺了什麼脈絡。</li>
   </ol>
   <div id="objChecks" class="jsonly"></div>
@@ -467,17 +476,17 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <button class="st"><span class="sn">5 · 預測與檢查</span>混淆矩陣、F1、讀錯誤<span class="sd">C06–C08 / G02d–G03</span></button>
   </div>
   <div class="explain jsonly" id="flowPipeTxt"></div>
-  <p class="hint">靜態摘要：1 取得一列一則文本的標註資料（自己編碼或用<abbr class="tt" tabindex="0" data-term="found labels" title="不是為研究而編碼、原本就存在的分類，例如 Nielsen 使用的 jihadist 整理文本。">現成標籤</abbr>，並稽核標籤）→ 2 在選詞彙、擬合模型<strong>之前</strong>切出 20% 測試集 → 3 只用訓練文本挑詞彙（中文用字、英文用詞）→ 4 用訓練矩陣與標籤擬合分類器 → 5 把測試文本對齊同一組詞彙後預測，讀混淆矩陣、F1，並讀錯誤的原文。<span class="slideref">投影片 23–26</span></p>
+  <p class="hint">靜態摘要：1 取得一列一則文本的標註資料（自己編碼或用<abbr class="tt" tabindex="0" data-term="found labels" data-tip="不是為研究而編碼、原本就存在的分類，例如 Nielsen 使用的 jihadist 整理文本。" title="不是為研究而編碼、原本就存在的分類，例如 Nielsen 使用的 jihadist 整理文本。">現成標籤</abbr>，並稽核標籤）→ 2 在選詞彙、擬合模型<strong>之前</strong>切出 20% 測試集 → 3 只用訓練文本挑詞彙（中文用字、英文用詞）→ 4 用訓練矩陣與標籤擬合分類器 → 5 把測試文本對齊同一組詞彙後預測，讀混淆矩陣、F1，並讀錯誤的原文。<span class="slideref">投影片 23–26</span></p>
 
   <h2 id="c0-cases">六個研究案例 <span class="slideref">投影片 3</span></h2>
   <div class="tablewrap"><table>
     <tr><th>研究</th><th>出處</th><th>本週的教學連結</th><th>本教材章節</th></tr>
-    <tr><td>Wang, Day &amp; Wu (2022)</td><td>IEEE Access</td><td>仇恨言論：中文字計數</td><td><a href="#ch06">06–08</a></td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="Gillion (2016)" title="Governing with Words：人工編碼政治人物的種族相關發言，信度 97%，再以分類器延伸。">Gillion (2016)</abbr></td><td><em>Governing with Words</em></td><td>編碼規則與一致性</td><td><a href="#ch02">02</a></td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="Benoit et al. (2016)" title="APSR 論文：以群眾編碼產生可重製的政治文本資料，兩波政黨分數相關 .93。">Benoit et al. (2016)</abbr></td><td><abbr class="tt" tabindex="0" data-term="APSR" title="American Political Science Review，美國政治學頂尖期刊。">APSR</abbr></td><td><abbr class="tt" tabindex="0" data-term="crowd coding" title="由許多非專家重複判斷再加總；Benoit et al. (2016)、Park (2021) 使用。">群眾編碼</abbr>與可重製性</td><td><a href="#ch02">02</a></td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="Boydstun (2013)" title="Making the News：以 codebook 編碼《紐約時報》頭版的政策議題注意力。">Boydstun (2013)</abbr></td><td><em>Making the News</em></td><td>Codebook 與罕見類別</td><td><a href="#ch03">03</a></td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="Nielsen (2017)" title="Deadly Clerics：以 jihadist 整理文本作現成標籤，NB 字權重加總成連續的 jihad 分數。">Nielsen (2017)</abbr></td><td><em>Deadly Clerics</em></td><td>現成標籤（found labels）與驗證</td><td><a href="#ch03">03</a></td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="Park (2021)" title="Journal of Politics 論文：以群眾評分與文字模型測量委員會聽證會上的 grandstanding。">Park (2021)</abbr></td><td>JOP</td><td>Grandstanding：<abbr class="tt" tabindex="0" data-term="mlr3" title="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。">mlr3</abbr> 線性 SVM</td><td><a href="#ch04">04</a>、<a href="#ch09">09–10</a></td></tr>
+    <tr><td>Wang, Day &amp; Wu (2022)</td><td><abbr class="tt" tabindex="0" data-term="IEEE" data-full="Institute of Electrical and Electronics Engineers" data-tip="電機電子工程師學會；IEEE Access 是它出版的期刊。" title="Institute of Electrical and Electronics Engineers — 電機電子工程師學會；IEEE Access 是它出版的期刊。">IEEE</abbr> Access</td><td>仇恨言論：中文字計數</td><td><a href="#ch06">06–08</a></td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="Gillion (2016)" data-tip="Governing with Words：人工編碼政治人物的種族相關發言，信度 97%，再以分類器延伸。" title="Governing with Words：人工編碼政治人物的種族相關發言，信度 97%，再以分類器延伸。">Gillion (2016)</abbr></td><td><em>Governing with Words</em></td><td>編碼規則與一致性</td><td><a href="#ch02">02</a></td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="Benoit et al. (2016)" data-tip="APSR 論文：以群眾編碼產生可重製的政治文本資料，兩波政黨分數相關 .93。" title="APSR 論文：以群眾編碼產生可重製的政治文本資料，兩波政黨分數相關 .93。">Benoit et al. (2016)</abbr></td><td><abbr class="tt" tabindex="0" data-term="APSR" data-full="American Political Science Review" data-tip="美國政治學頂尖期刊。" title="American Political Science Review — 美國政治學頂尖期刊。">APSR</abbr></td><td><abbr class="tt" tabindex="0" data-term="crowd coding" data-tip="由許多非專家重複判斷再加總；Benoit et al. (2016)、Park (2021) 使用。" title="由許多非專家重複判斷再加總；Benoit et al. (2016)、Park (2021) 使用。">群眾編碼</abbr>與可重製性</td><td><a href="#ch02">02</a></td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="Boydstun (2013)" data-tip="Making the News：以 codebook 編碼《紐約時報》頭版的政策議題注意力。" title="Making the News：以 codebook 編碼《紐約時報》頭版的政策議題注意力。">Boydstun (2013)</abbr></td><td><em>Making the News</em></td><td>Codebook 與罕見類別</td><td><a href="#ch03">03</a></td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="Nielsen (2017)" data-tip="Deadly Clerics：以 jihadist 整理文本作現成標籤，NB 字權重加總成連續的 jihad 分數。" title="Deadly Clerics：以 jihadist 整理文本作現成標籤，NB 字權重加總成連續的 jihad 分數。">Nielsen (2017)</abbr></td><td><em>Deadly Clerics</em></td><td>現成標籤（found labels）與驗證</td><td><a href="#ch03">03</a></td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="Park (2021)" data-tip="Journal of Politics 論文：以群眾評分與文字模型測量委員會聽證會上的 grandstanding。" title="Journal of Politics 論文：以群眾評分與文字模型測量委員會聽證會上的 grandstanding。">Park (2021)</abbr></td><td><abbr class="tt" tabindex="0" data-term="JOP" data-full="The Journal of Politics" data-tip="政治學期刊《The Journal of Politics》。" title="The Journal of Politics — 政治學期刊《The Journal of Politics》。">JOP</abbr></td><td>Grandstanding：<abbr class="tt" tabindex="0" data-term="mlr3" data-tip="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。" title="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。">mlr3</abbr> 線性 SVM</td><td><a href="#ch04">04</a>、<a href="#ch09">09–10</a></td></tr>
   </table></div>
   <p>分類練習只用 Wang, Day &amp; Wu (2022) 與 Park (2021) 的資料；另外四篇是用來討論「人工標籤怎麼產生、怎麼檢查」。<span class="slideref">投影片 3</span></p>
 
@@ -489,10 +498,10 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <tr><td>文字 → 目標</td><td><code>text</code> → <code>hate_speech</code>（0/1）</td><td><code>speech</code> → <code>rescaled_gs</code>（0/1）</td></tr>
     <tr><td>正類（positive）</td><td>HateSpeech</td><td>Grandstanding</td></tr>
     <tr><td>特徵</td><td>中文<strong>字</strong>計數</td><td>英文<strong>詞</strong>計數</td></tr>
-    <tr><td>分類器 / 介面</td><td>Multinomial NB / <abbr class="tt" tabindex="0" data-term="quanteda.textmodels" title="quanteda 的模型擴充套件，提供 textmodel_nb()、textmodel_lr()、textmodel_svmlin() 等。">quanteda.textmodels</abbr></td><td>Linear SVM / mlr3 + <abbr class="tt" tabindex="0" data-term="mlr3learners" title="mlr3 的 learner 擴充套件；本週的 classif.svm 由它提供（底層 e1071）。">mlr3learners</abbr></td></tr>
+    <tr><td>分類器 / 介面</td><td>Multinomial NB / <abbr class="tt" tabindex="0" data-term="quanteda.textmodels" data-tip="quanteda 的模型擴充套件，提供 textmodel_nb()、textmodel_lr()、textmodel_svmlin() 等。" title="quanteda 的模型擴充套件，提供 textmodel_nb()、textmodel_lr()、textmodel_svmlin() 等。">quanteda.textmodels</abbr></td><td>Linear SVM / mlr3 + <abbr class="tt" tabindex="0" data-term="mlr3learners" data-tip="mlr3 的 learner 擴充套件；本週的 classif.svm 由它提供（底層 e1071）。" title="mlr3 的 learner 擴充套件；本週的 classif.svm 由它提供（底層 e1071）。">mlr3learners</abbr></td></tr>
     <tr><td>不用的欄位</td><td><code>label</code>（類別名稱）</td><td><code>sentimentit_score</code>（原始 grandstanding 分數，不進入預測變數）</td></tr>
   </table></div>
-  <p class="hint">投影片 32 也列出兩個原始 CSV 的前三列，例如 <code>merged-hate-speeches.csv</code> 第 3 列「智X總統 畜X官員 無誤 ？！」標為 1。練習用的清理版 CSV 由老師事先用 <code>prepare_practice_data.R</code> 產生（去除標籤衝突與重複、排除人工參照集文字、以 seed 7191 抽 4,000 則），學生直接 <code>read.csv()</code>。<span class="slideref">投影片 32</span></p>
+  <p class="hint">投影片 32 也列出兩個原始 <abbr class="tt" tabindex="0" data-term="CSV" data-full="comma-separated values" data-tip="以逗號分隔欄位的純文字表格檔。" title="comma-separated values — 以逗號分隔欄位的純文字表格檔。">CSV</abbr> 的前三列，例如 <code>merged-hate-speeches.csv</code> 第 3 列「智X總統 畜X官員 無誤 ？！」標為 1。練習用的清理版 CSV 由老師事先用 <code>prepare_practice_data.R</code> 產生（去除標籤衝突與重複、排除人工參照集文字、以 seed 7191 抽 4,000 則），學生直接 <code>read.csv()</code>。<span class="slideref">投影片 32</span></p>
   <div class="callout note"><div class="ct">資料清理數字（Data/README.md 與 practice_manifest.json）</div>
     <ul>
       <li>仇恨言論：31,071 列 → 移除 1,275 列標籤衝突、5,811 列重複 → 23,985 則 → 再排除 370 則與參照集重疊 → 23,615 則可用 → 抽 4,000 則（2,378 HateSpeech、1,622 NonHateSpeech）。</li>
@@ -503,7 +512,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <h2 id="c0-how">怎麼使用本教材</h2>
   <ul>
     <li>右側（窄螢幕在右下角按鈕）是<strong>投影片對照面板</strong>，點任何「投影片 N」標籤會跳到那一頁。</li>
-    <li>R 輸出區塊都是<strong>本機實際執行</strong>老師的 <code>W6/classroom/W6_classification.R</code> 的結果（R 4.5.3（aarch64-conda-linux-gnu）、<abbr class="tt" tabindex="0" data-term="quanteda" title="R 的文字分析套件；本週用來建立語料、斷詞與 DFM。">quanteda</abbr> 4.5.1、quanteda.textmodels 0.9.10、mlr3 1.8.0、mlr3learners 0.16.0、<abbr class="tt" tabindex="0" data-term="e1071" title="提供 svm() 等函式的 R 套件；mlr3 的 classif.svm 在底層呼叫它。">e1071</abbr> 1.7.17、<abbr class="tt" tabindex="0" data-term="stringi" title="R 的字串處理套件；本週用 stri_trans_nfkc() 做 Unicode 正規化。">stringi</abbr> 1.8.9、glmnet 5.0），並逐一對照投影片數字。</li>
+    <li>R 輸出區塊都是<strong>本機實際執行</strong>老師的 <code>W6/classroom/W6_classification.R</code> 的結果（R 4.5.3（aarch64-conda-linux-gnu）、<abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的文字分析套件；本週用來建立語料、斷詞與 DFM。" title="R 的文字分析套件；本週用來建立語料、斷詞與 DFM。">quanteda</abbr> 4.5.1、quanteda.textmodels 0.9.10、mlr3 1.8.0、mlr3learners 0.16.0、<abbr class="tt" tabindex="0" data-term="e1071" data-tip="提供 svm() 等函式的 R 套件；mlr3 的 classif.svm 在底層呼叫它。" title="提供 svm() 等函式的 R 套件；mlr3 的 classif.svm 在底層呼叫它。">e1071</abbr> 1.7.17、<abbr class="tt" tabindex="0" data-term="stringi" data-tip="R 的字串處理套件；本週用 stri_trans_nfkc() 做 Unicode 正規化。" title="R 的字串處理套件；本週用 stri_trans_nfkc() 做 Unicode 正規化。">stringi</abbr> 1.8.9、glmnet 5.0），並逐一對照投影片數字。</li>
     <li>互動實驗室分三類：<b>真實資料型</b>（用本週 Data/ 實跑後匯出的預測、機率與模型參數）、<b>玩具直覺型</b>（標「補充（非講義內容）」）、<b>練習型</b>（編碼練習、作答區、翻牌卡、計畫填寫器）。</li>
     <li>進度、作答與筆記只存在這台瀏覽器（localStorage），不會上傳。</li>
   </ul>
@@ -549,29 +558,29 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   </div>
 
   <h2 id="c1-s1">步驟 1：取得標註資料 <span class="slideref">投影片 23</span></h2>
-  <p>流程：<strong>定義概念 → 自己標註或找<abbr class="tt" tabindex="0" data-term="found labels" title="不是為研究而編碼、原本就存在的分類，例如 Nielsen 使用的 jihadist 整理文本。">現成標籤</abbr> → 稽核標籤 → 一列一則文本</strong>。</p>
+  <p>流程：<strong>定義概念 → 自己標註或找<abbr class="tt" tabindex="0" data-term="found labels" data-tip="不是為研究而編碼、原本就存在的分類，例如 Nielsen 使用的 jihadist 整理文本。" title="不是為研究而編碼、原本就存在的分類，例如 Nielsen 使用的 jihadist 整理文本。">現成標籤</abbr> → 稽核標籤 → 一列一則文本</strong>。</p>
   <ul>
-    <li><b>自己做標籤</b>：寫 <abbr class="tt" tabindex="0" data-term="codebook" title="定義類別、編碼單位、邊界例子與可用證據的規則書；例如 Boydstun 只看標題與前三段。">codebook</abbr>、蒐集<strong>獨立</strong>的判斷、<abbr class="tt" tabindex="0" data-term="adjudication" title="編碼者意見不一致時，由第三方（如 Gillion 本人）決定最終標籤。">裁決</abbr>不一致（adjudicate）。</li>
-    <li><b>用現成標籤</b>：檢查來源、<abbr class="tt" tabindex="0" data-term="coding unit" title="一個標籤所對應的文本範圍，例如句子、段落、留言或整篇演說。">編碼單位</abbr>、定義，以及「分數轉成類別」的方式。</li>
-    <li><b>本週</b>：<abbr class="tt" tabindex="0" data-term="hate speech" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr>標籤來自 Wang, Day &amp; Wu (2022)；<abbr class="tt" tabindex="0" data-term="grandstanding" title="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。">grandstanding</abbr> 用 <abbr class="tt" tabindex="0" data-term="Park (2021)" title="Journal of Politics 論文：以群眾評分與文字模型測量委員會聽證會上的 grandstanding。">Park (2021)</abbr> 資料裡的 <code>rescaled_gs</code> 類別。</li>
+    <li><b>自己做標籤</b>：寫 <abbr class="tt" tabindex="0" data-term="codebook" data-tip="定義類別、編碼單位、邊界例子與可用證據的規則書；例如 Boydstun 只看標題與前三段。" title="定義類別、編碼單位、邊界例子與可用證據的規則書；例如 Boydstun 只看標題與前三段。">codebook</abbr>、蒐集<strong>獨立</strong>的判斷、<abbr class="tt" tabindex="0" data-term="adjudication" data-tip="編碼者意見不一致時，由第三方（如 Gillion 本人）決定最終標籤。" title="編碼者意見不一致時，由第三方（如 Gillion 本人）決定最終標籤。">裁決</abbr>不一致（adjudicate）。</li>
+    <li><b>用現成標籤</b>：檢查來源、<abbr class="tt" tabindex="0" data-term="coding unit" data-tip="一個標籤所對應的文本範圍，例如句子、段落、留言或整篇演說。" title="一個標籤所對應的文本範圍，例如句子、段落、留言或整篇演說。">編碼單位</abbr>、定義，以及「分數轉成類別」的方式。</li>
+    <li><b>本週</b>：<abbr class="tt" tabindex="0" data-term="hate speech" data-tip="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr>標籤來自 Wang, Day &amp; Wu (2022)；<abbr class="tt" tabindex="0" data-term="grandstanding" data-tip="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。" title="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。">grandstanding</abbr> 用 <abbr class="tt" tabindex="0" data-term="Park (2021)" data-tip="Journal of Politics 論文：以群眾評分與文字模型測量委員會聽證會上的 grandstanding。" title="Journal of Politics 論文：以群眾評分與文字模型測量委員會聽證會上的 grandstanding。">Park (2021)</abbr> 資料裡的 <code>rescaled_gs</code> 類別。</li>
   </ul>
 
   <h2 id="c1-s2">步驟 2：切分已標註文件 <span class="slideref">投影片 24</span></h2>
-  <p>在<strong>選詞彙或擬合模型之前</strong>先切分；用固定的<abbr class="tt" tabindex="0" data-term="stratified split" title="在每個類別內各自切分，使訓練與測試的類別比例相近；mlr3 用 col_roles$stratum。">分層</abbr> 80/20 切分；測試集標籤不參與擬合。兩個案例都用同樣的流程。</p>
-  <div class="callout tip"><div class="ct">為什麼要「先」切？（補充）</div><p>如果先用全部 4,000 則挑出「常見的字」，那些字的選擇就已經偷看過測試集。這叫<strong>資料洩漏（<abbr class="tt" tabindex="0" data-term="data leakage" title="測試資料的資訊（包括詞彙選擇）進入訓練流程，使評估結果過度樂觀。">data leakage</abbr>）</strong>：測試分數會偏樂觀，因為測試集不再是真正「沒看過」的資料。所以本週 C04b 的 <code>dfm_trim()</code> 只對訓練列做，測試列再用 <code>dfm_match()</code> 對齊。</p></div>
+  <p>在<strong>選詞彙或擬合模型之前</strong>先切分；用固定的<abbr class="tt" tabindex="0" data-term="stratified split" data-tip="在每個類別內各自切分，使訓練與測試的類別比例相近；mlr3 用 col_roles$stratum。" title="在每個類別內各自切分，使訓練與測試的類別比例相近；mlr3 用 col_roles$stratum。">分層</abbr> 80/20 切分；測試集標籤不參與擬合。兩個案例都用同樣的流程。</p>
+  <div class="callout tip"><div class="ct">為什麼要「先」切？（補充）</div><p>如果先用全部 4,000 則挑出「常見的字」，那些字的選擇就已經偷看過測試集。這叫<strong>資料洩漏（<abbr class="tt" tabindex="0" data-term="data leakage" data-tip="測試資料的資訊（包括詞彙選擇）進入訓練流程，使評估結果過度樂觀。" title="測試資料的資訊（包括詞彙選擇）進入訓練流程，使評估結果過度樂觀。">data leakage</abbr>）</strong>：測試分數會偏樂觀，因為測試集不再是真正「沒看過」的資料。所以本週 C04b 的 <code>dfm_trim()</code> 只對訓練列做，測試列再用 <code>dfm_match()</code> 對齊。</p></div>
 
   <h2 id="c1-s3">步驟 3：擬合 ML 分類器 <span class="slideref">投影片 25</span></h2>
-  <p>訓練文本 → 文字特徵 → 擬合好的分類器。中文留言用字計數，英文摘錄用詞計數；只用訓練文本選詞彙；用訓練特徵矩陣與對應標籤擬合。課堂範例：<code>textmodel_nb()</code> 擬合 multinomial <abbr class="tt" tabindex="0" data-term="NB" title="Naive Bayes：假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。">Naive Bayes</abbr>。</p>
+  <p>訓練文本 → 文字特徵 → 擬合好的分類器。中文留言用字計數，英文摘錄用詞計數；只用訓練文本選詞彙；用訓練特徵矩陣與對應標籤擬合。課堂範例：<code>textmodel_nb()</code> 擬合 multinomial <abbr class="tt" tabindex="0" data-term="NB" data-full="Naive Bayes" data-tip="假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。" title="Naive Bayes — 假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。">Naive Bayes</abbr>。</p>
 
   <h2 id="c1-s4">步驟 4：預測與檢查標籤 <span class="slideref">投影片 26</span></h2>
-  <p>測試文本 → 對齊詞彙（同樣順序）→ <code>predict()</code> → 和標籤比較。讀預測類別、<abbr class="tt" tabindex="0" data-term="confusion matrix" title="預測 × 真實的次數表；mlr3 的 $confusion 中列是 response（預測）、欄是 truth（真實）。">混淆矩陣</abbr>與 <abbr class="tt" tabindex="0" data-term="F1" title="precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。">F1</abbr>；仇恨言論另外用獨立的人工參照留言檢查。</p>
+  <p>測試文本 → 對齊詞彙（同樣順序）→ <code>predict()</code> → 和標籤比較。讀預測類別、<abbr class="tt" tabindex="0" data-term="confusion matrix" data-tip="預測 × 真實的次數表；mlr3 的 $confusion 中列是 response（預測）、欄是 truth（真實）。" title="預測 × 真實的次數表；mlr3 的 $confusion 中列是 response（預測）、欄是 truth（真實）。">混淆矩陣</abbr>與 <abbr class="tt" tabindex="0" data-term="F1" data-full="F1 score (F-measure with β = 1)" data-tip="precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。" title="F1 score (F-measure with β = 1) — precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。">F1</abbr>；仇恨言論另外用獨立的人工參照留言檢查。</p>
 
   <h2 id="c1-labels">標籤先於演算法 <span class="slideref">投影片 35</span></h2>
   <div class="keyline"><b>Labels come before the algorithm.</b> 先讀編碼定義、確認一列代表什麼；保留提供的標籤，不自創新切點；檢查錯誤時，細讀有爭議與不確定的文本。</div>
-  <p>仇恨言論用 Wang, Day &amp; Wu (2022) 資料的標籤；grandstanding 用 <code>rescaled_gs</code>——但這個 CSV <strong>沒有記錄</strong>原本從分數轉成二元類別的切點。<span class="slideref">投影片 35</span></p>
+  <p>仇恨言論用 Wang, Day &amp; Wu (2022) 資料的標籤；grandstanding 用 <code>rescaled_gs</code>——但這個 <abbr class="tt" tabindex="0" data-term="CSV" data-full="comma-separated values" data-tip="以逗號分隔欄位的純文字表格檔。" title="comma-separated values — 以逗號分隔欄位的純文字表格檔。">CSV</abbr> <strong>沒有記錄</strong>原本從分數轉成二元類別的切點。<span class="slideref">投影片 35</span></p>
 
   <h2 id="c1-nb">Naive Bayes 的直覺 <span class="slideref">投影片 36</span></h2>
-  <p>投影片 36 只要求「會用」：NB 用<abbr class="tt" tabindex="0" data-term="DFM" title="文件—特徵矩陣：列是文件、欄是特徵（字或詞）、格子是次數。本週仇恨言論為 4,000 × 2,916。">文件—特徵矩陣</abbr>與每列一個標籤擬合；把計數到的特徵合併成「支持每個類別的證據」；<code>predict()</code> 回傳類別，<code>type = "probability"</code> 回傳模型機率。下面的玩具讓你看見「合併證據」是怎麼算的。</p>
+  <p>投影片 36 只要求「會用」：NB 用<abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件—特徵矩陣：列是文件、欄是特徵（字或詞）、格子是次數。本週仇恨言論為 4,000 × 2,916。" title="document-feature matrix — 文件—特徵矩陣：列是文件、欄是特徵（字或詞）、格子是次數。本週仇恨言論為 4,000 × 2,916。">文件—特徵矩陣</abbr>與每列一個標籤擬合；把計數到的特徵合併成「支持每個類別的證據」；<code>predict()</code> 回傳類別，<code>type = "probability"</code> 回傳模型機率。下面的玩具讓你看見「合併證據」是怎麼算的。</p>
   <div class="lab" id="labToyNB">
     <div class="lab-h"><span class="ic">🧮</span><span class="lt">玩具 NB 計算機</span><span class="ls">補充（非講義內容）· 6 則虛構訓練文本</span></div>
     <div class="lab-b">
@@ -587,7 +596,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
       <div class="explain" id="tnbTxt">先點幾個字。</div>
     </div>
   </div>
-  <p class="hint">靜態說明：P(類別 | 文本) ∝ P(類別) × Π P(字 | 類別)<sup>次數</sup>。<abbr class="tt" tabindex="0" data-term="prior" title="類別的事前機率；prior = &quot;docfreq&quot; 用訓練集類別比例（HateSpeech 1,902/3,200）。">prior</abbr> = "docfreq" 表示 P(類別) 用訓練集各類別的文件比例（這裡 3/6）；smooth = 1 表示每個字的計數先加 1，避免沒見過的字讓機率變 0。</p>
+  <p class="hint">靜態說明：P(類別 | 文本) ∝ P(類別) × Π P(字 | 類別)<sup>次數</sup>。<abbr class="tt" tabindex="0" data-term="prior" data-tip="類別的事前機率；prior = &quot;docfreq&quot; 用訓練集類別比例（HateSpeech 1,902/3,200）。" title="類別的事前機率；prior = &quot;docfreq&quot; 用訓練集類別比例（HateSpeech 1,902/3,200）。">prior</abbr> = "docfreq" 表示 P(類別) 用訓練集各類別的文件比例（這裡 3/6）；smooth = 1 表示每個字的計數先加 1，避免沒見過的字讓機率變 0。</p>
 
   <h2 id="c1-quiz">自我檢查</h2>
   <div class="mcq" data-ans="2" data-q="c1q1">
@@ -604,7 +613,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <button class="opt">那個類別的機率幾乎被壓成 0，一個字就決定結果</button>
     <button class="opt">沒有影響</button>
     <button class="opt">prior 變成 0</button>
-    <div class="fb">沒有<abbr class="tt" tabindex="0" data-term="smoothing" title="在計數上加常數（smooth = 1），避免沒見過的字讓某類機率變成 0。">平滑</abbr>時 P(字 | 類別) = 0，乘起來整個類別都是 0；smooth = 1 正是為了避免這件事（補充說明）。<span class="slideref">投影片 52</span></div>
+    <div class="fb">沒有<abbr class="tt" tabindex="0" data-term="smoothing" data-tip="在計數上加常數（smooth = 1），避免沒見過的字讓某類機率變成 0。" title="在計數上加常數（smooth = 1），避免沒見過的字讓某類機率變成 0。">平滑</abbr>時 P(字 | 類別) = 0，乘起來整個類別都是 0；smooth = 1 正是為了避免這件事（補充說明）。<span class="slideref">投影片 52</span></div>
   </div>
   <div class="mcq" data-ans="3" data-q="c1q3">
     <div class="q">3. 「用現成標籤」時，投影片 23 要你檢查哪些東西？</div>
@@ -636,13 +645,13 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <h2 id="c2-rule">編碼邊界與一致性 <span class="slideref">投影片 6</span></h2>
   <div class="tablewrap"><table>
     <tr><th>設計</th><th>Gillion 的做法（Appendix A, pp. 163–166）</th></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="coding unit" title="一個標籤所對應的文本範圍，例如句子、段落、留言或整篇演說。">編碼單位</abbr></td><td>段落；排除書面法案與程序性內容</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="coding unit" data-tip="一個標籤所對應的文本範圍，例如句子、段落、留言或整篇演說。" title="一個標籤所對應的文本範圍，例如句子、段落、留言或整篇演說。">編碼單位</abbr></td><td>段落；排除書面法案與程序性內容</td></tr>
     <tr><td>訓練標籤</td><td>兩位助理編碼隨機樣本：每屆總統任期 300 段、每屆國會會期 1,000 段</td></tr>
     <tr><td>規則</td><td>必須<strong>明確提到種族</strong>：族群、種族特定政策、少數族群人物或種族特定議題</td></tr>
     <tr><td>邊界</td><td>一般的犯罪、教育、健康討論，只有在帶有上述明確指涉時才算</td></tr>
-    <tr><td>一致性</td><td>回報的編碼者間信度（<abbr class="tt" tabindex="0" data-term="intercoder reliability" title="不同編碼者對同一文本判斷一致的程度；Gillion 回報 97%。一致不等於效度。">intercoder reliability</abbr>）97%；不一致由 Gillion <abbr class="tt" tabindex="0" data-term="adjudication" title="編碼者意見不一致時，由第三方（如 Gillion 本人）決定最終標籤。">裁決</abbr></td></tr>
+    <tr><td>一致性</td><td>回報的編碼者間信度（<abbr class="tt" tabindex="0" data-term="intercoder reliability" data-tip="不同編碼者對同一文本判斷一致的程度；Gillion 回報 97%。一致不等於效度。" title="不同編碼者對同一文本判斷一致的程度；Gillion 回報 97%。一致不等於效度。">intercoder reliability</abbr>）97%；不一致由 Gillion <abbr class="tt" tabindex="0" data-term="adjudication" data-tip="編碼者意見不一致時，由第三方（如 Gillion 本人）決定最終標籤。" title="編碼者意見不一致時，由第三方（如 Gillion 本人）決定最終標籤。">裁決</abbr></td></tr>
   </table></div>
-  <div class="callout warn"><div class="ct">讀數字的提醒</div><p>投影片 6 的註腳：<strong>97% 是編碼者之間的一致性，不是分類器的<abbr class="tt" tabindex="0" data-term="accuracy" title="全部預測中判對的比例；類別不平衡時容易被多數類撐高。">準確率</abbr>。</strong><span class="slideref">投影片 6</span></p></div>
+  <div class="callout warn"><div class="ct">讀數字的提醒</div><p>投影片 6 的註腳：<strong>97% 是編碼者之間的一致性，不是分類器的<abbr class="tt" tabindex="0" data-term="accuracy" data-tip="全部預測中判對的比例；類別不平衡時容易被多數類撐高。" title="全部預測中判對的比例；類別不平衡時容易被多數類撐高。">準確率</abbr>。</strong><span class="slideref">投影片 6</span></p></div>
 
   <h2 id="c2-miss">這個量測會漏掉什麼？ <span class="slideref">投影片 7</span></h2>
   <ul>
@@ -654,7 +663,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 
   <h2 id="c2-kappa">一致性計算機：為什麼還要看 κ？</h2>
   <div class="lab" id="labKappa">
-    <div class="lab-h"><span class="ic">🤝</span><span class="lt">兩位編碼者的一致性：百分比 vs. <abbr class="tt" tabindex="0" data-term="κ" title="Cohen&#x27;s κ：扣掉碰巧一致後的編碼者一致性，(Po − Pe)/(1 − Pe)。本教材補充指標。">Cohen's κ</abbr></span><span class="ls">補充（非講義內容）· 玩具數字</span></div>
+    <div class="lab-h"><span class="ic">🤝</span><span class="lt">兩位編碼者的一致性：百分比 vs. <abbr class="tt" tabindex="0" data-term="κ" data-tip="Cohen&#x27;s κ：扣掉碰巧一致後的編碼者一致性，(Po − Pe)/(1 − Pe)。本教材補充指標。" title="Cohen&#x27;s κ：扣掉碰巧一致後的編碼者一致性，(Po − Pe)/(1 − Pe)。本教材補充指標。">Cohen's κ</abbr></span><span class="ls">補充（非講義內容）· 玩具數字</span></div>
     <div class="lab-b">
       <p class="hint">投影片只報告 Gillion 的 97%；Cohen's κ 是常見的補充指標，用來扣掉「碰巧一致」。在下表填入兩位編碼者的判斷次數（虛構），或按預設情境。</p>
       <div class="row"><button class="btn" data-kp="bal">情境 A：類別各半</button><button class="btn" data-kp="rare">情境 B：罕見類別</button><button class="btn" data-kp="lazy">情境 C：編碼者 B 全判「否」</button></div>
@@ -671,7 +680,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
       <div class="explain" id="kpTxt"></div>
     </div>
   </div>
-  <p class="hint">靜態說明：κ = (P<sub>o</sub> − P<sub>e</sub>) / (1 − P<sub>e</sub>)。當「是」非常罕見（例如 100 段只有 3 段談種族），兩人即使都隨便判「否」也會有很高的百分比一致，κ 才能揭露這個問題。這也是第 03 章 Boydstun 罕見類別、第 08 章<abbr class="tt" tabindex="0" data-term="hate speech" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr>只有約 10.6% 正類時要特別小心的原因。</p>
+  <p class="hint">靜態說明：κ = (P<sub>o</sub> − P<sub>e</sub>) / (1 − P<sub>e</sub>)。當「是」非常罕見（例如 100 段只有 3 段談種族），兩人即使都隨便判「否」也會有很高的百分比一致，κ 才能揭露這個問題。這也是第 03 章 Boydstun 罕見類別、第 08 章<abbr class="tt" tabindex="0" data-term="hate speech" data-tip="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr>只有約 10.6% 正類時要特別小心的原因。</p>
 
   <h2 id="c2-ben">Benoit et al. (2016)：群眾編碼政治文本 <span class="slideref">投影片 8–10</span></h2>
   <ul>
@@ -679,10 +688,10 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <li><b>簡單的編碼方案</b>（Figure 1, p. 281）：先分類主題，再評位置；任務保持簡單。<span class="slideref">投影片 9</span></li>
     <li><b>重製判斷</b>（Table 4, p. 291，移民議題編碼重製）：做兩波編碼，政黨分數相關 .93；範圍是<strong>加總層級</strong>的可重製性。<span class="slideref">投影片 10</span></li>
   </ul>
-  <div class="callout note"><div class="ct">「加總層級」是什麼意思？</div><p>.93 是「政黨分數」在兩波之間的相關，不是每一個句子在兩波中被貼上相同標籤的比例。許多雜訊判斷平均起來可以很穩定——這是<abbr class="tt" tabindex="0" data-term="crowd coding" title="由許多非專家重複判斷再加總；Benoit et al. (2016)、Park (2021) 使用。">群眾編碼</abbr>的核心想法，但它保證的是<strong>政黨層級</strong>的可重製性。<span class="slideref">投影片 10</span></p></div>
+  <div class="callout note"><div class="ct">「加總層級」是什麼意思？</div><p>.93 是「政黨分數」在兩波之間的相關，不是每一個句子在兩波中被貼上相同標籤的比例。許多雜訊判斷平均起來可以很穩定——這是<abbr class="tt" tabindex="0" data-term="crowd coding" data-tip="由許多非專家重複判斷再加總；Benoit et al. (2016)、Park (2021) 使用。" title="由許多非專家重複判斷再加總；Benoit et al. (2016)、Park (2021) 使用。">群眾編碼</abbr>的核心想法，但它保證的是<strong>政黨層級</strong>的可重製性。<span class="slideref">投影片 10</span></p></div>
 
   <h2 id="c2-coal">煤礦補助案例：拿分數對照投票 <span class="slideref">投影片 11</span></h2>
-  <p>36 篇歐洲議會（EP）演說；圖中有 31 筆投票、六種語言；把群眾編碼的分數和投票對照（Figure 7, p. 292）。這是用<strong>文本以外的行為</strong>檢查分數意義的例子，和第 03 章 Nielsen 的外部驗證同一個精神。</p>
+  <p>36 篇歐洲議會（<abbr class="tt" tabindex="0" data-term="EP" data-full="European Parliament" data-tip="歐洲議會。" title="European Parliament — 歐洲議會。">EP</abbr>）演說；圖中有 31 筆投票、六種語言；把群眾編碼的分數和投票對照（Figure 7, p. 292）。這是用<strong>文本以外的行為</strong>檢查分數意義的例子，和第 03 章 Nielsen 的外部驗證同一個精神。</p>
 
   <h2 id="c2-quiz">自我檢查</h2>
   <div class="mcq" data-ans="1" data-q="c2q1">
@@ -715,7 +724,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 <section class="chapter" id="ch03" data-slides="12,13,14">
   <div class="crumb">03 · 人工編碼 II</div>
   <h1 class="ch">Boydstun 與 Nielsen：codebook、罕見類別與現成標籤</h1>
-  <p class="lead">Boydstun 示範一份好的 <abbr class="tt" tabindex="0" data-term="codebook" title="定義類別、編碼單位、邊界例子與可用證據的規則書；例如 Boydstun 只看標題與前三段。">codebook</abbr> 怎麼限制編碼者「可以看什麼」；Nielsen 示範當標籤不是自己編、而是「找來的」（<abbr class="tt" tabindex="0" data-term="found labels" title="不是為研究而編碼、原本就存在的分類，例如 Nielsen 使用的 jihadist 整理文本。">found labels</abbr>）時，要怎麼用文本以外的證據檢查分數的意義。</p>
+  <p class="lead">Boydstun 示範一份好的 <abbr class="tt" tabindex="0" data-term="codebook" data-tip="定義類別、編碼單位、邊界例子與可用證據的規則書；例如 Boydstun 只看標題與前三段。" title="定義類別、編碼單位、邊界例子與可用證據的規則書；例如 Boydstun 只看標題與前三段。">codebook</abbr> 怎麼限制編碼者「可以看什麼」；Nielsen 示範當標籤不是自己編、而是「找來的」（<abbr class="tt" tabindex="0" data-term="found labels" data-tip="不是為研究而編碼、原本就存在的分類，例如 Nielsen 使用的 jihadist 整理文本。" title="不是為研究而編碼、原本就存在的分類，例如 Nielsen 使用的 jihadist 整理文本。">found labels</abbr>）時，要怎麼用文本以外的證據檢查分數的意義。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c3-boy">Boydstun：新聞議程</a><a href="#c3-code">codebook 定義證據</a><a href="#c3-rare">標籤揭露不均的注意力</a><a href="#c3-niel">Nielsen：從參照文本到分數</a><a href="#c3-ext">外部檢查與其限制</a><a href="#c3-judge">主張判斷練習</a><a href="#c3-quiz">自我檢查</a>
   </div>
@@ -736,10 +745,10 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <tr><td>一致性</td><td>對齊同一故事線（storyline）的標籤；釐清不清楚的情況</td></tr>
     <tr><td>教訓</td><td><strong>定義編碼者可以使用哪些證據</strong></td></tr>
   </table></div>
-  <div class="callout tip"><div class="ct">連到本週練習（補充）</div><p><abbr class="tt" tabindex="0" data-term="hate speech" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr>的「證據」是什麼？只有那一則留言？還是包括它回應的新聞標題？Data/README 說這份資料<strong>沒有</strong>提供使用者、新聞、討論串或時間識別碼。所以我們的分類器只能看單則留言的字——這就是它的「證據範圍」。</p></div>
+  <div class="callout tip"><div class="ct">連到本週練習（補充）</div><p><abbr class="tt" tabindex="0" data-term="hate speech" data-tip="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr>的「證據」是什麼？只有那一則留言？還是包括它回應的新聞標題？Data/README 說這份資料<strong>沒有</strong>提供使用者、新聞、討論串或時間識別碼。所以我們的分類器只能看單則留言的字——這就是它的「證據範圍」。</p></div>
 
   <h2 id="c3-rare">標籤揭露不均的注意力 <span class="slideref">投影片 14</span></h2>
-  <p><abbr class="tt" tabindex="0" data-term="Boydstun (2013)" title="Making the News：以 codebook 編碼《紐約時報》頭版的政策議題注意力。">Boydstun (2013)</abbr> Table A.1 的部分列（全語料 31,034 則新聞）。按下按鈕看比例長條：</p>
+  <p><abbr class="tt" tabindex="0" data-term="Boydstun (2013)" data-tip="Making the News：以 codebook 編碼《紐約時報》頭版的政策議題注意力。" title="Making the News：以 codebook 編碼《紐約時報》頭版的政策議題注意力。">Boydstun (2013)</abbr> Table A.1 的部分列（全語料 31,034 則新聞）。按下按鈕看比例長條：</p>
   <div class="lab" id="labBoyd">
     <div class="lab-h"><span class="ic">📰</span><span class="lt">Boydstun Table A.1（節選）</span><span class="ls">投影片 14 原始數字</span></div>
     <div class="lab-b">
@@ -759,7 +768,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <ul>
     <li><b>文本</b>：伊斯蘭教士（clerics）的阿拉伯文著作。<b>量測</b>：以語言為基礎的 jihad 分數；用來研究網絡、職涯與意識形態差異。<span class="slideref">投影片 15</span></li>
     <li><b>監督</b>：765 篇由 jihadist 整理的文本 vs. 1,951 篇抽樣的教士文本（混合基準）。</li>
-    <li><b><abbr class="tt" tabindex="0" data-term="NB" title="Naive Bayes：假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。">NB</abbr> 權重</b>：在 jihadist 參照中較常見的字<strong>提高</strong>分數；在基準中較常見的字<strong>降低</strong>分數。</li>
+    <li><b><abbr class="tt" tabindex="0" data-term="NB" data-full="Naive Bayes" data-tip="假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。" title="Naive Bayes — 假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。">NB</abbr> 權重</b>：在 jihadist 參照中較常見的字<strong>提高</strong>分數；在基準中較常見的字<strong>降低</strong>分數。</li>
     <li><b>加總</b>：把每位教士的著作合併，加總這些字的權重。<b>解讀</b>：分數越高，語言越像 jihadist 參照；量測是<strong>連續的</strong>。（Nielsen 2014 工作論文 §4.1, pp. 13–14）<span class="slideref">投影片 16</span></li>
   </ul>
   <div class="callout note"><div class="ct">連到本週（補充）</div><p>Nielsen 用的正是 NB 的「字權重」想法：log P(字 | jihadist) − log P(字 | 基準)。第 07 章的即時 NB 計分器會用本週擬合的模型，把每個中文字的同一種權重畫出來。</p></div>
@@ -825,7 +834,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 <section class="chapter" id="ch04" data-slides="19,20,21,22">
   <div class="crumb">04 · Park 與設計選擇</div>
   <h1 class="ch">Park (2021)：量測 grandstanding，以及四個編碼設計選擇</h1>
-  <p class="lead"><abbr class="tt" tabindex="0" data-term="grandstanding" title="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。">Grandstanding</abbr>（作秀式發言）指國會議員在聽證會上不是為了取得資訊，而是為了表態、讚揚或攻擊。Park 用<abbr class="tt" tabindex="0" data-term="crowd coding" title="由許多非專家重複判斷再加總；Benoit et al. (2016)、Park (2021) 使用。">群眾評分</abbr>產生標籤，再用模型預測分數。本章最後你要親自當一次編碼員。</p>
+  <p class="lead"><abbr class="tt" tabindex="0" data-term="grandstanding" data-tip="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。" title="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。">Grandstanding</abbr>（作秀式發言）指國會議員在聽證會上不是為了取得資訊，而是為了表態、讚揚或攻擊。Park 用<abbr class="tt" tabindex="0" data-term="crowd coding" data-tip="由許多非專家重複判斷再加總；Benoit et al. (2016)、Park (2021) 使用。" title="由許多非專家重複判斷再加總；Benoit et al. (2016)、Park (2021) 使用。">群眾評分</abbr>產生標籤，再用模型預測分數。本章最後你要親自當一次編碼員。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c4-park">Park 的研究</a><a href="#c4-pred">預測分數</a><a href="#c4-use">研究用途</a><a href="#c4-def">類別邊界</a><a href="#c4-choice">四個設計選擇</a><a href="#c4-code">你來編碼</a><a href="#c4-quiz">自我檢查</a>
   </div>
@@ -833,11 +842,11 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <h2 id="c4-park">Park (2021)：量測政治作秀 <span class="slideref">投影片 19</span></h2>
   <ul>
     <li><b>文本</b>：美國眾議院聽證會發言。<b>研究</b>：群眾編碼與 grandstanding 分數。</li>
-    <li><b>我們的練習</b>：用 <abbr class="tt" tabindex="0" data-term="Park (2021)" title="Journal of Politics 論文：以群眾評分與文字模型測量委員會聽證會上的 grandstanding。">Park (2021)</abbr> 資料的 <code>rescaled_gs</code> 標籤；<abbr class="tt" tabindex="0" data-term="mlr3" title="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。">mlr3</abbr> <abbr class="tt" tabindex="0" data-term="SVM" title="支持向量機：找一條間隔最大的分界；線性核下每個詞有一個權重。本週以 mlr3 的 classif.svm（e1071）擬合 grandstanding。">線性 SVM</abbr>。</li>
+    <li><b>我們的練習</b>：用 <abbr class="tt" tabindex="0" data-term="Park (2021)" data-tip="Journal of Politics 論文：以群眾評分與文字模型測量委員會聽證會上的 grandstanding。" title="Journal of Politics 論文：以群眾評分與文字模型測量委員會聽證會上的 grandstanding。">Park (2021)</abbr> 資料的 <code>rescaled_gs</code> 標籤；<abbr class="tt" tabindex="0" data-term="mlr3" data-tip="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。" title="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。">mlr3</abbr> <abbr class="tt" tabindex="0" data-term="SVM" data-full="support vector machine" data-tip="支持向量機：找一條間隔最大的分界；線性核下每個詞有一個權重。本週以 mlr3 的 classif.svm（e1071）擬合 grandstanding。" title="support vector machine — 支持向量機：找一條間隔最大的分界；線性核下每個詞有一個權重。本週以 mlr3 的 classif.svm（e1071）擬合 grandstanding。">線性 SVM</abbr>。</li>
   </ul>
 
   <h2 id="c4-pred">Grandstanding：預測分數 <span class="slideref">投影片 20</span></h2>
-  <p>原研究（manuscript Figure 1, pp. 16–18）：<b>3,000</b> 段群眾評分的段落作為標籤；保留 <b>300</b> 段做測試；<abbr class="tt" tabindex="0" data-term="RMSE" title="均方根誤差：預測值與真實值差距的平方平均再開根號；Park (2021) 保留測試為 0.613。">RMSE</abbr> <b>0.613</b>（原始單位）。注意：原研究預測的是<strong>連續分數</strong>，我們的課堂練習改做<strong>二元分類</strong>，兩者的評估數字不能直接比較。</p>
+  <p>原研究（manuscript Figure 1, pp. 16–18）：<b>3,000</b> 段群眾評分的段落作為標籤；保留 <b>300</b> 段做測試；<abbr class="tt" tabindex="0" data-term="RMSE" data-full="root mean squared error" data-tip="均方根誤差：預測值與真實值差距的平方平均再開根號；Park (2021) 保留測試為 0.613。" title="root mean squared error — 均方根誤差：預測值與真實值差距的平方平均再開根號；Park (2021) 保留測試為 0.613。">RMSE</abbr> <b>0.613</b>（原始單位）。注意：原研究預測的是<strong>連續分數</strong>，我們的課堂練習改做<strong>二元分類</strong>，兩者的評估數字不能直接比較。</p>
 
   <h2 id="c4-use">用這個量測做研究 <span class="slideref">投影片 21</span></h2>
   <p>manuscript Figure 3（p. 20）：橫軸是「共和黨平均 − 民主黨平均」；模式是<strong>少數黨</strong>得分較高；解讀：訊息傳遞（messaging）與權力。</p>
@@ -848,14 +857,14 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <li>一端：讚揚或貶低人物、機構；政策立場或主觀評價；意在讓證人難堪或攻擊證人的提問。</li>
     <li>另一端：事實描述、詢問事實或專家意見。</li>
     <li>提問也可能是 grandstanding；<strong>光是提到自己</strong>不能決定類別。</li>
-    <li>原始評分衡量的是<strong>相對強度</strong>；CSV 沒有記錄二元 <code>rescaled_gs</code> 的切點，所以保留現有類別。</li>
+    <li>原始評分衡量的是<strong>相對強度</strong>；<abbr class="tt" tabindex="0" data-term="CSV" data-full="comma-separated values" data-tip="以逗號分隔欄位的純文字表格檔。" title="comma-separated values — 以逗號分隔欄位的純文字表格檔。">CSV</abbr> 沒有記錄二元 <code>rescaled_gs</code> 的切點，所以保留現有類別。</li>
   </ul>
-  <p class="hint"><abbr class="tt" tabindex="0" data-term="hate speech" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr>（同一份講義）：Wang, Day &amp; Wu 定義為針對個人或群體<strong>屬性</strong>的辱罵，包括針對政治信仰或政黨的攻擊；排除諷刺與幽默，並區分冒犯言論與仇恨言論。讀留言時，找出目標、被攻擊的屬性，以及顯示辱罵的脈絡。（講義引 Wang, Day &amp; Wu 2022, §III-A(2), p. 44342；本教材未取得該文全文）</p>
+  <p class="hint"><abbr class="tt" tabindex="0" data-term="hate speech" data-tip="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr>（同一份講義）：Wang, Day &amp; Wu 定義為針對個人或群體<strong>屬性</strong>的辱罵，包括針對政治信仰或政黨的攻擊；排除諷刺與幽默，並區分冒犯言論與仇恨言論。讀留言時，找出目標、被攻擊的屬性，以及顯示辱罵的脈絡。（講義引 Wang, Day &amp; Wu 2022, §III-A(2), p. 44342；本教材未取得該文全文）</p>
 
   <h2 id="c4-choice">編碼與量測的四個選擇 <span class="slideref">投影片 22</span></h2>
   <div class="tablewrap"><table>
     <tr><th>設計選擇</th><th>W6 的問題</th></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="coding unit" title="一個標籤所對應的文本範圍，例如句子、段落、留言或整篇演說。">編碼單位</abbr></td><td>一句話是否包含足夠的證據判斷我們的類別？</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="coding unit" data-tip="一個標籤所對應的文本範圍，例如句子、段落、留言或整篇演說。" title="一個標籤所對應的文本範圍，例如句子、段落、留言或整篇演說。">編碼單位</abbr></td><td>一句話是否包含足夠的證據判斷我們的類別？</td></tr>
     <tr><td>重複判斷</td><td>哪些不一致應該觸發人工複核？</td></tr>
     <tr><td>加總</td><td>我們需要留言層級的標籤、仇恨言論<strong>比例</strong>，還是連續分數？</td></tr>
     <tr><td>驗證</td><td>哪些獨立證據能檢驗我們想要的詮釋？</td></tr>
@@ -866,17 +875,17 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <div class="lab" id="labCoder">
     <div class="lab-h"><span class="ic">✍️</span><span class="lt">Grandstanding 編碼練習</span><span class="ls">真實資料 · Park (2021) 測試集 8 段</span></div>
     <div class="lab-b">
-      <p class="hint">以下 8 段取自本機實跑的 700 段測試集（每個<abbr class="tt" tabindex="0" data-term="confusion matrix" title="預測 × 真實的次數表；mlr3 的 $confusion 中列是 response（預測）、欄是 truth（真實）。">混淆矩陣</abbr>格子各 2 段，順序打亂）。先用上面的邊界定義自己判斷，按完全部後再按「揭曉」，比較 <code>rescaled_gs</code> 參照標籤與 SVM 機率。你的判斷只存在這台瀏覽器。</p>
+      <p class="hint">以下 8 段取自本機實跑的 700 段測試集（每個<abbr class="tt" tabindex="0" data-term="confusion matrix" data-tip="預測 × 真實的次數表；mlr3 的 $confusion 中列是 response（預測）、欄是 truth（真實）。" title="預測 × 真實的次數表；mlr3 的 $confusion 中列是 response（預測）、欄是 truth（真實）。">混淆矩陣</abbr>格子各 2 段，順序打亂）。先用上面的邊界定義自己判斷，按完全部後再按「揭曉」，比較 <code>rescaled_gs</code> 參照標籤與 SVM 機率。你的判斷只存在這台瀏覽器。</p>
       <div id="coderList"></div>
       <div class="row"><button class="btn primary" id="coderReveal">揭曉參照標籤與 SVM</button><button class="btn" id="coderReset">重來</button></div>
       <div class="explain" id="coderTxt">還沒有作答。</div>
     </div>
   </div>
-  <p class="hint">靜態說明：這個練習需要 JavaScript。沒有 JS 時，可直接看第 10 章的兩則全文（gs_01045 與 gs_00013）。</p>
+  <p class="hint">靜態說明：這個練習需要 JavaScript。沒有 <abbr class="tt" tabindex="0" data-term="JS" data-full="JavaScript" data-tip="瀏覽器執行的程式語言；本講義的互動示範用它寫成。" title="JavaScript — 瀏覽器執行的程式語言；本講義的互動示範用它寫成。">JS</abbr> 時，可直接看第 10 章的兩則全文（gs_01045 與 gs_00013）。</p>
 
   <h2 id="c4-quiz">自我檢查</h2>
   <div class="mcq" data-ans="2" data-q="c4q1">
-    <div class="q">1. Park (2021) 原研究報告的 RMSE 0.613 和我們課堂的 <abbr class="tt" tabindex="0" data-term="F1" title="precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。">F1</abbr> 能直接比較嗎？</div>
+    <div class="q">1. Park (2021) 原研究報告的 RMSE 0.613 和我們課堂的 <abbr class="tt" tabindex="0" data-term="F1" data-full="F1 score (F-measure with β = 1)" data-tip="precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。" title="F1 score (F-measure with β = 1) — precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。">F1</abbr> 能直接比較嗎？</div>
     <button class="opt">可以，都在測試集上</button>
     <button class="opt">可以，RMSE 越低 F1 越高</button>
     <button class="opt">不能；原研究預測連續分數，課堂是二元分類的重新分析</button>
@@ -905,7 +914,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 <section class="chapter" id="ch05" data-slides="27,28,29,30">
   <div class="crumb">05 · R 工具</div>
   <h1 class="ch">R 工具：quanteda、quanteda.textmodels、mlr3 與 Naive Bayes</h1>
-  <p class="lead">本週用三組套件分工：<strong><abbr class="tt" tabindex="0" data-term="quanteda" title="R 的文字分析套件；本週用來建立語料、斷詞與 DFM。">quanteda</abbr></strong> 把文字變成特徵、<strong><abbr class="tt" tabindex="0" data-term="quanteda.textmodels" title="quanteda 的模型擴充套件，提供 textmodel_nb()、textmodel_lr()、textmodel_svmlin() 等。">quanteda.textmodels</abbr></strong> 直接擬合簡單的文字分類器、<strong><abbr class="tt" tabindex="0" data-term="mlr3" title="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。">mlr3</abbr></strong> 負責切分資料與評估（以及 <abbr class="tt" tabindex="0" data-term="grandstanding" title="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。">grandstanding</abbr> 的 <abbr class="tt" tabindex="0" data-term="SVM" title="支持向量機：找一條間隔最大的分界；線性核下每個詞有一個權重。本週以 mlr3 的 classif.svm（e1071）擬合 grandstanding。">SVM</abbr>）。</p>
+  <p class="lead">本週用三組套件分工：<strong><abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的文字分析套件；本週用來建立語料、斷詞與 DFM。" title="R 的文字分析套件；本週用來建立語料、斷詞與 DFM。">quanteda</abbr></strong> 把文字變成特徵、<strong><abbr class="tt" tabindex="0" data-term="quanteda.textmodels" data-tip="quanteda 的模型擴充套件，提供 textmodel_nb()、textmodel_lr()、textmodel_svmlin() 等。" title="quanteda 的模型擴充套件，提供 textmodel_nb()、textmodel_lr()、textmodel_svmlin() 等。">quanteda.textmodels</abbr></strong> 直接擬合簡單的文字分類器、<strong><abbr class="tt" tabindex="0" data-term="mlr3" data-tip="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。" title="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。">mlr3</abbr></strong> 負責切分資料與評估（以及 <abbr class="tt" tabindex="0" data-term="grandstanding" data-tip="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。" title="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。">grandstanding</abbr> 的 <abbr class="tt" tabindex="0" data-term="SVM" data-full="support vector machine" data-tip="支持向量機：找一條間隔最大的分界；線性核下每個詞有一個權重。本週以 mlr3 的 classif.svm（e1071）擬合 grandstanding。" title="support vector machine — 支持向量機：找一條間隔最大的分界；線性核下每個詞有一個權重。本週以 mlr3 的 classif.svm（e1071）擬合 grandstanding。">SVM</abbr>）。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c5-tools">工具分工</a><a href="#c5-mlr3">mlr3 是什麼</a><a href="#c5-py">與 Python 對照（翻牌卡）</a><a href="#c5-tm">quanteda.textmodels 的三個模型</a><a href="#c5-pkg">套件檢查</a><a href="#c5-quiz">自我檢查</a>
   </div>
@@ -916,10 +925,10 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <tr><td>把文字轉成特徵</td><td>quanteda</td></tr>
     <tr><td>直接擬合文字分類器</td><td>quanteda.textmodels</td></tr>
     <tr><td>組織模型與評估</td><td>mlr3</td></tr>
-    <tr><td>串接前處理步驟</td><td><abbr class="tt" tabindex="0" data-term="mlr3pipelines" title="mlr3 的擴充套件，把前處理步驟與模型串成 pipeline；對應 scikit-learn 的 Pipeline。">mlr3pipelines</abbr></td></tr>
-    <tr><td>搜尋模型設定</td><td><abbr class="tt" tabindex="0" data-term="mlr3tuning" title="mlr3 的參數搜尋套件；對應 scikit-learn 的 GridSearchCV。">mlr3tuning</abbr></td></tr>
+    <tr><td>串接前處理步驟</td><td><abbr class="tt" tabindex="0" data-term="mlr3pipelines" data-tip="mlr3 的擴充套件，把前處理步驟與模型串成 pipeline；對應 scikit-learn 的 Pipeline。" title="mlr3 的擴充套件，把前處理步驟與模型串成 pipeline；對應 scikit-learn 的 Pipeline。">mlr3pipelines</abbr></td></tr>
+    <tr><td>搜尋模型設定</td><td><abbr class="tt" tabindex="0" data-term="mlr3tuning" data-tip="mlr3 的參數搜尋套件；對應 scikit-learn 的 GridSearchCV。" title="mlr3 的參數搜尋套件；對應 scikit-learn 的 GridSearchCV。">mlr3tuning</abbr></td></tr>
   </table></div>
-  <p>需要重抽樣、模型比較、pipeline 或調參時用 mlr3；本週 <abbr class="tt" tabindex="0" data-term="NB" title="Naive Bayes：假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。">NB</abbr> 練習直接用 quanteda.textmodels 擬合。<span class="slideref">投影片 27</span></p>
+  <p>需要重抽樣、模型比較、pipeline 或調參時用 mlr3；本週 <abbr class="tt" tabindex="0" data-term="NB" data-full="Naive Bayes" data-tip="假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。" title="Naive Bayes — 假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。">NB</abbr> 練習直接用 quanteda.textmodels 擬合。<span class="slideref">投影片 27</span></p>
 
   <h2 id="c5-mlr3">mlr3：R 的機器學習框架 <span class="slideref">投影片 28</span></h2>
   <ul>
@@ -927,16 +936,16 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
     <li><b>Task + learner</b>：<code>as_task_classif()</code> 定義目標；<code>lrn()</code> 建立模型；<code>$train()</code> 擬合。</li>
     <li><b>評估</b>：重抽樣、指標（<code>msrs()</code>）與延伸套件。</li>
   </ul>
-  <div class="callout note"><div class="ct"><abbr class="tt" tabindex="0" data-term="R6" title="R 的物件導向系統；mlr3 物件用 $ 取欄位或呼叫方法（如 $train()）。">R6</abbr> 物件的 <code>$</code>（補充）</div><p>mlr3 的物件是 R6 類別：<code>$</code> 後面可能是<strong>欄位</strong>（<code>gs_result$response</code>）也可能是<strong>方法</strong>（<code>gs_result$score(measures)</code>，有括號）。Lab 講義的語法表也特別區分「data frame 的 <code>$</code>」與「mlr3 物件的 <code>$</code>」。</p></div>
+  <div class="callout note"><div class="ct"><abbr class="tt" tabindex="0" data-term="R6" data-tip="R 的物件導向系統；mlr3 物件用 $ 取欄位或呼叫方法（如 $train()）。" title="R 的物件導向系統；mlr3 物件用 $ 取欄位或呼叫方法（如 $train()）。">R6</abbr> 物件的 <code>$</code>（補充）</div><p>mlr3 的物件是 R6 類別：<code>$</code> 後面可能是<strong>欄位</strong>（<code>gs_result$response</code>）也可能是<strong>方法</strong>（<code>gs_result$score(measures)</code>，有括號）。Lab 講義的語法表也特別區分「data frame 的 <code>$</code>」與「mlr3 物件的 <code>$</code>」。</p></div>
 
   <h2 id="c5-py">mlr3 與 Python 生態系對照 <span class="slideref">投影片 29</span></h2>
-  <p>點卡片翻面。左邊是需求，翻過來是 R（mlr3 生態系）與 Python（<abbr class="tt" tabindex="0" data-term="scikit-learn" title="Python 的機器學習套件；投影片 29 拿它與 mlr3 生態系對照。">scikit-learn</abbr> 生態系）的對應。</p>
+  <p>點卡片翻面。左邊是需求，翻過來是 R（mlr3 生態系）與 Python（<abbr class="tt" tabindex="0" data-term="scikit-learn" data-tip="Python 的機器學習套件；投影片 29 拿它與 mlr3 生態系對照。" title="Python 的機器學習套件；投影片 29 拿它與 mlr3 生態系對照。">scikit-learn</abbr> 生態系）的對應。</p>
   <div class="grid3" id="flipGrid"></div>
   <div class="tablewrap"><table>
     <tr><th>需求</th><th>R：mlr3 生態系</th><th>Python：scikit-learn</th></tr>
     <tr><td>模型介面</td><td>Task + learner</td><td>Estimator</td></tr>
     <tr><td>擬合 / 預測</td><td><code>$train()</code> / <code>$predict()</code></td><td><code>.fit()</code> / <code>.predict()</code></td></tr>
-    <tr><td>文字特徵</td><td>quanteda 計數 / <abbr class="tt" tabindex="0" data-term="TF-IDF" title="詞頻乘以逆文件頻率的加權，降低到處都出現的詞的權重；投影片對照表中與計數並列。">TF-IDF</abbr></td><td>CountVectorizer / TfidfVectorizer</td></tr>
+    <tr><td>文字特徵</td><td>quanteda 計數 / <abbr class="tt" tabindex="0" data-term="TF-IDF" data-full="term frequency–inverse document frequency" data-tip="詞頻乘以逆文件頻率的加權，降低到處都出現的詞的權重；投影片對照表中與計數並列。" title="term frequency–inverse document frequency — 詞頻乘以逆文件頻率的加權，降低到處都出現的詞的權重；投影片對照表中與計數並列。">TF-IDF</abbr></td><td>CountVectorizer / TfidfVectorizer</td></tr>
     <tr><td>前處理＋模型</td><td>mlr3pipelines</td><td>Pipeline</td></tr>
     <tr><td>交叉驗證</td><td><code>resample()</code></td><td><code>cross_validate()</code></td></tr>
     <tr><td>參數搜尋</td><td>mlr3tuning</td><td>GridSearchCV</td></tr>
@@ -946,11 +955,11 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <h2 id="c5-tm">quanteda.textmodels 的簡單模型 <span class="slideref">投影片 30、36</span></h2>
   <div class="tablewrap"><table>
     <tr><th>模型</th><th>函式</th><th>本週</th></tr>
-    <tr><td>Naive Bayes</td><td><code>textmodel_nb()</code></td><td><abbr class="tt" tabindex="0" data-term="hate speech" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr>主模型（C05）</td></tr>
+    <tr><td>Naive Bayes</td><td><code>textmodel_nb()</code></td><td><abbr class="tt" tabindex="0" data-term="hate speech" data-tip="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr>主模型（C05）</td></tr>
     <tr><td>Regularized logistic regression</td><td><code>textmodel_lr()</code></td><td>選做（第 11 章，本機有實跑）</td></tr>
     <tr><td>Linear SVM</td><td><code>textmodel_svmlin()</code></td><td>實驗性、只支援兩類；本週改用 mlr3 的 <code>classif.svm</code></td></tr>
   </table></div>
-  <p>投影片 36：用 <abbr class="tt" tabindex="0" data-term="DFM" title="文件—特徵矩陣：列是文件、欄是特徵（字或詞）、格子是次數。本週仇恨言論為 4,000 × 2,916。">DFM</abbr> 與每列一個標籤擬合；NB 把計數到的特徵合併為支持各類別的證據；<code>predict()</code> 回傳類別，<code>type = "probability"</code> 回傳模型機率。重點放在 <strong>fit → predict → inspect</strong>。</p>
+  <p>投影片 36：用 <abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件—特徵矩陣：列是文件、欄是特徵（字或詞）、格子是次數。本週仇恨言論為 4,000 × 2,916。" title="document-feature matrix — 文件—特徵矩陣：列是文件、欄是特徵（字或詞）、格子是次數。本週仇恨言論為 4,000 × 2,916。">DFM</abbr> 與每列一個標籤擬合；NB 把計數到的特徵合併為支持各類別的證據；<code>predict()</code> 回傳類別，<code>type = "probability"</code> 回傳模型機率。重點放在 <strong>fit → predict → inspect</strong>。</p>
 
   <h2 id="c5-pkg">套件檢查 <span class="slideref">投影片 33</span></h2>
   <div class="codeblock nohl"><span class="lang">R · 投影片 33</span><button class="copyb jsonly">複製</button><pre># Install once
@@ -963,7 +972,7 @@ library(mlr3); library(mlr3learners)
 library(e1071); library(stringi)
 lrn("classif.svm")$id</pre></div>
   <p>準備好的標準：六個套件都能載入，最後一行回傳 <code>"classif.svm"</code>。<span class="slideref">投影片 33</span></p>
-  <div class="callout example"><div class="ct">本機環境紀錄</div><p>本教材的 R 輸出在 Linux aarch64 上執行：R 4.5.3（aarch64-conda-linux-gnu）、quanteda 4.5.1、quanteda.textmodels 0.9.10、mlr3 1.8.0、<abbr class="tt" tabindex="0" data-term="mlr3learners" title="mlr3 的 learner 擴充套件；本週的 classif.svm 由它提供（底層 e1071）。">mlr3learners</abbr> 0.16.0、<abbr class="tt" tabindex="0" data-term="e1071" title="提供 svm() 等函式的 R 套件；mlr3 的 classif.svm 在底層呼叫它。">e1071</abbr> 1.7.17、<abbr class="tt" tabindex="0" data-term="stringi" title="R 的字串處理套件；本週用 stri_trans_nfkc() 做 Unicode 正規化。">stringi</abbr> 1.8.9、glmnet 5.0。quanteda.textmodels、mlr3、mlr3learners、e1071 是這次從 CRAN 原始碼安裝。</p></div>
+  <div class="callout example"><div class="ct">本機環境紀錄</div><p>本教材的 R 輸出在 Linux aarch64 上執行：R 4.5.3（aarch64-conda-linux-gnu）、quanteda 4.5.1、quanteda.textmodels 0.9.10、mlr3 1.8.0、<abbr class="tt" tabindex="0" data-term="mlr3learners" data-tip="mlr3 的 learner 擴充套件；本週的 classif.svm 由它提供（底層 e1071）。" title="mlr3 的 learner 擴充套件；本週的 classif.svm 由它提供（底層 e1071）。">mlr3learners</abbr> 0.16.0、<abbr class="tt" tabindex="0" data-term="e1071" data-tip="提供 svm() 等函式的 R 套件；mlr3 的 classif.svm 在底層呼叫它。" title="提供 svm() 等函式的 R 套件；mlr3 的 classif.svm 在底層呼叫它。">e1071</abbr> 1.7.17、<abbr class="tt" tabindex="0" data-term="stringi" data-tip="R 的字串處理套件；本週用 stri_trans_nfkc() 做 Unicode 正規化。" title="R 的字串處理套件；本週用 stri_trans_nfkc() 做 Unicode 正規化。">stringi</abbr> 1.8.9、glmnet 5.0。quanteda.textmodels、mlr3、mlr3learners、e1071 是這次從 <abbr class="tt" tabindex="0" data-term="CRAN" data-full="Comprehensive R Archive Network" data-tip="R 套件的官方發佈網站；install.packages() 從這裡下載。" title="Comprehensive R Archive Network — R 套件的官方發佈網站；install.packages() 從這裡下載。">CRAN</abbr> 原始碼安裝。</p></div>
 
   <h2 id="c5-quiz">自我檢查</h2>
   <div class="mcq" data-ans="0" data-q="c5q1">
@@ -988,13 +997,13 @@ lrn("classif.svm")$id</pre></div>
     <button class="opt">它標示為實驗性（experimental）、只支援兩類</button>
     <button class="opt">它不能預測</button>
     <button class="opt">它比 NB 慢</button>
-    <div class="fb">Linear SVM: experimental, for two classes。本週改用 mlr3 + mlr3learners 的 <abbr class="tt" tabindex="0" data-term="classif.svm" title="mlr3learners 的 SVM learner（底層 e1071）；本週設 kernel = &quot;linear&quot;、cost = 1。">classif.svm</abbr>（底層 e1071）。<span class="slideref">投影片 30</span></div>
+    <div class="fb">Linear SVM: experimental, for two classes。本週改用 mlr3 + mlr3learners 的 <abbr class="tt" tabindex="0" data-term="classif.svm" data-tip="mlr3learners 的 SVM learner（底層 e1071）；本週設 kernel = &quot;linear&quot;、cost = 1。" title="mlr3learners 的 SVM learner（底層 e1071）；本週設 kernel = &quot;linear&quot;、cost = 1。">classif.svm</abbr>（底層 e1071）。<span class="slideref">投影片 30</span></div>
   </div>
 </section>
 
 <!-- ===================== CH06 ===================== -->
 <section class="chapter" id="ch06" data-slides="37,38,39,40">
-  <div class="crumb">06 · <abbr class="tt" tabindex="0" data-term="hate speech" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr> C01–C04</div>
+  <div class="crumb">06 · <abbr class="tt" tabindex="0" data-term="hate speech" data-tip="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr> C01–C04</div>
   <h1 class="ch">C01–C04：設定、讀檔、切分、中文字特徵與訓練詞彙</h1>
   <p class="lead">從 4,000 則留言到一個 3,200 × 603 的訓練矩陣。每一步都附老師腳本的程式碼與本機實跑輸出。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
@@ -1038,7 +1047,7 @@ See https://quanteda.io for tutorials and examples.
   <div class="tablewrap"><table>
     <tr><th>函式</th><th>用途</th></tr>
     <tr><td><code>quanteda_options()</code></td><td>設定本 session 的文字處理選項（這裡 threads = 1）</td></tr>
-    <tr><td><code>msrs()</code></td><td>建立 <abbr class="tt" tabindex="0" data-term="accuracy" title="全部預測中判對的比例；類別不平衡時容易被多數類撐高。">accuracy</abbr>、<abbr class="tt" tabindex="0" data-term="precision" title="被判為正類的文本中真的是正類的比例，TP/(TP+FP)。">precision</abbr>、<abbr class="tt" tabindex="0" data-term="recall" title="真正的正類中被模型抓到的比例，TP/(TP+FN)。">recall</abbr>、<abbr class="tt" tabindex="0" data-term="F1" title="precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。">F1</abbr> 四個指標物件（<code>classif.fbeta</code> 預設 β = 1，即 F1）</td></tr>
+    <tr><td><code>msrs()</code></td><td>建立 <abbr class="tt" tabindex="0" data-term="accuracy" data-tip="全部預測中判對的比例；類別不平衡時容易被多數類撐高。" title="全部預測中判對的比例；類別不平衡時容易被多數類撐高。">accuracy</abbr>、<abbr class="tt" tabindex="0" data-term="precision" data-tip="被判為正類的文本中真的是正類的比例，TP/(TP+FP)。" title="被判為正類的文本中真的是正類的比例，TP/(TP+FP)。">precision</abbr>、<abbr class="tt" tabindex="0" data-term="recall" data-tip="真正的正類中被模型抓到的比例，TP/(TP+FN)。" title="真正的正類中被模型抓到的比例，TP/(TP+FN)。">recall</abbr>、<abbr class="tt" tabindex="0" data-term="F1" data-full="F1 score (F-measure with β = 1)" data-tip="precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。" title="F1 score (F-measure with β = 1) — precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。">F1</abbr> 四個指標物件（<code>classif.fbeta</code> 預設 β = 1，即 F1）</td></tr>
   </table></div>
   <div class="callout note"><div class="ct">討論：如果是 FALSE？ <span class="slideref">投影片 38</span></div><p><code>data_dirs</code> 依序找 <code>Data</code>、<code>W6/lab/Data</code>、<code>W6/classroom/Data</code>、<code>../Data</code>。FALSE 表示 R 的工作目錄不在解壓縮後的資料夾，或 <code>Data/</code> 不在 R 檔旁邊——先 <code>getwd()</code> 檢查，而不是改程式。</p></div>
 
@@ -1099,11 +1108,11 @@ NonHateSpeech    HateSpeech
           324           476 </pre></div>
   <div class="linebyline">
     <div class="lr"><code>as_task_classif(hate["label"], target = "label", positive = "HateSpeech")</code><div>只把 label 欄放進 task：這個 task 只用來<strong>切分與評估</strong>，不擬合。正類明確設為 HateSpeech。</div></div>
-    <div class="lr"><code>hs_task$col_roles$stratum &lt;- "label"</code><div>依標籤<abbr class="tt" tabindex="0" data-term="stratified split" title="在每個類別內各自切分，使訓練與測試的類別比例相近；mlr3 用 col_roles$stratum。">分層</abbr>：每個類別內各自切約 80/20。</div></div>
+    <div class="lr"><code>hs_task$col_roles$stratum &lt;- "label"</code><div>依標籤<abbr class="tt" tabindex="0" data-term="stratified split" data-tip="在每個類別內各自切分，使訓練與測試的類別比例相近；mlr3 用 col_roles$stratum。" title="在每個類別內各自切分，使訓練與測試的類別比例相近；mlr3 用 col_roles$stratum。">分層</abbr>：每個類別內各自切約 80/20。</div></div>
     <div class="lr"><code>set.seed(7192); partition(hs_task, ratio = .8)</code><div>固定種子；回傳 <code>$train</code>、<code>$test</code> 列號。</div></div>
     <div class="lr"><code>parts &lt;- list(train = hate[hs_split$train, ], test = ...)</code><div>用列號切原始資料表，後面讀文字時用。</div></div>
   </div>
-  <p class="hint">討論：為什麼要在選詞彙<strong>之前</strong>保留測試列？——見第 01 章「<abbr class="tt" tabindex="0" data-term="data leakage" title="測試資料的資訊（包括詞彙選擇）進入訓練流程，使評估結果過度樂觀。">資料洩漏</abbr>」。<span class="slideref">投影片 42</span></p>
+  <p class="hint">討論：為什麼要在選詞彙<strong>之前</strong>保留測試列？——見第 01 章「<abbr class="tt" tabindex="0" data-term="data leakage" data-tip="測試資料的資訊（包括詞彙選擇）進入訓練流程，使評估結果過度樂觀。" title="測試資料的資訊（包括詞彙選擇）進入訓練流程，使評估結果過度樂觀。">資料洩漏</abbr>」。<span class="slideref">投影片 42</span></p>
 
   <h2 id="c6-c04a">C04a：中文字斷詞與 DFM <span class="slideref">投影片 43–46</span></h2>
   <div class="codeblock"><span class="lang">R · C04a_1（W6/classroom/W6_classification.R）</span><button class="copyb jsonly">複製</button><pre># C04a_1: Normalize and tokenize Chinese comments
@@ -1137,10 +1146,10 @@ dim(hs_dfm)</pre></div>
 [1] 4000 2916</pre></div>
   <div class="tablewrap"><table>
     <tr><th>函式</th><th>在這裡做什麼</th></tr>
-    <tr><td><code>stri_trans_nfkc()</code></td><td><abbr class="tt" tabindex="0" data-term="stringi" title="R 的字串處理套件；本週用 stri_trans_nfkc() 做 Unicode 正規化。">stringi</abbr>：在工作用的文字副本上做 Unicode <abbr class="tt" tabindex="0" data-term="NFKC" title="Unicode 相容性正規化形式；例如把全形英數轉成半形。本週以 stri_trans_nfkc() 處理。">NFKC</abbr> 正規化（例如全形英數轉半形）</td></tr>
+    <tr><td><code>stri_trans_nfkc()</code></td><td><abbr class="tt" tabindex="0" data-term="stringi" data-tip="R 的字串處理套件；本週用 stri_trans_nfkc() 做 Unicode 正規化。" title="R 的字串處理套件；本週用 stri_trans_nfkc() 做 Unicode 正規化。">stringi</abbr>：在工作用的文字副本上做 Unicode <abbr class="tt" tabindex="0" data-term="NFKC" data-full="Normalization Form KC (compatibility decomposition, then canonical composition)" data-tip="Unicode 相容性正規化形式；例如把全形英數轉成半形。本週以 stri_trans_nfkc() 處理。" title="Normalization Form KC (compatibility decomposition, then canonical composition) — Unicode 相容性正規化形式；例如把全形英數轉成半形。本週以 stri_trans_nfkc() 處理。">NFKC</abbr> 正規化（例如全形英數轉半形）</td></tr>
     <tr><td><code>tokens(what = "character")</code></td><td>把每則留言切成<strong>單一字元</strong>，並移除標點、符號、數字</td></tr>
     <tr><td><code>tokens_select("^\\p{Han}$", valuetype = "regex")</code></td><td>只保留漢字（剩下的拉丁字母、表情等丟掉）</td></tr>
-    <tr><td><code>dfm()</code></td><td>在稀疏的<abbr class="tt" tabindex="0" data-term="DFM" title="文件—特徵矩陣：列是文件、欄是特徵（字或詞）、格子是次數。本週仇恨言論為 4,000 × 2,916。">文件—特徵矩陣</abbr>中計數</td></tr>
+    <tr><td><code>dfm()</code></td><td>在稀疏的<abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件—特徵矩陣：列是文件、欄是特徵（字或詞）、格子是次數。本週仇恨言論為 4,000 × 2,916。" title="document-feature matrix — 文件—特徵矩陣：列是文件、欄是特徵（字或詞）、格子是次數。本週仇恨言論為 4,000 × 2,916。">文件—特徵矩陣</abbr>中計數</td></tr>
   </table></div>
   <div class="callout note"><div class="ct">討論 <span class="slideref">投影片 44、46</span></div><p><b>為什麼用字？</b>中文沒有空格，斷「詞」需要額外的斷詞器與詞典；用單字最簡單、可重製。<b>失去什麼？</b>詞與片語的意義（「台灣」被拆成「台」「灣」）、字序與否定（「不是」）、諧音與變體（如投影片 32 的「畜X」）。<b>4,000 × 2,916</b>：4,000 則留言 × 2,916 個不同的漢字。</p></div>
 
@@ -1148,7 +1157,7 @@ dim(hs_dfm)</pre></div>
   <div class="lab" id="labTok">
     <div class="lab-h"><span class="ic">🔤</span><span class="lt">中文字特徵檢視器</span><span class="ls">真實詞彙表 · 603 個訓練字</span></div>
     <div class="lab-b">
-      <p class="hint">輸入或貼上一則留言。綠框＝在 C04b 訓練詞彙（603 字）裡，下面的小字是它在 3,200 則訓練留言中的<abbr class="tt" tabindex="0" data-term="docfreq()" title="文件頻率：某特徵出現在幾份文件中（同一文件重複只算一次）。">文件頻率</abbr>；灰框＝漢字但不在詞彙裡（<abbr class="tt" tabindex="0" data-term="dfm_match()" title="讓新文件使用訓練詞彙的欄位與順序：多的字丟掉、缺的字補 0。">dfm_match</abbr> 會丟掉）；刪除線＝非漢字（C04a 就移除）。斷字規則在瀏覽器裡近似 <abbr class="tt" tabindex="0" data-term="quanteda" title="R 的文字分析套件；本週用來建立語料、斷詞與 DFM。">quanteda</abbr>（逐字＋漢字正規表示式），NFKC 正規化以瀏覽器的 <code>normalize("NFKC")</code> 處理。</p>
+      <p class="hint">輸入或貼上一則留言。綠框＝在 C04b 訓練詞彙（603 字）裡，下面的小字是它在 3,200 則訓練留言中的<abbr class="tt" tabindex="0" data-term="docfreq()" data-tip="文件頻率：某特徵出現在幾份文件中（同一文件重複只算一次）。" title="文件頻率：某特徵出現在幾份文件中（同一文件重複只算一次）。">文件頻率</abbr>；灰框＝漢字但不在詞彙裡（<abbr class="tt" tabindex="0" data-term="dfm_match()" data-tip="讓新文件使用訓練詞彙的欄位與順序：多的字丟掉、缺的字補 0。" title="讓新文件使用訓練詞彙的欄位與順序：多的字丟掉、缺的字補 0。">dfm_match</abbr> 會丟掉）；刪除線＝非漢字（C04a 就移除）。斷字規則在瀏覽器裡近似 <abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的文字分析套件；本週用來建立語料、斷詞與 DFM。" title="R 的文字分析套件；本週用來建立語料、斷詞與 DFM。">quanteda</abbr>（逐字＋漢字正規表示式），NFKC 正規化以瀏覽器的 <code>normalize("NFKC")</code> 處理。</p>
       <textarea id="tokIn" rows="2">垃圾426，滾回去中國，永不得進來台灣</textarea>
       <div class="row" style="margin-top:6px"><button class="btn" data-tokex="0">例：hs_26234</button><button class="btn" data-tokex="1">例：隨機測試留言</button></div>
       <div class="chips" id="tokChips"></div>
@@ -1190,7 +1199,7 @@ identical(featnames(train_dfm), featnames(test_dfm))</pre></div>
 
   <h2 id="c6-trim">修剪門檻實驗室：1% 是怎麼變成 603 的？</h2>
   <div class="lab" id="labTrim">
-    <div class="lab-h"><span class="ic">✂️</span><span class="lt"><abbr class="tt" tabindex="0" data-term="dfm_trim()" title="依次數或文件頻率刪除特徵；本週 min_docfreq = .01、docfreq_type = &quot;prop&quot;，只用訓練列。">dfm_trim</abbr>(<abbr class="tt" tabindex="0" data-term="min_docfreq" title="dfm_trim() 的最低文件頻率；docfreq_type = &quot;prop&quot; 時以比例計，數的是文件而非 token。">min_docfreq</abbr>) 門檻</span><span class="ls">真實資料 · 訓練列的文件頻率</span></div>
+    <div class="lab-h"><span class="ic">✂️</span><span class="lt"><abbr class="tt" tabindex="0" data-term="dfm_trim()" data-tip="依次數或文件頻率刪除特徵；本週 min_docfreq = .01、docfreq_type = &quot;prop&quot;，只用訓練列。" title="依次數或文件頻率刪除特徵；本週 min_docfreq = .01、docfreq_type = &quot;prop&quot;，只用訓練列。">dfm_trim</abbr>(<abbr class="tt" tabindex="0" data-term="min_docfreq" data-tip="dfm_trim() 的最低文件頻率；docfreq_type = &quot;prop&quot; 時以比例計，數的是文件而非 token。" title="dfm_trim() 的最低文件頻率；docfreq_type = &quot;prop&quot; 時以比例計，數的是文件而非 token。">min_docfreq</abbr>) 門檻</span><span class="ls">真實資料 · 訓練列的文件頻率</span></div>
     <div class="lab-b">
       <div class="row"><div class="seg" id="trSeg"><button class="on" data-ds="hs">仇恨言論（3,200 則訓練）</button><button data-ds="gs">Grandstanding（2,799 段訓練）</button></div></div>
       <div class="row" style="margin-top:8px"><label>min_docfreq = <b id="trV">1.0%</b></label><input type="range" id="trR" min="1" max="100" value="10" style="flex:1;min-width:180px"></div>
@@ -1203,7 +1212,7 @@ identical(featnames(train_dfm), featnames(test_dfm))</pre></div>
       <div class="explain" id="trTxt"></div>
     </div>
   </div>
-  <p class="hint">靜態說明：仇恨言論在 1% 門檻（≥ 32 則）保留 603 字；<abbr class="tt" tabindex="0" data-term="grandstanding" title="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。">grandstanding</abbr> 在 1%（≥ 27.99，即 ≥ 28 段）保留 629 詞。資料由本機實跑的 <code>docfreq(hs_dfm[hs_split$train, ])</code> 與 <code>docfreq(gs_dfm[gs_split$train, ])</code> 匯出。</p>
+  <p class="hint">靜態說明：仇恨言論在 1% 門檻（≥ 32 則）保留 603 字；<abbr class="tt" tabindex="0" data-term="grandstanding" data-tip="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。" title="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。">grandstanding</abbr> 在 1%（≥ 27.99，即 ≥ 28 段）保留 629 詞。資料由本機實跑的 <code>docfreq(hs_dfm[hs_split$train, ])</code> 與 <code>docfreq(gs_dfm[gs_split$train, ])</code> 匯出。</p>
 
   <h2 id="c6-quiz">自我檢查</h2>
   <div class="mcq" data-ans="1" data-q="c6q1">
@@ -1234,9 +1243,9 @@ identical(featnames(train_dfm), featnames(test_dfm))</pre></div>
 
 <!-- ===================== CH07 ===================== -->
 <section class="chapter" id="ch07" data-slides="51,52,53,54">
-  <div class="crumb">07 · <abbr class="tt" tabindex="0" data-term="hate speech" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr> C05–C07</div>
+  <div class="crumb">07 · <abbr class="tt" tabindex="0" data-term="hate speech" data-tip="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr> C05–C07</div>
   <h1 class="ch">C05–C07：擬合 Naive Bayes、讀混淆矩陣、檢查一則留言</h1>
-  <p class="lead"><abbr class="tt" tabindex="0" data-term="NB" title="Naive Bayes：假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。">NB</abbr> 擬合只要一行。真正的功夫在讀輸出：<abbr class="tt" tabindex="0" data-term="confusion matrix" title="預測 × 真實的次數表；mlr3 的 $confusion 中列是 response（預測）、欄是 truth（真實）。">混淆矩陣</abbr>的列是<strong>預測</strong>、欄是<strong>真實</strong>；0.999 是模型機率，不是<abbr class="tt" tabindex="0" data-term="accuracy" title="全部預測中判對的比例；類別不平衡時容易被多數類撐高。">準確率</abbr>。</p>
+  <p class="lead"><abbr class="tt" tabindex="0" data-term="NB" data-full="Naive Bayes" data-tip="假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。" title="Naive Bayes — 假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。">NB</abbr> 擬合只要一行。真正的功夫在讀輸出：<abbr class="tt" tabindex="0" data-term="confusion matrix" data-tip="預測 × 真實的次數表；mlr3 的 $confusion 中列是 response（預測）、欄是 truth（真實）。" title="預測 × 真實的次數表；mlr3 的 $confusion 中列是 response（預測）、欄是 truth（真實）。">混淆矩陣</abbr>的列是<strong>預測</strong>、欄是<strong>真實</strong>；0.999 是模型機率，不是<abbr class="tt" tabindex="0" data-term="accuracy" data-tip="全部預測中判對的比例；類別不平衡時容易被多數類撐高。" title="全部預測中判對的比例；類別不平衡時容易被多數類撐高。">準確率</abbr>。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c7-c05">C05 擬合 NB</a><a href="#c7-c06">C06 預測與評估</a><a href="#c7-metrics">四個指標</a><a href="#c7-cm">混淆矩陣實驗室</a><a href="#c7-c07">C07 一則留言</a><a href="#c7-nb">即時 NB 計分器</a><a href="#c7-quiz">自我檢查</a>
   </div>
@@ -1261,8 +1270,8 @@ nb$distribution</pre></div>
     <tr><th>參數</th><th>我們提供的東西</th></tr>
     <tr><td><code>x</code></td><td>訓練特徵計數（<code>train_dfm</code>）</td></tr>
     <tr><td><code>y</code></td><td>同樣列順序的標籤（<code>train_label</code>）——<b>這就是討論題的答案</b></td></tr>
-    <tr><td><code>smooth = 1</code></td><td>計數的平滑（<abbr class="tt" tabindex="0" data-term="smoothing" title="在計數上加常數（smooth = 1），避免沒見過的字讓某類機率變成 0。">Laplace</abbr>）</td></tr>
-    <tr><td><code>prior = "docfreq"</code></td><td>用訓練標籤的頻率當<abbr class="tt" tabindex="0" data-term="prior" title="類別的事前機率；prior = &quot;docfreq&quot; 用訓練集類別比例（HateSpeech 1,902/3,200）。">先驗</abbr></td></tr>
+    <tr><td><code>smooth = 1</code></td><td>計數的平滑（<abbr class="tt" tabindex="0" data-term="smoothing" data-tip="在計數上加常數（smooth = 1），避免沒見過的字讓某類機率變成 0。" title="在計數上加常數（smooth = 1），避免沒見過的字讓某類機率變成 0。">Laplace</abbr>）</td></tr>
+    <tr><td><code>prior = "docfreq"</code></td><td>用訓練標籤的頻率當<abbr class="tt" tabindex="0" data-term="prior" data-tip="類別的事前機率；prior = &quot;docfreq&quot; 用訓練集類別比例（HateSpeech 1,902/3,200）。" title="類別的事前機率；prior = &quot;docfreq&quot; 用訓練集類別比例（HateSpeech 1,902/3,200）。">先驗</abbr></td></tr>
   </table></div>
   <p class="hint">本機匯出的先驗：HateSpeech 0.5944、NonHateSpeech 0.4056（＝ 1,902 / 3,200 與 1,298 / 3,200）。</p>
 
@@ -1294,15 +1303,15 @@ response        HateSpeech NonHateSpeech
 &gt; round(nb_scores, 3)
       classif.acc classif.precision    classif.recall     classif.fbeta 
             0.694             0.726             0.779             0.752 </pre></div>
-  <div class="callout note"><div class="ct">討論（2 分鐘）：哪些格是<abbr class="tt" tabindex="0" data-term="FP" title="偽陽性：預測為正類，實際不是；會拉低 precision。C06 中為 140。">偽陽性</abbr>、<abbr class="tt" tabindex="0" data-term="FN" title="偽陰性：實際是正類卻被判為負類；會拉低 recall。C06 中為 105。">偽陰性</abbr>？ <span class="slideref">投影片 54</span></div><p>列（response）是預測、欄（truth）是真實。<b>偽陽性 FP = 140</b>：預測 HateSpeech、實際 NonHateSpeech。<b>偽陰性 FN = 105</b>：預測 NonHateSpeech、實際 HateSpeech。<abbr class="tt" tabindex="0" data-term="TP" title="真陽性：預測為正類，實際也是正類。C06 中為 371。">TP</abbr> = 371、<abbr class="tt" tabindex="0" data-term="TN" title="真陰性：預測為負類，實際也是負類。C06 中為 184。">TN</abbr> = 184。</p></div>
+  <div class="callout note"><div class="ct">討論（2 分鐘）：哪些格是<abbr class="tt" tabindex="0" data-term="FP" data-full="false positive" data-tip="偽陽性：預測為正類，實際不是；會拉低 precision。C06 中為 140。" title="false positive — 偽陽性：預測為正類，實際不是；會拉低 precision。C06 中為 140。">偽陽性</abbr>、<abbr class="tt" tabindex="0" data-term="FN" data-full="false negative" data-tip="偽陰性：實際是正類卻被判為負類；會拉低 recall。C06 中為 105。" title="false negative — 偽陰性：實際是正類卻被判為負類；會拉低 recall。C06 中為 105。">偽陰性</abbr>？ <span class="slideref">投影片 54</span></div><p>列（response）是預測、欄（truth）是真實。<b>偽陽性 FP = 140</b>：預測 HateSpeech、實際 NonHateSpeech。<b>偽陰性 FN = 105</b>：預測 NonHateSpeech、實際 HateSpeech。<abbr class="tt" tabindex="0" data-term="TP" data-full="true positive" data-tip="真陽性：預測為正類，實際也是正類。C06 中為 371。" title="true positive — 真陽性：預測為正類，實際也是正類。C06 中為 371。">TP</abbr> = 371、<abbr class="tt" tabindex="0" data-term="TN" data-full="true negative" data-tip="真陰性：預測為負類，實際也是負類。C06 中為 184。" title="true negative — 真陰性：預測為負類，實際也是負類。C06 中為 184。">TN</abbr> = 184。</p></div>
 
   <h2 id="c7-metrics">四個指標各在說什麼</h2>
   <div class="tablewrap"><table>
     <tr><th>指標</th><th>公式</th><th>C06 的算法</th><th>白話</th></tr>
     <tr><td>accuracy</td><td>(TP+TN) / N</td><td>(371+184)/800 = .694</td><td>全部猜對的比例</td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="precision" title="被判為正類的文本中真的是正類的比例，TP/(TP+FP)。">precision</abbr></td><td>TP / (TP+FP)</td><td>371/511 = .726</td><td>被判成仇恨的留言中，真的是仇恨的比例</td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="recall" title="真正的正類中被模型抓到的比例，TP/(TP+FN)。">recall</abbr></td><td>TP / (TP+FN)</td><td>371/476 = .779</td><td>真的仇恨留言中，被抓到的比例</td></tr>
-    <tr><td>F1（<abbr class="tt" tabindex="0" data-term="F1" title="precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。">classif.fbeta</abbr>, β=1）</td><td>2PR / (P+R)</td><td>2(.726)(.779)/(.726+.779) = .752</td><td>precision 與 recall 的調和平均</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="precision" data-tip="被判為正類的文本中真的是正類的比例，TP/(TP+FP)。" title="被判為正類的文本中真的是正類的比例，TP/(TP+FP)。">precision</abbr></td><td>TP / (TP+FP)</td><td>371/511 = .726</td><td>被判成仇恨的留言中，真的是仇恨的比例</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="recall" data-tip="真正的正類中被模型抓到的比例，TP/(TP+FN)。" title="真正的正類中被模型抓到的比例，TP/(TP+FN)。">recall</abbr></td><td>TP / (TP+FN)</td><td>371/476 = .779</td><td>真的仇恨留言中，被抓到的比例</td></tr>
+    <tr><td>F1（<abbr class="tt" tabindex="0" data-term="F1" data-full="F1 score (F-measure with β = 1)" data-tip="precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。" title="F1 score (F-measure with β = 1) — precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。">classif.fbeta</abbr>, β=1）</td><td>2PR / (P+R)</td><td>2(.726)(.779)/(.726+.779) = .752</td><td>precision 與 recall 的調和平均</td></tr>
   </table></div>
   <p class="hint">提醒：accuracy .694 只比「永遠猜 HateSpeech」的 .595 高約 10 個百分點（補充計算）。</p>
 
@@ -1403,7 +1412,7 @@ Levels: NonHateSpeech HateSpeech</pre></div>
 
 <!-- ===================== CH08 ===================== -->
 <section class="chapter" id="ch08" data-slides="58,59,60,61,62,63">
-  <div class="crumb">08 · <abbr class="tt" tabindex="0" data-term="hate speech" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr> C08</div>
+  <div class="crumb">08 · <abbr class="tt" tabindex="0" data-term="hate speech" data-tip="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr> C08</div>
   <h1 class="ch">C08：獨立人工參照集——recall 很高，precision 為什麼崩落？</h1>
   <p class="lead">內部測試集和訓練集來自同一個資料池。真正的考驗是拿模型去判一批<strong>另外蒐集、另外人工標註</strong>的留言，而且模型保持不變。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
@@ -1413,7 +1422,7 @@ Levels: NonHateSpeech HateSpeech</pre></div>
   <h2 id="c8-ref">獨立的人工參照檢查 <span class="slideref">投影片 58</span></h2>
   <ul>
     <li><b>合併檔</b>：<code>hate_speech_reference.csv</code> 合併了兩份各 1,000 則的驗證檔。</li>
-    <li><b><abbr class="tt" tabindex="0" data-term="BERT" title="Google 的預訓練 Transformer 語言模型；Wang, Day &amp; Wu (2022) 用它做仇恨言論分類，參照集的 BERT 檔名即由此而來。">BERT</abbr> / Lexicon</b>：原始檔名，記在 <code>source</code> 欄（15 則兩份都有，記為 BERT+Lexicon）。</li>
+    <li><b><abbr class="tt" tabindex="0" data-term="BERT" data-full="Bidirectional Encoder Representations from Transformers" data-tip="Google 的預訓練 Transformer 語言模型；Wang, Day &amp; Wu (2022) 用它做仇恨言論分類，參照集的 BERT 檔名即由此而來。" title="Bidirectional Encoder Representations from Transformers — Google 的預訓練 Transformer 語言模型；Wang, Day &amp; Wu (2022) 用它做仇恨言論分類，參照集的 BERT 檔名即由此而來。">BERT</abbr> / Lexicon</b>：原始檔名，記在 <code>source</code> 欄（15 則兩份都有，記為 BERT+Lexicon）。</li>
     <li><b>參照標籤</b>：<code>label</code> 來自「是否仇恨」欄，<strong>不是</strong>原始的模型預測欄。</li>
     <li>去重與衝突檢查後剩 <b>1,968</b> 則，全部排除在訓練之外。擬合後才檢查，模型保持固定。</li>
   </ul>
@@ -1453,7 +1462,7 @@ dim(ref_dfm); sum(ntoken(ref_dfm) == 0)</pre></div>
 &gt; dim(ref_dfm); sum(ntoken(ref_dfm) == 0)
 [1] 1968  603
 [1] 17</pre></div>
-  <div class="callout note"><div class="ct">討論：17 列<abbr class="tt" tabindex="0" data-term="zero-feature" title="對齊訓練詞彙後一個特徵都沒有的文件；NB 只能依先驗判斷。本週參照集有 17 則。">零特徵</abbr>代表空留言嗎？ <span class="slideref">投影片 60</span></div><p>不是。它們在<strong>保留下來的 603 個字</strong>裡一個都沒有（例如只有罕見字、英文、數字或表情）。Data/README 說零特徵的參照留言<strong>仍留在評估中</strong>；<abbr class="tt" tabindex="0" data-term="NB" title="Naive Bayes：假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。">NB</abbr> 對它們只能依<abbr class="tt" tabindex="0" data-term="prior" title="類別的事前機率；prior = &quot;docfreq&quot; 用訓練集類別比例（HateSpeech 1,902/3,200）。">先驗</abbr>判斷——先驗偏向 HateSpeech（.594）。本機匯出的資料證實：這 17 則的 P(HateSpeech) 全是 0.5944、全被判成 HateSpeech，而參照標籤只有 1 則是 HateSpeech（補充；可在下方實驗室勾「只看零特徵」驗證）。</p></div>
+  <div class="callout note"><div class="ct">討論：17 列<abbr class="tt" tabindex="0" data-term="zero-feature" data-tip="對齊訓練詞彙後一個特徵都沒有的文件；NB 只能依先驗判斷。本週參照集有 17 則。" title="對齊訓練詞彙後一個特徵都沒有的文件；NB 只能依先驗判斷。本週參照集有 17 則。">零特徵</abbr>代表空留言嗎？ <span class="slideref">投影片 60</span></div><p>不是。它們在<strong>保留下來的 603 個字</strong>裡一個都沒有（例如只有罕見字、英文、數字或表情）。Data/README 說零特徵的參照留言<strong>仍留在評估中</strong>；<abbr class="tt" tabindex="0" data-term="NB" data-full="Naive Bayes" data-tip="假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。" title="Naive Bayes — 假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。">NB</abbr> 對它們只能依<abbr class="tt" tabindex="0" data-term="prior" data-tip="類別的事前機率；prior = &quot;docfreq&quot; 用訓練集類別比例（HateSpeech 1,902/3,200）。" title="類別的事前機率；prior = &quot;docfreq&quot; 用訓練集類別比例（HateSpeech 1,902/3,200）。">先驗</abbr>判斷——先驗偏向 HateSpeech（.594）。本機匯出的資料證實：這 17 則的 P(HateSpeech) 全是 0.5944、全被判成 HateSpeech，而參照標籤只有 1 則是 HateSpeech（補充；可在下方實驗室勾「只看零特徵」驗證）。</p></div>
 
   <h2 id="c8-c08b">C08b：評估獨立的人工參照 <span class="slideref">投影片 61–62</span></h2>
   <div class="codeblock"><span class="lang">R · C08b（W6/classroom/W6_classification.R）</span><button class="copyb jsonly">複製</button><pre># C08b: Evaluate the separate human references
@@ -1486,16 +1495,16 @@ nrow(benchmark); round(benchmark_scores, 3)</pre></div>
     <tr><th>檢查</th><th>內部測試集</th><th>人工參照集</th></tr>
     <tr><td>留言數</td><td>800</td><td>1,968</td></tr>
     <tr><td>HateSpeech 比例（補充計算）</td><td>476 / 800 = 59.5%</td><td>209 / 1,968 = 10.6%</td></tr>
-    <tr><td>HateSpeech <abbr class="tt" tabindex="0" data-term="precision" title="被判為正類的文本中真的是正類的比例，TP/(TP+FP)。">precision</abbr></td><td>.726</td><td>.165</td></tr>
-    <tr><td>HateSpeech <abbr class="tt" tabindex="0" data-term="recall" title="真正的正類中被模型抓到的比例，TP/(TP+FN)。">recall</abbr></td><td>.779</td><td>.880</td></tr>
-    <tr><td>HateSpeech <abbr class="tt" tabindex="0" data-term="F1" title="precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。">F1</abbr></td><td>.752</td><td>.278</td></tr>
+    <tr><td>HateSpeech <abbr class="tt" tabindex="0" data-term="precision" data-tip="被判為正類的文本中真的是正類的比例，TP/(TP+FP)。" title="被判為正類的文本中真的是正類的比例，TP/(TP+FP)。">precision</abbr></td><td>.726</td><td>.165</td></tr>
+    <tr><td>HateSpeech <abbr class="tt" tabindex="0" data-term="recall" data-tip="真正的正類中被模型抓到的比例，TP/(TP+FN)。" title="真正的正類中被模型抓到的比例，TP/(TP+FN)。">recall</abbr></td><td>.779</td><td>.880</td></tr>
+    <tr><td>HateSpeech <abbr class="tt" tabindex="0" data-term="F1" data-full="F1 score (F-measure with β = 1)" data-tip="precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。" title="F1 score (F-measure with β = 1) — precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。">F1</abbr></td><td>.752</td><td>.278</td></tr>
   </table></div>
-  <div class="keyline"><b>投影片 63：</b>把 precision 和 recall 一起讀。這個簡單的 NB 在獨立樣本上產生大量<abbr class="tt" tabindex="0" data-term="FP" title="偽陽性：預測為正類，實際不是；會拉低 precision。C06 中為 140。">偽陽性</abbr>，儘管 recall 很高。</div>
-  <p>討論（投影片 62）：recall .880、precision .165 代表什麼錯誤？——209 則真正的仇恨留言抓到 184 則，但模型一共判了 1,115 則為仇恨，其中 931 則是<strong>偽陽性</strong>：大約每 6 則只有 1 則真的是仇恨（<abbr class="tt" tabindex="0" data-term="confusion matrix" title="預測 × 真實的次數表；mlr3 的 $confusion 中列是 response（預測）、欄是 truth（真實）。">混淆矩陣</abbr>由本機輸出計算，見下方實驗室）。</p>
+  <div class="keyline"><b>投影片 63：</b>把 precision 和 recall 一起讀。這個簡單的 NB 在獨立樣本上產生大量<abbr class="tt" tabindex="0" data-term="FP" data-full="false positive" data-tip="偽陽性：預測為正類，實際不是；會拉低 precision。C06 中為 140。" title="false positive — 偽陽性：預測為正類，實際不是；會拉低 precision。C06 中為 140。">偽陽性</abbr>，儘管 recall 很高。</div>
+  <p>討論（投影片 62）：recall .880、precision .165 代表什麼錯誤？——209 則真正的仇恨留言抓到 184 則，但模型一共判了 1,115 則為仇恨，其中 931 則是<strong>偽陽性</strong>：大約每 6 則只有 1 則真的是仇恨（<abbr class="tt" tabindex="0" data-term="confusion matrix" data-tip="預測 × 真實的次數表；mlr3 的 $confusion 中列是 response（預測）、欄是 truth（真實）。" title="預測 × 真實的次數表；mlr3 的 $confusion 中列是 response（預測）、欄是 truth（真實）。">混淆矩陣</abbr>由本機輸出計算，見下方實驗室）。</p>
 
   <h2 id="c8-why">為什麼？基率（base rate）實驗</h2>
   <div class="lab" id="labBase">
-    <div class="lab-h"><span class="ic">⚖️</span><span class="lt">同一個模型，不同的正類比例</span><span class="ls">補充（非講義內容）· 以真實 <abbr class="tt" tabindex="0" data-term="TPR" title="真陽性率＝TP/(TP+FN)，就是 recall。">TPR</abbr>/<abbr class="tt" tabindex="0" data-term="FPR" title="偽陽性率＝FP/(FP+TN)：實際為負類的文本中被誤判為正類的比例。">FPR</abbr> 為起點</span></div>
+    <div class="lab-h"><span class="ic">⚖️</span><span class="lt">同一個模型，不同的正類比例</span><span class="ls">補充（非講義內容）· 以真實 <abbr class="tt" tabindex="0" data-term="TPR" data-full="true positive rate" data-tip="真陽性率＝TP/(TP+FN)，就是 recall。" title="true positive rate — 真陽性率＝TP/(TP+FN)，就是 recall。">TPR</abbr>/<abbr class="tt" tabindex="0" data-term="FPR" data-full="false positive rate" data-tip="偽陽性率＝FP/(FP+TN)：實際為負類的文本中被誤判為正類的比例。" title="false positive rate — 偽陽性率＝FP/(FP+TN)：實際為負類的文本中被誤判為正類的比例。">FPR</abbr> 為起點</span></div>
     <div class="lab-b">
       <p class="hint">precision 不只取決於模型，也取決於樣本裡正類有多少。固定模型的 recall（TPR）與偽陽性率（FPR），只改變正類比例，看 precision 怎麼變。兩個預設值由本機混淆矩陣計算。</p>
       <div class="row"><button class="btn" data-bs="int">內部測試集的 TPR / FPR</button><button class="btn" data-bs="ref">參照集的 TPR / FPR</button></div>
@@ -1507,13 +1516,13 @@ nrow(benchmark); round(benchmark_scores, 3)</pre></div>
       <div class="grid3" style="margin-top:8px">
         <div class="stat"><div class="sl">precision</div><div class="sv" id="bsPrec">–</div></div>
         <div class="stat"><div class="sl">F1</div><div class="sv" id="bsF1">–</div></div>
-        <div class="stat"><div class="sl">每 1,000 則：<abbr class="tt" tabindex="0" data-term="TP" title="真陽性：預測為正類，實際也是正類。C06 中為 371。">TP</abbr> / FP</div><div class="sv" id="bsTF">–</div></div>
+        <div class="stat"><div class="sl">每 1,000 則：<abbr class="tt" tabindex="0" data-term="TP" data-full="true positive" data-tip="真陽性：預測為正類，實際也是正類。C06 中為 371。" title="true positive — 真陽性：預測為正類，實際也是正類。C06 中為 371。">TP</abbr> / FP</div><div class="sv" id="bsTF">–</div></div>
       </div>
       <canvas id="bsCanvas" width="760" height="200" style="width:100%;margin-top:10px"></canvas>
       <div class="explain" id="bsTxt"></div>
     </div>
   </div>
-  <p class="hint">靜態說明：precision = TPR·π / (TPR·π + FPR·(1−π))，π 是正類比例。內部測試 π = .595；參照集 π = .106。π 從六成掉到一成，就算 FPR 不變，同樣的偽陽性率會產生遠多於真陽性的 FP：把內部測試的 TPR .779、FPR .432 套到 π = .106，precision 只剩約 .176。參照集上實際的 FPR 是 .529（模型在不同來源的留言上更常誤判），precision 再降到 .165。所以落差<strong>大部分</strong>可由<abbr class="tt" tabindex="0" data-term="base rate" title="樣本中正類的比例；TPR、FPR 相同時，基率越低 precision 越低。">基率</abbr>解釋——這是<strong>補充解讀</strong>，投影片只陳述結果。</p>
+  <p class="hint">靜態說明：precision = TPR·π / (TPR·π + FPR·(1−π))，π 是正類比例。內部測試 π = .595；參照集 π = .106。π 從六成掉到一成，就算 FPR 不變，同樣的偽陽性率會產生遠多於真陽性的 FP：把內部測試的 TPR .779、FPR .432 套到 π = .106，precision 只剩約 .176。參照集上實際的 FPR 是 .529（模型在不同來源的留言上更常誤判），precision 再降到 .165。所以落差<strong>大部分</strong>可由<abbr class="tt" tabindex="0" data-term="base rate" data-tip="樣本中正類的比例；TPR、FPR 相同時，基率越低 precision 越低。" title="樣本中正類的比例；TPR、FPR 相同時，基率越低 precision 越低。">基率</abbr>解釋——這是<strong>補充解讀</strong>，投影片只陳述結果。</p>
 
   <h2 id="c8-cm">參照集混淆矩陣與留言瀏覽</h2>
   <div class="lab" id="labCmRef">
@@ -1560,9 +1569,9 @@ nrow(benchmark); round(benchmark_scores, 3)</pre></div>
 
 <!-- ===================== CH09 ===================== -->
 <section class="chapter" id="ch09" data-slides="64,65,66,67,68">
-  <div class="crumb">09 · <abbr class="tt" tabindex="0" data-term="grandstanding" title="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。">Grandstanding</abbr> G01–G02b</div>
+  <div class="crumb">09 · <abbr class="tt" tabindex="0" data-term="grandstanding" data-tip="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。" title="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。">Grandstanding</abbr> G01–G02b</div>
   <h1 class="ch">G01–G02b：英文詞特徵與 mlr3 的資料表</h1>
-  <p class="lead">第二個案例換成英文、換成 <abbr class="tt" tabindex="0" data-term="SVM" title="支持向量機：找一條間隔最大的分界；線性核下每個詞有一個權重。本週以 mlr3 的 classif.svm（e1071）擬合 grandstanding。">SVM</abbr>、換成 <abbr class="tt" tabindex="0" data-term="mlr3" title="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。">mlr3</abbr> 的完整 task/learner 介面。前處理的邏輯和<abbr class="tt" tabindex="0" data-term="hate speech" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr>一樣：先切分、只用訓練列選詞彙、測試列對齊。</p>
+  <p class="lead">第二個案例換成英文、換成 <abbr class="tt" tabindex="0" data-term="SVM" data-full="support vector machine" data-tip="支持向量機：找一條間隔最大的分界；線性核下每個詞有一個權重。本週以 mlr3 的 classif.svm（e1071）擬合 grandstanding。" title="support vector machine — 支持向量機：找一條間隔最大的分界；線性核下每個詞有一個權重。本週以 mlr3 的 classif.svm（e1071）擬合 grandstanding。">SVM</abbr>、換成 <abbr class="tt" tabindex="0" data-term="mlr3" data-tip="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。" title="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。">mlr3</abbr> 的完整 task/learner 介面。前處理的邏輯和<abbr class="tt" tabindex="0" data-term="hate speech" data-tip="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr>一樣：先切分、只用訓練列選詞彙、測試列對齊。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c9-src">資料來源與欄位</a><a href="#c9-g01">G01 讀檔與切分</a><a href="#c9-g02a">G02a 語料、斷詞、DFM</a><a href="#c9-tok">英文斷詞實驗室</a><a href="#c9-g02b">G02b 轉成資料表</a><a href="#c9-quiz">自我檢查</a>
   </div>
@@ -1623,7 +1632,7 @@ NonGrandstanding    Grandstanding
 
 NonGrandstanding    Grandstanding 
              369              331 </pre></div>
-  <div class="callout note"><div class="ct">討論 <span class="slideref">投影片 66、68</span></div><p>NonGrandstanding 較多（1,846 vs. 1,653）。<b><abbr class="tt" tabindex="0" data-term="stratified split" title="在每個類別內各自切分，使訓練與測試的類別比例相近；mlr3 用 col_roles$stratum。">分層</abbr>怎麼保住兩類？</b><code>stratum = "label"</code> 讓 partition 在<strong>每個類別內</strong>各切約 80/20：測試集 369 + 331，比例（52.7% / 47.3%）和全體（52.8% / 47.2%）幾乎一樣（補充計算）。</p></div>
+  <div class="callout note"><div class="ct">討論 <span class="slideref">投影片 66、68</span></div><p>NonGrandstanding 較多（1,846 vs. 1,653）。<b><abbr class="tt" tabindex="0" data-term="stratified split" data-tip="在每個類別內各自切分，使訓練與測試的類別比例相近；mlr3 用 col_roles$stratum。" title="在每個類別內各自切分，使訓練與測試的類別比例相近；mlr3 用 col_roles$stratum。">分層</abbr>怎麼保住兩類？</b><code>stratum = "label"</code> 讓 partition 在<strong>每個類別內</strong>各切約 80/20：測試集 369 + 331，比例（52.7% / 47.3%）和全體（52.8% / 47.2%）幾乎一樣（補充計算）。</p></div>
 
   <h2 id="c9-g02a">G02a：語料、斷詞、DFM、修剪與對齊 <span class="slideref">投影片 69–74</span></h2>
   <div class="codeblock"><span class="lang">R · G02a_1（W6/classroom/W6_classification.R）</span><button class="copyb jsonly">複製</button><pre># G02a_1: Build an English corpus and tokens
@@ -1674,17 +1683,17 @@ dim(gs_train_dfm); dim(gs_test_dfm)</pre></div>
 [1] 700 629</pre></div>
   <div class="tablewrap"><table>
     <tr><th>函式</th><th>在這裡做什麼</th></tr>
-    <tr><td><code>corpus(text_field = "text", docid_field = "doc_id")</code></td><td>從資料表讀文字與文件 ID（討論題：text 欄提供文字、doc_id 欄提供 ID）</td></tr>
+    <tr><td><code>corpus(text_field = "text", docid_field = "doc_id")</code></td><td>從資料表讀文字與文件 <abbr class="tt" tabindex="0" data-term="ID" data-full="identifier" data-tip="識別碼：唯一標示一份文件或一筆資料的編號。" title="identifier — 識別碼：唯一標示一份文件或一筆資料的編號。">ID</abbr>（討論題：text 欄提供文字、doc_id 欄提供 ID）</td></tr>
     <tr><td><code>tokens(remove_punct, remove_symbols, remove_numbers, remove_url)</code></td><td>切成詞並移除指定類型</td></tr>
     <tr><td><code>tokens_tolower()</code></td><td>合併大小寫</td></tr>
-    <tr><td><code>tokens_remove(stopwords("en"))</code></td><td>移除英文<abbr class="tt" tabindex="0" data-term="stopwords" title="高頻、內容意義少的功能詞；本週英文以 stopwords(&quot;en&quot;) 移除，中文未移除。">停用字</abbr>表</td></tr>
-    <tr><td><code>dfm_trim()</code> / <code>dfm_match()</code></td><td>用訓練<abbr class="tt" tabindex="0" data-term="docfreq()" title="文件頻率：某特徵出現在幾份文件中（同一文件重複只算一次）。">文件頻率</abbr>選詞；測試文件給同樣欄位</td></tr>
+    <tr><td><code>tokens_remove(stopwords("en"))</code></td><td>移除英文<abbr class="tt" tabindex="0" data-term="stopwords" data-tip="高頻、內容意義少的功能詞；本週英文以 stopwords(&quot;en&quot;) 移除，中文未移除。" title="高頻、內容意義少的功能詞；本週英文以 stopwords(&quot;en&quot;) 移除，中文未移除。">停用字</abbr>表</td></tr>
+    <tr><td><code>dfm_trim()</code> / <code>dfm_match()</code></td><td>用訓練<abbr class="tt" tabindex="0" data-term="docfreq()" data-tip="文件頻率：某特徵出現在幾份文件中（同一文件重複只算一次）。" title="文件頻率：某特徵出現在幾份文件中（同一文件重複只算一次）。">文件頻率</abbr>選詞；測試文件給同樣欄位</td></tr>
   </table></div>
   <div class="callout tip"><div class="ct">討論：英文詞特徵和中文字特徵有什麼不同？ <span class="slideref">投影片 72、74</span></div><p>英文有空格，一個特徵就是一個<strong>詞</strong>，詞彙量大得多（3,499 × 14,123，對比中文 4,000 × 2,916 個字）；停用字被移除了（中文沒有做）。兩邊修剪後的大小反而接近（629 vs. 603），因為同樣都用 1% 文件頻率門檻。兩個矩陣都有 629 欄，是因為測試矩陣是用 <code>dfm_match()</code> 對齊<strong>訓練</strong>詞彙，而不是自己選詞。</p></div>
 
   <h2 id="c9-tok">英文斷詞實驗室</h2>
   <div class="lab" id="labTokEn">
-    <div class="lab-h"><span class="ic">🔡</span><span class="lt">英文詞特徵檢視器</span><span class="ls">真實詞彙表 629 詞＋<abbr class="tt" tabindex="0" data-term="quanteda" title="R 的文字分析套件；本週用來建立語料、斷詞與 DFM。">quanteda</abbr> 英文停用字</span></div>
+    <div class="lab-h"><span class="ic">🔡</span><span class="lt">英文詞特徵檢視器</span><span class="ls">真實詞彙表 629 詞＋<abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的文字分析套件；本週用來建立語料、斷詞與 DFM。" title="R 的文字分析套件；本週用來建立語料、斷詞與 DFM。">quanteda</abbr> 英文停用字</span></div>
     <div class="lab-b">
       <p class="hint">輸入英文句子。刪除線＝停用字（<code>stopwords("en")</code>，本機匯出 175 個）；綠框＝在 629 個訓練詞裡；灰框＝不在詞彙。瀏覽器以簡化規則斷詞（小寫、去標點與數字），和 quanteda 的斷詞器不完全相同。</p>
       <textarea id="enIn" rows="3">Also I have not signed the no tax pledge. I am not intimidated by anybody.</textarea>
@@ -1735,7 +1744,7 @@ dim(gs_train_data); dim(gs_test_data)</pre></div>
 [1] 2799  630
 [1] 700 630</pre></div>
   <ul>
-    <li><code>quanteda::convert(to = "data.frame")</code> 把小型稀疏 <abbr class="tt" tabindex="0" data-term="DFM" title="文件—特徵矩陣：列是文件、欄是特徵（字或詞）、格子是次數。本週仇恨言論為 4,000 × 2,916。">DFM</abbr> 轉成<strong>稠密</strong>資料表；<code>doc_id &lt;- NULL</code> 移除識別碼，剩 629 個數值特徵欄。<span class="slideref">投影片 75</span></li>
+    <li><code>quanteda::convert(to = "data.frame")</code> 把小型稀疏 <abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件—特徵矩陣：列是文件、欄是特徵（字或詞）、格子是次數。本週仇恨言論為 4,000 × 2,916。" title="document-feature matrix — 文件—特徵矩陣：列是文件、欄是特徵（字或詞）、格子是次數。本週仇恨言論為 4,000 × 2,916。">DFM</abbr> 轉成<strong>稠密</strong>資料表；<code>doc_id &lt;- NULL</code> 移除識別碼，剩 629 個數值特徵欄。<span class="slideref">投影片 75</span></li>
     <li><b>為什麼 ID 不能當預測變數？</b>ID 和文字內容無關，卻可能和資料排序、來源批次相關，讓模型學到「誰是誰」而不是「說了什麼」；對新文本也沒有意義。<span class="slideref">投影片 76</span></li>
     <li><code>make.names(unique = TRUE)</code> 產生合法且唯一的欄名（例如以數字開頭或與 R 保留字衝突的詞）。<span class="slideref">投影片 77</span></li>
     <li><b>630 欄 = 629 文字特徵 + 1 個 label 欄。</b>目標欄 <code>label</code> 不是預測變數。<span class="slideref">投影片 78</span></li>
@@ -1757,7 +1766,7 @@ dim(gs_train_data); dim(gs_test_data)</pre></div>
     <button class="opt">測試集也做了 1% 修剪</button>
     <button class="opt">測試集剛好有 629 個詞</button>
     <button class="opt"><code>dfm_match()</code> 讓它使用訓練詞彙的欄位</button>
-    <div class="fb"><abbr class="tt" tabindex="0" data-term="dfm_match()" title="讓新文件使用訓練詞彙的欄位與順序：多的字丟掉、缺的字補 0。">dfm_match()</abbr> gives test documents the same feature columns。<span class="slideref">投影片 73–74</span></div>
+    <div class="fb"><abbr class="tt" tabindex="0" data-term="dfm_match()" data-tip="讓新文件使用訓練詞彙的欄位與順序：多的字丟掉、缺的字補 0。" title="讓新文件使用訓練詞彙的欄位與順序：多的字丟掉、缺的字補 0。">dfm_match()</abbr> gives test documents the same feature columns。<span class="slideref">投影片 73–74</span></div>
   </div>
   <div class="mcq" data-ans="0" data-q="c9q3">
     <div class="q">3. G02b_2 之後有 630 欄，但只有 629 個預測變數，因為？</div>
@@ -1771,9 +1780,9 @@ dim(gs_train_data); dim(gs_test_data)</pre></div>
 
 <!-- ===================== CH10 ===================== -->
 <section class="chapter" id="ch10" data-slides="79,80,81,82">
-  <div class="crumb">10 · <abbr class="tt" tabindex="0" data-term="grandstanding" title="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。">Grandstanding</abbr> G02c–G03</div>
+  <div class="crumb">10 · <abbr class="tt" tabindex="0" data-term="grandstanding" data-tip="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。" title="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。">Grandstanding</abbr> G02c–G03</div>
   <h1 class="ch">G02c–G03：定義 task、訓練 SVM、評估並讀錯誤</h1>
-  <p class="lead"><abbr class="tt" tabindex="0" data-term="mlr3" title="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。">mlr3</abbr> 把「資料與角色」（task）和「演算法與設定」（learner）分開。<code>lrn()</code> 只是設定，<code>$train()</code> 才會學。最後回到原文：一則判對的、一則判錯的。</p>
+  <p class="lead"><abbr class="tt" tabindex="0" data-term="mlr3" data-tip="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。" title="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。">mlr3</abbr> 把「資料與角色」（task）和「演算法與設定」（learner）分開。<code>lrn()</code> 只是設定，<code>$train()</code> 才會學。最後回到原文：一則判對的、一則判錯的。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c10-task">G02c_1 task</a><a href="#c10-lrn">G02c_2 learner</a><a href="#c10-train">G02c_3 訓練與預測</a><a href="#c10-g02d">G02d 評估</a><a href="#c10-cm">混淆矩陣實驗室</a><a href="#c10-w">SVM 權重</a><a href="#c10-g03">G03 讀一段</a><a href="#c10-err">讀錯誤</a><a href="#c10-reader">錯誤閱讀器</a><a href="#c10-cmp">兩個案例比較</a><a href="#c10-quiz">自我檢查</a>
   </div>
@@ -1814,11 +1823,11 @@ gs_learner$predict_type</pre></div>
 &gt; gs_learner$predict_type
 [1] "prob"</pre></div>
   <div class="linebyline">
-    <div class="lr"><code>type = "C-classification"</code><div><abbr class="tt" tabindex="0" data-term="e1071" title="提供 svm() 等函式的 R 套件；mlr3 的 classif.svm 在底層呼叫它。">e1071</abbr> 的分類型 <abbr class="tt" tabindex="0" data-term="SVM" title="支持向量機：找一條間隔最大的分界；線性核下每個詞有一個權重。本週以 mlr3 的 classif.svm（e1071）擬合 grandstanding。">SVM</abbr>。</div></div>
+    <div class="lr"><code>type = "C-classification"</code><div><abbr class="tt" tabindex="0" data-term="e1071" data-tip="提供 svm() 等函式的 R 套件；mlr3 的 classif.svm 在底層呼叫它。" title="提供 svm() 等函式的 R 套件；mlr3 的 classif.svm 在底層呼叫它。">e1071</abbr> 的分類型 <abbr class="tt" tabindex="0" data-term="SVM" data-full="support vector machine" data-tip="支持向量機：找一條間隔最大的分界；線性核下每個詞有一個權重。本週以 mlr3 的 classif.svm（e1071）擬合 grandstanding。" title="support vector machine — 支持向量機：找一條間隔最大的分界；線性核下每個詞有一個權重。本週以 mlr3 的 classif.svm（e1071）擬合 grandstanding。">SVM</abbr>。</div></div>
     <div class="lr"><code>kernel = "linear"</code><div>線性分界：每個詞一個權重，分數 = Σ 權重 × 次數 − 截距。</div></div>
     <div class="lr"><code>cost = 1</code><div>懲罰分錯的強度（越大越想把訓練點都分對）。</div></div>
     <div class="lr"><code>scale = FALSE</code><div>不把每欄標準化，直接用原始詞計數。</div></div>
-    <div class="lr"><code>predict_type = "prob"</code><div>除了類別也要機率（e1071 內部以 <abbr class="tt" tabindex="0" data-term="Platt scaling" title="以邏輯斯函數把 SVM 決策值轉成機率；e1071 用內部交叉驗證估計，所以需要設 seed。">Platt scaling</abbr> 估計，需要隨機的內部交叉驗證，所以 G02c_3 設 seed 7193）。</div></div>
+    <div class="lr"><code>predict_type = "prob"</code><div>除了類別也要機率（e1071 內部以 <abbr class="tt" tabindex="0" data-term="Platt scaling" data-tip="以邏輯斯函數把 SVM 決策值轉成機率；e1071 用內部交叉驗證估計，所以需要設 seed。" title="以邏輯斯函數把 SVM 決策值轉成機率；e1071 用內部交叉驗證估計，所以需要設 seed。">Platt scaling</abbr> 估計，需要隨機的內部交叉驗證，所以 G02c_3 設 seed 7193）。</div></div>
   </div>
   <p class="hint">討論：<code>lrn()</code> 有沒有已經從訓練列學到東西？——沒有。它只是「未擬合的 learner 與它的設定」。<span class="slideref">投影片 82</span></p>
 
@@ -1861,13 +1870,13 @@ response           Grandstanding NonGrandstanding
 &gt; round(gs_scores, 3)
       classif.acc classif.precision    classif.recall     classif.fbeta 
             0.673             0.704             0.532             0.606 </pre></div>
-  <div class="callout note"><div class="ct">討論：找出 74 個<abbr class="tt" tabindex="0" data-term="FP" title="偽陽性：預測為正類，實際不是；會拉低 precision。C06 中為 140。">偽陽性</abbr>與 155 個<abbr class="tt" tabindex="0" data-term="FN" title="偽陰性：實際是正類卻被判為負類；會拉低 recall。C06 中為 105。">偽陰性</abbr> <span class="slideref">投影片 86</span></div><p>response = Grandstanding、truth = NonGrandstanding 的 <b>74</b> 是 FP；response = NonGrandstanding、truth = Grandstanding 的 <b>155</b> 是 FN。FN 遠多於 FP，所以 <abbr class="tt" tabindex="0" data-term="recall" title="真正的正類中被模型抓到的比例，TP/(TP+FN)。">recall</abbr> 只有 .532：SVM 比較「保守」，漏掉將近一半的 grandstanding。注意這裡的欄位順序和<abbr class="tt" tabindex="0" data-term="hate speech" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr> C06 相同：正類在前。</p></div>
+  <div class="callout note"><div class="ct">討論：找出 74 個<abbr class="tt" tabindex="0" data-term="FP" data-full="false positive" data-tip="偽陽性：預測為正類，實際不是；會拉低 precision。C06 中為 140。" title="false positive — 偽陽性：預測為正類，實際不是；會拉低 precision。C06 中為 140。">偽陽性</abbr>與 155 個<abbr class="tt" tabindex="0" data-term="FN" data-full="false negative" data-tip="偽陰性：實際是正類卻被判為負類；會拉低 recall。C06 中為 105。" title="false negative — 偽陰性：實際是正類卻被判為負類；會拉低 recall。C06 中為 105。">偽陰性</abbr> <span class="slideref">投影片 86</span></div><p>response = Grandstanding、truth = NonGrandstanding 的 <b>74</b> 是 FP；response = NonGrandstanding、truth = Grandstanding 的 <b>155</b> 是 FN。FN 遠多於 FP，所以 <abbr class="tt" tabindex="0" data-term="recall" data-tip="真正的正類中被模型抓到的比例，TP/(TP+FN)。" title="真正的正類中被模型抓到的比例，TP/(TP+FN)。">recall</abbr> 只有 .532：SVM 比較「保守」，漏掉將近一半的 grandstanding。注意這裡的欄位順序和<abbr class="tt" tabindex="0" data-term="hate speech" data-tip="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr> C06 相同：正類在前。</p></div>
 
   <h2 id="c10-cm">混淆矩陣實驗室：SVM 測試集</h2>
   <div class="lab" id="labCmGs">
     <div class="lab-h"><span class="ic">🎯</span><span class="lt">SVM 測試集（700 段）</span><span class="ls">真實資料 · 本機實跑的 P(Grandstanding)</span></div>
     <div class="lab-b">
-      <p class="hint">門檻 0.5 重現投影片 86。把門檻往下拉，看 recall 怎麼回升、<abbr class="tt" tabindex="0" data-term="precision" title="被判為正類的文本中真的是正類的比例，TP/(TP+FP)。">precision</abbr> 怎麼下降（補充）。點格子讀那一格的摘錄。</p>
+      <p class="hint">門檻 0.5 重現投影片 86。把門檻往下拉，看 recall 怎麼回升、<abbr class="tt" tabindex="0" data-term="precision" data-tip="被判為正類的文本中真的是正類的比例，TP/(TP+FP)。" title="被判為正類的文本中真的是正類的比例，TP/(TP+FP)。">precision</abbr> 怎麼下降（補充）。點格子讀那一格的摘錄。</p>
       <div class="row"><label>門檻：P(Grandstanding) ≥ <b data-cm="thv">0.50</b></label><input type="range" data-cm="th" min="1" max="99" value="50" style="flex:1;min-width:180px"><button class="btn" data-cm="reset">回到 0.5</button></div>
       <div class="grid2" style="margin-top:10px">
         <div data-cm="grid"></div>
@@ -1950,7 +1959,7 @@ cat(parts$test$text[hate_errors[1]], "\n")</pre></div>
 
 &gt; cat(parts$test$text[hate_errors[1]], "\n")
 ﻿這隻河童來台灣亂更恐怖。 </pre></div>
-  <p class="hint">這是 hs_00453：參照 NonHateSpeech，<abbr class="tt" tabindex="0" data-term="NB" title="Naive Bayes：假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。">NB</abbr> 的 P(HateSpeech) = 0.791，判為 HateSpeech——一個<strong>偽陽性</strong>（由本機匯出的預測確認；Lab 解答只印出全文）。用 Wang, Day &amp; Wu 的定義想：目標是誰？攻擊了什麼屬性？需要什麼脈絡才能判斷？可在第 07 章的計分器按「第一則 NB 錯誤」看它的字證據。</p>
+  <p class="hint">這是 hs_00453：參照 NonHateSpeech，<abbr class="tt" tabindex="0" data-term="NB" data-full="Naive Bayes" data-tip="假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。" title="Naive Bayes — 假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。">NB</abbr> 的 P(HateSpeech) = 0.791，判為 HateSpeech——一個<strong>偽陽性</strong>（由本機匯出的預測確認；Lab 解答只印出全文）。用 Wang, Day &amp; Wu 的定義想：目標是誰？攻擊了什麼屬性？需要什麼脈絡才能判斷？可在第 07 章的計分器按「第一則 NB 錯誤」看它的字證據。</p>
 
   <h2 id="c10-reader">錯誤閱讀器：自己挑一則來讀</h2>
   <div class="lab" id="labErr">
@@ -1973,10 +1982,10 @@ cat(parts$test$text[hate_errors[1]], "\n")</pre></div>
   <h2 id="c10-cmp">兩個案例比較</h2>
   <div class="tablewrap"><table>
     <tr><th></th><th>仇恨言論 NB（內部測試）</th><th>Grandstanding SVM</th></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="accuracy" title="全部預測中判對的比例；類別不平衡時容易被多數類撐高。">accuracy</abbr></td><td>.694</td><td>.673</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="accuracy" data-tip="全部預測中判對的比例；類別不平衡時容易被多數類撐高。" title="全部預測中判對的比例；類別不平衡時容易被多數類撐高。">accuracy</abbr></td><td>.694</td><td>.673</td></tr>
     <tr><td>precision</td><td>.726</td><td>.704</td></tr>
     <tr><td>recall</td><td>.779</td><td>.532</td></tr>
-    <tr><td><abbr class="tt" tabindex="0" data-term="F1" title="precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。">F1</abbr></td><td>.752</td><td>.606</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="F1" data-full="F1 score (F-measure with β = 1)" data-tip="precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。" title="F1 score (F-measure with β = 1) — precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。">F1</abbr></td><td>.752</td><td>.606</td></tr>
   </table></div>
   <div class="callout warn"><div class="ct">不能直接說「NB 比 SVM 好」（Lab 講義第 4 節）</div><p>哪個案例 precision 高、哪個 recall 高？我們用了不同的標籤、語言與類別頻率，<strong>光看分數無法判斷差異是演算法造成的</strong>。要比較演算法，至少要在同一份資料、同一個切分、同一組特徵上比較——第 11 章的選做練習正是這樣做。</p></div>
 
@@ -1987,7 +1996,7 @@ cat(parts$test$text[hate_errors[1]], "\n")</pre></div>
     <button class="opt">訓練集的類別比例</button>
     <button class="opt">什麼都沒學到，只是設定好的未擬合 learner</button>
     <button class="opt">測試集的預測</button>
-    <div class="fb"><abbr class="tt" tabindex="0" data-term="lrn()" title="建立 mlr3 learner（演算法與設定），此時尚未擬合；$train() 才學習。">lrn()</abbr> creates an unfitted learner and sets its options；$train() 才擬合。<span class="slideref">投影片 81–82</span></div>
+    <div class="fb"><abbr class="tt" tabindex="0" data-term="lrn()" data-tip="建立 mlr3 learner（演算法與設定），此時尚未擬合；$train() 才學習。" title="建立 mlr3 learner（演算法與設定），此時尚未擬合；$train() 才學習。">lrn()</abbr> creates an unfitted learner and sets its options；$train() 才擬合。<span class="slideref">投影片 81–82</span></div>
   </div>
   <div class="mcq" data-ans="0" data-q="c10q2">
     <div class="q">2. G02d 的 recall .532 代表？</div>
@@ -2011,7 +2020,7 @@ cat(parts$test$text[hate_errors[1]], "\n")</pre></div>
 <section class="chapter" id="ch11" data-slides="92,93,94">
   <div class="crumb">11 · 延伸與課後</div>
   <h1 class="ch">延伸：同一組特徵換分類器、LLM 編碼，以及課後練習清單</h1>
-  <p class="lead">選做腳本 <code>optional_classifiers.R</code> 保留<abbr class="tt" tabindex="0" data-term="hate speech" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr>的切分與 603 字詞彙，換成 logistic regression 與 <abbr class="tt" tabindex="0" data-term="mlr3" title="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。">mlr3</abbr> <abbr class="tt" tabindex="0" data-term="SVM" title="支持向量機：找一條間隔最大的分界；線性核下每個詞有一個權重。本週以 mlr3 的 classif.svm（e1071）擬合 grandstanding。">SVM</abbr>。老師的 Lab 解答沒有附這兩段的輸出；本教材在本機實際跑了一次。</p>
+  <p class="lead">選做腳本 <code>optional_classifiers.R</code> 保留<abbr class="tt" tabindex="0" data-term="hate speech" data-tip="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr>的切分與 603 字詞彙，換成 logistic regression 與 <abbr class="tt" tabindex="0" data-term="mlr3" data-tip="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。" title="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。">mlr3</abbr> <abbr class="tt" tabindex="0" data-term="SVM" data-full="support vector machine" data-tip="支持向量機：找一條間隔最大的分界；線性核下每個詞有一個權重。本週以 mlr3 的 classif.svm（e1071）擬合 grandstanding。" title="support vector machine — 支持向量機：找一條間隔最大的分界；線性核下每個詞有一個權重。本週以 mlr3 的 classif.svm（e1071）擬合 grandstanding。">SVM</abbr>。老師的 Lab 解答沒有附這兩段的輸出；本教材在本機實際跑了一次。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c11-opt">選做：其他分類器</a><a href="#c11-res">本機結果比較</a><a href="#c11-llm">之後的週次：LLM</a><a href="#c11-ex">作答區</a><a href="#c11-run">R 執行清單</a><a href="#c11-quiz">自我檢查</a>
   </div>
@@ -2019,7 +2028,7 @@ cat(parts$test$text[hate_errors[1]], "\n")</pre></div>
   <h2 id="c11-opt">選做：重用特徵，換分類器 <span class="slideref">投影片 92</span></h2>
   <div class="tablewrap"><table>
     <tr><th>模型</th><th>套件介面</th><th>預測</th></tr>
-    <tr><td>Logistic regression</td><td><abbr class="tt" tabindex="0" data-term="quanteda.textmodels" title="quanteda 的模型擴充套件，提供 textmodel_nb()、textmodel_lr()、textmodel_svmlin() 等。">quanteda.textmodels</abbr> <code>textmodel_lr()</code></td><td><code>predict()</code></td></tr>
+    <tr><td>Logistic regression</td><td><abbr class="tt" tabindex="0" data-term="quanteda.textmodels" data-tip="quanteda 的模型擴充套件，提供 textmodel_nb()、textmodel_lr()、textmodel_svmlin() 等。" title="quanteda 的模型擴充套件，提供 textmodel_nb()、textmodel_lr()、textmodel_svmlin() 等。">quanteda.textmodels</abbr> <code>textmodel_lr()</code></td><td><code>predict()</code></td></tr>
     <tr><td>Linear SVM</td><td>mlr3 <code>lrn("classif.svm", kernel = "linear")</code></td><td><code>$train()</code> 然後 <code>$predict()</code></td></tr>
   </table></div>
   <p>保持同樣的訓練切分與詞彙。<code>textmodel_lr()</code> 在訓練資料內用交叉驗證選懲罰項（Lab 講義）。</p>
@@ -2097,13 +2106,13 @@ Warning in .resolve_control(control = control, nvars = nvars, deprecated = list(
 optional runtime (s): 4 </pre></div>
 
   <h2 id="c11-res">本機結果：同一切分、同一 603 字 <span class="slideref">投影片 92</span></h2>
-  <div class="tablewrap"><table id="optTable"><tr><th>模型（仇恨言論內部測試 800 則）</th><th><abbr class="tt" tabindex="0" data-term="accuracy" title="全部預測中判對的比例；類別不平衡時容易被多數類撐高。">accuracy</abbr></th><th><abbr class="tt" tabindex="0" data-term="precision" title="被判為正類的文本中真的是正類的比例，TP/(TP+FP)。">precision</abbr></th><th><abbr class="tt" tabindex="0" data-term="recall" title="真正的正類中被模型抓到的比例，TP/(TP+FN)。">recall</abbr></th><th><abbr class="tt" tabindex="0" data-term="F1" title="precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。">F1</abbr></th><th>來源</th></tr><tr><td><abbr class="tt" tabindex="0" data-term="NB" title="Naive Bayes：假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。">Multinomial NB</abbr>（C06）</td><td>.694</td><td>.726</td><td>.779</td><td>.752</td><td>投影片 54；本機相同</td></tr><tr><td>Logistic regression（<code>textmodel_lr</code>）</td><td>0.738</td><td>0.796</td><td>0.752</td><td>0.773</td><td>本機實跑（投影片／解答無數字）</td></tr><tr><td>Linear SVM（mlr3 <code>classif.svm</code>）</td><td>0.721</td><td>0.765</td><td>0.767</td><td>0.766</td><td>本機實跑（投影片／解答無數字）</td></tr></table></div>
+  <div class="tablewrap"><table id="optTable"><tr><th>模型（仇恨言論內部測試 800 則）</th><th><abbr class="tt" tabindex="0" data-term="accuracy" data-tip="全部預測中判對的比例；類別不平衡時容易被多數類撐高。" title="全部預測中判對的比例；類別不平衡時容易被多數類撐高。">accuracy</abbr></th><th><abbr class="tt" tabindex="0" data-term="precision" data-tip="被判為正類的文本中真的是正類的比例，TP/(TP+FP)。" title="被判為正類的文本中真的是正類的比例，TP/(TP+FP)。">precision</abbr></th><th><abbr class="tt" tabindex="0" data-term="recall" data-tip="真正的正類中被模型抓到的比例，TP/(TP+FN)。" title="真正的正類中被模型抓到的比例，TP/(TP+FN)。">recall</abbr></th><th><abbr class="tt" tabindex="0" data-term="F1" data-full="F1 score (F-measure with β = 1)" data-tip="precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。" title="F1 score (F-measure with β = 1) — precision 與 recall 的調和平均（β = 1）；mlr3 以 classif.fbeta 計算。">F1</abbr></th><th>來源</th></tr><tr><td><abbr class="tt" tabindex="0" data-term="NB" data-full="Naive Bayes" data-tip="假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。" title="Naive Bayes — 假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。">Multinomial NB</abbr>（C06）</td><td>.694</td><td>.726</td><td>.779</td><td>.752</td><td>投影片 54；本機相同</td></tr><tr><td>Logistic regression（<code>textmodel_lr</code>）</td><td>0.738</td><td>0.796</td><td>0.752</td><td>0.773</td><td>本機實跑（投影片／解答無數字）</td></tr><tr><td>Linear SVM（mlr3 <code>classif.svm</code>）</td><td>0.721</td><td>0.765</td><td>0.767</td><td>0.766</td><td>本機實跑（投影片／解答無數字）</td></tr></table></div>
   <div class="callout note"><div class="ct">怎麼讀（補充）</div><p>本機這次執行中，logistic regression 的四個指標都高於 NB（例如 F1 .773 vs. .752），線性 SVM 介於兩者之間。這三個模型在<strong>同一份資料、同一組 800 則測試留言、同一組特徵</strong>上比較，差異才比較能歸到演算法。但它們都只看單字計數，所以都會碰到第 08 章的同一個問題：在獨立參照集上表現如何，這裡沒有檢查。這些數字是本機一次執行的結果，<code>textmodel_lr()</code> 的交叉驗證帶有隨機性，換平台可能有小差異；投影片與 Lab 解答都沒有可供對照的數字。</p></div>
 
   <h2 id="c11-llm">之後的週次：LLM 編碼與分類 <span class="slideref">投影片 93</span></h2>
   <ul>
-    <li><b>分類</b>：prompt 與 <abbr class="tt" tabindex="0" data-term="codebook" title="定義類別、編碼單位、邊界例子與可用證據的規則書；例如 Boydstun 只看標題與前三段。">codebook</abbr> 可以引導類別標籤。</li>
-    <li><b><abbr class="tt" tabindex="0" data-term="AJPS" title="American Journal of Political Science，美國政治學頂尖期刊。">AJPS</abbr> 例子</b>：Benoit et al. (2026) 用 <abbr class="tt" tabindex="0" data-term="LLM" title="大型語言模型；可依 prompt 與 codebook 產生類別標籤，課程之後的週次討論。">LLM</abbr> 產生摘要與政策立場分數。</li>
+    <li><b>分類</b>：prompt 與 <abbr class="tt" tabindex="0" data-term="codebook" data-tip="定義類別、編碼單位、邊界例子與可用證據的規則書；例如 Boydstun 只看標題與前三段。" title="定義類別、編碼單位、邊界例子與可用證據的規則書；例如 Boydstun 只看標題與前三段。">codebook</abbr> 可以引導類別標籤。</li>
+    <li><b><abbr class="tt" tabindex="0" data-term="AJPS" data-full="American Journal of Political Science" data-tip="美國政治學頂尖期刊。" title="American Journal of Political Science — 美國政治學頂尖期刊。">AJPS</abbr> 例子</b>：Benoit et al. (2026) 用 <abbr class="tt" tabindex="0" data-term="LLM" data-full="large language model" data-tip="大型語言模型；可依 prompt 與 codebook 產生類別標籤，課程之後的週次討論。" title="large language model — 大型語言模型；可依 prompt 與 codebook 產生類別標籤，課程之後的週次討論。">LLM</abbr> 產生摘要與政策立場分數。</li>
     <li><b>之後的 LLM 週</b>：方法與驗證。</li>
   </ul>
   <p class="hint">連結（補充）：codebook 的角色不會因為 LLM 消失——prompt 就是寫給模型的 codebook；本週「標籤先於演算法」「用獨立證據驗證」的原則同樣適用。</p>
@@ -2118,7 +2127,7 @@ optional runtime (s): 4 </pre></div>
       <label class="f">4. 哪個案例 precision 較高、哪個 recall 較高？為什麼不能直接歸因於演算法？<textarea id="ans4" rows="3"></textarea></label>
       <div class="row"><button class="btn primary" id="ansCopy">複製成 R 註解</button><span class="hint" id="ansMsg"></span></div>
       <details class="quiz"><summary>參考思路（依 Lab 解答與投影片）</summary><div class="qa">
-        <p>1. <abbr class="tt" tabindex="0" data-term="FP" title="偽陽性：預測為正類，實際不是；會拉低 precision。C06 中為 140。">FP</abbr>（預測 <abbr class="tt" tabindex="0" data-term="grandstanding" title="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。">Grandstanding</abbr>、參照 NonGrandstanding），拉低 precision。<span class="slideref">投影片 91</span></p>
+        <p>1. <abbr class="tt" tabindex="0" data-term="FP" data-full="false positive" data-tip="偽陽性：預測為正類，實際不是；會拉低 precision。C06 中為 140。" title="false positive — 偽陽性：預測為正類，實際不是；會拉低 precision。C06 中為 140。">FP</abbr>（預測 <abbr class="tt" tabindex="0" data-term="grandstanding" data-tip="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。" title="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。">Grandstanding</abbr>、參照 NonGrandstanding），拉低 precision。<span class="slideref">投影片 91</span></p>
         <p>2. 可兩讀：自我宣傳，或是索取政策資訊的提問；需要聽證會主題、提問對象、前後文。不一致本身不證明誰對。</p>
         <p>3. 開放題；依 Wang, Day &amp; Wu 的定義（針對個人或群體屬性的辱罵，排除諷刺幽默、區分冒犯與仇恨）判斷。</p>
         <p>4. 仇恨言論 NB：precision .726、recall .779；grandstanding SVM：precision .704、recall .532。兩案例標籤、語言、類別比例都不同，分數差異不能歸因於演算法（Lab 講義第 4 節）。</p>
@@ -2165,14 +2174,14 @@ optional runtime (s): 4 </pre></div>
   <h1 class="ch">文獻導讀：六個研究案例與教科書</h1>
   <p class="lead">每張卡片整理「研究問題、資料、標籤怎麼來、驗證、和本週的連結」。</p>
   <div class="callout warn"><div class="ct">全文來源說明（請先讀）</div>
-    <p>課程 repo 的 W6 資料夾<strong>沒有</strong>任何一篇研究的全文 PDF（只有投影片中的書封、首頁與圖表截圖，<code>W6/assets/cases/</code>）。因此以下卡片<strong>只依投影片內容</strong>整理，頁碼標的是<strong>投影片頁</strong>；投影片上註明的原文出處頁（例如 Gillion Appendix A, pp. 163–166）照投影片轉錄，本教材沒有核對原文。需要深入閱讀時，請 Jerry 或同學以學校 VPN 從出版社取得全文。Lab 講義另提供 <abbr class="tt" tabindex="0" data-term="Park (2021)" title="Journal of Politics 論文：以群眾評分與文字模型測量委員會聽證會上的 grandstanding。">Park (2021)</abbr> 作者稿（Essex repository）與 Wang, Day &amp; Wu (2022) 的公開連結，本教材未下載核對。</p></div>
+    <p>課程 repo 的 W6 資料夾<strong>沒有</strong>任何一篇研究的全文 <abbr class="tt" tabindex="0" data-term="PDF" data-full="Portable Document Format" data-tip="可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。" title="Portable Document Format — 可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。">PDF</abbr>（只有投影片中的書封、首頁與圖表截圖，<code>W6/assets/cases/</code>）。因此以下卡片<strong>只依投影片內容</strong>整理，頁碼標的是<strong>投影片頁</strong>；投影片上註明的原文出處頁（例如 Gillion Appendix A, pp. 163–166）照投影片轉錄，本教材沒有核對原文。需要深入閱讀時，請 Jerry 或同學以學校 <abbr class="tt" tabindex="0" data-term="VPN" data-full="virtual private network" data-tip="虛擬私人網路；用台大 VPN 才能從校外下載付費期刊全文。" title="virtual private network — 虛擬私人網路；用台大 VPN 才能從校外下載付費期刊全文。">VPN</abbr> 從出版社取得全文。Lab 講義另提供 <abbr class="tt" tabindex="0" data-term="Park (2021)" data-tip="Journal of Politics 論文：以群眾評分與文字模型測量委員會聽證會上的 grandstanding。" title="Journal of Politics 論文：以群眾評分與文字模型測量委員會聽證會上的 grandstanding。">Park (2021)</abbr> 作者稿（Essex repository）與 Wang, Day &amp; Wu (2022) 的公開連結，本教材未下載核對。</p></div>
 
   <div class="reading" id="r-wang">
     <h2>Wang, Day &amp; Wu (2022). Political Hate Speech Detection and Lexicon Building: A Study in Taiwan. <em>IEEE Access</em> 10: 44337–44346. <span class="slideref">投影片 4、32、58、96</span></h2>
     <div class="rgrid">
-      <div><b>研究問題</b>偵測台灣政治新聞留言中的<abbr class="tt" tabindex="0" data-term="hate speech" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr>，並建立仇恨言論詞典（lexicon）。</div>
-      <div><b>資料</b>中文政治新聞留言。課堂使用老師授權的既有 <abbr class="tt" tabindex="0" data-term="Flair" title="一個 NLP 套件；課堂資料 merged-hate-speeches.csv 是先前為 Flair 微調準備的既有副本。">Flair</abbr> 微調副本 <code>merged-hate-speeches.csv</code>（31,071 列；17,548 正、13,523 負），以及兩份各 1,000 則的人工驗證表（<abbr class="tt" tabindex="0" data-term="BERT" title="Google 的預訓練 Transformer 語言模型；Wang, Day &amp; Wu (2022) 用它做仇恨言論分類，參照集的 BERT 檔名即由此而來。">BERT</abbr>／Lexicon）。</div>
-      <div><b>方法</b>原研究：仇恨言論詞典與 BERT 分類器。課堂：<abbr class="tt" tabindex="0" data-term="NB" title="Naive Bayes：假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。">multinomial NB</abbr>＋中文字計數（重新分析，不是重現原文）。</div>
+      <div><b>研究問題</b>偵測台灣政治新聞留言中的<abbr class="tt" tabindex="0" data-term="hate speech" data-tip="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr>，並建立仇恨言論詞典（lexicon）。</div>
+      <div><b>資料</b>中文政治新聞留言。課堂使用老師授權的既有 <abbr class="tt" tabindex="0" data-term="Flair" data-tip="一個 NLP 套件；課堂資料 merged-hate-speeches.csv 是先前為 Flair 微調準備的既有副本。" title="一個 NLP 套件；課堂資料 merged-hate-speeches.csv 是先前為 Flair 微調準備的既有副本。">Flair</abbr> 微調副本 <code>merged-hate-speeches.csv</code>（31,071 列；17,548 正、13,523 負），以及兩份各 1,000 則的人工驗證表（<abbr class="tt" tabindex="0" data-term="BERT" data-full="Bidirectional Encoder Representations from Transformers" data-tip="Google 的預訓練 Transformer 語言模型；Wang, Day &amp; Wu (2022) 用它做仇恨言論分類，參照集的 BERT 檔名即由此而來。" title="Bidirectional Encoder Representations from Transformers — Google 的預訓練 Transformer 語言模型；Wang, Day &amp; Wu (2022) 用它做仇恨言論分類，參照集的 BERT 檔名即由此而來。">BERT</abbr>／Lexicon）。</div>
+      <div><b>方法</b>原研究：仇恨言論詞典與 BERT 分類器。課堂：<abbr class="tt" tabindex="0" data-term="NB" data-full="Naive Bayes" data-tip="假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。" title="Naive Bayes — 假設特徵在類別內彼此獨立，把各字的 log 機率比與先驗相加來分類；本週用 textmodel_nb()。">multinomial NB</abbr>＋中文字計數（重新分析，不是重現原文）。</div>
       <div><b>標籤</b>保留既有二元標籤；不從個別編碼者評分或模型機率重算。參照集的 label 來自「是否仇恨」。</div>
       <div><b>定義</b>（Lab 講義轉述 §III-A(2), p. 44342）針對個人或群體屬性的辱罵，含政治信仰、政黨；排除諷刺幽默；區分冒犯與仇恨。</div>
       <div><b>與本週的連結</b>第 06–08 章；W6 結果是新的課堂執行，和論文的 BERT、詞典結果分開（投影片 96）。</div>
@@ -2184,11 +2193,11 @@ optional runtime (s): 4 </pre></div>
     <h2>Gillion (2016). <em>Governing with Words: The Political Dialogue on Race, Public Policy, and Inequality in America.</em> Cambridge UP. <span class="slideref">投影片 5–7、97</span></h2>
     <div class="rgrid">
       <div><b>研究問題</b>政治人物如何討論種族與少數族群關切；比較不同政治人物與時期的注意力。</div>
-      <div><b>資料</b>總統公開談話、國會口頭發言；<abbr class="tt" tabindex="0" data-term="coding unit" title="一個標籤所對應的文本範圍，例如句子、段落、留言或整篇演說。">編碼單位</abbr>＝段落，排除書面法案與程序性內容。</div>
-      <div><b>標籤</b>兩位助理編碼隨機樣本（每屆總統 300 段、每屆國會 1,000 段）；需明確種族指涉；信度 97%，Gillion <abbr class="tt" tabindex="0" data-term="adjudication" title="編碼者意見不一致時，由第三方（如 Gillion 本人）決定最終標籤。">裁決</abbr>不一致。</div>
+      <div><b>資料</b>總統公開談話、國會口頭發言；<abbr class="tt" tabindex="0" data-term="coding unit" data-tip="一個標籤所對應的文本範圍，例如句子、段落、留言或整篇演說。" title="一個標籤所對應的文本範圍，例如句子、段落、留言或整篇演說。">編碼單位</abbr>＝段落，排除書面法案與程序性內容。</div>
+      <div><b>標籤</b>兩位助理編碼隨機樣本（每屆總統 300 段、每屆國會 1,000 段）；需明確種族指涉；信度 97%，Gillion <abbr class="tt" tabindex="0" data-term="adjudication" data-tip="編碼者意見不一致時，由第三方（如 Gillion 本人）決定最終標籤。" title="編碼者意見不一致時，由第三方（如 Gillion 本人）決定最終標籤。">裁決</abbr>不一致。</div>
       <div><b>方法</b>人工標註段落後，用分類器延伸到全語料。</div>
       <div><b>限制</b>沒有明確指涉的編碼化種族訊息會被漏掉（如「inner city」；White 2007）。</div>
-      <div><b>與本週的連結</b>第 02 章：一致性 ≠ 效度；97% 是編碼者一致，不是分類器<abbr class="tt" tabindex="0" data-term="accuracy" title="全部預測中判對的比例；類別不平衡時容易被多數類撐高。">準確率</abbr>。</div>
+      <div><b>與本週的連結</b>第 02 章：一致性 ≠ 效度；97% 是編碼者一致，不是分類器<abbr class="tt" tabindex="0" data-term="accuracy" data-tip="全部預測中判對的比例；類別不平衡時容易被多數類撐高。" title="全部預測中判對的比例；類別不平衡時容易被多數類撐高。">準確率</abbr>。</div>
     </div>
     <p class="src">投影片引用：Appendix A, pp. 163–166；Appendix B；教科書 §17.1。</p>
   </div>
@@ -2196,7 +2205,7 @@ optional runtime (s): 4 </pre></div>
   <div class="reading" id="r-benoit">
     <h2>Benoit, Conway, Lauderdale, Laver &amp; Mikhaylov (2016). Crowd-sourced Text Analysis: Reproducible and Agile Production of Political Data. <em>APSR</em> 110(2): 278–295. <span class="slideref">投影片 8–11、98</span></h2>
     <div class="rgrid">
-      <div><b>研究問題</b><abbr class="tt" tabindex="0" data-term="crowd coding" title="由許多非專家重複判斷再加總；Benoit et al. (2016)、Park (2021) 使用。">群眾編碼</abbr>能否可靠、可重製地產生政治文本資料？</div>
+      <div><b>研究問題</b><abbr class="tt" tabindex="0" data-term="crowd coding" data-tip="由許多非專家重複判斷再加總；Benoit et al. (2016)、Park (2021) 使用。" title="由許多非專家重複判斷再加總；Benoit et al. (2016)、Park (2021) 使用。">群眾編碼</abbr>能否可靠、可重製地產生政治文本資料？</div>
       <div><b>資料</b>政黨宣言句子；另有 36 篇歐洲議會煤礦補助辯論演說（31 筆投票、六種語言）。</div>
       <div><b>標籤</b>重複的群眾判斷；簡單方案：先分主題、再評位置（Figure 1, p. 281）。</div>
       <div><b>驗證</b>與專家比較；兩波編碼的政黨分數相關 .93（Table 4, p. 291）；分數對照投票（Figure 7, p. 292）。</div>
@@ -2211,7 +2220,7 @@ optional runtime (s): 4 </pre></div>
     <div class="rgrid">
       <div><b>研究問題</b>新聞注意力如何隨時間分配在政策議題上？</div>
       <div><b>資料</b>《紐約時報》頭版，1996–2006；全語料 31,034 則。</div>
-      <div><b><abbr class="tt" tabindex="0" data-term="codebook" title="定義類別、編碼單位、邊界例子與可用證據的規則書；例如 Boydstun 只看標題與前三段。">codebook</abbr></b>證據＝標題與前三段；一個主要主題＋摘要；對齊故事線標籤（編碼手冊 pp. 1–5）。</div>
+      <div><b><abbr class="tt" tabindex="0" data-term="codebook" data-tip="定義類別、編碼單位、邊界例子與可用證據的規則書；例如 Boydstun 只看標題與前三段。" title="定義類別、編碼單位、邊界例子與可用證據的規則書；例如 Boydstun 只看標題與前三段。">codebook</abbr></b>證據＝標題與前三段；一個主要主題＋摘要；對齊故事線標籤（編碼手冊 pp. 1–5）。</div>
       <div><b>發現（節選）</b>International affairs 20.5%、Defense 14.4%、Health 5.8%、Energy 1.0%（Table A.1）。</div>
       <div><b>教訓</b>定義編碼者可以使用的證據；罕見類別。</div>
       <div><b>與本週的連結</b>第 03 章。</div>
@@ -2224,7 +2233,7 @@ optional runtime (s): 4 </pre></div>
     <div class="rgrid">
       <div><b>研究問題</b>受阻的學術職涯是否預測教士的 jihadist 修辭？</div>
       <div><b>資料</b>教士的阿拉伯文著作。</div>
-      <div><b>標籤（<abbr class="tt" tabindex="0" data-term="found labels" title="不是為研究而編碼、原本就存在的分類，例如 Nielsen 使用的 jihadist 整理文本。">found labels</abbr>）</b>765 篇 jihadist 整理的文本 vs. 1,951 篇抽樣教士文本（2014 工作論文 §4.1, pp. 13–14）。</div>
+      <div><b>標籤（<abbr class="tt" tabindex="0" data-term="found labels" data-tip="不是為研究而編碼、原本就存在的分類，例如 Nielsen 使用的 jihadist 整理文本。" title="不是為研究而編碼、原本就存在的分類，例如 Nielsen 使用的 jihadist 整理文本。">found labels</abbr>）</b>765 篇 jihadist 整理的文本 vs. 1,951 篇抽樣教士文本（2014 工作論文 §4.1, pp. 13–14）。</div>
       <div><b>方法</b>NB 字權重加總成連續的 jihad 分數。</div>
       <div><b>驗證</b>解釋「apostasy」的脈絡；與傳記、學術分類比較；jihadist 資訊圖（2017）。限制：傳記沉默不能證明非 jihadist（2013 §4.4.1, pp. 121–122；2014 p. 17 n. 16）。</div>
       <div><b>與本週的連結</b>第 03 章；第 07 章 NB 字權重。</div>
@@ -2235,11 +2244,11 @@ optional runtime (s): 4 </pre></div>
   <div class="reading" id="r-park">
     <h2>Park (2021). When Do Politicians Grandstand? Measuring Message Politics in Committee Hearings. <em>Journal of Politics</em> 83(1): 214–228. <span class="slideref">投影片 19–21、64、98</span></h2>
     <div class="rgrid">
-      <div><b>研究問題</b>國會議員何時在委員會聽證會上<abbr class="tt" tabindex="0" data-term="grandstanding" title="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。">作秀</abbr>？</div>
+      <div><b>研究問題</b>國會議員何時在委員會聽證會上<abbr class="tt" tabindex="0" data-term="grandstanding" data-tip="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。" title="聽證會上為表態、自我宣傳或攻擊而非取得資訊的發言；Park (2021) 的測量對象。">作秀</abbr>？</div>
       <div><b>資料</b>美國眾議院聽證會發言；課堂副本 3,500 列（去重 3,499）。</div>
-      <div><b>標籤</b>群眾評分；3,000 段標註、300 段保留測試；<abbr class="tt" tabindex="0" data-term="RMSE" title="均方根誤差：預測值與真實值差距的平方平均再開根號；Park (2021) 保留測試為 0.613。">RMSE</abbr> 0.613（原始單位，manuscript Figure 1, pp. 16–18）。</div>
+      <div><b>標籤</b>群眾評分；3,000 段標註、300 段保留測試；<abbr class="tt" tabindex="0" data-term="RMSE" data-full="root mean squared error" data-tip="均方根誤差：預測值與真實值差距的平方平均再開根號；Park (2021) 保留測試為 0.613。" title="root mean squared error — 均方根誤差：預測值與真實值差距的平方平均再開根號；Park (2021) 保留測試為 0.613。">RMSE</abbr> 0.613（原始單位，manuscript Figure 1, pp. 16–18）。</div>
       <div><b>發現</b>少數黨分數較高；解讀為訊息傳遞與權力（Figure 3, p. 20）。</div>
-      <div><b>課堂資料注意</b><code>rescaled_gs</code> 的二元切點未記錄，CSV 也沒有個別編碼者投票。</div>
+      <div><b>課堂資料注意</b><code>rescaled_gs</code> 的二元切點未記錄，<abbr class="tt" tabindex="0" data-term="CSV" data-full="comma-separated values" data-tip="以逗號分隔欄位的純文字表格檔。" title="comma-separated values — 以逗號分隔欄位的純文字表格檔。">CSV</abbr> 也沒有個別編碼者投票。</div>
       <div><b>與本週的連結</b>第 04、09、10 章。</div>
     </div>
     <p class="src">投影片 19–21；Data/README（replication: doi:10.7910/DVN/GSMBFX）。</p>
@@ -2249,7 +2258,7 @@ optional runtime (s): 4 </pre></div>
     <h2>Grimmer, Roberts &amp; Stewart (2022). <em>Text as Data</em>, Part IV（第 17–20 章） <span class="slideref">投影片 95、99</span></h2>
     <div class="tablewrap"><table>
       <tr><th>章</th><th>優先讀</th><th>教學連結</th></tr>
-      <tr><td>17 An Overview of <abbr class="tt" tabindex="0" data-term="supervised classification" title="用人工標註的文本訓練模型，再預測新文本的類別。">Supervised Classification</abbr></td><td>17.2–17.5</td><td>串起研究步驟</td></tr>
+      <tr><td>17 An Overview of <abbr class="tt" tabindex="0" data-term="supervised classification" data-tip="用人工標註的文本訓練模型，再預測新文本的類別。" title="用人工標註的文本訓練模型，再預測新文本的類別。">Supervised Classification</abbr></td><td>17.2–17.5</td><td>串起研究步驟</td></tr>
       <tr><td>18 Coding a Training Set</td><td>核心 18.1–18.2</td><td>codebook 與人工標籤</td></tr>
       <tr><td>19 Classifying Documents with Supervised Learning</td><td>模型細節 19.1–19.2</td><td>NB 與學習型分類器</td></tr>
       <tr><td>20 Checking Performance</td><td>核心 20.1</td><td>驗證與預測錯誤</td></tr>
@@ -2277,9 +2286,9 @@ optional runtime (s): 4 </pre></div>
   <h2 id="c13-pit">十個常見陷阱</h2>
   <div class="callout pit"><div class="ct">1. 先選詞彙再切分</div><p>詞彙的選擇偷看了測試集。正確：先 <code>partition()</code>，只對訓練列 <code>dfm_trim()</code>，測試列 <code>dfm_match()</code>。<span class="slideref">投影片 24</span></p></div>
   <div class="callout pit"><div class="ct">2. 測試矩陣欄位沒對齊</div><p>欄位順序不同，模型參數就套錯字。檢查 <code>identical(featnames(train_dfm), featnames(test_dfm))</code>。<span class="slideref">投影片 49–50</span></p></div>
-  <div class="callout pit"><div class="ct">3. 把 ID、分數或標籤放進 X</div><p><code>doc_id</code>、<code>key</code>、<code>sentimentit_score</code>、原始模型預測、coder 數值都不能當預測變數。<span class="slideref">投影片 64、76</span></p></div>
-  <div class="callout pit"><div class="ct">4. 讀反<abbr class="tt" tabindex="0" data-term="confusion matrix" title="預測 × 真實的次數表；mlr3 的 $confusion 中列是 response（預測）、欄是 truth（真實）。">混淆矩陣</abbr></div><p><abbr class="tt" tabindex="0" data-term="mlr3" title="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。">mlr3</abbr> 的 <code>$confusion</code>：列 = response（預測）、欄 = truth（真實）。<span class="slideref">投影片 54</span></p></div>
-  <div class="callout pit"><div class="ct">5. 只看 <abbr class="tt" tabindex="0" data-term="accuracy" title="全部預測中判對的比例；類別不平衡時容易被多數類撐高。">accuracy</abbr></div><p>多數類基準線（<abbr class="tt" tabindex="0" data-term="hate speech" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr> 59.5%）就已經不低；要同時看 <abbr class="tt" tabindex="0" data-term="precision" title="被判為正類的文本中真的是正類的比例，TP/(TP+FP)。">precision</abbr> 與 <abbr class="tt" tabindex="0" data-term="recall" title="真正的正類中被模型抓到的比例，TP/(TP+FN)。">recall</abbr>。<span class="slideref">投影片 40、63</span></p></div>
+  <div class="callout pit"><div class="ct">3. 把 <abbr class="tt" tabindex="0" data-term="ID" data-full="identifier" data-tip="識別碼：唯一標示一份文件或一筆資料的編號。" title="identifier — 識別碼：唯一標示一份文件或一筆資料的編號。">ID</abbr>、分數或標籤放進 X</div><p><code>doc_id</code>、<code>key</code>、<code>sentimentit_score</code>、原始模型預測、coder 數值都不能當預測變數。<span class="slideref">投影片 64、76</span></p></div>
+  <div class="callout pit"><div class="ct">4. 讀反<abbr class="tt" tabindex="0" data-term="confusion matrix" data-tip="預測 × 真實的次數表；mlr3 的 $confusion 中列是 response（預測）、欄是 truth（真實）。" title="預測 × 真實的次數表；mlr3 的 $confusion 中列是 response（預測）、欄是 truth（真實）。">混淆矩陣</abbr></div><p><abbr class="tt" tabindex="0" data-term="mlr3" data-tip="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。" title="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。">mlr3</abbr> 的 <code>$confusion</code>：列 = response（預測）、欄 = truth（真實）。<span class="slideref">投影片 54</span></p></div>
+  <div class="callout pit"><div class="ct">5. 只看 <abbr class="tt" tabindex="0" data-term="accuracy" data-tip="全部預測中判對的比例；類別不平衡時容易被多數類撐高。" title="全部預測中判對的比例；類別不平衡時容易被多數類撐高。">accuracy</abbr></div><p>多數類基準線（<abbr class="tt" tabindex="0" data-term="hate speech" data-tip="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">仇恨言論</abbr> 59.5%）就已經不低；要同時看 <abbr class="tt" tabindex="0" data-term="precision" data-tip="被判為正類的文本中真的是正類的比例，TP/(TP+FP)。" title="被判為正類的文本中真的是正類的比例，TP/(TP+FP)。">precision</abbr> 與 <abbr class="tt" tabindex="0" data-term="recall" data-tip="真正的正類中被模型抓到的比例，TP/(TP+FN)。" title="真正的正類中被模型抓到的比例，TP/(TP+FN)。">recall</abbr>。<span class="slideref">投影片 40、63</span></p></div>
   <div class="callout pit"><div class="ct">6. 把模型機率當準確率</div><p>0.999 是一則留言的模型機率。<span class="slideref">投影片 57</span></p></div>
   <div class="callout pit"><div class="ct">7. 以為內部測試分數可以外推</div><p>獨立參照集的正類比例與分布不同，precision 從 .726 掉到 .165。<span class="slideref">投影片 63</span></p></div>
   <div class="callout pit"><div class="ct">8. 把編碼者一致性當效度</div><p>Gillion 的 97% 是一致性；規則可能一致地漏掉隱性訴求。<span class="slideref">投影片 6–7</span></p></div>
@@ -2327,7 +2336,7 @@ optional runtime (s): 4 </pre></div>
   <h2 id="c14-ref">參考文獻 <span class="slideref">投影片 96–99</span></h2>
   <h3>練習資料</h3>
   <ul>
-    <li>Wang, Chih-Chien, Min-Yuh Day, and Chun-Lian Wu. 2022. “Political <abbr class="tt" tabindex="0" data-term="hate speech" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">Hate Speech</abbr> Detection and Lexicon Building: A Study in Taiwan.” <em>IEEE Access</em> 10: 44337–44346. doi:10.1109/ACCESS.2022.3160712</li>
+    <li>Wang, Chih-Chien, Min-Yuh Day, and Chun-Lian Wu. 2022. “Political <abbr class="tt" tabindex="0" data-term="hate speech" data-tip="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。" title="針對個人或群體屬性（含政治信仰、政黨）的辱罵；排除諷刺幽默，區分冒犯與仇恨（Wang, Day &amp; Wu 2022）。">Hate Speech</abbr> Detection and Lexicon Building: A Study in Taiwan.” <em><abbr class="tt" tabindex="0" data-term="IEEE" data-full="Institute of Electrical and Electronics Engineers" data-tip="電機電子工程師學會；IEEE Access 是它出版的期刊。" title="Institute of Electrical and Electronics Engineers — 電機電子工程師學會；IEEE Access 是它出版的期刊。">IEEE</abbr> Access</em> 10: 44337–44346. doi:10.1109/ACCESS.2022.3160712</li>
     <li>Park, Ju Yeon. 2021. “When Do Politicians Grandstand? Measuring Message Politics in Committee Hearings.” <em>The Journal of Politics</em> 83(1): 214–228. doi:10.1086/709147；replication doi:10.7910/DVN/GSMBFX</li>
   </ul>
   <h3>實證研究</h3>
@@ -2335,15 +2344,15 @@ optional runtime (s): 4 </pre></div>
     <li>Gillion, Daniel Q. 2016. <em>Governing with Words: The Political Dialogue on Race, Public Policy, and Inequality in America.</em> Cambridge University Press. Appendix A.</li>
     <li>Boydstun, Amber E. 2013. <em>Making the News: Politics, the Media, and Agenda Setting.</em> University of Chicago Press.</li>
     <li>Nielsen, Richard A. 2017. <em>Deadly Clerics: Blocked Ambition and the Paths to Jihad.</em> Cambridge University Press. 方法補充：Nielsen (2014)；English &amp; Nielsen (2024)。</li>
-    <li>Benoit, Kenneth, Drew Conway, Benjamin E. Lauderdale, Michael Laver, and Slava Mikhaylov. 2016. “<abbr class="tt" tabindex="0" data-term="crowd coding" title="由許多非專家重複判斷再加總；Benoit et al. (2016)、Park (2021) 使用。">Crowd-sourced</abbr> Text Analysis: Reproducible and Agile Production of Political Data.” <em><abbr class="tt" tabindex="0" data-term="APSR" title="American Political Science Review，美國政治學頂尖期刊。">APSR</abbr></em> 110(2): 278–295.</li>
-    <li>Benoit, Kenneth, Scott De Marchi, Conor Laver, Michael Laver, and Jinshuai Ma. 2026. “Using <abbr class="tt" tabindex="0" data-term="LLM" title="大型語言模型；可依 prompt 與 codebook 產生類別標籤，課程之後的週次討論。">large language models</abbr> to analyze political texts through natural language understanding.” <em><abbr class="tt" tabindex="0" data-term="AJPS" title="American Journal of Political Science，美國政治學頂尖期刊。">AJPS</abbr></em> 70(4): 1589–1605.</li>
+    <li>Benoit, Kenneth, Drew Conway, Benjamin E. Lauderdale, Michael Laver, and Slava Mikhaylov. 2016. “<abbr class="tt" tabindex="0" data-term="crowd coding" data-tip="由許多非專家重複判斷再加總；Benoit et al. (2016)、Park (2021) 使用。" title="由許多非專家重複判斷再加總；Benoit et al. (2016)、Park (2021) 使用。">Crowd-sourced</abbr> Text Analysis: Reproducible and Agile Production of Political Data.” <em><abbr class="tt" tabindex="0" data-term="APSR" data-full="American Political Science Review" data-tip="美國政治學頂尖期刊。" title="American Political Science Review — 美國政治學頂尖期刊。">APSR</abbr></em> 110(2): 278–295.</li>
+    <li>Benoit, Kenneth, Scott De Marchi, Conor Laver, Michael Laver, and Jinshuai Ma. 2026. “Using <abbr class="tt" tabindex="0" data-term="LLM" data-full="large language model" data-tip="大型語言模型；可依 prompt 與 codebook 產生類別標籤，課程之後的週次討論。" title="large language model — 大型語言模型；可依 prompt 與 codebook 產生類別標籤，課程之後的週次討論。">large language models</abbr> to analyze political texts through natural language understanding.” <em><abbr class="tt" tabindex="0" data-term="AJPS" data-full="American Journal of Political Science" data-tip="美國政治學頂尖期刊。" title="American Journal of Political Science — 美國政治學頂尖期刊。">AJPS</abbr></em> 70(4): 1589–1605.</li>
   </ul>
   <h3>教科書與軟體</h3>
   <ul>
     <li>Grimmer, J., M. E. Roberts, and B. M. Stewart. 2022. <em>Text as Data: A New Framework for Machine Learning and the Social Sciences.</em> Princeton University Press. 第 17–20 章，第 15 章為背景。</li>
-    <li><abbr class="tt" tabindex="0" data-term="quanteda" title="R 的文字分析套件；本週用來建立語料、斷詞與 DFM。">quanteda</abbr>（文字特徵）；<abbr class="tt" tabindex="0" data-term="quanteda.textmodels" title="quanteda 的模型擴充套件，提供 textmodel_nb()、textmodel_lr()、textmodel_svmlin() 等。">quanteda.textmodels</abbr>（<code>textmodel_nb()</code>、選做 <code>textmodel_lr()</code>）；<abbr class="tt" tabindex="0" data-term="mlr3" title="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。">mlr3</abbr> <code>classif.svm</code>（<abbr class="tt" tabindex="0" data-term="mlr3learners" title="mlr3 的 learner 擴充套件；本週的 classif.svm 由它提供（底層 e1071）。">mlr3learners</abbr>、<abbr class="tt" tabindex="0" data-term="e1071" title="提供 svm() 等函式的 R 套件；mlr3 的 classif.svm 在底層呼叫它。">e1071</abbr>）；<abbr class="tt" tabindex="0" data-term="stringi" title="R 的字串處理套件；本週用 stri_trans_nfkc() 做 Unicode 正規化。">stringi</abbr>。</li>
+    <li><abbr class="tt" tabindex="0" data-term="quanteda" data-tip="R 的文字分析套件；本週用來建立語料、斷詞與 DFM。" title="R 的文字分析套件；本週用來建立語料、斷詞與 DFM。">quanteda</abbr>（文字特徵）；<abbr class="tt" tabindex="0" data-term="quanteda.textmodels" data-tip="quanteda 的模型擴充套件，提供 textmodel_nb()、textmodel_lr()、textmodel_svmlin() 等。" title="quanteda 的模型擴充套件，提供 textmodel_nb()、textmodel_lr()、textmodel_svmlin() 等。">quanteda.textmodels</abbr>（<code>textmodel_nb()</code>、選做 <code>textmodel_lr()</code>）；<abbr class="tt" tabindex="0" data-term="mlr3" data-tip="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。" title="R 的機器學習框架：以 task 與 learner 統一介面，負責切分、重抽樣與評估。">mlr3</abbr> <code>classif.svm</code>（<abbr class="tt" tabindex="0" data-term="mlr3learners" data-tip="mlr3 的 learner 擴充套件；本週的 classif.svm 由它提供（底層 e1071）。" title="mlr3 的 learner 擴充套件；本週的 classif.svm 由它提供（底層 e1071）。">mlr3learners</abbr>、<abbr class="tt" tabindex="0" data-term="e1071" data-tip="提供 svm() 等函式的 R 套件；mlr3 的 classif.svm 在底層呼叫它。" title="提供 svm() 等函式的 R 套件；mlr3 的 classif.svm 在底層呼叫它。">e1071</abbr>）；<abbr class="tt" tabindex="0" data-term="stringi" data-tip="R 的字串處理套件；本週用 stri_trans_nfkc() 做 Unicode 正規化。" title="R 的字串處理套件；本週用 stri_trans_nfkc() 做 Unicode 正規化。">stringi</abbr>。</li>
   </ul>
-  <div class="pagemeta">本教材依據 NTLDEV 7191 W6 投影片（Yen-Chieh Liao 廖彥傑，課程日 2026-10-16；PDF 99 頁，2026-10-22 編譯版）、<code>W6/classroom/W6_classification.R</code>、<code>error_reading.R</code>、<code>optional_classifiers.R</code>、<code>W6/lab/Lab_Session_W6.R</code> 與解答、<code>Data/README.md</code> 製作。R 輸出為本機重新執行（R 4.5.3（aarch64-conda-linux-gnu）、quanteda 4.5.1、quanteda.textmodels 0.9.10、mlr3 1.8.0、mlr3learners 0.16.0、e1071 1.7.17、stringi 1.8.9、glmnet 5.0）。文獻卡片僅依投影片內容（repo 中無全文）。標示「補充（非講義內容）」的段落與玩具示範為額外說明。製作日期 2026-11-06。</div>
+  <div class="pagemeta">本教材依據 NTLDEV 7191 W6 投影片（Yen-Chieh Liao 廖彥傑，課程日 2026-10-16；<abbr class="tt" tabindex="0" data-term="PDF" data-full="Portable Document Format" data-tip="可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。" title="Portable Document Format — 可攜式文件格式：固定版面的文件檔；投影片與文獻多是這種格式。">PDF</abbr> 99 頁，2026-10-22 編譯版）、<code>W6/classroom/W6_classification.R</code>、<code>error_reading.R</code>、<code>optional_classifiers.R</code>、<code>W6/lab/Lab_Session_W6.R</code> 與解答、<code>Data/README.md</code> 製作。R 輸出為本機重新執行（R 4.5.3（aarch64-conda-linux-gnu）、quanteda 4.5.1、quanteda.textmodels 0.9.10、mlr3 1.8.0、mlr3learners 0.16.0、e1071 1.7.17、stringi 1.8.9、glmnet 5.0）。文獻卡片僅依投影片內容（repo 中無全文）。標示「補充（非講義內容）」的段落與玩具示範為額外說明。製作日期 2026-11-06。</div>
 </section>
 
     <div class="foot">NTLDEV 7191 Text as Data · W6 互動自學教材 · 依據 2026-10-16 課程投影片製作（2026-11-06）</div>
@@ -2352,7 +2361,7 @@ optional runtime (s): 4 </pre></div>
     <div class="sp-h"><span class="sp-t">投影片對照</span><span class="sp-l" id="spLabel">p. 1 / 99</span><button class="btn" id="spClose">隱藏</button></div>
     <div class="sp-img" id="spImgBox" title="點擊放大"><img id="spImg" alt="投影片頁面"></div>
     <div class="sp-nav"><button class="btn arrow" id="spPrev" aria-label="上一頁投影片">‹</button><div class="sp-tabs" id="spTabs"></div><button class="btn arrow" id="spNext" aria-label="下一頁投影片">›</button></div>
-    <label class="sp-follow"><input type="checkbox" id="spFollow" checked> 跟著捲動自動切換頁面</label>
+    <label class="sp-follow"><input type="checkbox" id="spFollow" checked> 跟著捲動自動切換頁面</label><label class="sp-follow sp-rev"><input type="checkbox" id="spRev" checked> 換投影片時，講義跟著跳到對應段落</label><form class="sp-goto" id="spGoto" autocomplete="off"><label for="spGotoN">跳到投影片 p.</label><input type="number" id="spGotoN" min="1" inputmode="numeric" placeholder="頁碼"><button class="btn" type="submit">前往</button></form>
     <div class="sp-note" id="spNote"></div>
     <div class="sp-strip" id="spStrip"></div>
   </aside>
@@ -2630,6 +2639,7 @@ function spChapterDefault(){
     spSet(parsePages(sec.dataset.slides),"本章開頭：先顯示最相關的投影片；捲動到標有「投影片」的段落時會自動切換。");return true;}
   return false;
 }
+try{window.__spApi={page:function(){return spPage;},setPage:function(n){spSetPage(n);},show:function(id){show(id,true);},badge:function(b){spFromBadge(b);},cur:function(){return spBadge;},chapter:function(){return current;},n:function(){return SLIDES.length;}};}catch(__e){}
 function spTrack(){
   if(!$("#spFollow").checked)return;
   var sec=$("section.chapter.show");if(!sec)return;
@@ -3022,6 +3032,78 @@ else if(window.__w8fail)window.__w8fail("no chapter shown");}catch(__e){__w8e("i
 })();
 
 </script>
+<script id="series-revsync">
+(function(){try{
+  var A=window.__spApi;if(!A)return;
+  var M={"exact": "講義已跳到引用投影片 p.%s 的段落：", "chapter": "講義已跳到涵蓋投影片 p.%s 的章節開頭：", "near": "講義沒有直接引用投影片 p.%s，已跳到最接近的段落（%s）：", "none": "講義沒有引用投影片 p.%s 附近的段落。", "stay": "目前段落已涵蓋投影片 p.%s。"};
+  function $(s,r){return (r||document).querySelector(s);}
+  function $$(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));}
+  var rev=$("#spRev"),follow=$("#spFollow");
+  try{var v=localStorage.getItem("tad:revsync");if(v==="0")rev.checked=false;}catch(e){}
+  rev.addEventListener("change",function(){try{localStorage.setItem("tad:revsync",rev.checked?"1":"0");}catch(e){}});
+  function pages(t){var out=[];(String(t).match(/\d+\s*[–-]\s*\d+|\d+/g)||[]).forEach(function(m){var r=m.split(/[–-]/).map(function(x){return +x;});
+    if(r.length===2&&r[1]>=r[0]&&r[1]-r[0]<200){for(var i=r[0];i<=r[1];i++)out.push(i);}else out.push(r[0]);});
+    var N=A.n();return out.filter(function(n){return n>=1&&n<=N;});}
+  var IDX=null;
+  function index(){if(IDX)return IDX;IDX=[];var k=0;
+    $$("section.chapter").forEach(function(sec){
+      $$(".slideref",sec).forEach(function(b){if(b.closest("aside,.fb,#ttPop"))return;var pg=pages(b.textContent);if(!pg.length)return;
+        IDX.push({b:b,sec:sec,lo:Math.min.apply(null,pg),hi:Math.max.apply(null,pg),pg:pg,k:k++});});});
+    return IDX;}
+  function ctx(b){var h=b.closest("h2,h3,h4");if(h)return h.textContent.replace(b.textContent,"").trim();
+    var c=b.closest(".callout,.card,li,p,td,div");var t=c?c.textContent.replace(/\s+/g," ").trim():"";return t.length>60?t.slice(0,58)+"…":t;}
+  function secTitle(sec){var h=$("h2",sec)||$("h1",sec);if(!h)return sec.id;var c=h.cloneNode(true);$$(".slideref",c).forEach(function(x){x.parentNode.removeChild(x);});return c.textContent.replace(/\s+/g," ").trim();}
+  function block(b){return b.closest("h2,h3,h4,.callout,li,p,tr,.card,figure,div")||b;}
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+  function setNote(h){var n=$("#spNote");if(n)n.innerHTML=h;}
+  function flash(el){if(!el)return;el.classList.remove("sp-hit");void el.offsetWidth;el.classList.add("sp-hit");setTimeout(function(){el.classList.remove("sp-hit");},2400);}
+  function vis(e){return !!(e&&e.offsetParent);}
+  function goSec(sec){if(A.chapter()!==sec.id)A.show(sec.id);}
+  function scrollTo(el){var r=el.getBoundingClientRect();var y=r.top+(window.pageYOffset||document.documentElement.scrollTop)-Math.round(innerHeight*0.26);
+    window.scrollTo(0,Math.max(0,y));}
+  var lockT=null,wasFollow=true;
+  function lock(){if(lockT){clearTimeout(lockT);}else{wasFollow=follow?follow.checked:false;}if(follow)follow.checked=false;
+    lockT=setTimeout(function(){if(follow)follow.checked=wasFollow;lockT=null;},450);}
+  function jump(p){
+    if(!rev.checked)return;
+    var cur=A.cur();if(cur&&vis(cur)&&pages(cur.textContent).indexOf(p)>=0){return;}
+    var I=index(),chap=A.chapter();
+    var ex=I.filter(function(x){return x.pg.indexOf(p)>=0;});
+    /* chapter that walks through this part of the deck: density of nearby citations (+ current-chapter bonus) */
+    var sc={};I.forEach(function(x){var d=1e9;x.pg.forEach(function(q){d=Math.min(d,Math.abs(q-p));});if(d<=2)sc[x.sec.id]=(sc[x.sec.id]||0)+(d===0?2:1)/x.pg.length;});
+    $$("section.chapter").forEach(function(s){if(s.dataset.slides&&pages(s.dataset.slides).indexOf(p)>=0)sc[s.id]=(sc[s.id]||0)+1;});
+    if(sc[chap])sc[chap]+=1.5;
+    ex.sort(function(a,b){return ((sc[b.sec.id]||0)-(sc[a.sec.id]||0))||(a.pg.length-b.pg.length)||(a.k-b.k);});
+    lock();
+    for(var i=0;i<ex.length;i++){goSec(ex[i].sec);if(vis(ex[i].b)){land(ex[i].b,p,"exact");return;}}
+    var secs=$$("section.chapter").filter(function(s){return s.dataset.slides&&pages(s.dataset.slides).indexOf(p)>=0;});
+    secs.sort(function(a,b){return (a.id===chap?0:1)-(b.id===chap?0:1);});
+    if(secs.length){goSec(secs[0]);window.scrollTo(0,0);A.setPage(p);setNote(M.chapter.replace("%s",p)+"<b>"+esc(secTitle(secs[0]))+"</b>");flash($("h2",secs[0]));return;}
+    var near=I.slice().sort(function(a,b){
+      var da=a.hi<p?p-a.hi:(a.lo-p)+0.5,db=b.hi<p?p-b.hi:(b.lo-p)+0.5;return (da-db)||((a.hi-a.lo)-(b.hi-b.lo))||(a.k-b.k);});
+    for(var j=0;j<near.length&&j<40;j++){goSec(near[j].sec);if(vis(near[j].b)){land(near[j].b,p,"near");return;}}
+    setNote(M.none.replace("%s",p));
+  }
+  function land(b,p,kind){
+    setTimeout(function(){
+      scrollTo(b);
+      if(kind==="exact"){A.badge(b);}
+      A.setPage(p);
+      var lab=b.textContent.replace(/\s+/g," ").trim();
+      setNote((kind==="exact"?M.exact.replace("%s",p):M.near.replace("%s",p).replace("%s",esc(lab)))+"<b>"+esc(ctx(b)||secTitle(b.closest("section.chapter")))+"</b>");
+      flash(block(b));
+    },40);
+  }
+  document.addEventListener("click",function(e){
+    var t=e.target.closest("#spPrev,#spNext,#spTabs button,#spStrip button");if(!t)return;
+    setTimeout(function(){jump(A.page());},0);
+  });
+  var f=$("#spGoto"),inp=$("#spGotoN");
+  if(inp)inp.max=A.n();
+  if(f)f.addEventListener("submit",function(e){e.preventDefault();var n=parseInt(inp.value,10);if(!(n>=1&&n<=A.n()))return;
+    A.setPage(n);jump(n);inp.blur();});
+}catch(e){if(window.console)console.warn("revsync",e);(window.__w8errs=window.__w8errs||[]).push("revsync: "+(e&&e.message));}})();
+</script>
 <script id="series-js">
 (function(){try{
   var pop=null,cur=null;
@@ -3029,7 +3111,7 @@ else if(window.__w8fail)window.__w8fail("no chapter shown");}catch(__e){__w8e("i
   function show(el){
     var p=mk(),tip=el.getAttribute("data-tip")||"";cur=el;
     p.innerHTML="";var b=document.createElement("b");b.appendChild(document.createTextNode(el.getAttribute("data-term")||el.textContent));
-    p.appendChild(b);p.appendChild(document.createTextNode(tip));p.style.display="block";
+    p.appendChild(b);var fu=el.getAttribute("data-full");if(fu){var fi=document.createElement("i");fi.className="full";fi.appendChild(document.createTextNode(fu));p.appendChild(fi);}p.appendChild(document.createTextNode(tip));p.style.display="block";
     var r=el.getBoundingClientRect(),w=p.offsetWidth,h=p.offsetHeight,vw=document.documentElement.clientWidth,vh=window.innerHeight;
     var x=r.left+r.width/2-w/2;if(x<12)x=12;if(x+w>vw-12)x=vw-12-w;
     var y=r.bottom+8;if(y+h>vh-8&&r.top-h-8>8)y=r.top-h-8;
@@ -3038,7 +3120,7 @@ else if(window.__w8fail)window.__w8fail("no chapter shown");}catch(__e){__w8e("i
   function hide(){if(pop)pop.style.display="none";cur=null;}
   var els=document.querySelectorAll("abbr.tt");
   for(var i=0;i<els.length;i++){(function(el){
-    var t=el.getAttribute("title");if(t){el.setAttribute("data-tip",t);el.removeAttribute("title");}
+    var t=el.getAttribute("title");if(t){if(!el.getAttribute("data-tip"))el.setAttribute("data-tip",t);el.removeAttribute("title");}
     el.addEventListener("mouseenter",function(){show(el);});
     el.addEventListener("mouseleave",function(){if(document.activeElement!==el)hide();});
     el.addEventListener("focus",function(){show(el);});
