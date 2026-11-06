@@ -363,6 +363,18 @@
   .outbox pre{max-height:520px;overflow:auto;}
   @media (max-width:860px){ #labExp .grid2{grid-template-columns:1fr;} }
 </style>
+<style id="series-css">
+.topbar .homebtn,.topbar .langbtn{text-decoration:none;display:inline-flex;align-items:center;}
+.topbar .langbtn{font-weight:600;}
+/* flow step titles: block, same font, slightly larger than the description (Jerry 2026-11-06) */
+.flow .st .sn{display:block;font-family:inherit;font-size:0.95rem;font-weight:700;line-height:1.4;margin-bottom:3px;}
+abbr.tt{text-decoration:underline dotted;text-decoration-thickness:1px;text-underline-offset:3px;cursor:help;border-bottom:0;}
+abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-radius:2px;}
+#ttPop{position:fixed;z-index:9999;max-width:min(340px,calc(100vw - 24px));padding:10px 12px;border-radius:10px;
+  background:var(--surface-2,#1d2330);color:var(--text,#e8ecf3);border:1px solid var(--border,#3a4456);box-shadow:0 8px 28px rgba(0,0,0,.35);
+  font-size:.86rem;line-height:1.55;display:none;pointer-events:none;word-wrap:break-word;overflow-wrap:anywhere;}
+#ttPop b{display:block;margin-bottom:3px;color:var(--accent,#6aa9ff);}
+</style>
 </head>
 <body>
 <div id="bar"></div>
@@ -401,7 +413,7 @@
   </nav>
   <div id="scrim"></div>
   <main id="main">
-    <div class="topbar">
+    <div class="topbar"><a class="btn homebtn" href="index.html" title="回到 Text as Data 課程講義目錄">⌂ 課程目錄</a><a class="btn langbtn" href="W8.en.html" hreflang="en" lang="en" title="Switch to English">English</a>
       <button class="menubtn jsonly" id="menubtn" aria-label="開啟章節選單">☰ 章節</button>
       <button class="btn jsonly" id="prevBtn">← 上一章</button>
       <button class="btn jsonly" id="nextBtn">下一章 →</button>
@@ -418,7 +430,7 @@
 <section class="chapter" id="ch00" data-slides="2,3,4,5">
   <div class="crumb">00 · 本週導覽</div>
   <h1 class="ch">W8：主題模型與其變形（Topic Models and Their Variants）</h1>
-  <p class="lead">W7 問的是「講者站在一條維度的<strong>哪個位置</strong>」；W8 換一個問題：「政治行動者<strong>選擇談什麼</strong>？」也就是議題注意力（issue attention）。工具是主題模型：LDA 與 STM。</p>
+  <p class="lead">W7 問的是「講者站在一條維度的<strong>哪個位置</strong>」；W8 換一個問題：「政治行動者<strong>選擇談什麼</strong>？」也就是議題注意力（<abbr class="tt" tabindex="0" data-term="issue attention" title="政治行動者選擇談什麼、談多少；W8 的研究任務，對照 W7 的立場位置。">issue attention</abbr>）。工具是<abbr class="tt" tabindex="0" data-term="topic model" title="從字的共現型態找出重複出現的字分布（主題），並估計每份文件主題比例的無監督方法。">主題模型</abbr>：<abbr class="tt" tabindex="0" data-term="LDA" title="潛在狄利克雷分配：每份文件是多個主題的混合、每個主題是字的機率分布；只用字詞計數同時估計兩者（Blei, Ng &amp; Jordan 2003）。">LDA</abbr> 與 <abbr class="tt" tabindex="0" data-term="STM" title="結構主題模型：讓主題盛行率（與用字）隨文件共變數（如政黨、時期）變化，並可估計這些關聯與不確定性（Roberts et al. 2014）。">STM</abbr>。</p>
 
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c0-w7">從 W7 到 W8</a><a href="#c0-obj">本週要能說明的事</a><a href="#c0-map">概念地圖</a><a href="#c0-cases">六個研究案例</a><a href="#c0-read">讀案例的四個問題</a><a href="#c0-data">練習資料</a><a href="#c0-how">怎麼使用</a><a href="#c0-due">期限與公告</a>
@@ -427,21 +439,21 @@
   <h2 id="c0-w7">從「位置」到「注意力」 <span class="slideref">投影片 2–3</span></h2>
   <div class="tablewrap"><table>
     <tr><th>研究任務</th><th>政治學問題</th></tr>
-    <tr><td>W7：文本縮放（text scaling）</td><td>講者在一個<strong>事先定義的維度</strong>上站在哪裡？</td></tr>
+    <tr><td>W7：文本縮放（<abbr class="tt" tabindex="0" data-term="text scaling" title="把文本放到一條事先定義的維度上估計講者位置的方法（W7 的主題，如 Wordfish）。">text scaling</abbr>）</td><td>講者在一個<strong>事先定義的維度</strong>上站在哪裡？</td></tr>
     <tr><td>W8：議題注意力（issue attention）</td><td>政治行動者<strong>選擇討論什麼</strong>？</td></tr>
   </table></div>
-  <p>本週的引導問題是：政治學者怎麼把大量文本變成「政治行為與政治傳播」的證據？課程先讀六篇政治學研究（競選承諾、新聞框架、政策擴散、社群媒體），再拆解模型怎麼運作，最後用 R 把模型套到政治演說上。<span class="slideref">投影片 2–3</span></p>
+  <p>本週的引導問題是：政治學者怎麼把大量文本變成「政治行為與政治傳播」的證據？課程先讀六篇政治學研究（競選承諾、新聞框架、<abbr class="tt" tabindex="0" data-term="policy diffusion" title="一個地方的政策採納影響其他地方是否、何時、如何採納類似政策；Gilardi et al. 研究它在議題定義階段的作用。">政策擴散</abbr>、社群媒體），再拆解模型怎麼運作，最後用 R 把模型套到政治演說上。<span class="slideref">投影片 2–3</span></p>
   <div class="callout tip"><div class="ct">白話翻譯（補充）</div><p>W7 像是替每位議員在「支持／反對預算」這把尺上找位置；W8 則像是幫每篇演說做一張<strong>「時間分配表」</strong>：這篇演說有 70% 在談歐洲、20% 在談經濟、10% 在談其他。重點不再是立場，而是<strong>注意力怎麼分配</strong>。</p></div>
 
   <h2 id="c0-obj">本週要能說明的事 <span class="slideref">投影片 70</span></h2>
   <p>投影片 70 的「R workflow」表格把課堂分成四段，每段都有一句「What you should explain」。把它當作本週的學習目標：</p>
   <ol class="objlist" id="objList">
     <li data-o="1"><strong>讀檔與準備</strong>（R01a–R01c）：定義什麼算一份文件，並說明清理步驟改變了什麼。</li>
-    <li data-o="2"><strong>擬合並閱讀 LDA</strong>（R02a–R02b）：讀懂一篇演說的<strong>完整</strong>主題混合（topic mixture）。</li>
+    <li data-o="2"><strong>擬合並閱讀 LDA</strong>（R02a–R02b）：讀懂一篇演說的<strong>完整</strong>主題混合（<abbr class="tt" tabindex="0" data-term="topic mixture" title="一份文件在各主題上的比例（θ 的一列），加總為 1；一篇演說可以同時談好幾個議題。">topic mixture</abbr>）。</li>
     <li data-o="3"><strong>檢查標籤</strong>（R03a–R03b、E02）：用原文支持一個主題標籤，並指出一個可能的反例。</li>
-    <li data-o="4"><strong>用 STM 比較</strong>（R05a–R05e、E05）：用百分點詮釋差異的方向、大小與不確定性。</li>
+    <li data-o="4"><strong>用 STM 比較</strong>（R05a–R05e、E05）：用<abbr class="tt" tabindex="0" data-term="percentage points" title="兩個比例相減的差，例如 13.66% − 7.63% ≈ 6.03 個百分點；不同於相對差（%）。">百分點</abbr>詮釋差異的方向、大小與不確定性。</li>
   </ol>
-  <p class="hint">投影片 70 的提醒：同一批文本，LDA 只用字的計數；STM 再加上文件的 metadata（政黨、時期）。<span class="slideref">投影片 70</span>　讀完一章後，回來勾選你覺得已經做得到的目標（只存在這台瀏覽器）：</p>
+  <p class="hint">投影片 70 的提醒：同一批文本，LDA 只用字的計數；STM 再加上文件的 <abbr class="tt" tabindex="0" data-term="metadata" title="文件的背景資訊（ID、黨魁、政黨、日期、時期）；STM 把它放進主題盛行率的估計。">metadata</abbr>（政黨、時期）。<span class="slideref">投影片 70</span>　讀完一章後，回來勾選你覺得已經做得到的目標（只存在這台瀏覽器）：</p>
   <div id="objChecks" class="jsonly"></div>
 
   <h2 id="c0-map">概念地圖：從演說到證據 <span class="slideref">投影片 43、70</span></h2>
@@ -453,12 +465,12 @@
       <div class="explain" id="cmapTxt">點擊任一方塊開始。</div>
     </div>
   </div>
-  <p class="hint">靜態摘要：問題（哪些議題得到注意？）→ 文件（一篇完整演說）→ 字的計數（切字、清理、DFM）→ 主題模型（LDA；STM 加上政黨與時期）→ 研究用途（詮釋、比較、檢查 K），並且每一步都要回到原文驗證。<span class="slideref">投影片 43</span></p>
+  <p class="hint">靜態摘要：問題（哪些議題得到注意？）→ 文件（一篇完整演說）→ 字的計數（切字、清理、<abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：列是文件、欄是字（特徵）、格子是次數。本週 R01c 得到 719 × 2,831。">DFM</abbr>）→ 主題模型（LDA；STM 加上政黨與時期）→ 研究用途（詮釋、比較、檢查 K），並且每一步都要回到原文驗證。<span class="slideref">投影片 43</span></p>
 
   <h2 id="c0-cases">本週六個研究案例 <span class="slideref">投影片 4</span></h2>
   <div class="tablewrap"><table>
     <tr><th>案例</th><th>文本</th><th>模型怎麼用</th><th>本教材</th></tr>
-    <tr><td>1 · Catalinac (2016)</td><td>日本候選人選舉公報</td><td>量測競選承諾（pork vs. policy）</td><td><a href="#c3-cat">03</a></td></tr>
+    <tr><td>1 · Catalinac (2016)</td><td>日本候選人選舉公報</td><td>量測競選承諾（<abbr class="tt" tabindex="0" data-term="pork" title="給特定選區或小團體的具體好處（如地方建設）；Catalinac 用「誰受益」把主題分成 pork 與 policy。">pork</abbr> vs. policy）</td><td><a href="#c3-cat">03</a></td></tr>
     <tr><td>2 · Gilardi, Shipan &amp; Wüest (2021)</td><td>美國報紙段落</td><td>研究政策擴散與框架</td><td><a href="#c3-gil">03</a></td></tr>
     <tr><td>3 · Barberá et al. (2019)</td><td>推文</td><td>量測每日議題注意力</td><td><a href="#c3-bar">03</a></td></tr>
     <tr><td>4 · Jiang, Xia &amp; Zhang (2024)</td><td>香港新聞</td><td>發展假設，再另外檢驗</td><td><a href="#c4-jiang">04</a></td></tr>
@@ -486,7 +498,7 @@
   <div class="grid2">
     <div class="callout note"><div class="ct">英國下議院黨魁演說（固定教學樣本）</div>
       <ul>
-        <li>來源：Essex Summer School 2026, Day 7（Martijn Schoonvelde 的 ESS 課程）。</li>
+        <li>來源：<abbr class="tt" tabindex="0" data-term="ESS" title="Essex Summer School：英國艾塞克斯大學的社會科學方法暑期學校；本週練習資料取自其 Day 7 課程。">Essex Summer School</abbr> 2026, Day 7（Martijn Schoonvelde 的 ESS 課程）。</li>
         <li>合格原始文本：3,897 篇非空演說（source terms ≥ 80）。</li>
         <li>教學樣本：<strong>719 篇完整演說</strong>，每個「政黨 × 時期」最多 30 篇；日期 1979-05-15 至 2025-12-17。</li>
         <li>兩個政黨：Conservative、Labour；時期是 47th–58th Parliament（共 12 屆）。</li>
@@ -505,23 +517,23 @@
   <ul>
     <li>左側章節照順序讀最順；完全沒碰過主題模型，<strong>先讀 01、02 章</strong>（補充，非講義內容），再進案例與 R。</li>
     <li>標著 <span class="slideref">投影片 N</span> 的徽章可以點：右側（或右下角按鈕）會打開該頁投影片，捲動時也會自動跟隨。</li>
-    <li>藍色框「互動實驗室」可以直接操作。第 05、06、08–11 章的實驗室用的是<strong>本週真實資料</strong>：719 篇演說全文、老師存檔的 LDA（<code>lda6.rds</code>）與重新擬合的 STM 的 θ、主題字詞機率，從 R 匯出後內嵌在這個檔案裡，不需連網。</li>
-    <li>第 01–02 章的生成模擬器、Gibbs 抽樣器與第 05 章的「重新加權」是<strong>玩具示範（補充）</strong>，用來建立直覺，數字不是課程結果。</li>
+    <li>藍色框「互動實驗室」可以直接操作。第 05、06、08–11 章的實驗室用的是<strong>本週真實資料</strong>：719 篇演說全文、老師存檔的 LDA（<code>lda6.rds</code>）與重新擬合的 STM 的 <abbr class="tt" tabindex="0" data-term="θ" title="文件—主題比例矩陣：每份文件一列、每個主題一欄，每列加總為 1；本週 lda_6$theta 是 719 × 6。">θ</abbr>、主題字詞機率，從 R 匯出後內嵌在這個檔案裡，不需連網。</li>
+    <li>第 01–02 章的生成模擬器、<abbr class="tt" tabindex="0" data-term="Gibbs sampling" title="反覆依其他所有字的指派重新抽每個字的主題，以估計 LDA 的演算法；seededlda 的 textmodel_lda 用它。">Gibbs 抽樣</abbr>器與第 05 章的「重新加權」是<strong>玩具示範（補充）</strong>，用來建立直覺，數字不是課程結果。</li>
     <li>每章結尾有「自我檢查」，第 14 章有總複習（可只重做答錯的題目）與研究設計計畫填寫器。</li>
     <li>進度與筆記只存在這台瀏覽器的 localStorage；第 14 章可一鍵清除。</li>
   </ul>
-  <div class="keyline"><b>本週核心觀念：</b>主題模型找出<strong>重複出現的字詞型態</strong>；給它「政治意義」的是研究者的閱讀與研究設計。標籤要回到原文檢查，政黨比較是<strong>觀察性的關聯</strong>，training perplexity 不能單獨證明一個政治量測有效。（<code>W8/README.md</code>）</div>
+  <div class="keyline"><b>本週核心觀念：</b>主題模型找出<strong>重複出現的字詞型態</strong>；給它「政治意義」的是研究者的閱讀與研究設計。標籤要回到原文檢查，政黨比較是<strong>觀察性的關聯</strong>，<abbr class="tt" tabindex="0" data-term="training perplexity" title="用估計模型時用過的同一批字計算的 perplexity（resubstitution）；K 越大通常越低。">training perplexity</abbr> 不能單獨證明一個政治量測有效。（<code>W8/README.md</code>）</div>
 
   <h2 id="c0-due">期限與公告（依 README，2026-11-06 讀取）</h2>
   <div class="callout warn"><div class="ct">接下來的日期</div>
     <ul>
-      <li><strong>EPSS 2027（Copenhagen）徵稿</strong>：2026-11-13 23:59 CET（台北時間 11-14 06:59）。</li>
+      <li><strong><abbr class="tt" tabindex="0" data-term="EPSS" title="European Political Science Society，歐洲政治學會；README 公告其 2027 年會徵稿。">EPSS</abbr> 2027（Copenhagen）徵稿</strong>：2026-11-13 23:59 CET（台北時間 11-14 06:59）。</li>
       <li><strong>11-20（W11）運動會停課</strong>。</li>
       <li><strong>TASPAA 第 22 屆年會</strong>：摘要與 panel 提案截止 2026-12-01。</li>
       <li><strong>Midterm research design report：2026-12-04（W13）</strong>。第 14 章的「研究設計計畫」填寫器就是為它暖身（投影片 91）。</li>
       <li>下週主題（投影片 92）：readability、similarity 與 word embeddings。</li>
     </ul>
-    <p class="hint">IPSA World Congress 摘要已於 2026-11-04 截止。日期以 <code>README.md</code> 為準；有疑問請用 README 的 office hour 連結問老師或助教 Matt Lee。</p>
+    <p class="hint"><abbr class="tt" tabindex="0" data-term="IPSA" title="International Political Science Association，國際政治學會；README 提到其世界大會摘要截止。">IPSA</abbr> World Congress 摘要已於 2026-11-04 截止。日期以 <code>README.md</code> 為準；有疑問請用 README 的 office hour 連結問老師或助教 Matt Lee。</p>
   </div>
 </section>
 
@@ -529,7 +541,7 @@
 <section class="chapter" id="ch01" data-slides="47,49,50">
   <div class="crumb">01 · 先建立直覺</div>
   <h1 class="ch">零基礎：主題模型在做什麼？</h1>
-  <p class="lead">這一章是補充（非講義內容）：先用白話與兩個可以玩的模擬器，弄懂「主題」「主題混合」「α」這幾個字。名詞的用法對應到投影片，並標出頁碼。</p>
+  <p class="lead">這一章是補充（非講義內容）：先用白話與兩個可以玩的模擬器，弄懂「主題」「<abbr class="tt" tabindex="0" data-term="topic mixture" title="一份文件在各主題上的比例（θ 的一列），加總為 1；一篇演說可以同時談好幾個議題。">主題混合</abbr>」「<abbr class="tt" tabindex="0" data-term="α" title="LDA 文件混合的 Dirichlet 先驗參數：越小，文件越集中在少數主題；本週 R02a 用 0.5。">α</abbr>」這幾個字。名詞的用法對應到投影片，並標出頁碼。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c1-analogy">一個比喻</a><a href="#c1-two">模型存的兩張表</a><a href="#c1-gen">生成故事模擬器</a><a href="#c1-alpha">α 三角形</a><a href="#c1-terms">十個關鍵名詞</a><a href="#c1-quiz">自我檢查</a>
   </div>
@@ -538,16 +550,16 @@
   <p>補充（非講義內容）：想像每篇演說是一個自助餐盤，餐廳只有 6 個菜區（6 個主題）。每個菜區有自己常見的菜色（字）：「歐洲區」多半是 <code>european</code>、<code>council</code>、<code>community</code>；「經濟區」多半是 <code>unemployment</code>、<code>economy</code>、<code>budget</code>。</p>
   <ul>
     <li>每一盤（演說）<strong>可以從好幾區夾菜</strong>，這就是「主題混合」：一篇演說 87% 在歐洲區、7% 在政府區……<span class="slideref">投影片 49</span></li>
-    <li>主題模型看不到「菜區招牌」，它只看到每盤裡有哪些菜，然後反推：哪些菜常一起出現（＝一個主題），以及每盤從各區夾了多少（＝混合比例）。</li>
-    <li>招牌（主題名稱）是<strong>你看了菜色與實際的盤子之後</strong>自己寫上去的，所以叫「暫定標籤」（provisional label）。<span class="slideref">投影片 48</span></li>
+    <li><abbr class="tt" tabindex="0" data-term="topic model" title="從字的共現型態找出重複出現的字分布（主題），並估計每份文件主題比例的無監督方法。">主題模型</abbr>看不到「菜區招牌」，它只看到每盤裡有哪些菜，然後反推：哪些菜常一起出現（＝一個主題），以及每盤從各區夾了多少（＝混合比例）。</li>
+    <li>招牌（主題名稱）是<strong>你看了菜色與實際的盤子之後</strong>自己寫上去的，所以叫「暫定標籤」（<abbr class="tt" tabindex="0" data-term="provisional label" title="研究者讀主題字與原文後給的名稱；必須再用其他文本驗證，決定保留、縮小、擴大或拒絕。">provisional label</abbr>）。<span class="slideref">投影片 48</span></li>
   </ul>
 
   <h2 id="c1-two">擬合好的模型存了兩張表 <span class="slideref">投影片 47</span></h2>
   <div class="grid2">
-    <div class="callout note"><div class="ct">主題—字機率（topic–word，β 或 φ）</div><p>回答：<strong>哪些字刻畫了每個主題？</strong>每個主題是一個「字的機率分布」，所有字的機率加起來 = 1。<code>terms(lda_6, 10)</code> 印出的就是每個主題機率最高的 10 個字。在 seededlda 物件裡叫 <code>$phi</code>，在 stm 物件裡以 log 存在 <code>$beta$logbeta</code>。</p></div>
-    <div class="callout note"><div class="ct">文件—主題比例（document–topic，θ）</div><p>回答：<strong>每篇演說裡出現哪些主題？</strong>每篇演說一列、每個主題一欄，每列加起來 = 1。本週的 <code>lda_6$theta</code> 是 719 × 6。</p></div>
+    <div class="callout note"><div class="ct">主題—字機率（topic–word，β 或 <abbr class="tt" tabindex="0" data-term="β (φ)" title="主題—字機率：每個主題下各字的機率分布；seededlda 存在 $phi，stm 以 log 存在 $beta$logbeta。β 也指它的先驗參數。">φ</abbr>）</div><p>回答：<strong>哪些字刻畫了每個主題？</strong>每個主題是一個「字的機率分布」，所有字的機率加起來 = 1。<code>terms(lda_6, 10)</code> 印出的就是每個主題機率最高的 10 個字。在 <abbr class="tt" tabindex="0" data-term="seededlda" title="R 套件，提供 textmodel_lda（一般 LDA）與 textmodel_seededlda（種子字典引導）；本週 R02a 用它擬合 LDA。">seededlda</abbr> 物件裡叫 <code>$phi</code>，在 stm 物件裡以 log 存在 <code>$beta$logbeta</code>。</p></div>
+    <div class="callout note"><div class="ct">文件—主題比例（document–topic，<abbr class="tt" tabindex="0" data-term="θ" title="文件—主題比例矩陣：每份文件一列、每個主題一欄，每列加總為 1；本週 lda_6$theta 是 719 × 6。">θ</abbr>）</div><p>回答：<strong>每篇演說裡出現哪些主題？</strong>每篇演說一列、每個主題一欄，每列加起來 = 1。本週的 <code>lda_6$theta</code> 是 719 × 6。</p></div>
   </div>
-  <p>投影片 47 的總結：一篇演說可以混合多個主題；每個主題偏好不同的字。LDA 從整個語料的字詞型態<strong>同時</strong>估計這兩張表。<span class="slideref">投影片 47</span></p>
+  <p>投影片 47 的總結：一篇演說可以混合多個主題；每個主題偏好不同的字。<abbr class="tt" tabindex="0" data-term="LDA" title="潛在狄利克雷分配：每份文件是多個主題的混合、每個主題是字的機率分布；只用字詞計數同時估計兩者（Blei, Ng &amp; Jordan 2003）。">LDA</abbr> 從整個語料的字詞型態<strong>同時</strong>估計這兩張表。<span class="slideref">投影片 47</span></p>
 
   <h2 id="c1-gen">互動：生成故事模擬器（補充）</h2>
   <p>LDA 是一個「生成模型」：它假設每篇文件是這樣寫出來的（Blei, Ng &amp; Jordan 2003 的設定，這裡簡化為教學版）：</p>
@@ -579,7 +591,7 @@
   <h2 id="c1-alpha">互動：α 三角形（補充）</h2>
   <p>只有 3 個主題時，每一組 θ 都可以畫成三角形裡的一個點：越靠近某個角，越集中在那個主題；正中央 = 三個各 1/3。下面一次抽 400 組 θ。</p>
   <div class="lab" id="labSimplex">
-    <div class="lab-h"><span class="ic">🔺</span><span class="lt">Dirichlet α 三角形</span><span class="ls">玩具示範・補充</span></div>
+    <div class="lab-h"><span class="ic">🔺</span><span class="lt"><abbr class="tt" tabindex="0" data-term="Dirichlet" title="定義在「加總為 1 的比例」上的機率分布；LDA 用它當文件主題比例與主題字分布的先驗。">Dirichlet</abbr> α 三角形</span><span class="ls">玩具示範・補充</span></div>
     <div class="lab-b">
       <div class="row">
         <label class="f">α <input type="range" id="sxAlpha" min="0" max="40" value="20"> <b id="sxAlphaV">0.50</b></label>
@@ -595,15 +607,15 @@
   <div class="tablewrap"><table>
     <tr><th style="width:25%">名詞</th><th>意思</th><th style="width:30%">本週的例子</th></tr>
     <tr><td><strong>文件</strong> document</td><td>模型的分析單位。單位一改，能回答的問題就改了。<span class="slideref">投影片 69</span></td><td>一篇完整演說（719 篇）</td></tr>
-    <tr><td><strong>詞袋</strong> bag of words</td><td>只看字出現幾次，不看順序。<span class="slideref">投影片 56</span></td><td>DFM 719 × 2,831</td></tr>
+    <tr><td><strong><abbr class="tt" tabindex="0" data-term="bag of words" title="只記錄每個字出現幾次、忽略字序的文本表示法；DFM 就是詞袋。">詞袋</abbr></strong> bag of words</td><td>只看字出現幾次，不看順序。<span class="slideref">投影片 56</span></td><td><abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：列是文件、欄是字（特徵）、格子是次數。本週 R01c 得到 719 × 2,831。">DFM</abbr> 719 × 2,831</td></tr>
     <tr><td><strong>主題</strong> topic</td><td>一個「字的機率分布」；不是事先定義的類別。</td><td>T1：european, council, community…</td></tr>
     <tr><td><strong>主題混合</strong> θ</td><td>一篇文件在各主題的比例，加總 = 1。<span class="slideref">投影片 49</span></td><td>ess_hoc_00004：T1 = .874</td></tr>
     <tr><td><strong>K</strong></td><td>主題數，由研究者指定；改 K，議題會分裂或合併。<span class="slideref">投影片 56</span></td><td>課堂用 K = 6</td></tr>
-    <tr><td><strong>α／β 先驗</strong></td><td>α 影響文件混合的集中度；β 影響主題字分布的集中度。</td><td><code>alpha = .5, beta = .1</code></td></tr>
-    <tr><td><strong>主導主題</strong> dominant topic</td><td>只留下最大比例的那個主題編號，是一種摘要。<span class="slideref">投影片 49、77</span></td><td>R02b 的 <code>max.col()</code></td></tr>
+    <tr><td><strong>α／β <abbr class="tt" tabindex="0" data-term="priors" title="在看資料之前對參數的假設分布；LDA 的 α、β 先驗影響文件混合與主題字分布有多集中。">先驗</abbr></strong></td><td>α 影響文件混合的集中度；β 影響主題字分布的集中度。</td><td><code>alpha = .5, beta = .1</code></td></tr>
+    <tr><td><strong><abbr class="tt" tabindex="0" data-term="dominant topic" title="每份文件只保留比例最大的主題編號（max.col）；容易重現但丟掉其他比例的資訊。">主導主題</abbr></strong> dominant topic</td><td>只留下最大比例的那個主題編號，是一種摘要。<span class="slideref">投影片 49、77</span></td><td>R02b 的 <code>max.col()</code></td></tr>
     <tr><td><strong>暫定標籤</strong> provisional label</td><td>研究者看字與原文後給的名稱，要再驗證。<span class="slideref">投影片 48</span></td><td>“European Council negotiations”</td></tr>
-    <tr><td><strong>主題盛行率</strong> topic prevalence</td><td>一個主題被談多少；STM 讓它隨 metadata 變化。<span class="slideref">投影片 50</span></td><td><code>prevalence = ~ party_family + period</code></td></tr>
-    <tr><td><strong>Perplexity</strong></td><td>一種模型配適分數；越低越好，但分數較低本身不能決定 K。<span class="slideref">投影片 59</span></td><td>LDA K=6：1062.5</td></tr>
+    <tr><td><strong><abbr class="tt" tabindex="0" data-term="topic prevalence" title="一個主題在文件中被談多少；STM 用 prevalence = ~ party_family + period 讓它隨共變數變化。">主題盛行率</abbr></strong> topic prevalence</td><td>一個主題被談多少；<abbr class="tt" tabindex="0" data-term="STM" title="結構主題模型：讓主題盛行率（與用字）隨文件共變數（如政黨、時期）變化，並可估計這些關聯與不確定性（Roberts et al. 2014）。">STM</abbr> 讓它隨 <abbr class="tt" tabindex="0" data-term="metadata" title="文件的背景資訊（ID、黨魁、政黨、日期、時期）；STM 把它放進主題盛行率的估計。">metadata</abbr> 變化。<span class="slideref">投影片 50</span></td><td><code>prevalence = ~ party_family + period</code></td></tr>
+    <tr><td><strong><abbr class="tt" tabindex="0" data-term="perplexity" title="模型配適分數：exp(−平均 log 字機率)，越低代表對被評分的字配適越好；不能單獨證明最佳 K 或主題有意義。">Perplexity</abbr></strong></td><td>一種模型配適分數；越低越好，但分數較低本身不能決定 K。<span class="slideref">投影片 59</span></td><td>LDA K=6：1062.5</td></tr>
   </table></div>
 
   <h2 id="c1-quiz">自我檢查</h2>
@@ -637,7 +649,7 @@
 <section class="chapter" id="ch02" data-slides="47,56,49">
   <div class="crumb">02 · 先建立直覺</div>
   <h1 class="ch">LDA：電腦怎麼「猜」出主題</h1>
-  <p class="lead">第 01 章是「正著寫」文件；這章看 LDA 怎麼「倒著推」：只看到字，同時估出主題字分布與每篇文件的混合。核心演算法用 Gibbs sampling 的玩具版示範（補充，非講義內容）。</p>
+  <p class="lead">第 01 章是「正著寫」文件；這章看 <abbr class="tt" tabindex="0" data-term="LDA" title="潛在狄利克雷分配：每份文件是多個主題的混合、每個主題是字的機率分布；只用字詞計數同時估計兩者（Blei, Ng &amp; Jordan 2003）。">LDA</abbr> 怎麼「倒著推」：只看到字，同時估出主題字分布與每篇文件的混合。核心演算法用 <abbr class="tt" tabindex="0" data-term="Gibbs sampling" title="反覆依其他所有字的指派重新抽每個字的主題，以估計 LDA 的演算法；seededlda 的 textmodel_lda 用它。">Gibbs sampling</abbr> 的玩具版示範（補充，非講義內容）。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c2-idea">倒推的直覺</a><a href="#c2-gibbs">Gibbs 抽樣器</a><a href="#c2-assume">建模選擇與假設</a><a href="#c2-mix">混合 vs. 主導主題</a><a href="#c2-quiz">自我檢查</a>
   </div>
@@ -645,8 +657,8 @@
   <h2 id="c2-idea">倒推的直覺（補充）</h2>
   <p>一開始，每個字被<strong>隨機</strong>指派到某個主題。接著一個字一個字重新指派，每次問兩件事：</p>
   <div class="grid2">
-    <div class="callout plain"><div class="ct">① 這篇文件現在偏好哪個主題？</div><p>文件裡其他字大多被指派到主題 k，這個字也比較可能是 k。（對應 θ，受 α 影響）</p></div>
-    <div class="callout plain"><div class="ct">② 這個字在整個語料裡常被指派到哪個主題？</div><p>如果 <code>council</code> 在其他文件常被指派到 k，這裡也比較可能是 k。（對應 φ，受 β 影響）</p></div>
+    <div class="callout plain"><div class="ct">① 這篇文件現在偏好哪個主題？</div><p>文件裡其他字大多被指派到主題 k，這個字也比較可能是 k。（對應 <abbr class="tt" tabindex="0" data-term="θ" title="文件—主題比例矩陣：每份文件一列、每個主題一欄，每列加總為 1；本週 lda_6$theta 是 719 × 6。">θ</abbr>，受 <abbr class="tt" tabindex="0" data-term="α" title="LDA 文件混合的 Dirichlet 先驗參數：越小，文件越集中在少數主題；本週 R02a 用 0.5。">α</abbr> 影響）</p></div>
+    <div class="callout plain"><div class="ct">② 這個字在整個語料裡常被指派到哪個主題？</div><p>如果 <code>council</code> 在其他文件常被指派到 k，這裡也比較可能是 k。（對應 <abbr class="tt" tabindex="0" data-term="β (φ)" title="主題—字機率：每個主題下各字的機率分布；seededlda 存在 $phi，stm 以 log 存在 $beta$logbeta。β 也指它的先驗參數。">φ</abbr>，受 β 影響）</p></div>
   </div>
   <p>把兩者相乘就是重新抽主題的機率（collapsed Gibbs sampling 的條件機率）：</p>
   <div class="codeblock nohl"><span class="lang">公式（補充）</span><pre>P(z = k | 其他所有指派) ∝ (n<sub>d,k</sub> + α) × (n<sub>k,w</sub> + β) / (n<sub>k</sub> + V·β)
@@ -672,7 +684,7 @@ n<sub>k</sub>：主題 k 的總字數；V：字彙大小</pre></div>
       </div>
       <div class="grid3" style="margin-top:10px">
         <div class="stat"><div class="sl">已完成迭代</div><div class="sv" id="gbIter">0</div></div>
-        <div class="stat"><div class="sl">訓練 perplexity（越低越好）</div><div class="sv" id="gbPerp">–</div></div>
+        <div class="stat"><div class="sl">訓練 <abbr class="tt" tabindex="0" data-term="perplexity" title="模型配適分數：exp(−平均 log 字機率)，越低代表對被評分的字配適越好；不能單獨證明最佳 K 或主題有意義。">perplexity</abbr>（越低越好）</div><div class="sv" id="gbPerp">–</div></div>
         <div class="stat"><div class="sl">本輪改變指派的字</div><div class="sv" id="gbMoved">–</div></div>
       </div>
       <div class="grid2" style="margin-top:10px">
@@ -682,13 +694,13 @@ n<sub>k</sub>：主題 k 的總字數；V：字彙大小</pre></div>
       <div class="explain" id="gbNote"></div>
     </div>
   </div>
-  <details class="quiz"><summary>試試看：同樣 K = 3，換三個不同的種子各跑 50 輪。主題「編號」一樣嗎？主題「內容」一樣嗎？</summary><div class="qa"><p>編號常常會換（這次的主題 1 可能是上次的主題 3），但內容通常相近。這就是投影片 53 與 87 的提醒：<strong>主題編號只屬於它自己那個擬合</strong>；比較不同模型時要先對字，不要對編號。也因此本週的 STM topic 4 和 LDA topic 4 不是同一個議題。<span class="slideref">投影片 53、87</span></p></div></details>
+  <details class="quiz"><summary>試試看：同樣 K = 3，換三個不同的種子各跑 50 輪。主題「編號」一樣嗎？主題「內容」一樣嗎？</summary><div class="qa"><p>編號常常會換（這次的主題 1 可能是上次的主題 3），但內容通常相近。這就是投影片 53 與 87 的提醒：<strong>主題編號只屬於它自己那個擬合</strong>；比較不同模型時要先對字，不要對編號。也因此本週的 <abbr class="tt" tabindex="0" data-term="STM" title="結構主題模型：讓主題盛行率（與用字）隨文件共變數（如政黨、時期）變化，並可估計這些關聯與不確定性（Roberts et al. 2014）。">STM</abbr> topic 4 和 LDA topic 4 不是同一個議題。<span class="slideref">投影片 53、87</span></p></div></details>
   <details class="quiz"><summary>試試看：把 K 改成 2 或 4，「歐洲」與「安全」的字會怎樣？</summary><div class="qa"><p>K 小時，相近的議題（例如歐洲事務與國際安全）可能<strong>合併</strong>成一個主題；K 大時，一個議題可能<strong>分裂</strong>，或冒出只由一兩篇文件撐起的主題。投影片 56：「Which issues split or merge when the number of topics changes?」第 11 章用老師存的真實 K = 3/6/9 模型看同樣的現象。<span class="slideref">投影片 56、87</span></p></div></details>
 
   <h2 id="c2-assume">建模選擇在命名之前就已經塑造了主題 <span class="slideref">投影片 56</span></h2>
   <div class="tablewrap"><table>
     <tr><th>建模選擇</th><th>研究者要問的問題</th><th>本週的對應（補充）</th></tr>
-    <tr><td>詞袋（bag of words）</td><td>字的順序是否帶有我們需要的資訊？</td><td>“not good” 被拆成 not、good</td></tr>
+    <tr><td>詞袋（<abbr class="tt" tabindex="0" data-term="bag of words" title="只記錄每個字出現幾次、忽略字序的文本表示法；DFM 就是詞袋。">bag of words</abbr>）</td><td>字的順序是否帶有我們需要的資訊？</td><td>“not good” 被拆成 not、good</td></tr>
     <tr><td>一套共同的主題</td><td>語言與主題意義在整個語料中可比較嗎？</td><td>1979 與 2025 的 “european” 意思一樣嗎？</td></tr>
     <tr><td>文件邊界</td><td>一篇演說的脈絡夠不夠撐起一個混合？</td><td>很短的插話只有幾個字</td></tr>
     <tr><td>字彙選擇</td><td>哪些區分在清理與修剪後還留著？</td><td>移除 “minister”、修剪 max_docfreq = .75</td></tr>
@@ -700,12 +712,12 @@ n<sub>k</sub>：主題 k 的總字數；V：字彙大小</pre></div>
   <h2 id="c2-mix">完整混合 vs. 主導主題 <span class="slideref">投影片 49、77–78</span></h2>
   <div class="grid2">
     <div class="callout note"><div class="ct">完整混合（保留 6 個比例）</div><p>ess_hoc_00004（Thatcher，1979-06-26）：T1 .874、T2 .067、T3 .012、T4 .002、T5 .012、T6 .032。一眼看出它幾乎只談 T1。</p><p>ess_hoc_05895（Corbyn，2020-03-25）：最大的只有 T4 .223，其餘 .098–.205，是全部 719 篇中<strong>最分散</strong>的一篇。</p></div>
-    <div class="callout warn"><div class="ct">主導主題（只留最大那一個）</div><p>兩篇都會被濃縮成「一個主題編號」：00004 → T1、05895 → T4。但 05895 的 T4 只有 22%，說它「是經濟演說」會誤導。<code>max.col(..., ties.method = "first")</code> 平手時取第一個，是容易重現但資訊較少的規則。<span class="slideref">投影片 77</span></p></div>
+    <div class="callout warn"><div class="ct"><abbr class="tt" tabindex="0" data-term="dominant topic" title="每份文件只保留比例最大的主題編號（max.col）；容易重現但丟掉其他比例的資訊。">主導主題</abbr>（只留最大那一個）</div><p>兩篇都會被濃縮成「一個主題編號」：00004 → T1、05895 → T4。但 05895 的 T4 只有 22%，說它「是經濟演說」會誤導。<code>max.col(..., ties.method = "first")</code> 平手時取第一個，是容易重現但資訊較少的規則。<span class="slideref">投影片 77</span></p></div>
   </div>
 
   <h2 id="c2-quiz">自我檢查</h2>
   <div class="mcq" data-ans="3" data-q="c2q1">
-    <div class="q">1. 同一份 DFM、同樣參數、同一個 seed，重新擬合 LDA，主題編號一定和上次一樣嗎？</div>
+    <div class="q">1. 同一份 <abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：列是文件、欄是字（特徵）、格子是次數。本週 R01c 得到 719 × 2,831。">DFM</abbr>、同樣參數、同一個 seed，重新擬合 LDA，主題編號一定和上次一樣嗎？</div>
     <button class="opt">一定一樣，因為 seed 固定了</button>
     <button class="opt">一定不一樣</button>
     <button class="opt">一樣，而且主題 4 永遠是經濟</button>
@@ -742,9 +754,9 @@ n<sub>k</sub>：主題 k 的總字數；V：字彙大小</pre></div>
   <h2 id="c3-cat">案例 1 · Catalinac (2016)：從 pork 到 policy <span class="slideref">投影片 6–15</span></h2>
   <div class="grid2">
     <div class="callout note"><div class="ct">政治問題 <span class="slideref">投影片 6</span></div>
-      <p><strong>謎題</strong>：日本 1994 年選制改革減少了同黨候選人互相競爭，但後來的研究仍把選戰描述為 pork 取向。<strong>問題</strong>：候選人是否從「給小團體的好處」轉向「更廣泛的公共政策」？</p>
+      <p><strong>謎題</strong>：日本 1994 年選制改革減少了同黨候選人互相競爭，但後來的研究仍把選戰描述為 <abbr class="tt" tabindex="0" data-term="pork" title="給特定選區或小團體的具體好處（如地方建設）；Catalinac 用「誰受益」把主題分成 pork 與 policy。">pork</abbr> 取向。<strong>問題</strong>：候選人是否從「給小團體的好處」轉向「更廣泛的公共政策」？</p>
       <p><strong>證據</strong>：7,497 份候選人選舉公報（manifestos），1986–2009 年共八次選舉。</p></div>
-    <div class="callout note"><div class="ct">LDA 怎麼用 <span class="slideref">投影片 7–9</span></div>
+    <div class="callout note"><div class="ct"><abbr class="tt" tabindex="0" data-term="LDA" title="潛在狄利克雷分配：每份文件是多個主題的混合、每個主題是字的機率分布；只用字詞計數同時估計兩者（Blei, Ng &amp; Jordan 2003）。">LDA</abbr> 怎麼用 <span class="slideref">投影片 7–9</span></div>
       <ol>
         <li><strong>發現主題</strong>：LDA 在 7,497 份公報中找出 69 個反覆出現的主題。</li>
         <li><strong>閱讀與檢查</strong>：每個主題讀 15 個最高字詞、10 份代表性公報。</li>
@@ -765,14 +777,14 @@ n<sub>k</sub>：主題 k 的總字數；V：字彙大小</pre></div>
   <h2 id="c3-gil">案例 2 · Gilardi, Shipan &amp; Wüest (2021)：擴散發生在「採納」之前 <span class="slideref">投影片 16–24</span></h2>
   <div class="grid2">
     <div class="callout note"><div class="ct">政治問題 <span class="slideref">投影片 16</span></div>
-      <p><strong>謎題</strong>：政策擴散研究通常在辯論開始後才觀察到「採納」。<strong>問題</strong>：其他州先前的禁菸令，會不會改變本州報紙<strong>怎麼定義這個議題</strong>？</p>
+      <p><strong>謎題</strong>：<abbr class="tt" tabindex="0" data-term="policy diffusion" title="一個地方的政策採納影響其他地方是否、何時、如何採納類似政策；Gilardi et al. 研究它在議題定義階段的作用。">政策擴散</abbr>研究通常在辯論開始後才觀察到「採納」。<strong>問題</strong>：其他州先前的禁菸令，會不會改變本州報紙<strong>怎麼定義這個議題</strong>？</p>
       <p><strong>證據</strong>：49 州報紙的 52,675 個段落，1996–2013。</p></div>
-    <div class="callout note"><div class="ct">STM 怎麼用 <span class="slideref">投影片 17–19</span></div>
+    <div class="callout note"><div class="ct"><abbr class="tt" tabindex="0" data-term="STM" title="結構主題模型：讓主題盛行率（與用字）隨文件共變數（如政黨、時期）變化，並可估計這些關聯與不確定性（Roberts et al. 2014）。">STM</abbr> 怎麼用 <span class="slideref">投影片 17–19</span></div>
       <ol>
         <li><strong>蒐集報導</strong>：搜尋 49 州報紙。</li>
-        <li><strong>保留相關段落</strong>：用群眾標註訓練 SVM 相關性過濾器。</li>
+        <li><strong>保留相關段落</strong>：用群眾標註訓練 <abbr class="tt" tabindex="0" data-term="SVM" title="支援向量機：一種監督式分類器；Gilardi et al. 用群眾標註訓練它來篩出相關報紙段落。">SVM</abbr> 相關性過濾器。</li>
         <li><strong>發現框架</strong>：對 52,675 段擬合 12 個主題的 STM。</li>
-        <li><strong>量測議題定義</strong>：估計每個框架有多常見（topic prevalence）。</li>
+        <li><strong>量測議題定義</strong>：估計每個框架有多常見（<abbr class="tt" tabindex="0" data-term="topic prevalence" title="一個主題在文件中被談多少；STM 用 prevalence = ~ party_family + period 讓它隨共變數變化。">topic prevalence</abbr>）。</li>
         <li><strong>研究擴散</strong>：把框架盛行率連到「相關州」先前的採納。</li>
       </ol></div>
   </div>
@@ -782,29 +794,29 @@ n<sub>k</sub>：主題 k 的總字數；V：字彙大小</pre></div>
     <tr><td>穩定的框架</td><td>Health 幾乎不隨先前採納改變；Freedom 也幾乎是平的。<span class="slideref">投影片 21–22</span></td></tr>
     <tr><td>框架相關（選讀）</td><td>採納較少時，Rules 主題和其他框架少有強相關；採納較多時，Rules 和多個實務、價值、政治框架相關，形成更廣的框架。<span class="slideref">投影片 23–24</span></td></tr>
   </table></div>
-  <p class="hint">為什麼用 STM 而不是 LDA？因為作者要讓「先前採納」直接進入主題盛行率的估計，這正是第 05 章 STM 的 prevalence 共變數。第 12 章的導讀卡有作者自述的限制（例如無法研究「框架到框架」的擴散）。</p>
+  <p class="hint">為什麼用 STM 而不是 LDA？因為作者要讓「先前採納」直接進入主題盛行率的估計，這正是第 05 章 STM 的 prevalence <abbr class="tt" tabindex="0" data-term="covariate" title="放進模型、用來解釋結果變化的文件資訊，例如政黨與選舉時期。">共變數</abbr>。第 12 章的導讀卡有作者自述的限制（例如無法研究「框架到框架」的擴散）。</p>
 
   <h2 id="c3-bar">案例 3 · Barberá et al. (2019)：誰領導？誰追隨？ <span class="slideref">投影片 25–30</span></h2>
   <div class="grid2">
     <div class="callout note"><div class="ct">政治問題 <span class="slideref">投影片 25</span></div>
       <p><strong>問題</strong>：政治人物是在<strong>引導</strong>民眾注意力，還是<strong>追隨</strong>？</p>
       <p><strong>文本</strong>：國會議員、民眾、媒體的推文，2013–2014。<strong>用途</strong>：比較共同議題的每日注意力。</p></div>
-    <div class="callout note"><div class="ct">主題模型怎麼用 <span class="slideref">投影片 26–28</span></div>
+    <div class="callout note"><div class="ct"><abbr class="tt" tabindex="0" data-term="topic model" title="從字的共現型態找出重複出現的字分布（主題），並估計每份文件主題比例的無監督方法。">主題模型</abbr>怎麼用 <span class="slideref">投影片 26–28</span></div>
       <ol>
         <li><strong>定義文件</strong>：把國會推文依「日 × 政黨 × 院別」合併。</li>
         <li><strong>發現共同主題</strong>：對合併後的國會文本擬合 100 個主題的 LDA。</li>
         <li><strong>詮釋議題</strong>：讀主題字詞，合併相關的政治主題。</li>
-        <li><strong>建構量測</strong>：估計政治人物、民眾樣本、媒體的每日議題注意力。</li>
+        <li><strong>建構量測</strong>：估計政治人物、民眾樣本、媒體的每日<abbr class="tt" tabindex="0" data-term="issue attention" title="政治行動者選擇談什麼、談多少；W8 的研究任務，對照 W7 的立場位置。">議題注意力</abbr>。</li>
         <li><strong>分析時序</strong>：比較誰較早的注意力能預測另一群人之後的注意力。</li>
       </ol></div>
   </div>
-  <div class="callout tip"><div class="ct">文件單位是刻意設計的 <span class="slideref">投影片 26</span></div><p>單則推文太短，模型很難估出混合；把推文合成「每日文件」既解決短文本問題，又剛好對應研究要的量測單位（每日注意力）。對照第 07 章的 BTM：另一種處理短文本的方法。</p></div>
+  <div class="callout tip"><div class="ct">文件單位是刻意設計的 <span class="slideref">投影片 26</span></div><p>單則推文太短，模型很難估出混合；把推文合成「每日文件」既解決短文本問題，又剛好對應研究要的量測單位（每日注意力）。對照第 07 章的 <abbr class="tt" tabindex="0" data-term="BTM" title="biterm 主題模型：把短文本中的無序字對匯集到整個語料來估計主題，適合推文、標題等短文本（Yan et al. 2013）。">BTM</abbr>：另一種處理短文本的方法。</p></div>
   <div class="tablewrap"><table>
     <tr><th>圖</th><th>投影片的讀法</th></tr>
     <tr><td>方向一（灰）</td><td>民眾注意力上升時，政治人物之後常會更注意。<span class="slideref">投影片 29</span></td></tr>
     <tr><td>反方向與提醒（黑）</td><td>政治人物注意力上升時，民眾之後<strong>可能</strong>更注意。<span class="slideref">投影片 30</span></td></tr>
   </table></div>
-  <p class="hint">補充（論文本身）：作者用 VAR 比較「誰先動」，並明說這是描述性分析，VAR 無法排除未觀察因素的混淆（Barberá et al. 2019, p. 884）。詳見第 12 章。</p>
+  <p class="hint">補充（論文本身）：作者用 <abbr class="tt" tabindex="0" data-term="VAR" title="向量自我迴歸：同時建模多條時間序列彼此的落後影響；Barberá et al. 用它比較誰的注意力先動，屬描述性分析。">VAR</abbr> 比較「誰先動」，並明說這是描述性分析，VAR 無法排除未觀察因素的<abbr class="tt" tabindex="0" data-term="confounding" title="第三個因素同時影響解釋變數與結果，讓觀察到的關聯不能解讀為因果。">混淆</abbr>（Barberá et al. 2019, p. 884）。詳見第 12 章。</p>
 
   <h2 id="c3-lab">互動：案例拆解卡</h2>
   <div class="lab" id="labCase">
@@ -847,7 +859,7 @@ n<sub>k</sub>：主題 k 的總字數；V：字彙大小</pre></div>
 <section class="chapter" id="ch04" data-slides="31,37,41,42">
   <div class="crumb">04 · 研究案例</div>
   <h1 class="ch">案例 4–6：理論建構、問卷開放題、衝突預測</h1>
-  <p class="lead">後三個案例展示主題模型的另外三種用途：幫忙<strong>想出</strong>假設、和<strong>人工編碼</strong>比對、當作<strong>預測</strong>的特徵。最後用投影片 42 的總表收攏。</p>
+  <p class="lead">後三個案例展示<abbr class="tt" tabindex="0" data-term="topic model" title="從字的共現型態找出重複出現的字分布（主題），並估計每份文件主題比例的無監督方法。">主題模型</abbr>的另外三種用途：幫忙<strong>想出</strong>假設、和<strong>人工編碼</strong>比對、當作<strong>預測</strong>的特徵。最後用投影片 42 的總表收攏。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c4-jiang">案例 4 Jiang et al.</a><a href="#c4-rob">案例 5 Roberts et al.</a><a href="#c4-mr">案例 6 Mueller &amp; Rauh</a><a href="#c4-sum">總表</a><a href="#c4-match">互動：證據配對</a><a href="#c4-quiz">自我檢查</a>
   </div>
@@ -856,12 +868,12 @@ n<sub>k</sub>：主題 k 的總字數；V：字彙大小</pre></div>
   <div class="grid2">
     <div class="callout note"><div class="ct">政治問題 <span class="slideref">投影片 31</span></div>
       <p><strong>謎題</strong>：既有研究強調經濟與文化顧慮，較少談共同的政治價值。<strong>問題</strong>：共同的民主價值能否降低對限制性移民政策的支持？</p>
-      <p><strong>證據</strong>：研究者用 STM 的結果<strong>發展假設</strong>，再用一個預先登記的實驗<strong>檢驗</strong>。</p></div>
+      <p><strong>證據</strong>：研究者用 <abbr class="tt" tabindex="0" data-term="STM" title="結構主題模型：讓主題盛行率（與用字）隨文件共變數（如政黨、時期）變化，並可估計這些關聯與不確定性（Roberts et al. 2014）。">STM</abbr> 的結果<strong>發展假設</strong>，再用一個<abbr class="tt" tabindex="0" data-term="preregistered" title="在收集或分析資料之前公開登記假設與分析計畫的研究設計；Jiang et al. 用預先登記的實驗檢驗假設。">預先登記</abbr>的實驗<strong>檢驗</strong>。</p></div>
     <div class="callout note"><div class="ct">STM 怎麼支援理論建構 <span class="slideref">投影片 32–34</span></div>
       <ol>
         <li><strong>發現顧慮</strong>：STM 在 4,453 篇新聞中找出 5 個主題。</li>
         <li><strong>閱讀與標記</strong>：看特徵字詞與代表性新聞。</li>
-        <li><strong>跨時比較</strong>：估計 2003–2020 主題盛行率的變化。</li>
+        <li><strong>跨時比較</strong>：估計 2003–2020 <abbr class="tt" tabindex="0" data-term="topic prevalence" title="一個主題在文件中被談多少；STM 用 prevalence = ~ party_family + period 讓它隨共變數變化。">主題盛行率</abbr>的變化。</li>
         <li><strong>建立假設</strong>：上升的政治注意力引出「共同價值」的論證。</li>
         <li><strong>另外檢驗</strong>：在預先登記的實驗中隨機分派訊息。</li>
       </ol></div>
@@ -875,8 +887,8 @@ n<sub>k</sub>：主題 k 的總字數；V：字彙大小</pre></div>
     <div class="callout note"><div class="ct">設計 <span class="slideref">投影片 37–38</span></div>
       <ul>
         <li><strong>問題</strong>：誰會把戰爭列為國家最重要的問題？</li>
-        <li><strong>文件</strong>：一則 ANES 開放式回答（most-important-national-problem）。</li>
-        <li><strong>模型輸入</strong>：60 個主題的 STM；共變數為政黨、教育、年齡與政黨 × 教育。</li>
+        <li><strong>文件</strong>：一則 <abbr class="tt" tabindex="0" data-term="ANES" title="美國全國選舉研究，一個長期的選民問卷調查；Roberts et al. 分析它「最重要的國家問題」開放題。">ANES</abbr> 開放式回答（most-important-national-problem）。</li>
+        <li><strong>模型輸入</strong>：60 個主題的 STM；<abbr class="tt" tabindex="0" data-term="covariate" title="放進模型、用來解釋結果變化的文件資訊，例如政黨與選舉時期。">共變數</abbr>為政黨、教育、年齡與政黨 × 教育。</li>
         <li><strong>使用的輸出</strong>：每則回答中「戰爭」主題的估計比例。</li>
         <li><strong>檢查</strong>：和 ANES 人工編碼的戰爭類別比較。</li>
       </ul></div>
@@ -890,16 +902,16 @@ n<sub>k</sub>：主題 k 的總字數；V：字彙大小</pre></div>
     <tr><th>步驟</th><th>他們做了什麼</th></tr>
     <tr><td>謎題</td><td>變動緩慢的國家指標能指出衝突「常發生在哪裡」，卻抓不到風險「何時上升」。新聞語言能改善一年後的預測嗎？</td></tr>
     <tr><td>語料</td><td>超過 700,000 篇 Economist、New York Times、Washington Post 文章。</td></tr>
-    <tr><td>量測</td><td>文章層級的 LDA，K = 15，彙整成「國家 × 年」的主題比例。</td></tr>
+    <tr><td>量測</td><td>文章層級的 <abbr class="tt" tabindex="0" data-term="LDA" title="潛在狄利克雷分配：每份文件是多個主題的混合、每個主題是字的機率分布；只用字詞計數同時估計兩者（Blei, Ng &amp; Jordan 2003）。">LDA</abbr>，K = 15，彙整成「國家 × 年」的主題比例。</td></tr>
     <tr><td>預測</td><td>只用到 T 年為止的文本重新估計，預測 T + 1 年的衝突爆發。</td></tr>
-    <tr><td>評估</td><td>1996–2014 年反覆進行；ROC 要和 precision–recall 一起讀。</td></tr>
+    <tr><td>評估</td><td>1996–2014 年反覆進行；<abbr class="tt" tabindex="0" data-term="ROC" title="ROC 曲線：在不同門檻下畫出真陽性率對偽陽性率；Mueller &amp; Rauh 用它評估衝突預測。">ROC</abbr> 要和 <abbr class="tt" tabindex="0" data-term="precision–recall" title="精確率（預警中真的發生的比例）與召回率（發生的事件被預警到的比例）；事件稀少時要和 ROC 一起看。">precision–recall</abbr> 一起讀。</td></tr>
   </table></div>
   <div class="callout warn"><div class="ct">這支持什麼？ <span class="slideref">投影片 41</span></div><p><strong>預測上的有用性</strong>。主題標籤與因果主張需要另外的證據。作者自己也寫：發出五次警示，大約有四次是誤報（postprint p. 27，見第 12 章）。</p></div>
 
   <h2 id="c4-sum">總表：從主題到政治證據 <span class="slideref">投影片 42</span></h2>
   <div class="tablewrap"><table>
     <tr><th>研究</th><th>模型的貢獻</th><th>下一個研究步驟</th></tr>
-    <tr><td>Catalinac</td><td>主題比例</td><td>定義 pork／policy；比較候選人</td></tr>
+    <tr><td>Catalinac</td><td>主題比例</td><td>定義 <abbr class="tt" tabindex="0" data-term="pork" title="給特定選區或小團體的具體好處（如地方建設）；Catalinac 用「誰受益」把主題分成 pork 與 policy。">pork</abbr>／policy；比較候選人</td></tr>
     <tr><td>Gilardi et al.</td><td>框架比例</td><td>把框架連到先前的政策採納</td></tr>
     <tr><td>Barberá et al.</td><td>每日注意力</td><td>比較誰先動</td></tr>
     <tr><td>Jiang et al.</td><td>主題趨勢</td><td>發展假設；另外檢驗</td></tr>
@@ -947,9 +959,9 @@ n<sub>k</sub>：主題 k 的總字數；V：字彙大小</pre></div>
 
 <!-- ===================== CH05 ===================== -->
 <section class="chapter" id="ch05" data-slides="50,51,52">
-  <div class="crumb">05 · STM、驗證與延伸</div>
+  <div class="crumb">05 · <abbr class="tt" tabindex="0" data-term="STM" title="結構主題模型：讓主題盛行率（與用字）隨文件共變數（如政黨、時期）變化，並可估計這些關聯與不確定性（Roberts et al. 2014）。">STM</abbr>、驗證與延伸</div>
   <h1 class="ch">STM：把政黨與時期放進模型</h1>
-  <p class="lead">LDA 只看字。STM（Structural Topic Model）多做一件事：讓每篇文件的<strong>主題盛行率</strong>隨文件資訊（政黨、選舉時期）變化，並直接估計這些關聯與不確定性。</p>
+  <p class="lead"><abbr class="tt" tabindex="0" data-term="LDA" title="潛在狄利克雷分配：每份文件是多個主題的混合、每個主題是字的機率分布；只用字詞計數同時估計兩者（Blei, Ng &amp; Jordan 2003）。">LDA</abbr> 只看字。STM（Structural <abbr class="tt" tabindex="0" data-term="topic model" title="從字的共現型態找出重複出現的字分布（主題），並估計每份文件主題比例的無監督方法。">Topic Model</abbr>）多做一件事：讓每篇文件的<strong><abbr class="tt" tabindex="0" data-term="topic prevalence" title="一個主題在文件中被談多少；STM 用 prevalence = ~ party_family + period 讓它隨共變數變化。">主題盛行率</abbr></strong>隨文件資訊（政黨、選舉時期）變化，並直接估計這些關聯與不確定性。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c5-why">為什麼要 STM</a><a href="#c5-steps">五個步驟</a><a href="#c5-raw">原始 vs. 調整後</a><a href="#c5-lab">互動：時期組成</a><a href="#c5-forest">互動：六個主題</a><a href="#c5-quiz">自我檢查</a>
   </div>
@@ -964,7 +976,7 @@ n<sub>k</sub>：主題 k 的總字數；V：字彙大小</pre></div>
   <div class="codeblock nohl"><span class="lang">概念式（補充，簡化）</span><pre>LDA： θ_d ~ Dirichlet(α)                         # 每篇文件的混合都來自同一個分布
 STM： θ_d ~ LogisticNormal(X_d γ, Σ)              # 混合的「平均」隨文件共變數 X_d 改變
       X_d = [截距, party_family, period]          # prevalence = ~ party_family + period</pre></div>
-  <p class="hint">補充：STM 用 logistic-normal 而不是 Dirichlet，好處是能放共變數，也能估計主題之間的相關（Gilardi et al. 用它研究框架相關，投影片 23–24）。本週範例只用 prevalence 共變數，<strong>沒有</strong> content 共變數：主題內的用字對兩黨是共用的。<span class="slideref">投影片 52</span></p>
+  <p class="hint">補充：STM 用 <abbr class="tt" tabindex="0" data-term="logistic-normal" title="STM 用來取代 Dirichlet 的主題比例分布；能放入共變數，也能估計主題之間的相關。">logistic-normal</abbr> 而不是 <abbr class="tt" tabindex="0" data-term="Dirichlet" title="定義在「加總為 1 的比例」上的機率分布；LDA 用它當文件主題比例與主題字分布的先驗。">Dirichlet</abbr>，好處是能放<abbr class="tt" tabindex="0" data-term="covariate" title="放進模型、用來解釋結果變化的文件資訊，例如政黨與選舉時期。">共變數</abbr>，也能估計主題之間的相關（Gilardi et al. 用它研究框架相關，投影片 23–24）。本週範例只用 prevalence 共變數，<strong>沒有</strong> <abbr class="tt" tabindex="0" data-term="content covariate" title="STM 中讓主題內用字隨群體不同的共變數；本週範例沒有使用，兩黨共用同一組主題用字。">content 共變數</abbr>：主題內的用字對兩黨是共用的。<span class="slideref">投影片 52</span></p>
 
   <h2 id="c5-steps">五個步驟（老師示範，與 Lab R05 相同設定） <span class="slideref">投影片 51–55</span></h2>
   <div class="flow jsonly" id="flowStm">
@@ -977,13 +989,13 @@ STM： θ_d ~ LogisticNormal(X_d γ, Σ)              # 混合的「平均」隨
   <div class="explain jsonly" id="flowStmTxt"></div>
   <div class="tablewrap"><table>
     <tr><th>步驟</th><th>重點與真實數字</th></tr>
-    <tr><td>1 · 加 metadata</td><td>719 列 metadata，順序和 719 份文件相同。Thatcher 的 ess_hoc_00004：Conservative、47th Parliament (1979–1983)。<strong>period 是類別，不是數值時間趨勢</strong>。<span class="slideref">投影片 51</span></td></tr>
-    <tr><td>2 · 設定模型</td><td><code>stm(..., K = 6, prevalence = ~ party_family + period, seed = 20260710, init.type = "Spectral")</code>；θ 是 719 × 6。Metadata 進入主題估計。<span class="slideref">投影片 52</span></td></tr>
-    <tr><td>3 · 讀 Topic 4</td><td>Probability：council, community, agreed, united, european；FREX：argentine, commonwealth, nations, agreed, meeting。暫定標籤「International affairs?」；同一篇 Thatcher 演說在這個主題有 97.9%。<span class="slideref">投影片 53</span></td></tr>
-    <tr><td>4 · 原始平均</td><td>Topic 4 平均比例：Conservative 13.66%、Labour 7.63%；Labour − Conservative = <strong>−6.03 個百分點</strong>。每篇抽樣演說等權。<span class="slideref">投影片 54</span></td></tr>
-    <tr><td>5 · 考慮時期</td><td><code>estimateEffect(1:6 ~ party_family + period, uncertainty = "Global", nsims = 50)</code>，再以 1,000 次模擬做對比：Labour − Conservative = <strong>−5.99 個百分點</strong>，95% 區間 <strong>[−9.27, −2.78]</strong>。這是<strong>條件關聯</strong>。<span class="slideref">投影片 55</span></td></tr>
+    <tr><td>1 · 加 <abbr class="tt" tabindex="0" data-term="metadata" title="文件的背景資訊（ID、黨魁、政黨、日期、時期）；STM 把它放進主題盛行率的估計。">metadata</abbr></td><td>719 列 metadata，順序和 719 份文件相同。Thatcher 的 ess_hoc_00004：Conservative、47th Parliament (1979–1983)。<strong>period 是類別，不是數值時間趨勢</strong>。<span class="slideref">投影片 51</span></td></tr>
+    <tr><td>2 · 設定模型</td><td><code>stm(..., K = 6, prevalence = ~ party_family + period, seed = 20260710, init.type = "Spectral")</code>；<abbr class="tt" tabindex="0" data-term="θ" title="文件—主題比例矩陣：每份文件一列、每個主題一欄，每列加總為 1；本週 lda_6$theta 是 719 × 6。">θ</abbr> 是 719 × 6。Metadata 進入主題估計。<span class="slideref">投影片 52</span></td></tr>
+    <tr><td>3 · 讀 Topic 4</td><td>Probability：council, community, agreed, united, european；<abbr class="tt" tabindex="0" data-term="FREX" title="兼顧頻率（FRequency）與獨特性（EXclusivity）的主題代表字：常見而且主要只出現在這個主題的字。">FREX</abbr>：argentine, commonwealth, nations, agreed, meeting。<abbr class="tt" tabindex="0" data-term="provisional label" title="研究者讀主題字與原文後給的名稱；必須再用其他文本驗證，決定保留、縮小、擴大或拒絕。">暫定標籤</abbr>「International affairs?」；同一篇 Thatcher 演說在這個主題有 97.9%。<span class="slideref">投影片 53</span></td></tr>
+    <tr><td>4 · 原始平均</td><td>Topic 4 平均比例：Conservative 13.66%、Labour 7.63%；Labour − Conservative = <strong>−6.03 個<abbr class="tt" tabindex="0" data-term="percentage points" title="兩個比例相減的差，例如 13.66% − 7.63% ≈ 6.03 個百分點；不同於相對差（%）。">百分點</abbr></strong>。每篇抽樣演說等權。<span class="slideref">投影片 54</span></td></tr>
+    <tr><td>5 · 考慮時期</td><td><code>estimateEffect(1:6 ~ party_family + period, uncertainty = "Global", nsims = 50)</code>，再以 1,000 次模擬做對比：Labour − Conservative = <strong>−5.99 個百分點</strong>，95% 區間 <strong>[−9.27, −2.78]</strong>。這是<strong><abbr class="tt" tabindex="0" data-term="conditional association" title="考慮其他共變數（如選舉時期）後兩個變數之間的關聯；描述性的，不是因果效果。">條件關聯</abbr></strong>。<span class="slideref">投影片 55</span></td></tr>
   </table></div>
-  <div class="callout tip"><div class="ct">FREX 是什麼？（補充）</div><p>Probability 字是「在這個主題裡最常見」的字，常見字（如 agreed）會出現在很多主題；FREX 同時考慮<strong>頻率</strong>（FRequency）與<strong>獨特性</strong>（EXclusivity），挑出「常見而且主要只在這個主題出現」的字。Topic 4 的 FREX 冒出 argentine、commonwealth，提示這個主題裡有福克蘭（Falklands）戰爭的語言，標籤不能只看 Probability 字。R05a 也印出 Lift 字：dependencies, falklands, islanders…<span class="slideref">投影片 80</span></p></div>
+  <div class="callout tip"><div class="ct">FREX 是什麼？（補充）</div><p>Probability 字是「在這個主題裡最常見」的字，常見字（如 agreed）會出現在很多主題；FREX 同時考慮<strong>頻率</strong>（FRequency）與<strong>獨特性</strong>（<abbr class="tt" tabindex="0" data-term="exclusivity" title="主題驗證指標之一：一個主題的顯著字是否主要只屬於這個主題，而不是在很多主題都高。">EXclusivity</abbr>），挑出「常見而且主要只在這個主題出現」的字。Topic 4 的 FREX 冒出 argentine、commonwealth，提示這個主題裡有福克蘭（Falklands）戰爭的語言，標籤不能只看 Probability 字。R05a 也印出 <abbr class="tt" tabindex="0" data-term="Lift" title="labelTopics 的一種代表字：字在主題中的機率除以它在整個語料的頻率，偏好較罕見但集中於該主題的字。">Lift</abbr> 字：dependencies, falklands, islanders…<span class="slideref">投影片 80</span></p></div>
 
   <h2 id="c5-raw">原始差異 −6.03，調整後 −5.99：為什麼幾乎一樣？</h2>
   <p>投影片 54 提醒：原始平均是描述性的，而且「演說來自不同的選舉時期」。如果某黨的演說剛好集中在某些時期，而那些時期本來就很常談國際事務，原始差異就會混進時期的效果。調整時期就是在比較<strong>同一時期內</strong>兩黨的差異。<span class="slideref">投影片 54–55</span></p>
@@ -1018,7 +1030,7 @@ STM： θ_d ~ LogisticNormal(X_d γ, Σ)              # 混合的「平均」隨
       <div class="explain" id="fpNote">點任一主題列看它的 Probability／FREX 字。</div>
     </div>
   </div>
-  <p class="hint">資料來源：本機依 R05a–R05d 重新擬合的 STM（spectral 初始化是確定性的；θ 與老師存檔的 <code>stm6.rds</code> 最大差異 2.6 × 10⁻⁸），Topic 4 數字與投影片 81–83 完全一致。原始差由 θ 直接相減；調整後差異與區間來自 <code>estimateEffect</code> ＋ <code>plot(..., method = "difference", omit.plot = TRUE)</code>。</p>
+  <p class="hint">資料來源：本機依 R05a–R05d 重新擬合的 STM（<abbr class="tt" tabindex="0" data-term="spectral initialization" title="STM 的 init.type = &quot;Spectral&quot;：以譜方法得到確定性的起點，所以在不同機器上結果一致。">spectral</abbr> 初始化是確定性的；θ 與老師存檔的 <code>stm6.rds</code> 最大差異 2.6 × 10⁻⁸），Topic 4 數字與投影片 81–83 完全一致。原始差由 θ 直接相減；調整後差異與區間來自 <code>estimateEffect</code> ＋ <code>plot(..., method = "difference", omit.plot = TRUE)</code>。</p>
 
   <h2 id="c5-quiz">自我檢查</h2>
   <div class="mcq" data-ans="1" data-q="c5q1">
@@ -1043,15 +1055,15 @@ STM： θ_d ~ LogisticNormal(X_d γ, Σ)              # 混合的「平均」隨
     <button class="opt">STM 忽略了 period</button>
     <button class="opt">estimateEffect 只用了 50 次模擬</button>
     <button class="opt">Topic 4 不隨時間變化</button>
-    <div class="fb">每格約 30 篇（Con 48th 為 29 篇）。若組成不平衡，時期就可能混淆原始比較——可在上面的實驗室試試。<span class="slideref">投影片 69</span></div>
+    <div class="fb">每格約 30 篇（Con 48th 為 29 篇）。若組成不平衡，時期就可能<abbr class="tt" tabindex="0" data-term="confounding" title="第三個因素同時影響解釋變數與結果，讓觀察到的關聯不能解讀為因果。">混淆</abbr>原始比較——可在上面的實驗室試試。<span class="slideref">投影片 69</span></div>
   </div>
 </section>
 
 <!-- ===================== CH06 ===================== -->
 <section class="chapter" id="ch06" data-slides="56,57,58">
-  <div class="crumb">06 · STM、驗證與延伸</div>
+  <div class="crumb">06 · <abbr class="tt" tabindex="0" data-term="STM" title="結構主題模型：讓主題盛行率（與用字）隨文件共變數（如政黨、時期）變化，並可估計這些關聯與不確定性（Roberts et al. 2014）。">STM</abbr>、驗證與延伸</div>
   <h1 class="ch">假設、驗證、perplexity 與 K</h1>
-  <p class="lead">主題模型一定會吐出主題。真正的問題是：這些主題能不能當作你要的<strong>政治量測</strong>？本章拆開五種驗證、讀懂 perplexity，並看 K 怎麼影響議題的切法。</p>
+  <p class="lead"><abbr class="tt" tabindex="0" data-term="topic model" title="從字的共現型態找出重複出現的字分布（主題），並估計每份文件主題比例的無監督方法。">主題模型</abbr>一定會吐出主題。真正的問題是：這些主題能不能當作你要的<strong>政治量測</strong>？本章拆開五種驗證、讀懂 <abbr class="tt" tabindex="0" data-term="perplexity" title="模型配適分數：exp(−平均 log 字機率)，越低代表對被評分的字配適越好；不能單獨證明最佳 K 或主題有意義。">perplexity</abbr>，並看 K 怎麼影響議題的切法。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c6-five">五種驗證</a><a href="#c6-label">檢查一個標籤</a><a href="#c6-perp">讀 perplexity</a><a href="#c6-kex">K = 3 vs. 9</a><a href="#c6-calc">補充：三個字的例子</a><a href="#c6-held">held-out 與意義</a><a href="#c6-k">檢查 K</a><a href="#c6-quiz">自我檢查</a>
   </div>
@@ -1059,9 +1071,9 @@ STM： θ_d ~ LogisticNormal(X_d γ, Σ)              # 混合的「平均」隨
   <h2 id="c6-five">主題驗證在問不同的問題 <span class="slideref">投影片 57</span></h2>
   <div class="tablewrap"><table>
     <tr><th>檢查</th><th>問題</th></tr>
-    <tr><td>Held-out word fit</td><td>模型能解釋<strong>沒看過</strong>的字嗎？</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="held-out" title="擬合前先藏起一部分字，擬合後再用模型對它們評分；STM 的 held-out log probability 越高越好。">Held-out</abbr> word fit</td><td>模型能解釋<strong>沒看過</strong>的字嗎？</td></tr>
     <tr><td>Words and documents</td><td>標籤描述了內容嗎？</td></tr>
-    <tr><td>Coherence and exclusivity</td><td>顯著字彼此相關、而且有區辨性嗎？</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="coherence" title="主題驗證指標之一：一個主題的顯著字是否常在同一批文件中一起出現、彼此相關。">Coherence</abbr> and <abbr class="tt" tabindex="0" data-term="exclusivity" title="主題驗證指標之一：一個主題的顯著字是否主要只屬於這個主題，而不是在很多主題都高。">exclusivity</abbr></td><td>顯著字彼此相關、而且有區辨性嗎？</td></tr>
     <tr><td>Sensitivity</td><td>詮釋在合理的選擇下站得住嗎？</td></tr>
     <tr><td>External prediction</td><td>主題比例能預測估計以外的結果嗎？（例：Mueller &amp; Rauh 預測下一年衝突）</td></tr>
   </table></div>
@@ -1070,7 +1082,7 @@ STM： θ_d ~ LogisticNormal(X_d γ, Σ)              # 混合的「平均」隨
   <div class="tablewrap"><table>
     <tr><th>證據</th><th>要檢查什麼</th></tr>
     <tr><td>Probability 字</td><td>council, community, agreed, united, european</td></tr>
-    <tr><td>FREX 字</td><td>argentine, commonwealth, nations, agreed, meeting</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="FREX" title="兼顧頻率（FRequency）與獨特性（EXclusivity）的主題代表字：常見而且主要只出現在這個主題的字。">FREX</abbr> 字</td><td>argentine, commonwealth, nations, agreed, meeting</td></tr>
     <tr><td>同一篇 Thatcher 演說</td><td>在 Strasbourg 的歐洲理事會會議；T4 = 97.9%</td></tr>
     <tr><td>其他演說</td><td>讀高比例的文本與可能的反例</td></tr>
   </table></div>
@@ -1081,7 +1093,7 @@ STM： θ_d ~ LogisticNormal(X_d γ, Σ)              # 混合的「平均」隨
   <p><strong>K</strong>：主題數。<strong>Perplexity</strong>：一種模型配適分數（a model fit score）。<span class="slideref">投影片 59</span></p>
   <div class="tablewrap"><table>
     <tr><th>步驟</th><th>要做什麼（投影片 59）</th></tr>
-    <tr><td>1 · 擬合候選模型</td><td>同樣的文本與字彙；例如 LDA K = 3、6、9</td></tr>
+    <tr><td>1 · 擬合候選模型</td><td>同樣的文本與字彙；例如 <abbr class="tt" tabindex="0" data-term="LDA" title="潛在狄利克雷分配：每份文件是多個主題的混合、每個主題是字的機率分布；只用字詞計數同時估計兩者（Blei, Ng &amp; Jordan 2003）。">LDA</abbr> K = 3、6、9</td></tr>
     <tr><td>2 · 比較分數</td><td>Perplexity 越低 = 對<strong>被打分數的那些字</strong>配適越好</td></tr>
     <tr><td>3 · 讀主題</td><td>看主題字與原文：標籤有沒有用？</td></tr>
     <tr><td>4 · 選一個有用的 K</td><td>分數和詮釋<strong>一起</strong>看</td></tr>
@@ -1097,7 +1109,7 @@ x<sub>dv</sub>：文件 d 中字 v 的次數；p<sub>dv</sub>：模型給文件 
 
   <h2 id="c6-kex">同樣的文本，不同的 K <span class="slideref">投影片 61</span></h2>
   <div class="tablewrap"><table>
-    <tr><th>主題數</th><th>可能的主題標籤（選出的主題）</th><th>Training perplexity</th></tr>
+    <tr><th>主題數</th><th>可能的主題標籤（選出的主題）</th><th><abbr class="tt" tabindex="0" data-term="training perplexity" title="用估計模型時用過的同一批字計算的 perplexity（resubstitution）；K 越大通常越低。">Training perplexity</abbr></th></tr>
     <tr><td><strong>K = 3</strong></td><td>Europe-related discussion（跟歐洲有關的討論）</td><td>1,195.7</td></tr>
     <tr><td><strong>K = 9</strong></td><td>EU agreements／Council meetings（歐盟協議／理事會會議）</td><td>989.2</td></tr>
   </table></div>
@@ -1180,9 +1192,9 @@ eval.heldout(fit_h, heldout$missing)$expected.heldout   # 越高越好</pre></di
 
 <!-- ===================== CH07 ===================== -->
 <section class="chapter" id="ch07" data-slides="63,64,66,67">
-  <div class="crumb">07 · STM、驗證與延伸</div>
+  <div class="crumb">07 · <abbr class="tt" tabindex="0" data-term="STM" title="結構主題模型：讓主題盛行率（與用字）隨文件共變數（如政黨、時期）變化，並可估計這些關聯與不確定性（Roberts et al. 2014）。">STM</abbr>、驗證與延伸</div>
   <h1 class="ch">延伸：keyATM、seeded LDA、CTM、DTM、BTM</h1>
-  <p class="lead">LDA 與 STM 之外，還有幾種變形各自回答不同的研究問題。投影片把它們列為「另一種建模選擇」或延伸，Lab 沒有 keyword-guidance 練習。</p>
+  <p class="lead"><abbr class="tt" tabindex="0" data-term="LDA" title="潛在狄利克雷分配：每份文件是多個主題的混合、每個主題是字的機率分布；只用字詞計數同時估計兩者（Blei, Ng &amp; Jordan 2003）。">LDA</abbr> 與 STM 之外，還有幾種變形各自回答不同的研究問題。投影片把它們列為「另一種建模選擇」或延伸，Lab 沒有 keyword-guidance 練習。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c7-key">關鍵字引導</a><a href="#c7-ctm">CTM 與 DTM</a><a href="#c7-btm">短文本 BTM</a><a href="#c7-sup">對照：監督式議題分類</a><a href="#c7-pick">互動：選哪個模型？</a><a href="#c7-app">更多應用</a><a href="#c7-quiz">自我檢查</a>
   </div>
@@ -1190,8 +1202,8 @@ eval.heldout(fit_h, heldout$missing)$expected.heldout   # 越高越好</pre></di
   <h2 id="c7-key">關鍵字引導的主題模型 <span class="slideref">投影片 63–64</span></h2>
   <div class="tablewrap"><table>
     <tr><th>方法</th><th>研究者的輸入</th><th>W8 的用法</th></tr>
-    <tr><td><strong>keyATM</strong>（Eshima, Imai &amp; Sasaki, AJPS 2024）</td><td>為想量測的概念提供少數關鍵字；模型同時估計<strong>沒有</strong>關鍵字的主題與文件混合</td><td>方法與套件概覽：<code>install.packages("keyATM")</code></td></tr>
-    <tr><td><strong>Seeded LDA</strong></td><td>種子字典（seed dictionary）、偽計數權重、殘差主題（residual topics）</td><td>獨立延伸；ESS Day 7 可執行的範例用 <code>textmodel_seededlda()</code></td></tr>
+    <tr><td><strong><abbr class="tt" tabindex="0" data-term="keyATM" title="關鍵字輔助主題模型：研究者為想量的概念提供少數關鍵字，模型同時估計沒有關鍵字的主題（Eshima, Imai &amp; Sasaki 2024）。">keyATM</abbr></strong>（Eshima, Imai &amp; Sasaki, <abbr class="tt" tabindex="0" data-term="AJPS" title="American Journal of Political Science，美國政治學期刊。">AJPS</abbr> 2024）</td><td>為想量測的概念提供少數關鍵字；模型同時估計<strong>沒有</strong>關鍵字的主題與文件混合</td><td>方法與套件概覽：<code>install.packages("keyATM")</code></td></tr>
+    <tr><td><strong><abbr class="tt" tabindex="0" data-term="seeded LDA" title="用種子字典引導部分主題的 LDA，可另設殘差主題；函式為 textmodel_seededlda()。">Seeded LDA</abbr></strong></td><td>種子字典（seed dictionary）、偽計數權重、殘差主題（residual topics）</td><td>獨立延伸；<abbr class="tt" tabindex="0" data-term="ESS" title="Essex Summer School：英國艾塞克斯大學的社會科學方法暑期學校；本週練習資料取自其 Day 7 課程。">ESS</abbr> Day 7 可執行的範例用 <code>textmodel_seededlda()</code></td></tr>
   </table></div>
   <p>兩者都用實質資訊來<strong>引導</strong>主題發現；模型與輸出不同，每個擬合都要各自詮釋與驗證。<span class="slideref">投影片 64</span></p>
   <details class="quiz"><summary>補充：seeded LDA 的語法長什麼樣？（非講義內容，未執行）</summary><div class="qa">
@@ -1200,19 +1212,19 @@ eval.heldout(fit_h, heldout$missing)$expected.heldout   # 越高越好</pre></di
   economy = c("unemployment", "economy", "budget", "inflation")))
 seeded &lt;- textmodel_seededlda(topic_dfm, dict, residual = 2)
 terms(seeded, 10)</pre></div>
-    <p class="hint">函式名依投影片 64；<code>residual</code> 參數依 seededlda 套件文件。字典內容是示範用。W7 的 LSS 也用「種子詞」，但它輸出的是一條極性量尺，不是主題混合。</p>
+    <p class="hint">函式名依投影片 64；<code>residual</code> 參數依 <abbr class="tt" tabindex="0" data-term="seededlda" title="R 套件，提供 textmodel_lda（一般 LDA）與 textmodel_seededlda（種子字典引導）；本週 R02a 用它擬合 LDA。">seededlda</abbr> 套件文件。字典內容是示範用。W7 的 LSS 也用「種子詞」，但它輸出的是一條極性量尺，不是<abbr class="tt" tabindex="0" data-term="topic mixture" title="一份文件在各主題上的比例（θ 的一列），加總為 1；一篇演說可以同時談好幾個議題。">主題混合</abbr>。</p>
   </div></details>
 
   <h2 id="c7-ctm">相關主題與跨時變化 <span class="slideref">投影片 66</span></h2>
   <div class="tablewrap"><table>
     <tr><th>模型</th><th>研究問題</th><th>研究者提供</th></tr>
-    <tr><td>Correlated Topic Model（CTM；Blei &amp; Lafferty 2007）</td><td>哪些議題傾向在同一份文件中一起出現？</td><td>文字計數與選定的主題數</td></tr>
-    <tr><td>Dynamic Topic Model（DTM；Blei &amp; Lafferty 2006）</td><td>一個議題的語言如何隨時期改變？</td><td>可比較的文本與排序好的時期</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="CTM" title="相關主題模型：估計哪些主題傾向在同一份文件中一起出現（Blei &amp; Lafferty 2007）。">Correlated Topic Model</abbr>（CTM；Blei &amp; Lafferty 2007）</td><td>哪些議題傾向在同一份文件中一起出現？</td><td>文字計數與選定的主題數</td></tr>
+    <tr><td><abbr class="tt" tabindex="0" data-term="DTM" title="動態主題模型：追蹤一個主題的用字如何隨排序好的時期改變（Blei &amp; Lafferty 2006）。">Dynamic Topic Model</abbr>（DTM；Blei &amp; Lafferty 2006）</td><td>一個議題的語言如何隨時期改變？</td><td>可比較的文本與排序好的時期</td></tr>
   </table></div>
-  <p class="hint">補充：Mueller &amp; Rauh 的論文正好提到 conflict 主題的用字在 1995 與 2015 之間改變（serb、gulf → terrorist、insurg、sunni；postprint pp. 14–16），並在結論說未來可用動態主題模型或 STM。這就是 DTM 想處理的問題。</p>
+  <p class="hint">補充：Mueller &amp; Rauh 的論文正好提到 conflict 主題的用字在 1995 與 2015 之間改變（serb、gulf → terrorist、insurg、sunni；postprint pp. 14–16），並在結論說未來可用動態<abbr class="tt" tabindex="0" data-term="topic model" title="從字的共現型態找出重複出現的字分布（主題），並估計每份文件主題比例的無監督方法。">主題模型</abbr>或 STM。這就是 DTM 想處理的問題。</p>
 
   <h2 id="c7-btm">短文本：biterm topic model <span class="slideref">投影片 67</span></h2>
-  <p>文本：短的問卷回答、貼文或標題。<strong>BTM</strong>（Yan et al. 2013；R 套件 BTM）把短文本中<strong>無序的字對</strong>（biterm）匯集到整個語料來估計主題，避免單篇短文本字太少的問題。延伸作業：比較 BTM 與 LDA，並用原文檢查標籤。<span class="slideref">投影片 67</span></p>
+  <p>文本：短的問卷回答、貼文或標題。<strong><abbr class="tt" tabindex="0" data-term="BTM" title="biterm 主題模型：把短文本中的無序字對匯集到整個語料來估計主題，適合推文、標題等短文本（Yan et al. 2013）。">BTM</abbr></strong>（Yan et al. 2013；R 套件 BTM）把短文本中<strong>無序的字對</strong>（biterm）匯集到整個語料來估計主題，避免單篇短文本字太少的問題。延伸作業：比較 BTM 與 LDA，並用原文檢查標籤。<span class="slideref">投影片 67</span></p>
 
   <h2 id="c7-sup">對照：先定義標籤的議題分類 <span class="slideref">投影片 90</span></h2>
   <div class="tablewrap"><table>
@@ -1266,15 +1278,15 @@ terms(seeded, 10)</pre></div>
 <section class="chapter" id="ch08" data-slides="70,71,72">
   <div class="crumb">08 · R 實作</div>
   <h1 class="ch">R00–R01c：套件、讀檔、清理、DFM</h1>
-  <p class="lead">兩個模型共用同一份計數矩陣（DFM）。這章把演說讀進來、切字、清理、合併常見片語、修剪字彙，最後得到 719 × 2,831、共 70,813 個 token 的 DFM。</p>
+  <p class="lead">兩個模型共用同一份計數矩陣（<abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：列是文件、欄是字（特徵）、格子是次數。本週 R01c 得到 719 × 2,831。">DFM</abbr>）。這章把演說讀進來、切字、清理、合併常見片語、修剪字彙，最後得到 719 × 2,831、共 70,813 個 <abbr class="tt" tabindex="0" data-term="token" title="切字後的單位（一個字或標點）；本週 DFM 共保留 70,813 個 token。">token</abbr> 的 DFM。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c8-env">本機環境</a><a href="#c8-r00">R00 準備</a><a href="#c8-r01a">R01a 讀檔</a><a href="#c8-r01b">R01b 切字與清理</a><a href="#c8-pipe">互動：清理管線</a><a href="#c8-r01c">R01c DFM</a><a href="#c8-trim">互動：修剪</a><a href="#c8-run">執行清單</a><a href="#c8-quiz">自我檢查</a>
   </div>
 
   <div class="callout note" id="c8-env"><div class="ct">本教材的 R 輸出怎麼來的</div>
     <ul>
-      <li>在教材製作機（Linux aarch64）上用 R 4.5.3、quanteda 4.5.1、quanteda.textstats 0.97.2、seededlda 1.4.3（另以 1.4.4 重跑，結果相同）、stm 1.3.8 把 <code>W8/classroom/W8.R</code> 從頭到尾跑過一次（<code>R CMD BATCH</code>），下面每段「R console output」都是那次的真實輸出，只刪掉註解行、截短長篇演說全文。</li>
-      <li>R00–R01c、R04、R05 的數字與投影片完全一致。<strong>R02–R03 的 LDA 例外</strong>：本機重跑得到的主題排列不同（詳見第 09 章），所以那幾步同時列出「載入老師存檔的 <code>lda6.rds</code>」與「本機重新擬合」兩種輸出。</li>
+      <li>在教材製作機（Linux aarch64）上用 R 4.5.3、<abbr class="tt" tabindex="0" data-term="quanteda" title="R 的文本分析套件：建立語料庫、切字、清理、建 DFM；本週的前處理都用它。">quanteda</abbr> 4.5.1、quanteda.textstats 0.97.2、<abbr class="tt" tabindex="0" data-term="seededlda" title="R 套件，提供 textmodel_lda（一般 LDA）與 textmodel_seededlda（種子字典引導）；本週 R02a 用它擬合 LDA。">seededlda</abbr> 1.4.3（另以 1.4.4 重跑，結果相同）、stm 1.3.8 把 <code>W8/classroom/W8.R</code> 從頭到尾跑過一次（<code>R CMD BATCH</code>），下面每段「R console output」都是那次的真實輸出，只刪掉註解行、截短長篇演說全文。</li>
+      <li>R00–R01c、R04、R05 的數字與投影片完全一致。<strong>R02–R03 的 <abbr class="tt" tabindex="0" data-term="LDA" title="潛在狄利克雷分配：每份文件是多個主題的混合、每個主題是字的機率分布；只用字詞計數同時估計兩者（Blei, Ng &amp; Jordan 2003）。">LDA</abbr> 例外</strong>：本機重跑得到的主題排列不同（詳見第 09 章），所以那幾步同時列出「載入老師存檔的 <code>lda6.rds</code>」與「本機重新擬合」兩種輸出。</li>
       <li>課程路線（投影片 70）：課前 R00；課堂 R01 → R02 → R03a–R03b 與 E02 → R05a–R05e 與 E05；課後 R03c–R04c 與其餘練習。</li>
     </ul>
   </div>
@@ -1333,7 +1345,7 @@ print(topic_docs[1:3,
 print(c(speeches = ndoc(topic_corpus)))</pre></div>
   <div class="linebyline">
     <div class="lr"><code>readRDS(lab_file("sample_raw.rds"))</code><div>讀入 719 篇演說的表格（欄位含 doc_id、leader、party_family、date、period、text）。</div></div>
-    <div class="lr"><code>corpus(topic_docs, text_field = "text", docid_field = "doc_id")</code><div>一列一篇完整演說；文件名就是 doc_id，其他欄位成為 docvars。</div></div>
+    <div class="lr"><code>corpus(topic_docs, text_field = "text", docid_field = "doc_id")</code><div>一列一篇完整演說；文件名就是 doc_id，其他欄位成為 <abbr class="tt" tabindex="0" data-term="docvars" title="quanteda 語料庫中附在每份文件上的變數（metadata），例如 party_family、period。">docvars</abbr>。</div></div>
   </div>
   <div class="outbox"><div class="ohead">R console output（本機實跑：R 4.5.3、quanteda 4.5.1、quanteda.textstats 0.97.2、seededlda 1.4.3（另以 1.4.4 重跑，結果相同）、stm 1.3.8）</div><pre>&gt; topic_docs &lt;- readRDS(lab_file("sample_raw.rds"))
 &gt; topic_corpus &lt;- corpus(
@@ -1349,7 +1361,7 @@ print(c(speeches = ndoc(topic_corpus)))</pre></div>
 &gt; print(c(speeches = ndoc(topic_corpus)))
 speeches 
      719 </pre></div>
-  <p class="hint">投影片 44：這裡「一份文件 = 一篇完整演說」。語料庫把每篇演說和它的 ID 與背景資訊放在一起；字還沒有被切開或計數。<span class="slideref">投影片 44</span></p>
+  <p class="hint">投影片 44：這裡「一份文件 = 一篇完整演說」。<abbr class="tt" tabindex="0" data-term="corpus" title="文件的集合；quanteda 的 corpus 物件把每篇演說與它的 ID 和背景資訊放在一起，尚未切字或計數。">語料庫</abbr>把每篇演說和它的 ID 與背景資訊放在一起；字還沒有被切開或計數。<span class="slideref">投影片 44</span></p>
 
   <h2 id="c8-r01b">R01b：切字與清理 <span class="slideref">投影片 45–46、74</span></h2>
   <div class="codeblock"><span class="lang">R · R01b（W8/classroom/W8.R）</span><button class="copyb jsonly">複製</button><pre># R01b Split and clean the words
@@ -1394,7 +1406,7 @@ print(clean_tokens[[id]][1:8])</pre></div>
   <div class="lab" id="labPipe">
     <div class="lab-h"><span class="ic">🧹</span><span class="lt">一次開關一個清理步驟</span><span class="ls">真實 token＋JS 重現</span></div>
     <div class="lab-b">
-      <p class="hint">起點是 R 對 Thatcher 1979-06-26 演說切出的<strong>真實</strong>原始 token（共 <span id="ppN">–</span> 個）。下面的開關用 JavaScript 依序套用與 R01b 相同的規則（停用字表也從 R 匯出），刪掉的字會劃線。JS 只是重現示範，正式結果以 R 為準。</p>
+      <p class="hint">起點是 R 對 Thatcher 1979-06-26 演說切出的<strong>真實</strong>原始 token（共 <span id="ppN">–</span> 個）。下面的開關用 JavaScript 依序套用與 R01b 相同的規則（<abbr class="tt" tabindex="0" data-term="stopwords" title="出現很頻繁、幾乎不帶議題資訊的常用字（the、to、I…）；R01b 用 stopwords(&quot;en&quot;) 移除。">停用字</abbr>表也從 R 匯出），刪掉的字會劃線。JS 只是重現示範，正式結果以 R 為準。</p>
       <div class="row">
         <label class="f"><input type="checkbox" id="ppPunct" checked> 移除標點／符號／數字</label>
         <label class="f"><input type="checkbox" id="ppLower" checked> 轉小寫</label>
@@ -1429,11 +1441,11 @@ print(c(speeches = ndoc(topic_dfm), features = nfeat(topic_dfm),
   tokens = sum(ntoken(topic_dfm))))
 print(topfeatures(topic_dfm, 6))</pre></div>
   <div class="linebyline">
-    <div class="lr"><code>textstat_collocations(..., min_count = 8, size = 2:3)</code><div>找出至少出現 8 次的 2–3 字搭配，依 λ（關聯強度）排序。</div></div>
+    <div class="lr"><code>textstat_collocations(..., min_count = 8, size = 2:3)</code><div>找出至少出現 8 次的 2–3 字搭配，依 <abbr class="tt" tabindex="0" data-term="λ" title="textstat_collocations 報告的搭配關聯強度；值越大，代表這幾個字一起出現得越不像巧合。">λ</abbr>（關聯強度）排序。</div></div>
     <div class="lr"><code>tokens_compound(..., phrase(head(..., 30)))</code><div>把前 30 個搭配黏成一個 token（例如 <code>per_cent</code>），讓它在模型裡是一個字。</div></div>
     <div class="lr"><code>dfm_trim(min_termfreq = 5, min_docfreq = 2)</code><div>刪掉全語料出現少於 5 次、或只出現在 1 篇演說的字。</div></div>
     <div class="lr"><code>dfm_trim(max_docfreq = .75, docfreq_type = "prop")</code><div>刪掉出現在超過 75% 演說裡的字（太普遍，無法區分主題）。</div></div>
-    <div class="lr"><code>stopifnot(identical(...))</code><div>確認 metadata 與 DFM 的列順序完全一致，後面 STM 才不會對錯人。</div></div>
+    <div class="lr"><code>stopifnot(identical(...))</code><div>確認 <abbr class="tt" tabindex="0" data-term="metadata" title="文件的背景資訊（ID、黨魁、政黨、日期、時期）；STM 把它放進主題盛行率的估計。">metadata</abbr> 與 DFM 的列順序完全一致，後面 <abbr class="tt" tabindex="0" data-term="STM" title="結構主題模型：讓主題盛行率（與用字）隨文件共變數（如政黨、時期）變化，並可估計這些關聯與不確定性（Roberts et al. 2014）。">STM</abbr> 才不會對錯人。</div></div>
   </div>
   <div class="outbox"><div class="ohead">R console output（本機實跑：R 4.5.3、quanteda 4.5.1、quanteda.textstats 0.97.2、seededlda 1.4.3（另以 1.4.4 重跑，結果相同）、stm 1.3.8）</div><pre>&gt; collocations &lt;- textstat_collocations(
 +   clean_tokens, min_count = 8, size = 2:3) |&gt; arrange(desc(lambda))
@@ -1457,11 +1469,11 @@ speeches features   tokens
     <li>719 篇演說、2,831 個特徵、70,813 個保留的 token。列是演說、欄是字或合併後的片語、格子是次數。<strong>LDA 與 STM 都用這同一份計數</strong>。</li>
     <li>最常見的保留字：prime 992、government 728、people 590、can 490、now 382、country 354。注意 <code>prime</code> 很多是 “Prime Minister” 的殘片（minister 已被移除）——這就是清理選擇的副作用。</li>
   </ul></div>
-  <details class="quiz"><summary>看看實際被合併的 30 個搭配（真實輸出）</summary><div class="qa"><div class="tablewrap"><table id="collocTable"></table></div><p class="hint">由 R 匯出：<code>head(collocations, 30)</code> 的 collocation、count、λ。</p></div></details>
+  <details class="quiz"><summary>看看實際被合併的 30 個搭配（真實輸出）</summary><div class="qa"><div class="tablewrap"><table id="collocTable"></table></div><p class="hint">由 R 匯出：<code>head(collocations, 30)</code> 的 <abbr class="tt" tabindex="0" data-term="collocation" title="常一起出現的 2–3 字片語（如 per cent）；R01c 找出後把前 30 個合併成單一 token。">collocation</abbr>、count、λ。</p></div></details>
 
   <h2 id="c8-trim">互動：修剪門檻會刪掉多少字？（真實計數）</h2>
   <div class="lab" id="labTrim">
-    <div class="lab-h"><span class="ic">✂️</span><span class="lt">dfm_trim 門檻實驗</span><span class="ls">真實的修剪前字頻與文件頻率</span></div>
+    <div class="lab-h"><span class="ic">✂️</span><span class="lt"><abbr class="tt" tabindex="0" data-term="dfm_trim" title="依字頻與文件頻率刪字的 quanteda 函式；R01c： min_termfreq = 5、min_docfreq = 2、max_docfreq = .75。">dfm_trim</abbr> 門檻實驗</span><span class="ls">真實的修剪前字頻與文件頻率</span></div>
     <div class="lab-b">
       <p class="hint">修剪前（合併片語後）的 DFM 有 <b id="trPre">–</b> 個特徵。拖動門檻，看保留的特徵數與 token 數。預設值 = R01c 的設定，應得到 2,831 個特徵、70,813 個 token。</p>
       <div class="grid3">
@@ -1513,16 +1525,16 @@ speeches features   tokens
 <section class="chapter" id="ch09" data-slides="47,48,49,76">
   <div class="crumb">09 · R 實作</div>
   <h1 class="ch">R02a–R03b：擬合 LDA、讀完整混合、回到原文（E02）</h1>
-  <p class="lead">擬合 6 個主題的 LDA，讀主題字、讀每篇演說的完整混合，再挑兩篇演說回到原文，替主題寫暫定標籤並找反例。</p>
+  <p class="lead">擬合 6 個主題的 <abbr class="tt" tabindex="0" data-term="LDA" title="潛在狄利克雷分配：每份文件是多個主題的混合、每個主題是字的機率分布；只用字詞計數同時估計兩者（Blei, Ng &amp; Jordan 2003）。">LDA</abbr>，讀主題字、讀每篇演說的完整混合，再挑兩篇演說回到原文，替主題寫<abbr class="tt" tabindex="0" data-term="provisional label" title="研究者讀主題字與原文後給的名稱；必須再用其他文本驗證，決定保留、縮小、擴大或拒絕。">暫定標籤</abbr>並找反例。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c9-diff">⚠ 數字差異說明</a><a href="#c9-r02a">R02a 擬合</a><a href="#c9-label">互動：替主題命名</a><a href="#c9-r02b">R02b 完整混合</a><a href="#c9-hist">互動：多「混」？</a><a href="#c9-r03a">R03a–R03b 讀原文</a><a href="#c9-explorer">互動：演說瀏覽器</a><a href="#c9-e02">E02 練習</a><a href="#c9-quiz">自我檢查</a>
   </div>
 
   <div class="callout warn" id="c9-diff"><div class="ct">⚠ 本機重新擬合 LDA 的數字和投影片不同（已查證原因範圍）</div>
     <ul>
-      <li>在 Linux aarch64 上照 R02a 原封不動重跑，<strong>主題內容大致相同但編號與比例不同</strong>：例如歐洲議題變成 topic3，ess_hoc_00004 的 topic3 = 0.819；主導主題計數是 82/71/77/121/177/191，不是投影片的 91/80/193/143/145/67。</li>
-      <li>已排除的原因：輸入資料完全相同（DFM 與老師 <code>lda6.rds</code> 內存的 <code>$data</code> 逐格相同、欄列順序相同）；套件版本也不是原因（改裝老師存檔時用的 seededlda 1.4.3 重跑，結果與 1.4.4 相同）。</li>
-      <li>推測原因（未證實）：Gibbs 抽樣的隨機數在不同作業系統／C++ 標準函式庫上產生不同序列。Jerry 在自己的 Mac 上跑，很可能會和投影片一致。</li>
+      <li>在 Linux aarch64 上照 R02a 原封不動重跑，<strong>主題內容大致相同但編號與比例不同</strong>：例如歐洲議題變成 topic3，ess_hoc_00004 的 topic3 = 0.819；<abbr class="tt" tabindex="0" data-term="dominant topic" title="每份文件只保留比例最大的主題編號（max.col）；容易重現但丟掉其他比例的資訊。">主導主題</abbr>計數是 82/71/77/121/177/191，不是投影片的 91/80/193/143/145/67。</li>
+      <li>已排除的原因：輸入資料完全相同（<abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：列是文件、欄是字（特徵）、格子是次數。本週 R01c 得到 719 × 2,831。">DFM</abbr> 與老師 <code>lda6.rds</code> 內存的 <code>$data</code> 逐格相同、欄列順序相同）；套件版本也不是原因（改裝老師存檔時用的 <abbr class="tt" tabindex="0" data-term="seededlda" title="R 套件，提供 textmodel_lda（一般 LDA）與 textmodel_seededlda（種子字典引導）；本週 R02a 用它擬合 LDA。">seededlda</abbr> 1.4.3 重跑，結果與 1.4.4 相同）。</li>
+      <li>推測原因（未證實）：<abbr class="tt" tabindex="0" data-term="Gibbs sampling" title="反覆依其他所有字的指派重新抽每個字的主題，以估計 LDA 的演算法；seededlda 的 textmodel_lda 用它。">Gibbs 抽樣</abbr>的隨機數在不同作業系統／C++ 標準函式庫上產生不同序列。Jerry 在自己的 Mac 上跑，很可能會和投影片一致。</li>
       <li>本教材的做法：R02a–R03d 以 <code>readRDS("analysis/ess_lab/lda6.rds")</code>（老師用同一個呼叫存下的 K = 6 擬合）作為主要輸出，<strong>這個版本與投影片 76–78、85–86 的每個數字都相符</strong>；本機重新擬合的輸出放在可展開的區塊供對照。所有 LDA 互動實驗室也用 <code>lda6.rds</code>。</li>
     </ul>
     <p class="hint">這也是第 02 章那句話的實例：seed 支持可重現性，不保證效度，也不保證跨平台得到同一組編號。</p>
@@ -1537,7 +1549,7 @@ print(terms(lda_6, 10))
 print(dim(lda_6$theta))</pre></div>
   <div class="linebyline">
     <div class="lr"><code>set.seed(20260710)</code><div>固定隨機起點，讓同一環境可以重現。</div></div>
-    <div class="lr"><code>textmodel_lda(topic_dfm, k = 6, alpha = .5, beta = .1, ...)</code><div>seededlda 套件提供的一般 LDA（Gibbs 抽樣）；K = 6、α = 0.5、β = 0.1。</div></div>
+    <div class="lr"><code>textmodel_lda(topic_dfm, k = 6, alpha = .5, beta = .1, ...)</code><div>seededlda 套件提供的一般 LDA（Gibbs 抽樣）；K = 6、<abbr class="tt" tabindex="0" data-term="α" title="LDA 文件混合的 Dirichlet 先驗參數：越小，文件越集中在少數主題；本週 R02a 用 0.5。">α</abbr> = 0.5、<abbr class="tt" tabindex="0" data-term="β (φ)" title="主題—字機率：每個主題下各字的機率分布；seededlda 存在 $phi，stm 以 log 存在 $beta$logbeta。β 也指它的先驗參數。">β</abbr> = 0.1。</div></div>
     <div class="lr"><code>max_iter = 500, auto_iter = FALSE, batch_size = 1</code><div>固定跑 500 輪、不提早停、不分批。</div></div>
     <div class="lr"><code>terms(lda_6, 10)</code><div>每個主題機率最高的 10 個字（來自 <code>$phi</code>）。</div></div>
   </div>
@@ -1647,7 +1659,7 @@ ess_hoc_00002 ess_hoc_00211 ess_hoc_00004 ess_hoc_00006 ess_hoc_00008
 dominant_topic
   1   2   3   4   5   6 
  82  71  77 121 177 191 </pre></div></div></details>
-  <p class="hint">投影片 77 的檢查題：「Which output can answer: Which issues does one speech discuss as a mixture?」答案是 θ 的一列。<span class="slideref">投影片 77</span></p>
+  <p class="hint">投影片 77 的檢查題：「Which output can answer: Which issues does one speech discuss as a mixture?」答案是 <abbr class="tt" tabindex="0" data-term="θ" title="文件—主題比例矩陣：每份文件一列、每個主題一欄，每列加總為 1；本週 lda_6$theta 是 719 × 6。">θ</abbr> 的一列。<span class="slideref">投影片 77</span></p>
 
   <h2 id="c9-hist">互動：719 篇演說到底有多「混」？（真實 θ）</h2>
   <div class="lab" id="labHist">
@@ -1746,7 +1758,7 @@ My hon. Friend understands the issue and represents his constituency extremely w
         <div>
           <div id="exMeta" class="explain" style="margin-top:0"></div>
           <div class="hint" style="margin:8px 0 4px">LDA（lda6）完整混合</div><div class="bars" id="exLda"></div>
-          <div class="hint" style="margin:10px 0 4px">STM（K = 6）完整混合</div><div class="bars" id="exStm"></div>
+          <div class="hint" style="margin:10px 0 4px"><abbr class="tt" tabindex="0" data-term="STM" title="結構主題模型：讓主題盛行率（與用字）隨文件共變數（如政黨、時期）變化，並可估計這些關聯與不確定性（Roberts et al. 2014）。">STM</abbr>（K = 6）完整混合</div><div class="bars" id="exStm"></div>
         </div>
       </div>
       <div class="row" style="margin-top:12px">
@@ -1803,7 +1815,7 @@ My hon. Friend understands the issue and represents his constituency extremely w
 <section class="chapter" id="ch10" data-slides="80,81,82,83,84">
   <div class="crumb">10 · R 實作</div>
   <h1 class="ch">R05a–R05e：STM 與政黨比較（E05）</h1>
-  <p class="lead">用同一份 DFM 加上政黨與時期擬合 STM，先算原始平均差，再算考慮時期後的條件差異與區間，最後畫圖。這一段本機重跑的數字與投影片<strong>完全一致</strong>。</p>
+  <p class="lead">用同一份 <abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：列是文件、欄是字（特徵）、格子是次數。本週 R01c 得到 719 × 2,831。">DFM</abbr> 加上政黨與時期擬合 <abbr class="tt" tabindex="0" data-term="STM" title="結構主題模型：讓主題盛行率（與用字）隨文件共變數（如政黨、時期）變化，並可估計這些關聯與不確定性（Roberts et al. 2014）。">STM</abbr>，先算原始平均差，再算考慮時期後的條件差異與區間，最後畫圖。這一段本機重跑的數字與投影片<strong>完全一致</strong>。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c10-r05a">R05a 擬合</a><a href="#c10-r05b">R05b 原始差</a><a href="#c10-r05c">R05c 條件比較</a><a href="#c10-r05d">R05d 表格</a><a href="#c10-r05e">R05e 圖</a><a href="#c10-e05">E05 練習</a><a href="#c10-quiz">自我檢查</a>
   </div>
@@ -1825,9 +1837,9 @@ print(labelTopics(stm_6, topics = 4, n = 5))</pre></div>
   <div class="linebyline">
     <div class="lr"><code>metadata &lt;- data.frame(doc_id, party_family, period)</code><div>一篇演說一列；period 是類別（12 屆國會）。</div></div>
     <div class="lr"><code>model.matrix(...)</code>＋<code>qr(design)$rank</code><div>確認設計矩陣滿秩：政黨與時期沒有完全共線，係數才估得出來。</div></div>
-    <div class="lr"><code>convert(topic_dfm, to = "stm")</code><div>把 quanteda 的 DFM 轉成 stm 要的 documents／vocab 格式。</div></div>
-    <div class="lr"><code>init.type = "Spectral"</code><div>譜方法初始化是確定性的，所以 STM 在不同機器上結果一致（本機 θ 與老師的 stm6.rds 最大差 2.6 × 10⁻⁸）。</div></div>
-    <div class="lr"><code>labelTopics(stm_6, topics = 4, n = 5)</code><div>印出 Topic 4 的四種字摘要：Highest Prob、FREX、Lift、Score。</div></div>
+    <div class="lr"><code>convert(topic_dfm, to = "stm")</code><div>把 <abbr class="tt" tabindex="0" data-term="quanteda" title="R 的文本分析套件：建立語料庫、切字、清理、建 DFM；本週的前處理都用它。">quanteda</abbr> 的 DFM 轉成 stm 要的 documents／vocab 格式。</div></div>
+    <div class="lr"><code>init.type = "Spectral"</code><div><abbr class="tt" tabindex="0" data-term="spectral initialization" title="STM 的 init.type = &quot;Spectral&quot;：以譜方法得到確定性的起點，所以在不同機器上結果一致。">譜方法初始化</abbr>是確定性的，所以 STM 在不同機器上結果一致（本機 <abbr class="tt" tabindex="0" data-term="θ" title="文件—主題比例矩陣：每份文件一列、每個主題一欄，每列加總為 1；本週 lda_6$theta 是 719 × 6。">θ</abbr> 與老師的 stm6.rds 最大差 2.6 × 10⁻⁸）。</div></div>
+    <div class="lr"><code>labelTopics(stm_6, topics = 4, n = 5)</code><div>印出 Topic 4 的四種字摘要：Highest Prob、<abbr class="tt" tabindex="0" data-term="FREX" title="兼顧頻率（FRequency）與獨特性（EXclusivity）的主題代表字：常見而且主要只出現在這個主題的字。">FREX</abbr>、<abbr class="tt" tabindex="0" data-term="Lift" title="labelTopics 的一種代表字：字在主題中的機率除以它在整個語料的頻率，偏好較罕見但集中於該主題的字。">Lift</abbr>、Score。</div></div>
   </div>
   <div class="outbox"><div class="ohead">R console output（本機實跑：R 4.5.3、quanteda 4.5.1、quanteda.textstats 0.97.2、seededlda 1.4.3（另以 1.4.4 重跑，結果相同）、stm 1.3.8）</div><pre>&gt; metadata &lt;- data.frame(
 +   doc_id = topic_docs$doc_id,
@@ -1846,7 +1858,7 @@ Topic 4 Top Words:
  	 FREX: argentine, commonwealth, nations, agreed, meeting 
  	 Lift: dependencies, falklands, islanders, moore, shareholders 
  	 Score: names, argentine, council, islands, commonwealth </pre></div>
-  <p class="hint">STM topic 4 和 LDA topic 4 不是同一個議題：編號只屬於自己的擬合。<span class="slideref">投影片 53、80</span></p>
+  <p class="hint">STM topic 4 和 <abbr class="tt" tabindex="0" data-term="LDA" title="潛在狄利克雷分配：每份文件是多個主題的混合、每個主題是字的機率分布；只用字詞計數同時估計兩者（Blei, Ng &amp; Jordan 2003）。">LDA</abbr> topic 4 不是同一個議題：編號只屬於自己的擬合。<span class="slideref">投影片 53、80</span></p>
 
   <h2 id="c10-r05b">R05b：同一個 STM 裡的原始政黨差 <span class="slideref">投影片 54、81</span></h2>
   <div class="codeblock"><span class="lang">R · R05b（W8/classroom/W8.R）</span><button class="copyb jsonly">複製</button><pre># R05b Calculate raw STM party differences
@@ -1947,7 +1959,7 @@ print(p_stm_adjusted)</pre></div>
   <p class="hint">垂直線標出零差異，橫線是模擬區間。每個主題代表什麼概念，仍然要從字與文本詮釋。<span class="slideref">投影片 84</span></p>
 
   <h2 id="c10-e05">E05：STM 關聯（課堂重點）</h2>
-  <div class="callout example"><div class="ct">題目（W8.R）</div><p>對 STM topic 4：檢查 Probability 與 FREX 字、原始政黨平均、調整後的 Labour − Conservative 比較。用<strong>百分點</strong>報告調整後差異的方向與大小，說明共變數與區間的意義。寫一個證據<strong>支持</strong>的結論，以及一個它<strong>無法建立</strong>的因果主張。</p></div>
+  <div class="callout example"><div class="ct">題目（W8.R）</div><p>對 STM topic 4：檢查 Probability 與 FREX 字、原始政黨平均、調整後的 Labour − Conservative 比較。用<strong><abbr class="tt" tabindex="0" data-term="percentage points" title="兩個比例相減的差，例如 13.66% − 7.63% ≈ 6.03 個百分點；不同於相對差（%）。">百分點</abbr></strong>報告調整後差異的方向與大小，說明<abbr class="tt" tabindex="0" data-term="covariate" title="放進模型、用來解釋結果變化的文件資訊，例如政黨與選舉時期。">共變數</abbr>與區間的意義。寫一個證據<strong>支持</strong>的結論，以及一個它<strong>無法建立</strong>的因果主張。</p></div>
   <div class="lab" id="labE05">
     <div class="lab-h"><span class="ic">🧩</span><span class="lt">E05 句子組裝器</span><span class="ls">挑對的零件，組成一段結論</span></div>
     <div class="lab-b">
@@ -1968,7 +1980,7 @@ print(p_stm_adjusted)</pre></div>
     <div class="fb">如果某個時期只有一個政黨，政黨與時期就會無法分開。</div>
   </div>
   <div class="mcq" data-ans="0" data-q="c10q2">
-    <div class="q">2. 為什麼投影片說 −5.99 個百分點是「條件關聯」而不是政黨的因果效果？</div>
+    <div class="q">2. 為什麼投影片說 −5.99 個百分點是「<abbr class="tt" tabindex="0" data-term="conditional association" title="考慮其他共變數（如選舉時期）後兩個變數之間的關聯；描述性的，不是因果效果。">條件關聯</abbr>」而不是政黨的因果效果？</div>
     <button class="opt">黨魁演說的內容受很多政黨以外的因素影響（執政與否、事件、場合），政黨身分不是隨機分派的</button>
     <button class="opt">因為只模擬了 50 次</button>
     <button class="opt">因為 STM 是無監督的</button>
@@ -1981,7 +1993,7 @@ print(p_stm_adjusted)</pre></div>
 <section class="chapter" id="ch11" data-slides="85,86,87,88,89">
   <div class="crumb">11 · R 實作（課後）</div>
   <h1 class="ch">課後：R03c–R04c 政黨平均、K 與 training perplexity</h1>
-  <p class="lead">課後練習：把 LDA 的比例依政黨平均（R03c–R03d），讀老師事先擬合的 K = 3/6/9 與 STM K = 5/6（R04a），計算並畫出 training perplexity（R04b–R04c）。</p>
+  <p class="lead">課後練習：把 <abbr class="tt" tabindex="0" data-term="LDA" title="潛在狄利克雷分配：每份文件是多個主題的混合、每個主題是字的機率分布；只用字詞計數同時估計兩者（Blei, Ng &amp; Jordan 2003）。">LDA</abbr> 的比例依政黨平均（R03c–R03d），讀老師事先擬合的 K = 3/6/9 與 <abbr class="tt" tabindex="0" data-term="STM" title="結構主題模型：讓主題盛行率（與用字）隨文件共變數（如政黨、時期）變化，並可估計這些關聯與不確定性（Roberts et al. 2014）。">STM</abbr> K = 5/6（R04a），計算並畫出 <abbr class="tt" tabindex="0" data-term="training perplexity" title="用估計模型時用過的同一批字計算的 perplexity（resubstitution）；K 越大通常越低。">training perplexity</abbr>（R04b–R04c）。</p>
   <div class="pagetoc"><div class="tt">本章內容</div>
     <a href="#c11-r03c">R03c–R03d 政黨平均</a><a href="#c11-w">互動：怎麼加權？</a><a href="#c11-r04a">R04a 不同解析度</a><a href="#c11-k">互動：K 瀏覽器</a><a href="#c11-r04b">R04b–R04c perplexity</a><a href="#c11-ex">E01、E03、E04</a><a href="#c11-quiz">自我檢查</a>
   </div>
@@ -2054,7 +2066,7 @@ print(p_lda_party)</pre></div>
 
   <h2 id="c11-w">互動：「每篇等權」還是「每個字等權」？（真實 θ）</h2>
   <div class="lab" id="labW">
-    <div class="lab-h"><span class="ic">⚖️</span><span class="lt">回答投影片 85 的檢查題</span><span class="ls">lda6 θ × retained_tokens</span></div>
+    <div class="lab-h"><span class="ic">⚖️</span><span class="lt">回答投影片 85 的檢查題</span><span class="ls">lda6 <abbr class="tt" tabindex="0" data-term="θ" title="文件—主題比例矩陣：每份文件一列、每個主題一欄，每列加總為 1；本週 lda_6$theta 是 719 × 6。">θ</abbr> × retained_tokens</span></div>
     <div class="lab-b">
       <p class="hint">投影片 85 問：如果用 <code>retained_tokens</code> 加權，你估計的會是什麼量？切換權重看看。</p>
       <div class="row"><div class="seg" id="wMode"><button data-w="eq" class="on">每篇演說等權（R03c）</button><button data-w="tok">依保留 token 數加權</button></div><label class="f">模型 <select id="wModel"><option value="lda">LDA（lda6）</option><option value="stm">STM（K=6）</option></select></label></div>
@@ -2137,9 +2149,9 @@ perplexity_results &lt;- data.frame(Model = c("LDA", "LDA", "LDA", "STM", "STM")
 print(perplexity_results, row.names = FALSE)</pre></div>
   <div class="linebyline">
     <div class="lr"><code>phi &lt;- if (is_stm) exp(model$beta$logbeta[[1]]) else model$phi</code><div>STM 存的是 log 機率，要 <code>exp()</code> 回來；LDA 直接用 <code>$phi</code>。</div></div>
-    <div class="lr"><code>counts &lt;- as.matrix(data[, vocab])</code><div>用模型的字彙對齊 DFM 欄位。</div></div>
-    <div class="lr"><code>probabilities &lt;- pmax(model$theta %*% phi, 1e-12)</code><div>每篇文件每個字的 p<sub>dv</sub> = Σ<sub>k</sub> θ<sub>dk</sub> β<sub>kv</sub>；避免 log(0)。</div></div>
-    <div class="lr"><code>exp(-sum(counts * log(probabilities)) / sum(counts))</code><div>依 token 加權的平均 log 機率，取負號後指數化（公式見第 06 章補充；新版投影片 59 已不列公式）。</div></div>
+    <div class="lr"><code>counts &lt;- as.matrix(data[, vocab])</code><div>用模型的字彙對齊 <abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：列是文件、欄是字（特徵）、格子是次數。本週 R01c 得到 719 × 2,831。">DFM</abbr> 欄位。</div></div>
+    <div class="lr"><code>probabilities &lt;- pmax(model$theta %*% phi, 1e-12)</code><div>每篇文件每個字的 p<sub>dv</sub> = Σ<sub>k</sub> θ<sub>dk</sub> <abbr class="tt" tabindex="0" data-term="β (φ)" title="主題—字機率：每個主題下各字的機率分布；seededlda 存在 $phi，stm 以 log 存在 $beta$logbeta。β 也指它的先驗參數。">β</abbr><sub>kv</sub>；避免 log(0)。</div></div>
+    <div class="lr"><code>exp(-sum(counts * log(probabilities)) / sum(counts))</code><div>依 <abbr class="tt" tabindex="0" data-term="token" title="切字後的單位（一個字或標點）；本週 DFM 共保留 70,813 個 token。">token</abbr> 加權的平均 log 機率，取負號後指數化（公式見第 06 章補充；新版投影片 59 已不列公式）。</div></div>
   </div>
   <div class="outbox"><div class="ohead">R console output（本機實跑：R 4.5.3、quanteda 4.5.1、quanteda.textstats 0.97.2、seededlda 1.4.3（另以 1.4.4 重跑，結果相同）、stm 1.3.8）</div><pre>&gt; training_perplexity &lt;- function(model, data) {
 +   is_stm &lt;- inherits(model, "STM")
@@ -2168,14 +2180,14 @@ p_perplexity &lt;- ggplot(perplexity_results, aes(k, perplexity)) +
   theme_minimal(base_size = 16)
 print(p_perplexity)</pre></div>
   <div class="figbox"><img loading="lazy" decoding="async" src="data:image/webp;base64,UklGRuI9AABXRUJQVlA4INY9AADQiAGdASpMBK8CPm02l0mkIqIiIRV4gIANiWlu+A49lWmBSkXcGwetCb8An/5VxNfxvGp0Fep8k/5n7YO0B9wHqS9J3zMfwD+5/tHwgH9V6kP0AP1A6zv9x/Su1bLzL/gfx28yH6j/Y/7p+2f909L/xL5T+t/sJ/pf7X+yvw+Zj/Sv5v/d+hv8Y+vX4D+vf4j/h/4D91fiv/N+CPyC/nvUF/JP5V/hP6//fP+H/iv3j9y3ZM69/m/9x6hHr19I/1P+D/dz/P+jz/LfnD7w/on9t/2P29fYB/Jf6d/of7f+9v7//WH+W8KDzX2Av55/Z/+p/ofyq+kv+P/6v+K/y37T+2X8t/yH/b/y3+s/an7Bv5p/VP+L/h/9N/8v8f////x90///90P7if//3Zf2X///7/hH7af723tX37Vi3miManrGQGTMGiMxMNma1csbFH0XKXyjHtWSwXNBJAS0wy881szbpFmhrRXtHu80RnclWF4EOqtMmrvZaQzqVgTrlqheBT7kVW6ZfFWrWzURyPoTW8EIiyYF3/oMjljwhHgUsFT4i3ofQymQoKykpCM/rXUH1rqD611B9a6g+taCHeUHxdiEGS8d5eUtuCDwzrRLH+PhGCGyMDLTTyFYheyong+BV9EKfBDu5a+9X4syB2YOGDJm59Sl4w3adFWGsHoCS0wemFvJqU6a7LkDxDEPbmsYs0U/+qFGtDtse9W8cpg+RJyfIVpKENgop3/eb/qu5ICLjiENu712CafDwJni4R6VaKIdqW8AoWQBB5r/EKdkFCMrLwPQZY+vOe7xOmVjDa5lXYOSCOn1tFc6CUrHOrI4L2hxM6LzMIazRvqAm6Yvf+UGqHkQc1am4Zmi0N8TRon0SuH56pr86JqpF7oCfEpamZtl82ZrBJRUSjVrItg9aGmvMDCn3LyRf2321Hu45WuoPrXUH1rqD7AlS8lw4W+hCyajD1rymxK1rq93zZvHDawBAAykUDXSx7uOVrqD611B9a6g+tdQfWuoPrXnj6WGAtqRfXVsSsVntb58kHaDbqD611B9azgu25ZkRgLPyKHbkeylKNuoPrXUH1rqD611B9a57gGrQDoByt8dfXigpJS4UkpcKSUuFJKN+OiObAwgqADDF7joM+2PdxytdQfSyU+xRXpEAdygSp5f34dkY85zvj3SzxkUfaInxBxT/+IHKZFqXf2eNjPjCtD/2o3Qz9wDbU4GffOjl0sCkJVxfYCm+GfNfedFrWWLGClbNacXIftVUAq2ozMVAYYSgVYYNmkFU4EFPV4Tgan45656kyzzcNnUR0Eu/vOjDSke0kuZ9n4QDRtn3Zu+86OgYtW4kr2CJejLrVoyu1CDT+85XQFgN4+thQxEy5JkVzLl0vm83Ml/HaWfSSmPtetl56SQj7Yc6c5yqLzccwMe7k7aj3ccGfIkqpvtEdadRKMey+6wS8IcKT6XUISkMvrxTOVTnOX/lHHyheoPwMe7jjm3J4FM9JUrcKNL41ZRQdKFbRq/vOjoJd/edHQS6kOBDT6y+dHQS7+86Ogl3950dBLv7zQG3UIUll2PTuwEkQZfv5faJEiySDiRZS4kWonH7F1jtor/o+45sXUH7F1B9a7/TUxB8og5waH9ghKt/2Eg4bnWuqOxa+G515SRuEOFJ9LqEJRx8kHM+J0b8o0cV4k+hH656KZduMvnyhe/3bjL7v3CeFHK8Uy7cZfJ+YJnlv/eH+DJ+oeyTN61AWlnDxirDwGs6KuT5mwtmAvxlQUQiL/MW5ifnR0Eu/vOjoJdZlr/SBSiTqyEwbL4VtGr7rxo9d+KuYj+boJd/edHQJeAkxMeqgv6yUfl4l+zqfJFsOhSXi0kH8UuG51rqjsWvhudeUkbhDhSfS6hCUYh+ltcY2UlMfbDeyhB83LNF7W7Ft4Nl8+rN1CEpDL68UzueBt3Pkjwo5Xig/k5+JHAUFIksBoEA/aJeu/3eKwlTEerz3XYIG5YFO3UNNqPfSUL1DTauWA8/S4VKWuoaaOkunS0bdft371XM6b50c9D+sFqkwRyz2oF2Vc0Dzo6CXf3nR0C6hh1tyXNA86Ogl3950dBLv7zo6B+MiPmobGGrU3c2WLlbLzekyxevr2JkT94JqSJqwkHDc611R0iy7Ok+l4IF23c+SPCjleKEKXwrGhPtax86i8BcghKOd+o1ND9+sGNMm56KZduMvnyhd3Mvr4GPwpf+UcfKF6g/AxLBvm6Ve84EBdBC1pG2whCjz88GWbvfFdRZruXxKpCBjXcRdAr1rffvTcKxOWNSAXrqrbCatLahH0KuaB50dBLv7zk1U8E3GlP0RpBW0arKUCrEvyc0T5/xhW0av7zlM1CnGoPYTYLA+EWTxKOkiL94oMY62PicC9c8wMsUqawoxvGJIpBXOXLxrMO5KS11DdG3YvzZMlHOuW1jAVB0fm0ZI6CUsQd7nR0EDqdMfrys2VuUC2NZkbic1U2oGPwpR0MRt6Zv+w/FNlHctQfgY93J2lnwLorPQkTVd2nObqGm1HvpGt3+SJe4rqj2TfNnOFg37whzX6EeN5tmMucxpTsMvnyheoPwMln8oXqlPRE6h1G3f7tqSzoD0NHfUzXzZExlxKFbRq/vOir0IOjC3RSdJEp2aCXf3nR0Eu+5ODcwHBzVG3YwUsKNuxVJYUbdjBSwow3XoBAm8JWiymikEg5n5g2X3V+if+k3TWQtLFodGXeEOFJ9MvNydtXLAZosO+fKF6g/AxDDCKjDcQbKQpf21buhko51gbvUpwgP98hrimUTjcvNxzAyWfyheqU9ETp5kg5n5Wu/0/edKJfFgyH/eONiVx6R5kkUaBU92wQ5r9CP10SZLhjiV/+sfKmm4x9Hd4Q4Un0y83J2zhwgssQ+5opJpulZn74Un0uoQlBDtJjSlSXQ7mQMthLuByn+HY41wGyfd/eQEGp7fGFbRq8bxNteJyE1/pnrtdIK2jV9/3g2O5NvpB/miCmUi2+bpBWzfTsmgeV1b/l47cvPuZFA2sFLCjbsYKWFG3T+rXUNNqxRfrZfBS/yhEVdrFLhP7GyEm2SQcNz2LqGm1XGT/ywFs6nAC96XUISjj5QvUH1rv93aLXyreevP0bsQl6Y6ZjSykRRL1B+Bks/lC8/TElgLvx72iZy/sKOV4pl24y+fIqgpYURX+0boJd/edHPo7q5JSh5j9n0gPsFLCh3SirR5t2wgraNOLkXEBIXEbODCPpBW0av7zo6CWltR8CwDhihVEtwmOpAW+7jDuPAVVH6T1YLl3JczfLq9raNX8XI8T5qnT1ZdksE28/yXNA86OglerXUISjnfrVvPXn6XCcidh3jl+tY58wNr6pO3GX0LrZlJSlJCw1oiOC3CVhyeHG5ebjmBj3ccrxTO51svgpf6tdJv9Y85iCyAwdr5ZJjHumm4y+hdbMpNCfZa9J7xtFSdtR76SP3b/SQDW/1mKwFmi8NLZ6ScOSUW/3f2xkouFNFeiq/qV0q/bKcf4B4wUsKNuxPUieyalwxACPVh+LBNkaqB8YFFtXoJd/eRYJ8yVHDAu4/UsIwllVkuaBp4oHAqEkw7q07zPzBzcy1T6BkZfPjtiTpJFKMr40mVE2tJvrUUIkn0uqOu2/7FZuoQlHHyheoPrXf7vGXqjyq3urXTjcw9eVKJaSgx16r1YIcseNkkI+2J+7FkkHDc611R104+RkccJlcyncUw/FusCVyOlIPKJelCNJKUGxbUZdtKYqLXytvbBHaijF36Jp06mWK8LHDRvc/XwNV8+JJA5Bl2zzynvWuoPTWSkmsHqSlwjd/4/wsfDlnG2DKfJBwpJE+sRwtNsQmyPqpd4mUMQXz5EvE5PLLy5omObr+LPE+klLhSSIzC0+tYfCQcKK4rVLn5X5IN8z+benPbgDGfBdlwpG8oXPg0bIwFwucxyfvLiPJnleafpVc98qjxOijNswjuNIHAYD7X6FPHGklLhSSjb10iUuFJKXCklLhSSlwpJVDExhydcrHh80kpSEzbqRaqknQ+DicdXuEivTAxtTIwglikZ9c6C8FVTBTDZ27fP0pXeBaOLuPlc9JaBLB2vl2Atwd2plao5QxyXmcK2a4q87X0WfsQFEBcm0dCifavPb3R9a6g+tdQfWuoPrXUH1rqD611B9a6iFlThYWjISo31+iiIAP5q46jla6g+tdQfWuoLAAP7/S1Aej6ok4UPzfDW923mpQf4uP90OpTZ0NZ0iUQCQcurETC+yEiLyD+t2DpdmQ9gpkZ3QBYvuNqCUwa4MQR2XsqWv3KLi9uHRJnsUGdZLc1XNsj5seVcxX0byZO06MnVN4JSqGfy6ymlSXaYmFp9YRlQhj8YgjsJBFB81Fvv00Nve/LRfL7y7/ydxFApLb1XQs+laXTrctZteRIvE92c0jWbIpfxR98mR3GS5Mh4Zu3K5HWxk0i7LdbE7pFnJ89jhIsUbtmB0XXME/UuMN1suYSggc17Fxv66dSLSTdL/fCrw6ARHBdgRH6/+LaYUWR/MR2xEaxJQpve+yrPxakxOnl1/VbDycAOVkAflDCwKyHRTHQ5MrtIZFrf9HsRfongf6vnU6hp4Lz6L0gIn/qL8X2v7apYNnYtY38Cbev298syQIg2+a7sJmaZ0KW8VMGhg4D4XbPkUeX1JBDqo9JtywgioEqIIRP/QZftStHg54Dh3wqYIQ9ylMXq9c8EkHGW7BAgRQi/fDxMV829oVQ0NSP7FL7QFDhF0HAhpi43a084yxasUL2yvDc4aBI58j7t/GJJYdrSSOrb0q/N2+0NtwG1KCcaPW0bQXm51MGdUd0hEbFsVh50cemZebUh8vB3rnaUiTizdG/E2HDoEcM7YGqj2CAm3OBOUju9xYArwEzIuWWwWWhzXsXG/ruevNnNCN3UXhOHj+0AP26FGStNPpw7pppTvHZ23wizcIBYD1hg5fB86ISdkjqcR4OXSKmvgR7DE010g0Zl6Vftw9UUJSyAeNZyYmuIDtujRlLBTiLIqve4lgXx67t+tzplbeiOx+wJ9yFcb06UOmDro1EdDSk/yjtJ9qVXqew3XVajNWpr6eQeTBia84PTm4C9O64aDD1+1Tvvs+Q1+CQ+EQwDBlnIdIdAh0uxDu+YMix6jioqod8TF/piex9/DXjkMyCZso15RJc1zgV6Govy6NfXBDZ+g/wpuPn7jl9eAGji+MdzGYiHh6Xh8IwpNwZu41fTyDEZjCyiOAsueINbiRXF1RYKIf5HEzIEBZFRZuZIXvi8v8OAXFOizkMZDJtbolTt1XUsrbB0NBrwymfSZ8+Vcf+LNIpwpNd6eWC9TUIEH9pYz/VlGpA92KcUdab+k67WhqgSm5xm0lUXqaQAEqMkZ+EYIy+Yc3X0vICsytzNoTBmPL3zgw0/GIn7QxGWC15oYYA5Sz7STVErN9OysWlO30gFLrfkfhci1qk2gnNlja3yyHCqOATpLOVrDEbupPEUCAfOqXRSz84vcztxDab+hXDjBWh8fpch6MTyaQ7HJce3imutwIm0bFNqlzLD9Q4idjqIav44U1UAJF0Gq3gRirwZTvZclW85xKvp7rqk5ic0NQEHkhLZB8WaWQFKIyaznhGYyUCdV2Masag8eFKhLh5rPf+ux3g+LIbH/PmWWLqjjGOG5D1u5xmIzEHyHhe0F+oNKlCjTUb2/2RaAlNZxbgd3QnZ2Jz6u6RMvOWEN6se/EcO62RsJPD/nSEfCPXRSpuebDrTYbCvSjyvldDZAP+FP2xspd6tFIwO6G8lgCIdhd+uQErFx5zB4EfqRF48jyPk5gcxc9cUZaPUEMr6QsMxK3UQo1SN6OZsQDC5liyengblCcNWxIl2jOr5ifnVEr1u9eNyUU3MkFCzctCYWfKpJ/SY35PnR72BE07zc8fHfiT6D3SUVdYfHu6Jzr/ZHP+MeLeFWE9B2bouZJDz/67NT0Xcr6612a51kKd7Sb6AlNBShBfl1+pOXXD94Mya+JSgrgQlZ9g6RaM1AXvpYY4nSg1OP1AFJeUp4Pup8aBUnscITNL96bVgb3dTf7HSiVYQN5rH3d8s9HH0YjfvVF8OAS8Bh8qOuI+NbWpDJFXajk8vNwiVzRaA5jDo1Ok/y1L57Hr0FtzNvbgNu4FCqlTNWLEQ155amVhtqli5i7xetrn1k9ZaLCSOXAwDSEpThaWxFFdV/g1YAzrZKTRr/h7jFVhAvtL2sWv8WPyIP/en5LOuM38dtF13AgA8sf/uqb9o2fCjplI6aJXS5YHl/qVJg4/eJsAwCm9F+TV22X+GFITZWXg6hg+d/sRXPGP/Z+I6QRqHvwzgjf8nB/+SYZ4kUIA5hrz7IbcoNqQt70qlUHFkOVvOvpJtDbvl2nvxf4paW8O7CXU7Kb9lhdXFNmv5xOl3WRuOC0HozjfqZmKKK9M/n8PCqVLs7dSV1BYEb+5euYp19hEFmmslSrZ3I08LJwNCfK1UaJkDW6v+c8D2eWmEV8/aKNTNxgq7oqk9LbYBe3f1NYN2+y1v8rlJ53Mw0Txt5uPOoj0gGdEn+qeROt1h9QWTTH0FTKyPzTzMm6AEaGwCaab+QVo5ApIryHWeQ+x4+rkULWNqiZe0r+SWkwkB6gILnKROSiZBrZwEi22zY9BDM82O2RBtq4GEve2jbsyoDPL0SPPQ+fGoqrVsELQL8Iuhx3GgxzGyh7F3uA3giF7JIeSMt9GcXUHpjkvyVEJkVMVErGv7GKP+JVPHf+qDXLuS+XVz76Qg+JkLWO15rA0T2A/icaaJjIv9Okx6hBaJoQJfKSVYjwCTKPKZmtcUQwfn3YxX7xKn6dFVMTux21QuEbPdtvpC6VqWOhB/mdxpabM1nEdcW3Yac5UeaBrf8fVUvYKKSTilMJK1APVP09JPZFevhn8XrnRL6bBBZIoQEwCQhCiegAF6wnFZkQPD99zAzlaCJ3zVhOzDAIs+7uGR4+Cd2JYljtV6osIXaLcjwy68xqcMqUzvo51fM+vjTdvhfc86DMQceRbTAAzdn8jdKnO/h/ZluWLgbXV9xi729p0l8QHQwxYsaggkaPiT3Lz3kbI74ybK4jK6Z4Lpnp3Q09LbYvNbShqXvztnD/L+qxrdPn5G5gAzlF/3nwtIGzLysK0qqVvVR0zpA3jNxifwl+g2lOtw21isIGBiZHlkCHeHi8MjVw/wz0VsaYNmAlui8ZvRqmlGivBPckg4gL+UIhfxsu9NHeE4AE0lClCphYgQom/V9Bfe6BmuHuQuIHlp5qPqrEPVa9mbk+mfC5rsH7ha045zPd+7+ERoGG+P1t+7Kvu8pfr/ERcwOaRWvf/WKNjIQ97C0DdfNed2pGDyHDXyaoLmE+eL7rxaCPBafCqkHiNXmR+VlsU8YScDfy07IokxhdRE4w4GFAqXK2vjIIVB++YD3mdttMecUtmVKkH5KcNlDr0innj34GpWDv+i1TlA8SNrqaqRkTZpiEUboNuR76zIN29jnvhMbMIKy9z7vy04wHdK4tukXapQCb71Y8X4oGPFsD0NF4Wt/ipC9QONcmIJ8dmETIFuFI0MMXjFLn26v3plCOBLbUolvo1IHsTS3mkL/QtsNK5IwoW0VDugLgWB4C9XoRZ8hqyWTIT/Ew0CqiryjK75BaNFW3Q+PIBi3CfYx+sh9w5zPYf+lJwq8GB2kXL4Dj0XSMZeqkTfCOnXmqJt5up9Ae7KDaCFvcUaqV3dnif4LDfE7IbyuPtgRc7ufacz0m6hVGJ8XzSKEwxGR2Rzu7V7URE8Dqg23cH3Y8EiBXVcn6+7s3QH4V8+pNtBg9Z7qD5lhGwDcHbcq1nuuKrd+hQ9r3J57jiZOD8c1zUFaoPl0yPWi4EGgNUyj0U+Wv5TY571y9Zd3JY7gU1o+KT1qV9DnguGGfyxuLk+gApGrj3kQJ7+JiZnDZPshJ+fiJosWbrTTYo2oPry5jSdALQKr6T6M9LbPw5996Uj/hx0SfH51N1+iho5cd/qp+zmJ1O83bKFCfHEO7Qm7k+VLVJGT7Xa5YshTcUgn9g5nTrbwjbXlVl3uYjtGASr4XacUUZB0no8YMg05gb0Tue1wyOXesNPl2smKvv6jGDTv9MKqVF7ardgRCpMQikBTOHM8vG8oKXPPKCZ/Ry8mCjFgKHRCptQ6owhj92ZOOucX/bOANWQoOdrNKPM2Voim9E9ILVYYM9LOxZ505/NEXb8Bz34gFc855MOBFImKZotbylGUwqka6aydY91iu06VrYla3MZNokBSEhd6/s9CC1R5ypoHz/s4NV/YnwkpKK5l9iV4QimrxU14wKtnozyF++EWB4LHH5azF8PnOh/+r+oCc88LJjOqlv8KdXpfYDYmScE0pSifMcwXdTkuQHOxSxIJawH/mNcOT+a3OAv9umyNi9+asC928XTz7jYWHQIa7+fuN6whKckS9bBHtiApGY2ZUjO2iT2Dm104L0l76xkoRuxFBTqzbPqK4oXbvaQfMoziKTrJJoxK89y2dRHuZfnhnNtPFIOiIRtvSFK6S0eO6H9FmFI7O0l+ulY9dfQeiYfoFxVwm646fSAq9D+k+Ymw7t9f6Zb/+kWerq/RL1grye6k4rwXkFmI7j/nJgVW2kK8RfFvHZsQ0vwcCjQZJkvbyrayxhCh4Wgft/j0Xq1q3FNDLkNXJEcRkq5wDJ/CiFstuQqgGrIRMgRTwfN4WaKJQXUZF/HqV813TTx8jNCtLlulDKSagcDYflVb6R/rK6rM7GAic5P9HdV6gGd2RQkXZ0cCxWaSoSrlQS72sQ/FW+Yoe/3JFOX6j1izDhtVvAm3kBtU8yaHr+hxLB6H5TzKV+TyIQ70zHmfmH5LWsFI/tvs3aKOcMAZVmgAAAmtI2EmNQD1+5jmNv4DhF1qQfgAAAnONHbOd/dFhUpTL5N91gY+I4DYASCfRYTLlMZx0DkZRXQMSqQokvO+6gyKTuAnJ+ZmaEAAAAnrCgxgYhfh1gYwJ+tvMKKPuPwGet8YvBQb789tSi+UMLcCIk5JAadQshx4XlaySjb4842ya9tCB+X622leyOQ+qOkt1sTdOFvy8+xdlXxVcZjb6wx6y88C5XZQMBtqbC/Eu4QoKy3J6SyKFtNiRbyPGBSvc2b6TiLF4dYe/9gPUVxfEcpFI4MlFu1t6ctHiQTxInwmlvhytkOyaW4/YfIEIzSUXuJncNWzJfLvqbD17ah870m1ZJJrGFxBXmB/uP+Pp5BEKo8XDNIYBgn+ISIcRh3ghLAfjEwvS2wvLJPJ3F96G0Ad/UffIQ0f1mRj6ySnq0q5sryu8XmNK2i/3qn3a3R8V+J7wFZ8L9nd0mTHj6GCRvaJuqE1joANMZM2kJq6NKw068iRY6ZZZV4zvQzAuMgA22s6uDVzBFQlps7W4FX/gvgD2eUIRAG1vBvw4wXB/kCFcELEecrlLMwVtfHIzsOMGmAjYUQQlNwg+Ctj+EcASZbJbdSsVch9KkNwyfickRFzC2tSSN0QmyncKjcbfv6GCJkJQXxrRKsNQyah21kCEm67+fSb7OPhkv5sBloH5MbksT7edzYGtYxq/LpBYxMIzKDVUcMO7LcUAIAtoW9Z4uV4dnHwUFVIp5cweJJdHL6xQ1MBnWsWkjxacW0h9cr4KM3OYJHmyep0mn2l7qll09xFMQN+nqh4fmL7ZykxCE+Db7bJJsLHX2n7tNZoutUYaqVoH92seD9Rt8R1HXYmsE7C1jdwJ80RyB3FwYMYYLQVV+pggf26E+AXvhGWbFZYVmma7OOsGi9+CBsCQyewExfmBsRI2QMFie4MsVNMR3MJs7gDmK1TQ2dX5h1yusyKvkCARkkM2o8VULPJL4XRsjenXcWxIPxXGSh4ejmXBEkF5GiuKcWY4QNmAXRkX8EVSUKbJ0vxanrZVZUALe5EXnGCCFOHhrw53IvvSYS/rMfv0+wjHE4eXYWexaFOFBHyeXU9KDiV/vz/LiRkwBdNHGKwneidL/J5abz2IkCb/kdXtjbegPDekfh/luMCCLRAhepzoRIQctgrgAsbqQNA672rbWR7co2fPORiJwRitlj4lsHkJZiSXmsgzITIZBXsFXmLAN0X3H8yBkANAkLHYsNDdVwd4B4RxT+663+wI/emRlZQD43FAyjdeA7ufvdyBAMDRfQIALmCYju1t9BT3NqU/uK30dmnWPcl9u3OHupwE3feOJhjM/pqadKwhvqwR3jIWZ667DEynrDNPufyz4j2+4u0W/EPFjjdc2KfouMpZ4u2OeeJqEIJ620JKhtQ1xu9Ohzg9u4ziuVnyBQmgbEDag6jj/AiOHyUUf2nPWC5P7i1L5Mt+LxdHtCdUTgr/kl3aY9/9scL0hjZHpGsVUPP1doWhMH0zFexlxtNF8w+Ax2IbX6OU1ZBSeboFz44RNPMxzRiNO54SltODXU5aC+wuXbd+TDINrS+fHjwx1Wpdyaywql1jC987zqD4NWb46vRMgLFYFDstIwACIEuM2tL1BjGaxNKXnPJo8MEd1ssh/8yYRmatWxOatI/W9sweh+xNNXRZF/D3/6gEOsbtpXm4SlRKqSrl4IpoYwAA+7HN6mSk4LrfBn0+dKzLlzjuOoZaY4V0x6+Tdgaj/3E+eUBdBDt+yfprQ5uqIC3vGrr4Kj5Qoc3WfSpujg8qJwnd2whvV+ADeLT+wX0R9ugTR4mN/fV7qemBL9OPW62RbF8EZaehK+98CpLe+XVO7BlOX/QUZanFnb15X/gXdYIjz8175V193rDT/GgUDOScBTdGkIHp3R/b9TeopVmrBBnuSy71GGAX4pnN3qIAAIw91s/IZ2QM5uZJw6BbZxFPNqmi1CYNzCzVLBz90TtihrRFl3vtwjYhJSQh997BXdjVgihEUtVZH7kAAg4YX3tdwsSxKMSZWk8CvXhj0sEmIMm+9goAmU/XTly+k0othe0d3XR0WF/aS/zjemr5wi6dFBm0zgCYaDFR6rGIBggB+75pBHR9o3o+bvNtTfhAK4XCU9QFw6e1Fa7ekbatTnnD3MiY/rySb1n8MTSbmqCcYKBYcqfVWES8L7ag+cVSyPL2s8ewkW0nfeuiQhcPzTj/HMcq4CKKnH4QLzxmPJL3R9XE/9VUE0wjjFA2Hk5MCwn24VGMk1U/ZdrFl/Mnx5laJuwt67mhlygBAmozVmj0mnbEgp2oh6cbHgqFaL937ziiTdEcUDA/i283kyTJeuXy30lB05s0v3JXurvkgXmksjK6KtiQCY6jwgf0dGEDEZlMA/FF15C2A6VwzEt2uh7tev2oT73xprsN4nDqzNqa7z9iZNihGM532Gf00LXH7jYaY/vRo2h4VCnXYCW1tnZOKuPQpynU+bnAw96y/YTd1cRyfvpTGrId9C1ytmXWool0wmpqW8uq+n+H8M0/CI/et6z4NmqeK0BySBjYcIH9mkD/9Qoq86+PSXe0J2VMiHhxZZtXv4MgG+hh0Ky4ZdwOfDSqqWmCPaRkhxY9aTioFqiIelLPF2wDOLkNLOij8ohX3hcRtPtq4g9k8pAxe7MmXDdBtNIE4AxSQE4Z9uc5VxN30SxJfPzozJTwsQbLIMdSVoC79SivV2ASyWcQZTOcRCoXenVncRky0yGvVH/iIrUziP9BqymmIpAMg9u2cxzVjqTMMPHOVUIgjtLff8A0jf1F7NvBgtMUlFVff2/PdBG5W+vIZaz7AJbJUawYB7QRNkacfrbN8QQE7GktB832AKNtJRPuHbPP4lXbqNww7CbXbv2g0/rtvntc46gc6WbXuv76ndP+Igtdoc6PjiECx24ltAZDjc4DdonS1wdoWgx4AWbtSim2K0mKD2nNfnbXp7QS7V1FysycPEoRD/hlK+wUXurgVYnQO7OUBKjf3OKSC5ReQDg1BGCCjQ/wIzgEflZx0E3GbLZIp9BG38WqSd7nfVYG876rjwN+VUMug6tZF+Y45RcyIcWw6QCzxaeNSyMBs7zT9SweSwgGTLCWuWxX1J8TRGEF7kygCnv7yPwgKM5fys4/diSfzEd3ut3U6uztYE7/IT7/n31eGEgP006KSgzOl6iM0rh4sgePztewo+/T4HFRG9TocBEwD4R8ifkQKZ8+F9KY8MfauuffoJfNnt5px2yOF8Lx9w9RfX5eb7wq0IU3KoDNuo1il3fKA1mrN98WfF4MgTa7GkeeGld8MAVJ+m8l2vjE00s5nmCkpRSh8sXqedHW0OLfCp4qGWk4ScQn0TW9hut/blPIzIvN6Dz0YxhxSYchxL8QO94vRXujzAHp9+huELn+BU+cCaFzCtY/3k9mkfzRay4xpPMkEvx5jFG8gRwwCurH5LyHhMTG8TAuIqXT3iR+oa/jJBZNxxgIlCzA2T3HI+0XMeU8BBJGT11tpk+tvM7ETNLmxp2tLsNWyJg1ASaIR3mTh1QyL8G6IGTarSFJIvbu7DlzSn7FP/50jTO2e1QouALmlRKz34M3kroWXS8j0Vu4gnrk9Ti4GfrTnVjGyi0j/VlFFuHceCovLBOynU2yX2OW45RoFmvwoPiihtNGVY5sLOkidVqKmpeBEVpSjaKFyrX8obBM0QWARsuArRe2AGjcvC3c6fyK/KTbbxqwGIuQQ95PCv1imw0+k5Ubdew40OZKpYHB+6Ld71TtNN2Jsdxenxf2EwtKGo9ZI5ZWmG3LDR83Kf5EeJ0uQ2TQFcAj/08hfXHEiaCG5p9SGp9P/S7uO8DybfyhXgAz1kyyl14A/okCRIZzXQv+pdiudqoPyFpLS9hRjxj1tHnzlriUHJf79vcLyrqS5jbaHFL77wVZBHHJItZQ5UiCCploID/Z0V6q06X7PYCbWP3WEKMjtdXq8IztUvV+sjuTSnin4p2A2dr0NwUr4msAAkhwRcVVBj+MSfRpxeAlC6pCo1h9iunZncGv+NNgGIzR2QfcuGOCDaBf8AulNCe9Ittxtwef6kGq053nurhYoM5L2L3VYX4HebQiBj4Ea/EWoYyrvQJFbZKUu33DI9WaR4RxvIku/ISPuAVxXXEOY1pFW8W4zD+IYYO/iZBiP9YEJYr8GuLcTaZfJTcQA+jTsEXkR5iCJp7Q24Y/oHqrONRfA0zi12fLuAvEcChMAbYRCcT9+xmZKYcfmb5yfodOE9yRa5X7ZAvXklAkGvOTs0tj/xWppEck2E8soV1sknMpSj+/S3Q7Szs+simQmSTRznrXWA1+MeTZgzvG1ryUUU5vgGPHzK1mTKOTKSdTF2O40xjfaiWdUHRtUpWnJsQ+UMgLstMoCRr08o91dyWrjP0U69uS4x9rUqxlpTLUEWpoYvevvDrpES37U6toNQBJhcFhs8uA2VMCNhFAwg9t6QODfz5Zx7S3fiRy0BtyZ2xDbGGfty9y9v+OAa8UanQ3Uj5Kk7dqUa6stZ6/rbHzotAcCR7TTB6OrXj5/HMN9pH00AHeaNQayzMrgTvR/pdF00v0fyqP6r033JpkQ2GovaaSQjkoO+zOso7LRXIrV02tVSrng25GTuvfaF1amw0oqID1396gmnx8vXujHt9Q6uHND6NFZNcYZ2Xb8/Qq+3wKqqKPwwaCRmzqKxiieMX9hwGxYADd0C0xPb9JYId1B+/OsfF+O+26Z9UN62sNLFfUMZazOEsBI57FCZOB8fQBoG3KN3wysgK0Of+5zfA80u6ayJJNWnRowEAnkTNHVFjJ5+HGx5JE/dctn/HbW4mngEAuc+qwclH7SsGezCTpJ8ipnjNJxzpHoLU1pTNK0Uao+OFiGCYp/ciK887ztqgxQGjBjGaor/l9ILl2PT5xTUe9I9AwVHgrHfVPzrcvCsNR0e+nGu0JGQTwSaf+S1Jwhj1umnAY8BpNQzJfgapL/in4GokevY8uuc/95jRwokQ7XgEuzHRrUq/8ANWASvkeSXvGf+FwTsQfAuF8CWhuuy994wMnM6VJee2jS4CJnI/StlsNJns9uTM8Dgc1vMuf0FGOLa9YDdkDukjOtf0iR1gSLHqMYvFnjNc+krJw/jLqfMln6Py1MnHlKc4aOKxg9OEW5r3c7ACC4FHM06z+MPnw+Lpea1447PylhVq0yxNSpf2+pi8f23fwluZk+m0l+RL6WSrjfGFRYidYCZxftVIpw/Tk0Sx/ynx50BqNTOp//55riO2uQkilG1KHo5TPjaVFXLelJ+orESkLJIbdovapm9dukpSdCEJ7CUM1akaVGfdhodWxSym4vDM5y45VEMlETy1OPfQObSx69b5LiVxH6IOIhC6NE31juuKA1NbB258K4mGn1PlL4WZqiIYgBHKOE0ZPXspqvjXptAPTXSpckM8+V5RphEQE3r9RolY5veJEWTZbQeLKDDwzHG3Oo+i76wlct6pJOTz1KmQn1PRCtcdXIV3jAXx99g6fq5yPCnDaYUf2JJYo19ms4EhWliH35G85tfvbg7TBCV93ZXrIvoPELMgSUZRX0RnsKcWTEB9drJPrW7x6l5B3VUi8XFQAuL0gvtStUOnxyocpmHXYVPnEBWqoSvEs6olj25HKZnuT+A5D4E+Ls+0CDCb3yB69psZeicPt5r81bbgYMOdHKO1IgATDyiM98SlpPoHT6662jZ0P6X8pjKuPAGJwrjQs8fxX/YLygImLKAYhcP/rdsutO2S/rRM/+rrpaWLjxuHEKfHIQJC67XPIMjRx3Y0IxeuuOBWdGbuExn00p28Wl4T+uJSSaoKzzdgmAVjywZ43RoT7w829v7DrAluyufKjV/MoxByaGseFoF6Ui+vzvT6k3znHoD9JOAdEDJUC/dgAA3NsBud4LvF95HwC2jzFIC5l123KX5zvo8QhfmOHwwriCspA2TjtvdiSCfbK/2hRcAYHKqmP7fJClncCgKHpMkT6OUba/jUaZYiF0Z9KrscGc157hewvND0nhVcMiz+MGpLnu0Z9otKkRZBC03lCDU+GSc3AEPQ34VC74JsUWYxoCMlMIyM6JdOGkvnAHf67ci21i51kuJLyJxf002WJ8jEAm19DC+lGBKxmlKEQJ94VSisUKc6KImQE9yeFT6d0E0Z7AmU1CBZ8GSpqw5B4sUHYKmZ8aot/Y46JZPj7z6mWu2qmaBn/mjE/VjFirIxsLOa/xQNJtVgArbhuKXWWh701aFOJF6XHB/3f7cUoo8+gTImKX05trGuVkmBy74qt09+0ZIHc3l45HPWpQmCiefjemNtEUxIGCLb1SOKl4jUzQm0tFMPCRwh2WeGfmzNft51qvmiLUfr82Kmm6flD6IBXO4X8u8T022ZVCrtz2Da8ev7EUXlcA+lCsR8PcrsCyVWYhmcBhPk/dhVgki/tcDWoQsot6JOCoLIYf+VyYfcRkr31X6ThbgYFMG8cKzq22utpomhxCVx2AX2I8czaXjfPlPmzLPJHSO1Dv6JxBnAp6xAIPjkfT5rtWTZTyP9uVuEH5jJUcVZ6HUh4p202BPQ+J9st64deNh3YAafQkEQ3+3waUTIw/UDfR7fMFm0c1fwcXq37sjASIx1lOJ9gt8sHcgd6KQrJg9KT08XsiFOkooH18ShVz2hfqr0Ksk37pVRrp8rH40T9MYuIvGTl2TKU7mBJjcQ4L7N/yzUgaoTm2qHpd2DxZ3BG7migEraPKoEEgGKYyXgf5VLy4qVdgNxeL40L9tbe8ZSIhJAwzj5ME5b/IROTtvZkXlnerWzPev61s3Wsn+ixtjYa1tKqvvCFRXGDi5l2eEtAIj/DyJ/tu8BTes982Ah5JXWAPKbEvZ6e89l2XrZEsE08d/FGnVwdxmR00S9FMWEJVf0Ra8te3xWsQFzmvhvbxzmIazbXBef9gn+d+btETe9dwEA+EebkYRsMMNv7qm3C7w1Sb76yDzqisbczwDM+kDCLCK3YaIeFfikTm4qakbcdghTd8vVzLTGE8dSp9bCdfCBDk7nmNgu9isyLgPG3nupfahWRxoszo0H9IjuKzmtl6BPNXhZon3fnW1KQJe/FkTVEOL6sJUpErUCpTlNR2GNAC2y2y2rm/aVW57CiUkNdGmyuRFyxB/vnetHGeT/6hQ8wN4xMolnlnlnj0XVqcWmL595F01RHwLITNt+cXtUPZTQzQnjQi2WxTRyPMzcW2mKEE+Xca+cL1lH4Ykjs3ZTgt/a3TjaeIA+kKMJOknyOiksha09/7U5Inn14UXcfh3I9R52o4Qlyz5ytYTdXXgm6krGq/FO2HHeAypjTbozvhHC8WxQYLAFkbzEpZbpPBYmFq0Gjm4ceVNDSYS/dJK0BhptQyU0O3y5aVrSnTFwI72c7mO1VSSlf1YQ17R0pbgmntMovKftjG9nOCLvUB0cPV3fwfQRTlt1YW7D3fbg5+WRyssM6TK0JYRhLMLFE+bD0X88yOBN1PhZdJCRjiCnp10CFrz9bmtiybEHjBe2L47bIQcWkhKA+scF9inow19HKC3Tv8u8VNPu3eD5sJwknw2NXdXTJGVzaR41DQVoSpgQAGPGaiW1K6cR0SWaC7wTtdDNmt8r720ZcBH/07Vz4X9E6l4vEU6aGW+5Fy2SzUD0xFvee9WelxP953IXmwTXQK4kft75dYFl3SWFYliKg6Prpy+JWxkRINm6PWsZD2GXr4ZDwq0AYcumq9tlvzLE61ixtMsIgVuddYepSupsNrZIMFo0y/K0RkuXKFS0zH+kBjLitn4ExBVG8x8WAWNqG3xlhB4vH36srIrVW0w7ZPzmpfRhZX4IqfnZfTaIZ7YwCnRz5R5m8WuK/na11opMgXeyFsYLiuF3Yp878YFuo8e8g5LlWC2AtpItUiKkVBlUKkRUijdDG8WufBvxgYG5kL4vBQefSQIgbwunj45pCJsehj7AIs94ar4fohhtbkBqyp9koojR8cXtts58XT5h4ELaDuBBg6/oGNMeaFsxd5lF+DwWt2hJuFme1MkR6xMk9bZG6UVuj0EM5DLFbxG7Xh4gorlq1ZE/bvT/kyVW0VaJlLboPiyL0sdKv8So4zkEbuFuB+ZX83TNps97Y3TBAvftN3vQODEb3xTHHAQdh/+6Tq+hRP00rWlOnWtbCbfPmURe4EoCrTah2UKtAWuU1R1n3UYy+MRW7WIDpD739Maz3wf1uLmzn1IZBLyrHhqRbqiEXjASJFOzeZxxzQrQFRiA6V6CEFRcqe6v9eAYsA9LsEAQ/8bsR2AWOSvG/MM6KrfyM/jK3ucKlvUVcN6ojOCDW2/awDZhobtpjqeYyi85aoZxb5kbvFTUqVXcjP1pRqs1y/+QWXdB1Gu/sPQYc9K0OhQXQHxLWoHD/72xS0rOqI6AFxYy538i6idOyWBo9iM1Jmx6Y3Ms6eMKhpDN4mZWFaIRqeRYsZVeX0e82gI0XIh8+M2IchdT1fG8HznvzrsjlKF4qYigVcK78z0UVoJ4FQAJwHyLmcYDnItDHaGtQXS9xfVnKHh9B5onfBOmBlhMXMzjIFRAXd/Z5VtjPb3Fw7qv943puApmr63sHKAzR0UgOHCHLh1HUbPJqUaisgp28QKBi6ejKliC8/I3dgszvwSOIq/rZRaNOE6d8+OtcopcNeHmu65EE9kthtRV5yWZHQAwZ9MJsi7TlNSVrL9ucFKdx2qwQq6azEmgGLbHcSJqukHL8fcv46zkWRa7yMgC95zggzbRa+1Bmc8znwP74p0C4MCIF4uVVgPHj8Nj51mqympB9MfpQkSb8DDJy92mCku7gHI3lb7OeG/3aO2A0SK0Wd7d0K23xYC0GNxZSIaAXCoCW0hNbY/YP3Qv4pUr7KOrj250+Uu0kKhj1Al6R+3AeYZpsWDbUpr82vM6Yk1a4g8JKondEk0OKq4Lp4p5Z0m1KiZTPrWNUlfGWnNcvSgMpEf4R7Qh8wHHdYjNg0ekdmk7jZ4/1QyY6KdPUo7ElpzgFL+rGXy6WTJJP4KJkRXAv/xqU5lvO14/7sWPcVrSQcF3s1C4pB5p+UMCVD2dyx1JoDZUXTy+z0+9eU38RxHXd6KxfoRMDn+VlfRXJpM0UXX8d3MQeiJZ3Qo0WZcxo9rvVk3fVUk/9yP3Sh2kb3JEa0OTcLyd/f/GpTgB0josV1TbHozOZzMK1EhS1afNuGGhlyeKA5RcrufdzAfbpx1g8gyVAjMZOcGXrjAXiADLY2uY0QGawpFRKHpMSZOBecNtb4DdrVdEuK5s+lJ0ndDTVhz8rXC2/IUMG5QUwjHMGCLVk6jRwVBx56VnPSuQ0icSRQpBdxVbiVJLbXB2w8SoJAiEeeBMLv0BsI4WclBTrtUSynIIkMzYAH6y8UF9XlhFHv71Ez5XC5mYtGicOrVTgRFJcao98uDk8Ik4bJfhG89xBINZwI921X5Iw8z2mrC0Dn+HW/+UMKzHmfuWiicE6sAAdg9kVeGCQPRACNPRBWztFCPEdwlylFYyv69pm1RmfX9+mV6B0cqEZzdY8TCZ5xD+ovj5RPe8qFMBKwWIRvIH07U4IfHjb1pq7KXKDX56dBZ4cBWFm3FxRmcav/62WRnQRYh6y6FnNxVl2H2HD7VORxt6frh2q26stdn0xTvrTKzhInBkQdCfY97MwnMSv1DJRSqR3aD0UGen1EXEweR2bRXtoUVEsgFaqP6Jcc/UJ1ZhhLe8yFSBA5RD5HGlXLhg2g94kxDyuZOne2/pKQb1b0UBpz6Gyj/1LXhYLX6qh+DxvdRQiThiOmUPfq19Bk3Xk+73tj9KZs6mPrL2T4vYoQelvG/LmBRzwB65AvDbLp4aUNx7a+CQBIJZfthJK/TvQZTedfDr5PQvd2gXqa5BhOXLs1oL+wLVjPG2IDS0yhnSjHJjL/r3TEeIB3c8t+Ta1NSDjkWc+Y3aLYyH24Q2yApKq3kIhiqSn0SJHlOq3PhK/rypjwqA95rbT/aRkFNqvTLwyFzk1Z/FyU9jwzDwMT5vDPNb0sQ41eo6Qpl/AiTwzats9GpMRrKrsJ0xxY/p8my0KFbNFTu6+G8OO8yGV1aLatjNg0SPsqfeR/yGRiZcSnFLXJXjywpskfTyS10ViDobkNRORZHquIhcTj/t8wQDxDJYqXRiwTmoKeCmeySGK1uY3haJmgzFAtIrLrhgjZ0U/m299hmEgFP+AKh1XulXT3+UICkhnHc8knzhDvDsU0Zp9OW0TPXs6CbxXxgN2XcNfBKJjoYCG/3hY4nmeQ3IpknTGfSdyzErL760298kDSCivHPHsNyWy1XFLNmGfbA9qSe+HL0q9KdcZyeOglH8RZGyezQjb5hCUaGxjNnsRpV5E/zdM3aiBRXbG1Qf8p8ke1eyZ7GYLKuvLt6EOiePqV0wvSMenlz2GJme5lnkQ23N/A2rdh2A95HP/rSH4urio/MiaaHi1+8S21Rmor7NHUbx1FJtjd7oI2CfhfjsK27OFuDE3MrD7skyELA622gRCpkckyz7N3Xx+LwRBpIdr4Ri4oMwxnR22sESNs6bI1VURLx53Q4mODsWdNDy+M1DyvGFt/ZdCz3mNMvVJuaN9AAVNVs+U4jT5zyybM4ptrbSCQye2XPneZgQMV+b/oWwdF0fwIdfwSZioOcg7Q4WP47LrqlVNulWjDfJOIZEdnIT5XpHeSyn/CnBPjSNvc5sGECpppOG7ZvQCPm1nukGKZCLm+P9V8OPQwwCpHlNlunTSJ/LQNae6ITu1kI+dSNbegtxx4KCHAYnKmyv9d/lImqVszV5YSA8ZVZTvfULzc62Hws/62ZW3U5hgDhhqeGRBSEx3A7vPgOil4vyv6fBGef4taGEDvkl2cMea9egaGOGloYfTxAmofwnrnmY7+1Yhei0qtnFUOB+1FVKU2eiNRSYFkJCyXPxIv4KO5GYcEW/fbsBywe5xJPOFThKxybnO+tcrcgTrV/co/wgeBod0ZoCPkwg7ogU8H0S0TyQpMer622qRfzhNRm/Trsk4ZR6W4KxwGXj/YNI3yUTIWx4CpvF8ifkyffkeVDGfDWv+ojM+wQ8BhR3eaBUxQ56EmxoeSagTuS/XVI5ho8LlSj/x0Rbipzp0O7/33/0TXRvrojvivfuzS+00rmz89D0vm3H2THxuh+gYjgCPdevWMFMYbn1P2nUvLsb+cXIdCHdjEmuH3Ttjojn3HlkuLUY/WvE+zLJuyTY/XjUP08wj7um81c2hTTOMnak+aRC2WHf0CENQESUEyjz2KAKZAUO8E2Xqw6PVBRqIuChUQo/27Y5QFj3V8N4OfSfSxFBbFJhIolX1Y81BTw6tx8kGgDUjB1c28djNf2rfJVCQJRzJcy9hbdaoE0cRCSE4wSR5nLgcI5Auzi3oPcLN2r66SMdgusLOO8AleqUdBQnLbkXHajdglD0dt+yf12rMcbhz6dpnakf63dvDRbTa4zlTNxgIWO9JoBT0z3xXrMwnuwrNExQs/QynMKuBAr4LsZyZsLpSMXQf4I+JPUomV698aK4qSxLTrz7hG+da+OMmNj5vGOfi1LB2Di6XJ0R0hXk0ZV+6FQpreX3UPd4PJ+u3rPdvONc3OCbNyuCtjJpGo8Y+eJI/ugJGhIEKXhDQ4nubpmgGLJmKV9p4GhSKI7VL2hNl9Bs/rVnrCVxi5+f4liZN07w9Q5TJc0eKtCoJ0hb+QZWuYobmAnoENRQBMufKGqEQafg4Qoq6w7UircYo92t8vvvTQc+AIBkKyI4r1GzXtPN/6il4hF1EtSjkWcJvMM6xR+Mzkmbo6BdU54SsedNlHTZm4wyuSpC+GZMlKwSUFlGMEZrkM0pQ16jqfmI3TI7xNKc0TcHxVKJjTHDuD/3r+8+rB1/jsYxlsXHgzmOEbFt3rxCjDs6Yif+QIdjq+RjIeafmL0sD32t0ZHPkQ1vQi/uLqvRDGc7HHaqtLB1h3qgehfvdCk3elhFanLpS9E+EBvjp4HBKkk7blMrKMZkW/GXwK45903IVmAXFSfIP/2HOKvECEmIujUrhB9NgR4Tlq+/QE2eLYzKxOUvUmQclDki3nvtmeef8V981MVaBZieNpPjEJDtFgxUhK7f1py+I2ER8e0RVGm0o6dZMfV5DsJfmLcpfEkeveEgtmjxG0Axk23H3Q3zLJWeBTYe5B4hRs2iSLZ7+/XRE6wJDwAAAAHZU5n8V/Op5z51kheSACeHvTt+iScbFyawOrZzwql1Fy0N+/5fFAAAAA==" alt="R04c training perplexity plot"><div class="fcap">R04c 的真實輸出（本機）。LDA 與 STM 分面，同一個刻度。</div></div>
-  <div class="callout pit"><div class="ct">這五個分數不能證明什麼 <span class="slideref">投影片 88–89</span></div><p>五個分數都重用同樣的訓練字（resubstitution，不是 held-out）。較低的值<strong>不能單獨</strong>選出最佳 K，也不能證明 LDA 或 STM 哪個「家族」比較好：兩者的模型結構與擬合程序不同。請說出一個用主題字或原文的檢查。</p></div>
+  <div class="callout pit"><div class="ct">這五個分數不能證明什麼 <span class="slideref">投影片 88–89</span></div><p>五個分數都重用同樣的訓練字（<abbr class="tt" tabindex="0" data-term="resubstitution" title="用訓練資料本身評估模型；本週 R04b 的五個 perplexity 都是這種，不是 held-out。">resubstitution</abbr>，不是 <abbr class="tt" tabindex="0" data-term="held-out" title="擬合前先藏起一部分字，擬合後再用模型對它們評分；STM 的 held-out log probability 越高越好。">held-out</abbr>）。較低的值<strong>不能單獨</strong>選出最佳 K，也不能證明 LDA 或 STM 哪個「家族」比較好：兩者的模型結構與擬合程序不同。請說出一個用主題字或原文的檢查。</p></div>
 
   <h2 id="c11-ex">課後練習 E01、E03（與 E04 對應的 R04 檢查）</h2>
   <div class="tablewrap"><table>
     <tr><th>練習</th><th>要做的事（W8.R）</th><th>在本教材哪裡練</th></tr>
     <tr><td>E01 從演說到字數</td><td>確認一份文件 = 一篇完整演說；比較 ess_hoc_00004 的原始與清理後字詞；報告 DFM 的文件數、特徵數、token 數；說明片語合併與字彙修剪如何改變兩個模型的輸入。</td><td><a href="#c8-pipe">清理管線</a>、<a href="#c8-trim">修剪實驗室</a></td></tr>
     <tr><td>E03 混合與政黨平均</td><td>用 doc_id 取出閱讀文本 A、B，印出六個比例與加總，和「只留最大主題」比較；用 party_family 平均比較 LDA Topic 1；報告兩個平均、說明加權方式，並解釋為什麼圖不能建立政黨的因果效果。</td><td><a href="#c9-explorer">演說瀏覽器</a>、<a href="#c11-w">加權實驗室</a></td></tr>
-    <tr><td>R04 的 K 檢查</td><td>讀 K = 3/6/9 與 STM K = 5/6；計算並畫 training perplexity；說出一個用主題字或原文的檢查。</td><td><a href="#c11-k">K 瀏覽器</a></td></tr>
+    <tr><td>R04 的 K 檢查</td><td>讀 K = 3/6/9 與 STM K = 5/6；計算並畫 training <abbr class="tt" tabindex="0" data-term="perplexity" title="模型配適分數：exp(−平均 log 字機率)，越低代表對被評分的字配適越好；不能單獨證明最佳 K 或主題有意義。">perplexity</abbr>；說出一個用主題字或原文的檢查。</td><td><a href="#c11-k">K 瀏覽器</a></td></tr>
   </table></div>
   <details class="quiz"><summary>E03 參考數字（真實輸出，lda6）</summary><div class="qa"><p>A = ess_hoc_00004：.8738 / .0668 / .0124 / .0025 / .0124 / .0322（加總 1）；B = ess_hoc_05895：.0982 / .1339 / .2054 / .2232 / .2054 / .1339（加總 1）。LDA Topic 1 政黨平均：Conservative 0.1510、Labour 0.1174（每篇演說等權，未調整時期）。<span class="slideref">投影片 78、85</span></p></div></details>
 
@@ -2218,10 +2230,10 @@ print(p_perplexity)</pre></div>
     <div class="rgrid">
       <div><b>研究問題</b>擴散研究幾乎只看「採納」。本文看政策過程的第一階段：其他州先前的採納，能否預測本州怎麼<strong>框架</strong>議題？作者稱之為 “policy-to-frame diffusion”（ms p. 1–2，註 2）。</div>
       <div><b>資料</b>美國各州禁菸令；文件單位 = <strong>報紙段落</strong>；49 州 49 份報紙，1996–2013；先寬鬆檢索，再用群眾標註＋機器學習排除不相關段落，最終 52,675 段（ms p. 12）。</div>
-      <div><b>方法</b>STM（因為能放共變數）。估了 K = 3 到 50 共 47 個模型，再質性檢視選 K = 12；關鍵共變數是先前採納的空間落遲（ms pp. 13–15）。12 個主題歸成 7 類，如 Freedom、Health、Regulations（ms p. 16）。</div>
+      <div><b>方法</b><abbr class="tt" tabindex="0" data-term="STM" title="結構主題模型：讓主題盛行率（與用字）隨文件共變數（如政黨、時期）變化，並可估計這些關聯與不確定性（Roberts et al. 2014）。">STM</abbr>（因為能放<abbr class="tt" tabindex="0" data-term="covariate" title="放進模型、用來解釋結果變化的文件資訊，例如政黨與選舉時期。">共變數</abbr>）。估了 K = 3 到 50 共 47 個模型，再質性檢視選 K = 12；關鍵共變數是先前採納的<abbr class="tt" tabindex="0" data-term="spatial lag" title="由「相關」其他單位的值加權而成的變數；Gilardi et al. 用相關州先前採納的空間落遲當 STM 共變數。">空間落遲</abbr>（ms pp. 13–15）。12 個主題歸成 7 類，如 Freedom、Health、Regulations（ms p. 16）。</div>
       <div><b>發現</b>Rules、Bars and restaurants 等隨先前採納<strong>下降</strong>，Enforcement、Casinos、Electoral politics 等<strong>上升</strong>（ms p. 18）；可從他州經驗驗證的實務框架會「學習」，規範性的 Freedom、Health 則幾乎不變（ms pp. 18–22）；政策越普及，框架越複合（ms p. 23）。</div>
       <div><b>限制</b>主題比例加總為 1 會互相排擠，所以只分析正相關（ms p. 13）；只研究一個政策領域；無法研究「框架到框架」擴散；結果是預測不是因果（ms pp. 27–28）。</div>
-      <div><b>與本週的連結</b>STM 的 prevalence 共變數就是第 05 章 <code>prevalence = ~ party_family + period</code> 的同一個機制，只是共變數換成「先前採納」。</div>
+      <div><b>與本週的連結</b>STM 的 <abbr class="tt" tabindex="0" data-term="topic prevalence" title="一個主題在文件中被談多少；STM 用 prevalence = ~ party_family + period 讓它隨共變數變化。">prevalence</abbr> 共變數就是第 05 章 <code>prevalence = ~ party_family + period</code> 的同一個機制，只是共變數換成「先前採納」。</div>
     </div>
     <p class="src">來源：ZORA（蘇黎世大學典藏）接受稿 PDF，CC BY 4.0；DOI 10.1111/ajps.12521。</p>
   </div>
@@ -2229,12 +2241,12 @@ print(p_perplexity)</pre></div>
   <div class="reading" id="r-bar">
     <h2>Barberá et al. (2019). Who Leads? Who Follows? <em>APSR</em> 113(4): 883–901. <span class="slideref">投影片 25–30</span></h2>
     <div class="rgrid">
-      <div><b>研究問題</b>國會議員在議題注意力上是引導還是追隨民眾？追隨哪一群人？比較 Downsian（一般大眾）、Attentive（關注政治者）、Supporter（本黨支持者）三種回應模型（p. 883；p. 886）。</div>
+      <div><b>研究問題</b>國會議員在<abbr class="tt" tabindex="0" data-term="issue attention" title="政治行動者選擇談什麼、談多少；W8 的研究任務，對照 W7 的立場位置。">議題注意力</abbr>上是引導還是追隨民眾？追隨哪一群人？比較 Downsian（一般大眾）、Attentive（關注政治者）、Supporter（本黨支持者）三種回應模型（p. 883；p. 886）。</div>
       <div><b>資料</b>2013-01-01 至 2014-12-31（第 113 屆國會）；議員推文 651,116 則；四個民眾樣本與 36 家媒體帳號；轉推排除（pp. 888–889）。</div>
-      <div><b>方法</b>LDA，1-gram 與 2-gram；文件 = 「政黨 × 院別」每日推文總和；只用議員推文估模型，再推算其他群體；K = 100（交叉驗證）；五位編碼者把主題分類，最後 46 個議題；每日比例進 VAR（pp. 889–892）。</div>
+      <div><b>方法</b><abbr class="tt" tabindex="0" data-term="LDA" title="潛在狄利克雷分配：每份文件是多個主題的混合、每個主題是字的機率分布；只用字詞計數同時估計兩者（Blei, Ng &amp; Jordan 2003）。">LDA</abbr>，1-gram 與 2-gram；文件 = 「政黨 × 院別」每日推文總和；只用議員推文估模型，再推算其他群體；K = 100（交叉驗證）；五位編碼者把主題分類，最後 46 個議題；每日比例進 <abbr class="tt" tabindex="0" data-term="VAR" title="向量自我迴歸：同時建模多條時間序列彼此的落後影響；Barberá et al. 用它比較誰的注意力先動，屬描述性分析。">VAR</abbr>（pp. 889–892）。</div>
       <div><b>發現</b>議員與本黨支持者的注意力相關最高；議員比較常追隨而非引導；Supporter 模型最受支持；媒體較追隨政治參與度高的民眾（pp. 890–897）。原文：“legislators are more likely to follow, than to lead”（p. 883）。</div>
-      <div><b>限制</b>描述性而非因果，VAR “cannot rule out confounding by unobservable factors”（p. 884）；議題固定效果的同質假設被作者自稱 “an inaccurate assumption”（p. 892）；只分析第 113 屆國會（p. 898）。</div>
-      <div><b>與本週的連結</b>每日後驗主題比例被直接當成注意力時間序列（p. 891 Figure 1 註）：主題模型是量測，推論來自時間序列模型——對應投影片 42「研究設計決定證據支持什麼」。</div>
+      <div><b>限制</b>描述性而非因果，VAR “cannot rule out <abbr class="tt" tabindex="0" data-term="confounding" title="第三個因素同時影響解釋變數與結果，讓觀察到的關聯不能解讀為因果。">confounding</abbr> by unobservable factors”（p. 884）；議題<abbr class="tt" tabindex="0" data-term="fixed effects" title="迴歸中為每個單位（如國家）設一個截距，吸收不隨時間變的差異，只比較單位內的變化。">固定效果</abbr>的同質假設被作者自稱 “an inaccurate assumption”（p. 892）；只分析第 113 屆國會（p. 898）。</div>
+      <div><b>與本週的連結</b>每日後驗主題比例被直接當成注意力時間序列（p. 891 Figure 1 註）：<abbr class="tt" tabindex="0" data-term="topic model" title="從字的共現型態找出重複出現的字分布（主題），並估計每份文件主題比例的無監督方法。">主題模型</abbr>是量測，推論來自時間序列模型——對應投影片 42「研究設計決定證據支持什麼」。</div>
     </div>
     <p class="src">來源：Cambridge Core 開放取用 PDF（CC BY 4.0）；DOI 10.1017/S0003055419000352。</p>
   </div>
@@ -2243,8 +2255,8 @@ print(p_perplexity)</pre></div>
     <h2>Roberts et al. (2014). Structural Topic Models for Open-Ended Survey Responses. <em>AJPS</em> 58(4): 1064–1082. <span class="slideref">投影片 37–40、50</span></h2>
     <div class="rgrid">
       <div><b>研究問題</b>開放式問卷回答很少被分析、而且幾乎都靠人工編碼。作者提出 STM：能把文件層級共變數（性別、政黨、實驗處理）放進模型，估計處理效果與調節效果（EV p. 1、p. 3）。</div>
-      <div><b>資料</b>文件單位 = 每位受訪者的一則開放式回答；包含兩個實驗與 ANES「最重要的國家問題」開放題。</div>
-      <div><b>方法</b>STM；主題比例當作結果變數，處理效果在 prevalence 迴歸中估計並納入量測不確定性（EV p. 5 註）；content 共變數用來比較不同群體「怎麼談同一主題」。</div>
+      <div><b>資料</b>文件單位 = 每位受訪者的一則開放式回答；包含兩個實驗與 <abbr class="tt" tabindex="0" data-term="ANES" title="美國全國選舉研究，一個長期的選民問卷調查；Roberts et al. 分析它「最重要的國家問題」開放題。">ANES</abbr>「最重要的國家問題」開放題。</div>
+      <div><b>方法</b>STM；主題比例當作結果變數，處理效果在 prevalence 迴歸中估計並納入量測不確定性（EV p. 5 註）；<abbr class="tt" tabindex="0" data-term="content covariate" title="STM 中讓主題內用字隨群體不同的共變數；本週範例沒有使用，兩黨共用同一組主題用字。">content 共變數</abbr>用來比較不同群體「怎麼談同一主題」。</div>
       <div><b>發現</b>實驗中 STM 與人工編碼都找到處理效果且顯著相關（EV pp. 11–12）；ANES 上分類數量與人工編碼非常接近，Iraq War 主題與政黨、教育的關係也和人工編碼相近（EV pp. 16–17）。</div>
       <div><b>限制</b>目標函數多峰造成模型選擇問題，且有主觀性（EV p. 18）；無監督主題不一定和人工類別一一對應，也會出現 “get”、“go” 之類的雜燴主題（EV pp. 12、17）。</div>
       <div><b>與本週的連結</b>投影片 50 的 STM 參考文獻；R05 的 <code>estimateEffect(..., uncertainty = "Global")</code> 就是這套「把量測不確定性帶進迴歸」的做法。人工編碼只當<strong>基準</strong>（投影片 38）。</div>
@@ -2257,10 +2269,10 @@ print(p_perplexity)</pre></div>
     <div class="rgrid">
       <div><b>研究問題</b>能否用新聞文本預測武裝衝突爆發的<strong>時機</strong>，而不只是哪些國家有風險？既有預測變數主要在國家之間變動，抓不到過去和平國家的新衝突（postprint pp. 1–3）。</div>
       <div><b>資料</b>Economist、NYT、Washington Post，1975–2015，標題含國名或首都名，共超過 70 萬篇，涵蓋 185 國；文章層級建模，彙整成國家 × 年（postprint pp. 2、11–16）。</div>
-      <div><b>方法</b>LDA（Gibbs），K = 15、α = 3.33、β = 0.01，另以 5、50、70 個主題做穩健性（postprint p. 13）；每個 T 只用到 T 年的文本重新估計，預測 T + 1（p. 14）；國家固定效果面板迴歸，以 ROC／AUC 評估（p. 17）。</div>
+      <div><b>方法</b>LDA（Gibbs），K = 15、<abbr class="tt" tabindex="0" data-term="α" title="LDA 文件混合的 Dirichlet 先驗參數：越小，文件越集中在少數主題；本週 R02a 用 0.5。">α</abbr> = 3.33、<abbr class="tt" tabindex="0" data-term="β (φ)" title="主題—字機率：每個主題下各字的機率分布；seededlda 存在 $phi，stm 以 log 存在 $beta$logbeta。β 也指它的先驗參數。">β</abbr> = 0.01，另以 5、50、70 個主題做穩健性（postprint p. 13）；每個 T 只用到 T 年的文本重新估計，預測 T + 1（p. 14）；國家固定效果面板迴歸，以 <abbr class="tt" tabindex="0" data-term="ROC" title="ROC 曲線：在不同門檻下畫出真陽性率對偽陽性率；Mueller &amp; Rauh 用它評估衝突預測。">ROC</abbr>／<abbr class="tt" tabindex="0" data-term="AUC" title="ROC 曲線下面積：0.5 等於亂猜、1 是完美區分；摘要分類或預測的區辨能力。">AUC</abbr> 評估（p. 17）。</div>
       <div><b>發現</b>內戰爆發：約 20% 偽陽性率下有約 80% 真陽性率（p. 17）；在過去和平的國家，扣除固定效果的 within 模型明顯較好（p. 22）；拿掉衝突主題，只用其他主題，within AUC 仍有 0.79（內戰）（p. 25）。</div>
       <div><b>限制</b>預測不是因果；“for five warnings made, four will be false warnings”（p. 27）；報導量各國差異極大，作者改用主題「比例」處理（p. 12）。</div>
-      <div><b>與本週的連結</b>主題是預測特徵，證據是<strong>樣本外預測</strong>（投影片 57 的 external prediction）；註 17 指出主題以匿名方式進入迴歸，主題身分跨年一致與否不影響預測——和「描述議題」的研究用途完全不同。</div>
+      <div><b>與本週的連結</b>主題是預測特徵，證據是<strong><abbr class="tt" tabindex="0" data-term="out-of-sample prediction" title="用估計時沒用到的資料（如下一年）檢驗預測；Mueller &amp; Rauh 的主要證據。">樣本外預測</abbr></strong>（投影片 57 的 external prediction）；註 17 指出主題以匿名方式進入迴歸，主題身分跨年一致與否不影響預測——和「描述議題」的研究用途完全不同。</div>
     </div>
     <p class="src">來源：Digital.CSIC 作者 postprint（2017-10-24）；DOI 10.1017/S0003055417000570。</p>
   </div>
@@ -2269,7 +2281,7 @@ print(p_perplexity)</pre></div>
     <h2>Catalinac (2016). From Pork to Policy. <em>Journal of Politics</em> 78(1): 1–18.（只讀到線上附錄） <span class="slideref">投影片 6–15</span></h2>
     <div class="rgrid">
       <div><b>狀態</b>期刊正文需付費，本教材<strong>沒有讀到正文</strong>；研究問題、結果與限制請以投影片 6–15 為準。</div>
-      <div><b>附錄讀到的方法</b>7,497 份日文候選人公報；MeCab 斷詞並人工統一不同文字系統的同一詞；2,843 個詞幹（Appendix pp. 1–2）。</div>
+      <div><b>附錄讀到的方法</b>7,497 份日文候選人公報；<abbr class="tt" tabindex="0" data-term="MeCab" title="日文斷詞（形態素分析）工具；Catalinac 用它切分日文公報。">MeCab</abbr> 斷詞並人工統一不同文字系統的同一詞；2,843 個詞幹（Appendix pp. 1–2）。</div>
       <div><b>K 怎麼選</b>試過 20 到 200 個主題，選 69 個：“one of the lowest specifications that appeared to produce topics that were fine-grained enough”（Appendix p. 2）。</div>
       <div><b>標記與驗證</b>每個主題讀最高 15 個詞幹與 10 份公報；例如「農林漁業」主題在非常鄉村選區的公報占 3.5%，其他選區 1.6%（Appendix pp. 2–3、9）。</div>
       <div><b>分類</b>扣掉 3 個邀功型主題，其餘 66 個依「宣稱的受益者」分成 particularistic 與 programmatic（Appendix p. 11）。</div>
@@ -2297,13 +2309,13 @@ print(p_perplexity)</pre></div>
   <div class="pagetoc"><div class="tt">本章內容</div><a href="#c13-pit">十個常見陷阱</a><a href="#c13-gloss">詞彙表</a></div>
   <h2 id="c13-pit">十個常見陷阱（點開看為什麼）</h2>
   <div class="pitfalls">
-    <details class="quiz"><summary>1. 把 <code>terms()</code> 的前幾個字直接當主題名稱</summary><div class="qa"><p>字只提示暫定標籤，要讀原文並找反例；決定保留、縮小、擴大或拒絕。<span class="slideref">投影片 48、58</span></p></div></details>
-    <details class="quiz"><summary>2. 跨模型對「編號」而不是對「字」</summary><div class="qa"><p>STM topic 4 ≠ LDA topic 4；K = 6 的 T1 在 K = 9 裡變成 T3 與 T5。本機重跑 LDA 時歐洲議題也從 T1 變成 topic3。<span class="slideref">投影片 53、87</span></p></div></details>
-    <details class="quiz"><summary>3. 只報告主導主題</summary><div class="qa"><p>dominant_topic 丟掉其他五個比例；05895 的最大比例只有 22%。要說一篇演說談了多個議題，用 θ 的一列。<span class="slideref">投影片 77–78</span></p></div></details>
-    <details class="quiz"><summary>4. 用 training perplexity 選「最佳 K」</summary><div class="qa"><p>K 越大 training perplexity 通常越低；它是 resubstitution，不是 held-out，也不衡量意義。<span class="slideref">投影片 59–62、88–89</span></p></div></details>
-    <details class="quiz"><summary>5. 把 STM 的政黨差異說成因果效果</summary><div class="qa"><p>−5.99 個百分點是考慮時期後的條件關聯；區間只描述這個擬合內的不確定性。<span class="slideref">投影片 55、82–84</span></p></div></details>
+    <details class="quiz"><summary>1. 把 <code>terms()</code> 的前幾個字直接當主題名稱</summary><div class="qa"><p>字只提示<abbr class="tt" tabindex="0" data-term="provisional label" title="研究者讀主題字與原文後給的名稱；必須再用其他文本驗證，決定保留、縮小、擴大或拒絕。">暫定標籤</abbr>，要讀原文並找反例；決定保留、縮小、擴大或拒絕。<span class="slideref">投影片 48、58</span></p></div></details>
+    <details class="quiz"><summary>2. 跨模型對「編號」而不是對「字」</summary><div class="qa"><p><abbr class="tt" tabindex="0" data-term="STM" title="結構主題模型：讓主題盛行率（與用字）隨文件共變數（如政黨、時期）變化，並可估計這些關聯與不確定性（Roberts et al. 2014）。">STM</abbr> topic 4 ≠ <abbr class="tt" tabindex="0" data-term="LDA" title="潛在狄利克雷分配：每份文件是多個主題的混合、每個主題是字的機率分布；只用字詞計數同時估計兩者（Blei, Ng &amp; Jordan 2003）。">LDA</abbr> topic 4；K = 6 的 T1 在 K = 9 裡變成 T3 與 T5。本機重跑 LDA 時歐洲議題也從 T1 變成 topic3。<span class="slideref">投影片 53、87</span></p></div></details>
+    <details class="quiz"><summary>3. 只報告主導主題</summary><div class="qa"><p>dominant_topic 丟掉其他五個比例；05895 的最大比例只有 22%。要說一篇演說談了多個議題，用 <abbr class="tt" tabindex="0" data-term="θ" title="文件—主題比例矩陣：每份文件一列、每個主題一欄，每列加總為 1；本週 lda_6$theta 是 719 × 6。">θ</abbr> 的一列。<span class="slideref">投影片 77–78</span></p></div></details>
+    <details class="quiz"><summary>4. 用 training perplexity 選「最佳 K」</summary><div class="qa"><p>K 越大 <abbr class="tt" tabindex="0" data-term="training perplexity" title="用估計模型時用過的同一批字計算的 perplexity（resubstitution）；K 越大通常越低。">training perplexity</abbr> 通常越低；它是 <abbr class="tt" tabindex="0" data-term="resubstitution" title="用訓練資料本身評估模型；本週 R04b 的五個 perplexity 都是這種，不是 held-out。">resubstitution</abbr>，不是 <abbr class="tt" tabindex="0" data-term="held-out" title="擬合前先藏起一部分字，擬合後再用模型對它們評分；STM 的 held-out log probability 越高越好。">held-out</abbr>，也不衡量意義。<span class="slideref">投影片 59–62、88–89</span></p></div></details>
+    <details class="quiz"><summary>5. 把 STM 的政黨差異說成因果效果</summary><div class="qa"><p>−5.99 個<abbr class="tt" tabindex="0" data-term="percentage points" title="兩個比例相減的差，例如 13.66% − 7.63% ≈ 6.03 個百分點；不同於相對差（%）。">百分點</abbr>是考慮時期後的<abbr class="tt" tabindex="0" data-term="conditional association" title="考慮其他共變數（如選舉時期）後兩個變數之間的關聯；描述性的，不是因果效果。">條件關聯</abbr>；區間只描述這個擬合內的不確定性。<span class="slideref">投影片 55、82–84</span></p></div></details>
     <details class="quiz"><summary>6. 忘了說差異的方向</summary><div class="qa"><p>本週定義是 Labour − Conservative；負值 = Labour 較少談。報告時要寫出方向與百分點。<span class="slideref">投影片 81、84</span></p></div></details>
-    <details class="quiz"><summary>7. 不交代平均是怎麼加權的</summary><div class="qa"><p>R03c 是每篇演說等權；依 token 加權回答的是「所有字中有多少比例屬於這個主題」，是不同的量。<span class="slideref">投影片 85</span></p></div></details>
+    <details class="quiz"><summary>7. 不交代平均是怎麼加權的</summary><div class="qa"><p>R03c 是每篇演說等權；依 <abbr class="tt" tabindex="0" data-term="token" title="切字後的單位（一個字或標點）；本週 DFM 共保留 70,813 個 token。">token</abbr> 加權回答的是「所有字中有多少比例屬於這個主題」，是不同的量。<span class="slideref">投影片 85</span></p></div></details>
     <details class="quiz"><summary>8. 清理規則沒有理由</summary><div class="qa"><p>移除 minister 讓 “Prime Minister” 只剩下 prime，而 prime 成為最常見的字。每個刪除規則都要說明。<span class="slideref">投影片 46、75</span></p></div></details>
     <details class="quiz"><summary>9. 用挑出來的範例當驗證</summary><div class="qa"><p>R03a 的兩篇是依模型結果挑的，不是隨機驗證樣本；驗證要讀其他高比例文本與反例。<span class="slideref">投影片 78、58</span></p></div></details>
     <details class="quiz"><summary>10. 以為樣本代表全部國會發言</summary><div class="qa"><p>719 篇是近乎平衡的政黨 × 時期樣本，不代表國會發言的字數比例。<span class="slideref">投影片 69</span></p></div></details>
@@ -2328,7 +2340,7 @@ print(p_perplexity)</pre></div>
   </div></div>
 
   <h2 id="c14-plan">你的專題：驗證計畫 <span class="slideref">投影片 91</span></h2>
-  <p>投影片 91（研究設計，四分鐘）：定義概念、母體與「一份文件」；選 LDA 或 STM 並說明你提供了什麼資訊；說明比較、分母與加權；指定一個敏感度檢查與獨立證據。最後分享一個失敗案例：什麼證據會讓你改掉主題標籤或放棄這個量測？這些答案也可以直接變成 12-04 midterm research design report 的段落。</p>
+  <p>投影片 91（研究設計，四分鐘）：定義概念、母體與「一份文件」；選 <abbr class="tt" tabindex="0" data-term="LDA" title="潛在狄利克雷分配：每份文件是多個主題的混合、每個主題是字的機率分布；只用字詞計數同時估計兩者（Blei, Ng &amp; Jordan 2003）。">LDA</abbr> 或 <abbr class="tt" tabindex="0" data-term="STM" title="結構主題模型：讓主題盛行率（與用字）隨文件共變數（如政黨、時期）變化，並可估計這些關聯與不確定性（Roberts et al. 2014）。">STM</abbr> 並說明你提供了什麼資訊；說明比較、分母與加權；指定一個敏感度檢查與獨立證據。最後分享一個失敗案例：什麼證據會讓你改掉主題標籤或放棄這個量測？這些答案也可以直接變成 12-04 midterm research design report 的段落。</p>
   <div class="lab" id="labPlan">
     <div class="lab-h"><span class="ic">🗒</span><span class="lt">驗證計畫填寫器</span><span class="ls">自動存檔・可匯出</span></div>
     <div class="lab-b">
@@ -2352,27 +2364,27 @@ print(p_perplexity)</pre></div>
   <h2 id="c14-ref">參考文獻 <span class="slideref">投影片 93–96</span></h2>
   <h3>方法與驗證</h3>
   <ul>
-    <li>Blei, D. M., A. Y. Ng, and M. I. Jordan. 2003. “Latent Dirichlet Allocation.” <em>JMLR</em> 3: 993–1022.</li>
-    <li>Roberts, M. E., et al. 2014. “Structural Topic Models for Open-Ended Survey Responses.” <em>AJPS</em> 58(4): 1064–1082. doi:10.1111/ajps.12103</li>
-    <li>Eshima, S., K. Imai, and T. Sasaki. 2024. “Keyword-Assisted Topic Models.” <em>AJPS</em> 68(2): 730–750.</li>
+    <li>Blei, D. M., A. Y. Ng, and M. I. Jordan. 2003. “Latent <abbr class="tt" tabindex="0" data-term="Dirichlet" title="定義在「加總為 1 的比例」上的機率分布；LDA 用它當文件主題比例與主題字分布的先驗。">Dirichlet</abbr> Allocation.” <em>JMLR</em> 3: 993–1022.</li>
+    <li>Roberts, M. E., et al. 2014. “Structural <abbr class="tt" tabindex="0" data-term="topic model" title="從字的共現型態找出重複出現的字分布（主題），並估計每份文件主題比例的無監督方法。">Topic Models</abbr> for Open-Ended Survey Responses.” <em><abbr class="tt" tabindex="0" data-term="AJPS" title="American Journal of Political Science，美國政治學期刊。">AJPS</abbr></em> 58(4): 1064–1082. doi:10.1111/ajps.12103</li>
+    <li>Eshima, S., K. Imai, and T. Sasaki. 2024. “<abbr class="tt" tabindex="0" data-term="keyATM" title="關鍵字輔助主題模型：研究者為想量的概念提供少數關鍵字，模型同時估計沒有關鍵字的主題（Eshima, Imai &amp; Sasaki 2024）。">Keyword-Assisted Topic Models</abbr>.” <em>AJPS</em> 68(2): 730–750.</li>
     <li>Ying, L., J. M. Montgomery, and B. M. Stewart. 2022. “Topics, Concepts, and Measurement.” <em>Political Analysis</em> 30(4): 570–589.</li>
     <li>Grimmer, J., M. E. Roberts, and B. M. Stewart. 2022. <em>Text as Data</em>. Princeton University Press. Ch. 13；選讀 §§21.3–21.4。</li>
-    <li>Schoonvelde, M. 2026. Introduction to Quantitative Text Analysis. Essex Summer School, Day 7 slides and lab.</li>
+    <li>Schoonvelde, M. 2026. Introduction to Quantitative Text Analysis. <abbr class="tt" tabindex="0" data-term="ESS" title="Essex Summer School：英國艾塞克斯大學的社會科學方法暑期學校；本週練習資料取自其 Day 7 課程。">Essex Summer School</abbr>, Day 7 slides and lab.</li>
   </ul>
   <h3>變形與模型評估</h3>
   <ul>
-    <li>Blei, D. M., and J. D. Lafferty. 2007. “A Correlated Topic Model of Science.” <em>Annals of Applied Statistics</em> 1(1): 17–35.</li>
+    <li>Blei, D. M., and J. D. Lafferty. 2007. “A <abbr class="tt" tabindex="0" data-term="CTM" title="相關主題模型：估計哪些主題傾向在同一份文件中一起出現（Blei &amp; Lafferty 2007）。">Correlated Topic Model</abbr> of Science.” <em>Annals of Applied Statistics</em> 1(1): 17–35.</li>
     <li>Blei, D. M., and J. D. Lafferty. 2006. “Dynamic Topic Models.” <em>ICML</em>: 113–120.</li>
     <li>Chang, J., et al. 2009. “Reading Tea Leaves: How Humans Interpret Topic Models.” <em>NeurIPS</em> 22.</li>
     <li>Wallach, H. M., et al. 2009. “Evaluation Methods for Topic Models.” <em>ICML</em>: 1105–1112.</li>
     <li>Roberts, M. E., B. M. Stewart, and D. Tingley. 2019. “stm: An R Package for Structural Topic Models.” <em>JSS</em> 91(2): 1–40.</li>
-    <li>Yan, X., et al. 2013. A biterm topic model for short texts（WWW 2013；投影片 67）。</li>
+    <li>Yan, X., et al. 2013. A <abbr class="tt" tabindex="0" data-term="BTM" title="biterm 主題模型：把短文本中的無序字對匯集到整個語料來估計主題，適合推文、標題等短文本（Yan et al. 2013）。">biterm topic model</abbr> for short texts（WWW 2013；投影片 67）。</li>
   </ul>
   <h3>應用研究</h3>
   <ul>
-    <li>Catalinac, A. 2016. “From Pork to Policy: The Rise of Programmatic Campaigning in Japanese Elections.” <em>JOP</em> 78(1): 1–18. doi:10.1086/683073</li>
-    <li>Gilardi, F., C. R. Shipan, and B. Wüest. 2021. “Policy Diffusion: The Issue-Definition Stage.” <em>AJPS</em> 65(1): 21–35. doi:10.1111/ajps.12521</li>
-    <li>Barberá, P., et al. 2019. “Who Leads? Who Follows?” <em>APSR</em> 113(4): 883–901. doi:10.1017/S0003055419000352</li>
+    <li>Catalinac, A. 2016. “From <abbr class="tt" tabindex="0" data-term="pork" title="給特定選區或小團體的具體好處（如地方建設）；Catalinac 用「誰受益」把主題分成 pork 與 policy。">Pork</abbr> to Policy: The Rise of Programmatic Campaigning in Japanese Elections.” <em>JOP</em> 78(1): 1–18. doi:10.1086/683073</li>
+    <li>Gilardi, F., C. R. Shipan, and B. Wüest. 2021. “<abbr class="tt" tabindex="0" data-term="policy diffusion" title="一個地方的政策採納影響其他地方是否、何時、如何採納類似政策；Gilardi et al. 研究它在議題定義階段的作用。">Policy Diffusion</abbr>: The Issue-Definition Stage.” <em>AJPS</em> 65(1): 21–35. doi:10.1111/ajps.12521</li>
+    <li>Barberá, P., et al. 2019. “Who Leads? Who Follows?” <em><abbr class="tt" tabindex="0" data-term="APSR" title="American Political Science Review，美國政治學會的旗艦期刊。">APSR</abbr></em> 113(4): 883–901. doi:10.1017/S0003055419000352</li>
     <li>Jiang, J., S. Xia, and D. Zhang. 2024. “Birds of a Feather: Sharing Democratic Values Eases Immigration in a Postmaterialist Society.” <em>Political Behavior</em> 46(3): 1887–1911. doi:10.1007/s11109-023-09900-y</li>
     <li>Mueller, H., and C. Rauh. 2018. “Reading Between the Lines: Prediction of Political Violence Using Newspaper Text.” <em>APSR</em> 112(2): 358–375. doi:10.1017/S0003055417000570</li>
     <li>Wratil, C., J. Wäckerle, and S.-O. Proksch. 2023. “Government Rhetoric and the Representation of Public Opinion in International Negotiations.” <em>APSR</em> 117(3): 1105–1122.</li>
@@ -2380,7 +2392,7 @@ print(p_perplexity)</pre></div>
     <li>Bernhard-Harrer, J., et al. 2026. “Beyond Standardization: A Comprehensive Review of Topic Modeling Validation Methods for Computational Social Science Research.” <em>PSRM</em> 14(3): 833–851.</li>
   </ul>
   <h3>軟體</h3>
-  <ul><li>quanteda、quanteda.textstats（語料、DFM、搭配詞）；seededlda（<code>textmodel_lda</code>）；stm（STM、<code>estimateEffect</code>、<code>labelTopics</code>）；dplyr、tidyr、ggplot2、jsonlite。</li></ul>
+  <ul><li><abbr class="tt" tabindex="0" data-term="quanteda" title="R 的文本分析套件：建立語料庫、切字、清理、建 DFM；本週的前處理都用它。">quanteda</abbr>、quanteda.textstats（語料、<abbr class="tt" tabindex="0" data-term="DFM" title="文件-特徵矩陣：列是文件、欄是字（特徵）、格子是次數。本週 R01c 得到 719 × 2,831。">DFM</abbr>、<abbr class="tt" tabindex="0" data-term="collocation" title="常一起出現的 2–3 字片語（如 per cent）；R01c 找出後把前 30 個合併成單一 token。">搭配詞</abbr>）；<abbr class="tt" tabindex="0" data-term="seededlda" title="R 套件，提供 textmodel_lda（一般 LDA）與 textmodel_seededlda（種子字典引導）；本週 R02a 用它擬合 LDA。">seededlda</abbr>（<code>textmodel_lda</code>）；stm（STM、<code>estimateEffect</code>、<code>labelTopics</code>）；dplyr、tidyr、ggplot2、jsonlite。</li></ul>
   <div class="pagemeta">本教材依據 NTLDEV 7191 W8 投影片（Yen-Chieh Liao 廖彥傑，2026-10-30；PDF 共 96 頁，2026-11-06 編譯版，repo commit f66e9ea）、<code>W8/classroom/W8.R</code>、<code>W8/analysis/ess_lab/*.rds</code> 與 <code>W8/README.md</code>、<code>W8/lab/README.md</code> 製作。R 輸出為本機重新執行（R 4.5.3、quanteda 4.5.1、quanteda.textstats 0.97.2、seededlda 1.4.3（另以 1.4.4 重跑，結果相同）、stm 1.3.8）；R02–R03 的 LDA 以老師存檔的 <code>lda6.rds</code> 為主，並並列本機重新擬合結果（見第 09 章說明）。文獻導讀依公開全文（見第 12 章）。標示「補充（非講義內容）」的段落與玩具示範為額外說明。製作日期 2026-11-06。</div>
 </section>
 
@@ -3220,6 +3232,38 @@ try{if($("section.chapter.show")){window.__w8ready=true;root.classList.add("js-r
 else if(window.__w8fail)window.__w8fail("no chapter shown");}catch(__e){__w8e("init",__e);}
 })();
 
+</script>
+<script id="series-js">
+(function(){try{
+  var pop=null,cur=null;
+  function mk(){if(pop)return pop;pop=document.createElement("div");pop.id="ttPop";pop.setAttribute("role","tooltip");document.body.appendChild(pop);return pop;}
+  function show(el){
+    var p=mk(),tip=el.getAttribute("data-tip")||"";cur=el;
+    p.innerHTML="";var b=document.createElement("b");b.appendChild(document.createTextNode(el.getAttribute("data-term")||el.textContent));
+    p.appendChild(b);p.appendChild(document.createTextNode(tip));p.style.display="block";
+    var r=el.getBoundingClientRect(),w=p.offsetWidth,h=p.offsetHeight,vw=document.documentElement.clientWidth,vh=window.innerHeight;
+    var x=r.left+r.width/2-w/2;if(x<12)x=12;if(x+w>vw-12)x=vw-12-w;
+    var y=r.bottom+8;if(y+h>vh-8&&r.top-h-8>8)y=r.top-h-8;
+    p.style.left=x+"px";p.style.top=y+"px";
+  }
+  function hide(){if(pop)pop.style.display="none";cur=null;}
+  var els=document.querySelectorAll("abbr.tt");
+  for(var i=0;i<els.length;i++){(function(el){
+    var t=el.getAttribute("title");if(t){el.setAttribute("data-tip",t);el.removeAttribute("title");}
+    el.addEventListener("mouseenter",function(){show(el);});
+    el.addEventListener("mouseleave",function(){if(document.activeElement!==el)hide();});
+    el.addEventListener("focus",function(){show(el);});
+    el.addEventListener("blur",function(){hide();});
+    el.addEventListener("click",function(e){e.stopPropagation();if(cur===el&&pop&&pop.style.display==="block"){hide();}else{show(el);}});
+  })(els[i]);}
+  document.addEventListener("click",function(){hide();});
+  window.addEventListener("scroll",function(){hide();},true);
+  window.addEventListener("resize",function(){hide();});
+  var ls=document.querySelectorAll("a.langbtn");
+  for(var j=0;j<ls.length;j++){ls[j].addEventListener("click",function(e){
+    var h=location.hash||"";if(h){e.preventDefault();location.href=this.getAttribute("href").split("#")[0]+h;}
+  });}
+}catch(e){if(window.console)console.warn("series layer",e);}})();
 </script>
 </body>
 </html>

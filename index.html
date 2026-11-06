@@ -1,1 +1,53 @@
-<!DOCTYPE html><html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Text as Data 自學講義</title><style>body{font-family:-apple-system,"PingFang TC",sans-serif;max-width:640px;margin:40px auto;padding:0 20px;line-height:1.7;color:#222}a{display:block;padding:14px 16px;margin:10px 0;border:1px solid #ddd;border-radius:10px;text-decoration:none;color:#0b5cad}small{color:#777}</style></head><body><h1>Text as Data 自學講義</h1><p><small>NTLDEV 7191（115-1，廖彥傑老師）課程的個人學習輔助，非官方教材。原始教材：<a style="display:inline;border:0;padding:0" href="https://github.com/davidycliao/NTLDEV-7191-1151">davidycliao/NTLDEV-7191-1151</a></small></p><a href="W8.html">W8 主題模型與其變形（LDA / STM）</a></body></html>
+<!DOCTYPE html>
+<html lang="zh-Hant-TW"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>W0 · Text as Data 互動講義目錄</title><style>
+:root{--bg:#0f1115;--card:#171c26;--card2:#1d2330;--text:#e6e9ef;--dim:#aab2c0;--faint:#7c8696;--border:#28303f;--accent:#3794ff;--ok:#3fb950;}
+@media (prefers-color-scheme: light){:root{--bg:#f5f6f8;--card:#fff;--card2:#f3f5f8;--text:#1b2430;--dim:#4a5566;--faint:#6b7585;--border:#dce0e8;--accent:#0a66c2;--ok:#1a7f37;}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Segoe UI",sans-serif;line-height:1.65;-webkit-text-size-adjust:100%}
+.wrap{max-width:920px;margin:0 auto;padding:28px 18px 60px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.kicker{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.lang{border:1px solid var(--border);border-radius:999px;padding:6px 14px;color:var(--text);text-decoration:none;font-size:.9rem;background:var(--card)}
+.lang:hover{border-color:var(--accent)}
+h1{font-size:clamp(1.6rem,4.5vw,2.3rem);margin:.25em 0 .2em;line-height:1.25}
+.sub{color:var(--dim);margin:0 0 14px;font-size:.95rem}
+.note{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:12px 16px;font-size:.92rem;color:var(--dim)}
+.note a{color:var(--accent);word-break:break-all}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:22px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card.live{border-color:color-mix(in srgb,var(--accent) 45%,var(--border))}
+.card.off,.card.soon{opacity:.62}
+.meta{display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--faint)}
+.wk{font-weight:800;color:var(--accent);font-size:.95rem}
+.badge{font-size:.72rem;border:1px solid var(--border);border-radius:999px;padding:1px 8px}
+.card.live .badge{color:var(--ok);border-color:var(--ok)}
+.ttl{font-weight:700;font-size:1.02rem;line-height:1.4}
+.alt{color:var(--dim);font-size:.85rem;line-height:1.45}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:6px}
+.acts a{flex:1 1 auto;text-align:center;text-decoration:none;border-radius:9px;padding:9px 10px;font-size:.9rem;font-weight:600;border:1px solid var(--border);color:var(--text);background:var(--card2)}
+.acts a.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+.how{color:var(--dim);font-size:.9rem;margin-top:14px}
+footer{margin-top:34px;color:var(--faint);font-size:.8rem;text-align:center}
+</style></head><body><div class="wrap">
+<div class="top"><span class="kicker">W0 · 課程講義目錄</span><a class="lang" href="index.en.html">English</a></div>
+<h1>Text as Data 互動講義</h1><p class="sub">NTLDEV 7191《Text as Data: Computational Methods for Social Science Research》· 2026 秋（115-1）· 廖彥傑老師 · 週五 16:30–18:20</p>
+<div class="note">個人學習輔助，<b>非官方教材</b>。內容依老師公開的課程 repo 整理，R 程式在本機實跑；超出投影片的內容都標「補充（非講義內容）」。原始教材：<a href="https://github.com/davidycliao/NTLDEV-7191-1151">github.com/davidycliao/NTLDEV-7191-1151</a></div>
+<p class="how">每份講義：左側章節、右側投影片對照（附頁碼）、互動示範、章末測驗、詞彙表與總複習；虛線底線的術語可滑過或點一下看說明。進度存在你這台裝置的瀏覽器裡。</p>
+<div class="grid"><article class="card live" id="w1"><div class="meta"><span class="wk">W1 · 9/11</span><span class="badge">已上線</span></div><div class="ttl">量化文本分析導論</div><div class="alt" lang="en">Introduction to Quantitative Text Analysis</div><div class="meta"><span>38 頁投影片</span></div><div class="acts"><a class="pri" href="W1.html">開啟講義 · 中文</a><a href="W1.en.html" lang="en">English</a></div></article>
+<article class="card live" id="w2"><div class="meta"><span class="wk">W2 · 9/18</span><span class="badge">已上線</span></div><div class="ttl">R 與 Python 的文本前處理：協作工作流程</div><div class="alt" lang="en">Text Preparation in R and Python: Collaborative Workflow</div><div class="meta"><span>64 頁投影片</span></div><div class="acts"><a class="pri" href="W2.html">開啟講義 · 中文</a><a href="W2.en.html" lang="en">English</a></div></article>
+<article class="card off" id="w3"><div class="meta"><span class="wk">W3 · 9/25</span><span class="badge">停課</span></div><div class="ttl">中秋節（停課）</div><div class="alt" lang="en">Mid-Autumn Festival (No Class)</div></article>
+<article class="card live" id="w4"><div class="meta"><span class="wk">W4 · 10/2</span><span class="badge">已上線</span></div><div class="ttl">斷詞、文件-特徵矩陣、字典與情緒分析</div><div class="alt" lang="en">Tokenisation, Document-Feature Matrices, Dictionaries, and Sentiment Analysis</div><div class="meta"><span>99 頁投影片</span></div><div class="acts"><a class="pri" href="W4.html">開啟講義 · 中文</a><a href="W4.en.html" lang="en">English</a></div></article>
+<article class="card off" id="w5"><div class="meta"><span class="wk">W5 · 10/9</span><span class="badge">停課</span></div><div class="ttl">國慶日補假（停課）</div><div class="alt" lang="en">National Day Observed (No Class)</div></article>
+<article class="card live" id="w6"><div class="meta"><span class="wk">W6 · 10/16</span><span class="badge">已上線</span></div><div class="ttl">人工編碼與文件分類</div><div class="alt" lang="en">Human Coding and Document Classification</div><div class="meta"><span>99 頁投影片</span></div><div class="acts"><a class="pri" href="W6.html">開啟講義 · 中文</a><a href="W6.en.html" lang="en">English</a></div></article>
+<article class="card live" id="w7"><div class="meta"><span class="wk">W7 · 10/23</span><span class="badge">已上線</span></div><div class="ttl">監督式、非監督式與半監督式尺度化</div><div class="alt" lang="en">Supervised, Unsupervised, and Semi-Supervised Scaling</div><div class="meta"><span>133 頁投影片</span></div><div class="acts"><a class="pri" href="W7.html">開啟講義 · 中文</a><a href="W7.en.html" lang="en">English</a></div></article>
+<article class="card live" id="w8"><div class="meta"><span class="wk">W8 · 10/30</span><span class="badge">已上線</span></div><div class="ttl">主題模型與其變形</div><div class="alt" lang="en">Topic Models and Their Variants</div><div class="meta"><span>96 頁投影片</span></div><div class="acts"><a class="pri" href="W8.html">開啟講義 · 中文</a><a href="W8.en.html" lang="en">English</a></div></article>
+<article class="card soon" id="w9"><div class="meta"><span class="wk">W9 · 11/6</span><span class="badge">尚無教材</span></div><div class="ttl">描述與比較文本：可讀性、相似度與詞嵌入</div><div class="alt" lang="en">Describing and Comparing Texts: Readability, Similarity, and Word Embeddings</div></article>
+<article class="card soon" id="w10"><div class="meta"><span class="wk">W10 · 11/13</span><span class="badge">尚無教材</span></div><div class="ttl">NLP 管線與 Transformers：標註、分類與可解釋性</div><div class="alt" lang="en">NLP Pipelines and Transformers: Annotation, Classification, and Interpretability</div></article>
+<article class="card off" id="w11"><div class="meta"><span class="wk">W11 · 11/20</span><span class="badge">停課</span></div><div class="ttl">臺大運動會（停課）</div><div class="alt" lang="en">NTU Sports Day (No Class)</div></article>
+<article class="card soon" id="w12"><div class="meta"><span class="wk">W12 · 11/27</span><span class="badge">尚無教材</span></div><div class="ttl">大型語言模型與多代理系統</div><div class="alt" lang="en">Large Language Models and Multi-Agent Systems</div></article>
+<article class="card soon" id="w13"><div class="meta"><span class="wk">W13 · 12/4</span><span class="badge">尚無教材</span></div><div class="ttl">新型態文本資料：多語與多模態來源</div><div class="alt" lang="en">New Forms of Textual Data: Multilingual and Multimodal Sources</div></article>
+<article class="card soon" id="w14"><div class="meta"><span class="wk">W14 · 12/11</span><span class="badge">尚無教材</span></div><div class="ttl">海報工作坊：格式、視覺呈現與 5 分鐘報告</div><div class="alt" lang="en">Poster Workshop: Format, Visual Presentation, and 5-Minute Talk</div></article>
+<article class="card soon" id="w15"><div class="meta"><span class="wk">W15 · 12/18</span><span class="badge">尚無教材</span></div><div class="ttl">期末海報發表</div><div class="alt" lang="en">Final Poster Presentations</div></article>
+<article class="card off" id="w16"><div class="meta"><span class="wk">W16 · 12/25</span><span class="badge">停課</span></div><div class="ttl">行憲紀念日（停課）</div><div class="alt" lang="en">Constitution Day Holiday (No Class)</div></article></div>
+<footer>由 Text-as-Data 助教整理 · 每週新教材上線後更新</footer></div></body></html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>W0 · Text as Data Interactive Notes</title><style>
+:root{--bg:#0f1115;--card:#171c26;--card2:#1d2330;--text:#e6e9ef;--dim:#aab2c0;--faint:#7c8696;--border:#28303f;--accent:#3794ff;--ok:#3fb950;}
+@media (prefers-color-scheme: light){:root{--bg:#f5f6f8;--card:#fff;--card2:#f3f5f8;--text:#1b2430;--dim:#4a5566;--faint:#6b7585;--border:#dce0e8;--accent:#0a66c2;--ok:#1a7f37;}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Segoe UI",sans-serif;line-height:1.65;-webkit-text-size-adjust:100%}
+.wrap{max-width:920px;margin:0 auto;padding:28px 18px 60px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.kicker{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.lang{border:1px solid var(--border);border-radius:999px;padding:6px 14px;color:var(--text);text-decoration:none;font-size:.9rem;background:var(--card)}
+.lang:hover{border-color:var(--accent)}
+h1{font-size:clamp(1.6rem,4.5vw,2.3rem);margin:.25em 0 .2em;line-height:1.25}
+.sub{color:var(--dim);margin:0 0 14px;font-size:.95rem}
+.note{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:12px 16px;font-size:.92rem;color:var(--dim)}
+.note a{color:var(--accent);word-break:break-all}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:22px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card.live{border-color:color-mix(in srgb,var(--accent) 45%,var(--border))}
+.card.off,.card.soon{opacity:.62}
+.meta{display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--faint)}
+.wk{font-weight:800;color:var(--accent);font-size:.95rem}
+.badge{font-size:.72rem;border:1px solid var(--border);border-radius:999px;padding:1px 8px}
+.card.live .badge{color:var(--ok);border-color:var(--ok)}
+.ttl{font-weight:700;font-size:1.02rem;line-height:1.4}
+.alt{color:var(--dim);font-size:.85rem;line-height:1.45}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:6px}
+.acts a{flex:1 1 auto;text-align:center;text-decoration:none;border-radius:9px;padding:9px 10px;font-size:.9rem;font-weight:600;border:1px solid var(--border);color:var(--text);background:var(--card2)}
+.acts a.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+.how{color:var(--dim);font-size:.9rem;margin-top:14px}
+footer{margin-top:34px;color:var(--faint);font-size:.8rem;text-align:center}
+</style></head><body><div class="wrap">
+<div class="top"><span class="kicker">W0 · Course index</span><a class="lang" href="index.html">中文</a></div>
+<h1>Text as Data Interactive Notes</h1><p class="sub">NTLDEV 7191 “Text as Data: Computational Methods for Social Science Research” · Fall 2026 (115-1) · Instructor: Yen-Chieh Liao · Fri 16:30–18:20</p>
+<div class="note">A personal study aid, <b>not official course material</b>. Built from the instructor’s public course repository; the R code was re-run locally, and anything beyond the slides is marked “Supplement (not from the lecture)”. Original materials: <a href="https://github.com/davidycliao/NTLDEV-7191-1151">github.com/davidycliao/NTLDEV-7191-1151</a></div>
+<p class="how">Each set of notes has chapters on the left, a slide panel with page numbers on the right, interactive demos, chapter quizzes, a glossary and a final review. Hover or tap a dotted-underlined term for a short explanation. Progress is saved in this device’s browser.</p>
+<div class="grid"><article class="card live" id="w1"><div class="meta"><span class="wk">W1 · Sep 11</span><span class="badge">Available</span></div><div class="ttl">Introduction to Quantitative Text Analysis</div><div class="alt" lang="zh-Hant">量化文本分析導論</div><div class="meta"><span>38 slides</span></div><div class="acts"><a class="pri" href="W1.en.html">Open notes · English</a><a href="W1.html" lang="zh-Hant">中文</a></div></article>
+<article class="card live" id="w2"><div class="meta"><span class="wk">W2 · Sep 18</span><span class="badge">Available</span></div><div class="ttl">Text Preparation in R and Python: Collaborative Workflow</div><div class="alt" lang="zh-Hant">R 與 Python 的文本前處理：協作工作流程</div><div class="meta"><span>64 slides</span></div><div class="acts"><a class="pri" href="W2.en.html">Open notes · English</a><a href="W2.html" lang="zh-Hant">中文</a></div></article>
+<article class="card off" id="w3"><div class="meta"><span class="wk">W3 · Sep 25</span><span class="badge">No class</span></div><div class="ttl">Mid-Autumn Festival (No Class)</div><div class="alt" lang="zh-Hant">中秋節（停課）</div></article>
+<article class="card live" id="w4"><div class="meta"><span class="wk">W4 · Oct 2</span><span class="badge">Available</span></div><div class="ttl">Tokenisation, Document-Feature Matrices, Dictionaries, and Sentiment Analysis</div><div class="alt" lang="zh-Hant">斷詞、文件-特徵矩陣、字典與情緒分析</div><div class="meta"><span>99 slides</span></div><div class="acts"><a class="pri" href="W4.en.html">Open notes · English</a><a href="W4.html" lang="zh-Hant">中文</a></div></article>
+<article class="card off" id="w5"><div class="meta"><span class="wk">W5 · Oct 9</span><span class="badge">No class</span></div><div class="ttl">National Day Observed (No Class)</div><div class="alt" lang="zh-Hant">國慶日補假（停課）</div></article>
+<article class="card live" id="w6"><div class="meta"><span class="wk">W6 · Oct 16</span><span class="badge">Available</span></div><div class="ttl">Human Coding and Document Classification</div><div class="alt" lang="zh-Hant">人工編碼與文件分類</div><div class="meta"><span>99 slides</span></div><div class="acts"><a class="pri" href="W6.en.html">Open notes · English</a><a href="W6.html" lang="zh-Hant">中文</a></div></article>
+<article class="card live" id="w7"><div class="meta"><span class="wk">W7 · Oct 23</span><span class="badge">Available</span></div><div class="ttl">Supervised, Unsupervised, and Semi-Supervised Scaling</div><div class="alt" lang="zh-Hant">監督式、非監督式與半監督式尺度化</div><div class="meta"><span>133 slides</span></div><div class="acts"><a class="pri" href="W7.en.html">Open notes · English</a><a href="W7.html" lang="zh-Hant">中文</a></div></article>
+<article class="card live" id="w8"><div class="meta"><span class="wk">W8 · Oct 30</span><span class="badge">Available</span></div><div class="ttl">Topic Models and Their Variants</div><div class="alt" lang="zh-Hant">主題模型與其變形</div><div class="meta"><span>96 slides</span></div><div class="acts"><a class="pri" href="W8.en.html">Open notes · English</a><a href="W8.html" lang="zh-Hant">中文</a></div></article>
+<article class="card soon" id="w9"><div class="meta"><span class="wk">W9 · Nov 6</span><span class="badge">Not yet available</span></div><div class="ttl">Describing and Comparing Texts: Readability, Similarity, and Word Embeddings</div><div class="alt" lang="zh-Hant">描述與比較文本：可讀性、相似度與詞嵌入</div></article>
+<article class="card soon" id="w10"><div class="meta"><span class="wk">W10 · Nov 13</span><span class="badge">Not yet available</span></div><div class="ttl">NLP Pipelines and Transformers: Annotation, Classification, and Interpretability</div><div class="alt" lang="zh-Hant">NLP 管線與 Transformers：標註、分類與可解釋性</div></article>
+<article class="card off" id="w11"><div class="meta"><span class="wk">W11 · Nov 20</span><span class="badge">No class</span></div><div class="ttl">NTU Sports Day (No Class)</div><div class="alt" lang="zh-Hant">臺大運動會（停課）</div></article>
+<article class="card soon" id="w12"><div class="meta"><span class="wk">W12 · Nov 27</span><span class="badge">Not yet available</span></div><div class="ttl">Large Language Models and Multi-Agent Systems</div><div class="alt" lang="zh-Hant">大型語言模型與多代理系統</div></article>
+<article class="card soon" id="w13"><div class="meta"><span class="wk">W13 · Dec 4</span><span class="badge">Not yet available</span></div><div class="ttl">New Forms of Textual Data: Multilingual and Multimodal Sources</div><div class="alt" lang="zh-Hant">新型態文本資料：多語與多模態來源</div></article>
+<article class="card soon" id="w14"><div class="meta"><span class="wk">W14 · Dec 11</span><span class="badge">Not yet available</span></div><div class="ttl">Poster Workshop: Format, Visual Presentation, and 5-Minute Talk</div><div class="alt" lang="zh-Hant">海報工作坊：格式、視覺呈現與 5 分鐘報告</div></article>
+<article class="card soon" id="w15"><div class="meta"><span class="wk">W15 · Dec 18</span><span class="badge">Not yet available</span></div><div class="ttl">Final Poster Presentations</div><div class="alt" lang="zh-Hant">期末海報發表</div></article>
+<article class="card off" id="w16"><div class="meta"><span class="wk">W16 · Dec 25</span><span class="badge">No class</span></div><div class="ttl">Constitution Day Holiday (No Class)</div><div class="alt" lang="zh-Hant">行憲紀念日（停課）</div></article></div>
+<footer>Compiled by the Text-as-Data study assistant · updated when new weekly materials are released</footer></div></body></html>
