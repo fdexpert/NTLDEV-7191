@@ -1,5 +1,9 @@
 # Text as Data 互動自學講義（NTLDEV 7191，2026 秋）
 
+[English](README.en.md) · **中文**
+
+> 🌏 **International students: the full English version of this README is here → [README.en.md](README.en.md)**
+
 > 👉 **直接開始讀：<https://fdexpert.github.io/NTLDEV-7191/>**（English: <https://fdexpert.github.io/NTLDEV-7191/index.en.html>）
 
 這是台大「**Text as Data: Computational Methods for Social Science Research**」（NTLDEV 7191，115-1，廖彥傑老師）的**同學自製補充講義**。我們把每一週的投影片、課堂 R 程式和指定閱讀整理成一份互動網頁：一邊讀解說，一邊看對應的投影片，在網頁上直接動手玩模型，最後用小測驗檢查自己有沒有懂。
@@ -18,9 +22,9 @@
 - [和投影片對不上的地方](#和投影片對不上的地方)
 - [已知限制](#已知限制)
 - [更新方式](#更新方式)
-- [發現錯誤怎麼辦](#發現錯誤怎麼辦)
+- [回報錯誤與建議功能](#回報錯誤與建議功能)
 - [版權與致謝](#版權與致謝)
-- [English summary](#english-summary)
+- [English version of this README](README.en.md)
 
 ---
 
@@ -122,9 +126,19 @@
   - `main` 分支只用來和老師的 repo 同步，**沒有任何修改**；
   - 講義網站放在 [`gh-pages`](https://github.com/fdexpert/NTLDEV-7191/tree/gh-pages) 分支，也就是你現在看到的這份說明所在的位置。
 
-## 發現錯誤怎麼辦
+## 回報錯誤與建議功能
 
-如果你發現錯字、算錯的數字、頁碼對不上，或解釋不清楚的地方，請直接告訴整理者，最好附上**週次、章節和投影片頁碼**，會盡快修正。
+歡迎大家一起把講義變得更好！請到本 repo 的 [Issues](https://github.com/fdexpert/NTLDEV-7191/issues) 留言（需要 GitHub 帳號）。點下面的連結會開好一份填寫格式：
+
+- 🐞 **[回報錯誤](https://github.com/fdexpert/NTLDEV-7191/issues/new?title=%5B%E9%8C%AF%E8%AA%A4%5D%20W%3F%20&body=%2A%2A%E9%80%B1%E6%AC%A1%EF%BC%8F%E8%AA%9E%E8%A8%80%2A%2A%EF%BC%9A%EF%BC%88%E4%BE%8B%E5%A6%82%20W8%20%E4%B8%AD%E6%96%87%E7%89%88%EF%BC%89%0A%2A%2A%E7%AB%A0%E7%AF%80%2A%2A%EF%BC%9A%EF%BC%88%E4%BE%8B%E5%A6%82%2005%20%C2%B7%20STM%EF%BC%89%0A%2A%2A%E6%8A%95%E5%BD%B1%E7%89%87%E9%A0%81%E7%A2%BC%2A%2A%EF%BC%9A%EF%BC%88%E4%BE%8B%E5%A6%82%20p.%2053%EF%BC%89%0A%2A%2A%E5%93%AA%E8%A3%A1%E6%9C%89%E5%95%8F%E9%A1%8C%2A%2A%EF%BC%9A%0A%2A%2A%E4%BD%A0%E8%AA%8D%E7%82%BA%E6%AD%A3%E7%A2%BA%E7%9A%84%E6%98%AF%2A%2A%EF%BC%88%E6%9C%89%E5%87%BA%E8%99%95%E6%9B%B4%E5%A5%BD%EF%BC%89%EF%BC%9A%0A%2A%2A%E8%A3%9D%E7%BD%AE%EF%BC%8F%E7%80%8F%E8%A6%BD%E5%99%A8%2A%2A%EF%BC%88%E7%95%AB%E9%9D%A2%E6%88%96%E6%93%8D%E4%BD%9C%E5%95%8F%E9%A1%8C%E6%89%8D%E9%9C%80%E8%A6%81%EF%BC%89%EF%BC%9A%0A)**：錯字、算錯的數字、頁碼或投影片對不上、解釋不清楚、按鈕或畫面有問題。請盡量寫上**週次、章節和投影片頁碼**，會比較快修好。
+- 💡 **[建議功能](https://github.com/fdexpert/NTLDEV-7191/issues/new?title=%5B%E5%BB%BA%E8%AD%B0%5D%20&body=%2A%2A%E6%83%B3%E8%A6%81%E7%9A%84%E5%8A%9F%E8%83%BD%E6%88%96%E6%94%B9%E9%80%B2%2A%2A%EF%BC%9A%0A%2A%2A%E6%9C%83%E5%9C%A8%E4%BB%80%E9%BA%BC%E6%83%85%E6%B3%81%E7%94%A8%E5%88%B0%2A%2A%EF%BC%9A%0A%2A%2A%E5%8F%83%E8%80%83%E4%BE%8B%E5%AD%90%E6%88%96%E6%83%B3%E5%83%8F%E7%9A%84%E6%A8%A3%E5%AD%90%2A%2A%EF%BC%88%E5%8F%AF%E9%81%B8%EF%BC%89%EF%BC%9A%0A)**：想多一種互動示範、想補某個概念的解釋、希望某個功能更好用，都可以提。
+
+小提醒：
+
+- 開之前可以先看看[現有的 Issues](https://github.com/fdexpert/NTLDEV-7191/issues?q=is%3Aissue)，有人提過的話按個 👍 或補充留言就好。
+- Issues 是**公開的**，請不要貼作業答案、個人資料或付費論文的全文。
+- 課程規則、作業和成績的問題請直接問老師或助教，不在這裡處理。
+- Issue 用中文或英文寫都可以。
 
 ## 版權與致謝
 
@@ -132,18 +146,3 @@
 - 謝謝廖彥傑老師同意分享這份補充講義。
 - 講義使用 R 與 [quanteda](https://quanteda.io/) 系列套件，以及 seededlda、stm、mlr3 等開源套件；感謝各套件作者。
 
----
-
-## English summary
-
-**Interactive self-study notes** for NTU's *Text as Data: Computational Methods for Social Science Research* (NTLDEV 7191, Fall 2026, taught by Dr. Yen-Chieh Liao). Shared with the instructor's permission. **These are unofficial, student-made notes**; the official materials are in the course repo: <https://github.com/davidycliao/NTLDEV-7191-1151>.
-
-**Start here: <https://fdexpert.github.io/NTLDEV-7191/index.en.html>**
-
-- One self-contained HTML file per week (W1, W2, W4, W6, W7, W8 so far; W3 and W5 had no class), each in Chinese and English.
-- A slide panel synced both ways: scrolling the notes turns the slides, and turning the slides (or typing a page number) jumps the notes to the passage that cites that slide.
-- The class R scripts were actually run (R 4.5.3, quanteda 4.5.1), and the outputs were checked against the slides. Where they differ, both are shown with an explanation (see the table above).
-- Interactive demos, end-of-chapter quizzes, reading cards with page numbers, a glossary, and hover/tap tooltips for terms and abbreviations (with full names).
-- Anything beyond the course materials is labelled "supplementary".
-- Made by a classmate with AI assistance and spot-checked, so errors are possible. When in doubt, follow the instructor's slides and announcements.
-- Slides, code and data belong to the instructor and the original authors. They are used here with permission for students of this course only.

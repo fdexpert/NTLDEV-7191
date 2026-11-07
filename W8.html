@@ -373,7 +373,7 @@
 <style id="series-css">
 .topbar .homebtn,.topbar .langbtn{text-decoration:none;display:inline-flex;align-items:center;}
 .topbar .langbtn{font-weight:600;}
-/* flow step titles: block, same font, slightly larger than the description (Jerry 2026-11-06) */
+/* flow step titles: block, same font, slightly larger than the description */
 .flow .st .sn{display:block;font-family:inherit;font-size:0.95rem;font-weight:700;line-height:1.4;margin-bottom:3px;}
 abbr.tt{text-decoration:underline dotted;text-decoration-thickness:1px;text-underline-offset:3px;cursor:help;border-bottom:0;}
 abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-radius:2px;}
@@ -1523,7 +1523,7 @@ speeches features   tokens
     <ul>
       <li>在 Linux aarch64 上照 R02a 原封不動重跑，<strong>主題內容大致相同但編號與比例不同</strong>：例如歐洲議題變成 topic3，ess_hoc_00004 的 topic3 = 0.819；<abbr class="tt" tabindex="0" data-term="dominant topic" data-tip="每份文件只保留比例最大的主題編號（max.col）；容易重現但丟掉其他比例的資訊。" title="每份文件只保留比例最大的主題編號（max.col）；容易重現但丟掉其他比例的資訊。">主導主題</abbr>計數是 82/71/77/121/177/191，不是投影片的 91/80/193/143/145/67。</li>
       <li>已排除的原因：輸入資料完全相同（<abbr class="tt" tabindex="0" data-term="DFM" data-full="document-feature matrix" data-tip="文件-特徵矩陣：列是文件、欄是字（特徵）、格子是次數。本週 R01c 得到 719 × 2,831。" title="document-feature matrix — 文件-特徵矩陣：列是文件、欄是字（特徵）、格子是次數。本週 R01c 得到 719 × 2,831。">DFM</abbr> 與老師 <code>lda6.rds</code> 內存的 <code>$data</code> 逐格相同、欄列順序相同）；套件版本也不是原因（改裝老師存檔時用的 <abbr class="tt" tabindex="0" data-term="seededlda" data-tip="R 套件，提供 textmodel_lda（一般 LDA）與 textmodel_seededlda（種子字典引導）；本週 R02a 用它擬合 LDA。" title="R 套件，提供 textmodel_lda（一般 LDA）與 textmodel_seededlda（種子字典引導）；本週 R02a 用它擬合 LDA。">seededlda</abbr> 1.4.3 重跑，結果與 1.4.4 相同）。</li>
-      <li>推測原因（未證實）：<abbr class="tt" tabindex="0" data-term="Gibbs sampling" data-tip="反覆依其他所有字的指派重新抽每個字的主題，以估計 LDA 的演算法；seededlda 的 textmodel_lda 用它。" title="反覆依其他所有字的指派重新抽每個字的主題，以估計 LDA 的演算法；seededlda 的 textmodel_lda 用它。">Gibbs 抽樣</abbr>的隨機數在不同作業系統／C++ 標準函式庫上產生不同序列。Jerry 在自己的 Mac 上跑，很可能會和投影片一致。</li>
+      <li>推測原因（未證實）：<abbr class="tt" tabindex="0" data-term="Gibbs sampling" data-tip="反覆依其他所有字的指派重新抽每個字的主題，以估計 LDA 的演算法；seededlda 的 textmodel_lda 用它。" title="反覆依其他所有字的指派重新抽每個字的主題，以估計 LDA 的演算法；seededlda 的 textmodel_lda 用它。">Gibbs 抽樣</abbr>的隨機數在不同作業系統／C++ 標準函式庫上產生不同序列。在 Mac 上跑，很可能會和投影片一致。</li>
       <li>本教材的做法：R02a–R03d 以 <code>readRDS("analysis/ess_lab/lda6.rds")</code>（老師用同一個呼叫存下的 K = 6 擬合）作為主要輸出，<strong>這個版本與投影片 75–77、84–85 的每個數字都相符</strong>；本機重新擬合的輸出放在可展開的區塊供對照。所有 LDA 互動實驗室也用 <code>lda6.rds</code>。</li>
     </ul>
     <p class="hint">這也是第 02 章那句話的實例：seed 支持可重現性，不保證效度，也不保證跨平台得到同一組編號。</p>
@@ -2288,7 +2288,7 @@ print(p_perplexity)</pre></div>
     <tr><td>Eshima et al. (2024)</td><td>關鍵字輔助的量測</td><td>第 07 章（依投影片）</td></tr>
     <tr><td>Gilardi et al. (2022)</td><td>監督式議題分類</td><td>第 07 章（依投影片 89）</td></tr>
   </table></div>
-  <p class="hint">Jiang, Xia &amp; Zhang (2024) 的正確篇名是 “Birds of a Feather: Sharing Democratic Values Eases Immigration in a Postmaterialist Society,” <em>Political Behavior</em> 46(3): 1887–1911（DOI 10.1007/s11109-023-09900-y）。全文需付費；如果 Jerry 從 Mac（台大 <abbr class="tt" tabindex="0" data-term="VPN" data-full="virtual private network" data-tip="虛擬私人網路；用台大 VPN 才能從校外下載付費期刊全文。" title="virtual private network — 虛擬私人網路；用台大 VPN 才能從校外下載付費期刊全文。">VPN</abbr>）下載 PDF 上傳，我可以補一張導讀卡。</p>
+  <p class="hint">Jiang, Xia &amp; Zhang (2024) 的正確篇名是 “Birds of a Feather: Sharing Democratic Values Eases Immigration in a Postmaterialist Society,” <em>Political Behavior</em> 46(3): 1887–1911（DOI 10.1007/s11109-023-09900-y）。全文需付費，可透過台大圖書館或學校 <abbr class="tt" tabindex="0" data-term="VPN" data-full="virtual private network" data-tip="虛擬私人網路；用台大 VPN 才能從校外下載付費期刊全文。" title="virtual private network — 虛擬私人網路；用台大 VPN 才能從校外下載付費期刊全文。">VPN</abbr> 取得。</p>
 </section>
 
 <!-- ===================== CH13 ===================== -->
