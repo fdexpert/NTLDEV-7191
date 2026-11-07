@@ -372,6 +372,15 @@
 </style>
 <style id="series-css">
 .topbar .homebtn,.topbar .langbtn{text-decoration:none;display:inline-flex;align-items:center;}
+.fbmenu{position:relative;display:inline-block;}
+.fbmenu>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;user-select:none;}
+.fbmenu>summary::-webkit-details-marker{display:none;}
+.fbmenu .fbpop{position:absolute;left:0;top:calc(100% + 6px);z-index:9000;width:min(300px,calc(100vw - 24px));padding:8px;border-radius:10px;
+  background:var(--surface-2,#1d2330);color:var(--text,#e8ecf3);border:1px solid var(--border,#3a4456);box-shadow:0 8px 28px rgba(0,0,0,.35);}
+.fbmenu .fbpop a{display:block;padding:8px 10px;border-radius:8px;text-decoration:none;color:inherit;}
+.fbmenu .fbpop a:hover,.fbmenu .fbpop a:focus{background:rgba(127,127,127,.16);}
+.fbmenu .fbpop small{display:block;opacity:.75;font-size:.78rem;margin-top:2px;}
+.fbmenu .fbwarn{margin:6px 10px 2px;font-size:.76rem;line-height:1.45;opacity:.75;}
 .topbar .langbtn{font-weight:600;}
 /* flow step titles: block, same font, slightly larger than the description */
 .flow .st .sn{display:block;font-family:inherit;font-size:0.95rem;font-weight:700;line-height:1.4;margin-bottom:3px;}
@@ -422,7 +431,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   </nav>
   <div id="scrim"></div>
   <main id="main">
-    <div class="topbar"><a class="btn homebtn" href="index.html" title="回到 Text as Data 課程講義目錄">⌂ 課程目錄</a><a class="btn langbtn" href="W8.en.html" hreflang="en" lang="en" title="Switch to English">English</a>
+    <div class="topbar"><a class="btn homebtn" href="index.html" title="回到 Text as Data 課程講義目錄">⌂ 課程目錄</a><details class="fbmenu" id="fbMenu" data-week="W8" data-lang="zh"><summary class="btn fbbtn" title="回報錯誤或建議功能（GitHub Issues）">🐞 回報</summary><div class="fbpop" role="menu"><a role="menuitem" id="fbBug" href="https://github.com/fdexpert/NTLDEV-7191/issues/new?title=%5B%E9%8C%AF%E8%AA%A4%5D%20W8%20&amp;body=**%E9%80%B1%E6%AC%A1%EF%BC%8F%E8%AA%9E%E8%A8%80**%EF%BC%9AW8%20%E4%B8%AD%E6%96%87%E7%89%88%0A**%E7%AB%A0%E7%AF%80**%EF%BC%9A%0A**%E6%8A%95%E5%BD%B1%E7%89%87%E9%A0%81%E7%A2%BC**%EF%BC%9A%0A**%E5%93%AA%E8%A3%A1%E6%9C%89%E5%95%8F%E9%A1%8C**%EF%BC%9A%0A**%E4%BD%A0%E8%AA%8D%E7%82%BA%E6%AD%A3%E7%A2%BA%E7%9A%84%E6%98%AF%EF%BC%88%E6%9C%89%E5%87%BA%E8%99%95%E6%9B%B4%E5%A5%BD%EF%BC%89**%EF%BC%9A%0A**%E8%A3%9D%E7%BD%AE%EF%BC%8F%E7%80%8F%E8%A6%BD%E5%99%A8%EF%BC%88%E7%95%AB%E9%9D%A2%E6%88%96%E6%93%8D%E4%BD%9C%E5%95%8F%E9%A1%8C%E6%89%8D%E9%9C%80%E8%A6%81%EF%BC%89**%EF%BC%9A%0A" target="_blank" rel="noopener"><b>🐞 回報錯誤</b><small>自動帶入週次、章節、投影片頁碼</small></a><a role="menuitem" href="https://github.com/fdexpert/NTLDEV-7191/issues/new?title=%5B%E5%BB%BA%E8%AD%B0%5D%20W8%20&amp;body=**%E9%80%B1%E6%AC%A1**%EF%BC%9AW8%0A**%E6%83%B3%E8%A6%81%E7%9A%84%E5%8A%9F%E8%83%BD%E6%88%96%E6%94%B9%E9%80%B2**%EF%BC%9A%0A**%E6%9C%83%E5%9C%A8%E4%BB%80%E9%BA%BC%E6%83%85%E6%B3%81%E7%94%A8%E5%88%B0**%EF%BC%9A%0A**%E5%8F%83%E8%80%83%E4%BE%8B%E5%AD%90%E6%88%96%E6%83%B3%E5%83%8F%E7%9A%84%E6%A8%A3%E5%AD%90%EF%BC%88%E5%8F%AF%E9%81%B8%EF%BC%89**%EF%BC%9A%0A" target="_blank" rel="noopener"><b>💡 建議功能</b></a><a role="menuitem" href="https://github.com/fdexpert/NTLDEV-7191/issues" target="_blank" rel="noopener"><b>看看已有的回報</b></a><p class="fbwarn">需要 GitHub 帳號；Issues 是公開的，請不要貼作業答案或個人資料。</p></div></details><a class="btn langbtn" href="W8.en.html" hreflang="en" lang="en" title="Switch to English">English</a>
       <button class="menubtn jsonly" id="menubtn" aria-label="開啟章節選單">☰ 章節</button>
       <button class="btn jsonly" id="prevBtn">← 上一章</button>
       <button class="btn jsonly" id="nextBtn">下一章 →</button>
@@ -3295,6 +3304,31 @@ else if(window.__w8fail)window.__w8fail("no chapter shown");}catch(__e){__w8e("i
 }catch(e){if(window.console)console.warn("revsync",e);(window.__w8errs=window.__w8errs||[]).push("revsync: "+(e&&e.message));}})();
 </script>
 <script id="series-js">
+(function(){try{
+  var fm=document.getElementById("fbMenu");
+  if(fm){
+    var fb=document.getElementById("fbBug"),base=fb.getAttribute("href"),zh=fm.getAttribute("data-lang")==="zh";
+    var fill=function(){try{
+      var sec=document.querySelector("section.chapter.show"),ch="";
+      if(sec){var h=sec.querySelector("h2,h1");if(h){var c=h.cloneNode(true);Array.prototype.forEach.call(c.querySelectorAll(".slideref"),function(x){x.parentNode.removeChild(x);});ch=c.textContent.replace(/\s+/g," ").trim();}}
+      var pg="";try{if(window.__spApi)pg="p. "+window.__spApi.page();}catch(e){}
+      var sep=encodeURIComponent(zh?"：":": ");
+      var u=base,k1=encodeURIComponent(zh?"**章節**":"**Chapter**")+sep,k2=encodeURIComponent(zh?"**投影片頁碼**":"**Slide page**")+sep;
+      if(ch)u=u.replace(k1,k1+encodeURIComponent(ch));
+      if(pg)u=u.replace(k2,k2+encodeURIComponent(pg));
+      fb.setAttribute("href",u);}catch(e){}};
+    var pop=fm.querySelector(".fbpop");
+    var place=function(){try{pop.style.left="0px";var vw=document.documentElement.clientWidth,r=pop.getBoundingClientRect(),dx=0;
+      if(r.right>vw-12)dx=(vw-12)-r.right;if(r.left+dx<12)dx=12-r.left;pop.style.left=dx+"px";}catch(e){}};
+    fm.addEventListener("toggle",function(){if(fm.open){fill();place();}});
+    window.addEventListener("resize",function(){if(fm.open)place();});
+    fb.addEventListener("mousedown",fill);fb.addEventListener("focus",fill);
+    document.addEventListener("click",function(e){if(fm.open&&!fm.contains(e.target))fm.open=false;});
+    document.addEventListener("keydown",function(e){if(e.key==="Escape"&&fm.open){fm.open=false;fm.querySelector("summary").focus();}});
+  }
+}catch(e){if(window.console)console.warn("fbmenu",e);}})();
+</script>
+<script id="series-js-tt">
 (function(){try{
   var pop=null,cur=null;
   function mk(){if(pop)return pop;pop=document.createElement("div");pop.id="ttPop";pop.setAttribute("role","tooltip");document.body.appendChild(pop);return pop;}

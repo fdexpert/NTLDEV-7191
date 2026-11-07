@@ -372,6 +372,15 @@
 </style>
 <style id="series-css">
 .topbar .homebtn,.topbar .langbtn{text-decoration:none;display:inline-flex;align-items:center;}
+.fbmenu{position:relative;display:inline-block;}
+.fbmenu>summary{list-style:none;cursor:pointer;display:inline-flex;align-items:center;user-select:none;}
+.fbmenu>summary::-webkit-details-marker{display:none;}
+.fbmenu .fbpop{position:absolute;left:0;top:calc(100% + 6px);z-index:9000;width:min(300px,calc(100vw - 24px));padding:8px;border-radius:10px;
+  background:var(--surface-2,#1d2330);color:var(--text,#e8ecf3);border:1px solid var(--border,#3a4456);box-shadow:0 8px 28px rgba(0,0,0,.35);}
+.fbmenu .fbpop a{display:block;padding:8px 10px;border-radius:8px;text-decoration:none;color:inherit;}
+.fbmenu .fbpop a:hover,.fbmenu .fbpop a:focus{background:rgba(127,127,127,.16);}
+.fbmenu .fbpop small{display:block;opacity:.75;font-size:.78rem;margin-top:2px;}
+.fbmenu .fbwarn{margin:6px 10px 2px;font-size:.76rem;line-height:1.45;opacity:.75;}
 .topbar .langbtn{font-weight:600;}
 /* flow step titles: block, same font, slightly larger than the description */
 .flow .st .sn{display:block;font-family:inherit;font-size:0.95rem;font-weight:700;line-height:1.4;margin-bottom:3px;}
@@ -422,7 +431,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   </nav>
   <div id="scrim"></div>
   <main id="main">
-    <div class="topbar"><a class="btn homebtn" href="index.en.html" title="Back to the Text as Data notes index">⌂ Course index</a><a class="btn langbtn" href="W8.html" hreflang="zh-Hant" lang="zh-Hant" title="切換到中文">中文</a>
+    <div class="topbar"><a class="btn homebtn" href="index.en.html" title="Back to the Text as Data notes index">⌂ Course index</a><details class="fbmenu" id="fbMenu" data-week="W8" data-lang="en"><summary class="btn fbbtn" title="Report an error or suggest a feature (GitHub Issues)">🐞 Feedback</summary><div class="fbpop" role="menu"><a role="menuitem" id="fbBug" href="https://github.com/fdexpert/NTLDEV-7191/issues/new?title=%5BBug%5D%20W8%20&amp;body=**Week%20%2F%20language**%3A%20W8%20English%0A**Chapter**%3A%20%0A**Slide%20page**%3A%20%0A**What%20is%20wrong**%3A%20%0A**What%20you%20think%20is%20correct%20(with%20a%20source%20if%20possible)**%3A%20%0A**Device%20%2F%20browser%20(only%20for%20display%20or%20interaction%20problems)**%3A%20%0A" target="_blank" rel="noopener"><b>🐞 Report an error</b><small>Week, chapter and slide page are filled in for you</small></a><a role="menuitem" href="https://github.com/fdexpert/NTLDEV-7191/issues/new?title=%5BFeature%5D%20W8%20&amp;body=**Week**%3A%20W8%0A**Feature%20or%20improvement%20you%20want**%3A%20%0A**When%20would%20you%20use%20it**%3A%20%0A**Example%20or%20mock-up%20(optional)**%3A%20%0A" target="_blank" rel="noopener"><b>💡 Suggest a feature</b></a><a role="menuitem" href="https://github.com/fdexpert/NTLDEV-7191/issues" target="_blank" rel="noopener"><b>See existing reports</b></a><p class="fbwarn">Requires a GitHub account. Issues are public: do not post assignment answers or personal information.</p></div></details><a class="btn langbtn" href="W8.html" hreflang="zh-Hant" lang="zh-Hant" title="切換到中文">中文</a>
       <button class="menubtn jsonly" id="menubtn" aria-label="Open chapter menu">☰ Chapters</button>
       <button class="btn jsonly" id="prevBtn">← Previous</button>
       <button class="btn jsonly" id="nextBtn">Next →</button>
@@ -3295,6 +3304,31 @@ else if(window.__w8fail)window.__w8fail("no chapter shown");}catch(__e){__w8e("i
 }catch(e){if(window.console)console.warn("revsync",e);(window.__w8errs=window.__w8errs||[]).push("revsync: "+(e&&e.message));}})();
 </script>
 <script id="series-js">
+(function(){try{
+  var fm=document.getElementById("fbMenu");
+  if(fm){
+    var fb=document.getElementById("fbBug"),base=fb.getAttribute("href"),zh=fm.getAttribute("data-lang")==="zh";
+    var fill=function(){try{
+      var sec=document.querySelector("section.chapter.show"),ch="";
+      if(sec){var h=sec.querySelector("h2,h1");if(h){var c=h.cloneNode(true);Array.prototype.forEach.call(c.querySelectorAll(".slideref"),function(x){x.parentNode.removeChild(x);});ch=c.textContent.replace(/\s+/g," ").trim();}}
+      var pg="";try{if(window.__spApi)pg="p. "+window.__spApi.page();}catch(e){}
+      var sep=encodeURIComponent(zh?"：":": ");
+      var u=base,k1=encodeURIComponent(zh?"**章節**":"**Chapter**")+sep,k2=encodeURIComponent(zh?"**投影片頁碼**":"**Slide page**")+sep;
+      if(ch)u=u.replace(k1,k1+encodeURIComponent(ch));
+      if(pg)u=u.replace(k2,k2+encodeURIComponent(pg));
+      fb.setAttribute("href",u);}catch(e){}};
+    var pop=fm.querySelector(".fbpop");
+    var place=function(){try{pop.style.left="0px";var vw=document.documentElement.clientWidth,r=pop.getBoundingClientRect(),dx=0;
+      if(r.right>vw-12)dx=(vw-12)-r.right;if(r.left+dx<12)dx=12-r.left;pop.style.left=dx+"px";}catch(e){}};
+    fm.addEventListener("toggle",function(){if(fm.open){fill();place();}});
+    window.addEventListener("resize",function(){if(fm.open)place();});
+    fb.addEventListener("mousedown",fill);fb.addEventListener("focus",fill);
+    document.addEventListener("click",function(e){if(fm.open&&!fm.contains(e.target))fm.open=false;});
+    document.addEventListener("keydown",function(e){if(e.key==="Escape"&&fm.open){fm.open=false;fm.querySelector("summary").focus();}});
+  }
+}catch(e){if(window.console)console.warn("fbmenu",e);}})();
+</script>
+<script id="series-js-tt">
 (function(){try{
   var pop=null,cur=null;
   function mk(){if(pop)return pop;pop=document.createElement("div");pop.id="ttPop";pop.setAttribute("role","tooltip");document.body.appendChild(pop);return pop;}
