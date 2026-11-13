@@ -885,7 +885,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
 
   <h2 id="c7-multi">英文以外：多語嵌入 <span class="slideref">投影片 72</span></h2>
   <p>Wirsching et al. (2025, <em>Political Analysis</em>, Figure 1, p. 159) 在<strong>每個語言內</strong>比較 <abbr class="tt" tabindex="0" data-term="ALC" data-full="à la carte embedding" data-tip="à la carte 嵌入：把一次出現周圍語境字的預訓練向量平均，再乘上學到的轉換矩陣 A，得到這次使用的向量。" title="à la carte embedding — à la carte 嵌入：把一次出現周圍語境字的預訓練向量平均，再乘上學到的轉換矩陣 A，得到這次使用的向量。">ALC</abbr> 估計和預訓練向量。依 <code>W9/reading/README.md</code>：這個檢查<strong>不代表跨語言對齊</strong>；非英文研究可以用該語言自己的模型，但不要跨語言比座標。</p>
-  <div class="callout tip"><div class="ct">對 Jerry 的提示（補充）</div><p>如果要做中文（例如立法院質詢），流程一樣：中文預訓練向量 E＋針對它學的 A。<abbr class="tt" tabindex="0" data-term="conText" data-tip="Rodriguez、Spirling 與 Stewart 的 R 套件，實作 ALC 與 embedding regression。" title="Rodriguez、Spirling 與 Stewart 的 R 套件，實作 ALC 與 embedding regression。">conText</abbr> 的 Quick Start 只附英文 <code>cr_glove_subset</code>／<code>cr_transform</code>，中文要另找配對資源（Wirsching et al. 2025 提供 157 種語言）。</p></div>
+  <div class="callout tip"><div class="ct">延伸提示（補充）</div><p>如果要做中文（例如立法院質詢），流程一樣：中文預訓練向量 E＋針對它學的 A。<abbr class="tt" tabindex="0" data-term="conText" data-tip="Rodriguez、Spirling 與 Stewart 的 R 套件，實作 ALC 與 embedding regression。" title="Rodriguez、Spirling 與 Stewart 的 R 套件，實作 ALC 與 embedding regression。">conText</abbr> 的 Quick Start 只附英文 <code>cr_glove_subset</code>／<code>cr_transform</code>，中文要另找配對資源（Wirsching et al. 2025 提供 157 種語言）。</p></div>
 
   <h2 id="c7-app">四個 embedding regression 應用 <span class="slideref">投影片 73–76</span></h2>
   <div class="tablewrap"><table>
@@ -923,7 +923,7 @@ abbr.tt:focus{outline:2px solid var(--accent,#6aa9ff);outline-offset:1px;border-
   <h2 id="c8-prep">F00：課前準備環境與模型 <span class="slideref">投影片 81</span></h2>
   <p>投影片 81：課前用 Lab F00 準備好 Python、套件和 <abbr class="tt" tabindex="0" data-term="GloVe" data-full="Global Vectors for Word Representation" data-tip="擬合整個語料共現統計得到的靜態詞向量；本週 Flair Lab 用 100 維 GloVe。" title="Global Vectors for Word Representation — 擬合整個語料共現統計得到的靜態詞向量；本週 Flair Lab 用 100 維 GloVe。">GloVe</abbr>；從課程根目錄 <code>source("W9/lab/flair/flair_prepare.R")</code>（R 路線要 reticulate＋flaiR），R 不行就改 Python 路線。安裝與下載都在課前完成。</p>
   <div class="runnote callout"><div class="ct">本機怎麼跑的（照實說）</div><p>這台是 2 GB 記憶體的 Linux 容器，沒有 flaiR／reticulate，所以我走 <strong>Python 路線</strong>：另建乾淨 venv，照 <code>W9/lab/flair/requirements.txt</code> 裝 <code>flair[word-embeddings]==0.15.1</code>、numpy &lt; 2（Python 3.11.2、flair 0.15.1、torch 2.5.1、numpy 1.26.4、gensim 4.4.0）。第一次 <code>WordEmbeddings('glove')</code> 下載約 20.5 MB 模型到 <code>~/.flair/embeddings/glove.gensim</code>，載入時峰值 RSS 約 1237 MB。<strong>R 路線（flaiR）沒有在本機跑</strong>；老師的 <code>runtime.json</code> 記錄 R 與 Python 向量差在 1e-6 以內。</p></div>
-  <div class="callout tip"><div class="ct">Jerry 課前要做（補充）</div><p>在自己的 Mac 上：<code>python3.11 -m venv .venv &amp;&amp; .venv/bin/pip install -r W9/lab/flair/requirements.txt</code>，再跑 <code>.venv/bin/python W9/lab/flair/flair_lab.py --download-glove</code> 預載模型、<code>--check</code> 檢查。看到 “Imports OK. Device: CPU.” 就過關。</p></div>
+  <div class="callout tip"><div class="ct">課前準備建議（補充）</div><p>在自己的 Mac 上：<code>python3.11 -m venv .venv &amp;&amp; .venv/bin/pip install -r W9/lab/flair/requirements.txt</code>，再跑 <code>.venv/bin/python W9/lab/flair/flair_lab.py --download-glove</code> 預載模型、<code>--check</code> 檢查。看到 “Imports OK. Device: CPU.” 就過關。</p></div>
 
   <h2 id="c8-steps">三步驟：載入 → 11 × 100 → 3 × 100 <span class="slideref">投影片 82–84</span></h2>
   <p>課堂用的是 R 版 <code>flair_steps.R</code>（三段和 Python 版一一對應）：</p>
@@ -1697,7 +1697,7 @@ print(readability_summary, row.names = FALSE)
     </table></div>
   </div>
 
-  <div class="callout" id="c12-src"><div class="ct">要補全文的話</div><p>Rodriguez &amp; Spirling (2022) 請 Jerry 在 Mac 上用台大 <abbr class="tt" tabindex="0" data-term="VPN" data-full="virtual private network" data-tip="虛擬私人網路；用台大 VPN 才能從校外下載付費期刊全文。" title="virtual private network — 虛擬私人網路；用台大 VPN 才能從校外下載付費期刊全文。">VPN</abbr> 從 <a href="https://doi.org/10.1086/715162">doi:10.1086/715162</a> 下載；Bischof &amp; Senninger (2018) 可從 <a href="https://doi.org/10.1111/1475-6765.12235">doi:10.1111/1475-6765.12235</a> 或奧胡斯大學 Pure 頁面下載接受稿。上傳後我可以補上附頁碼的完整導讀卡。</p></div>
+  <div class="callout" id="c12-src"><div class="ct">要補全文的話</div><p>Rodriguez &amp; Spirling (2022) 可用學校圖書館權限從 <a href="https://doi.org/10.1086/715162">doi:10.1086/715162</a> 下載；Bischof &amp; Senninger (2018) 可從 <a href="https://doi.org/10.1111/1475-6765.12235">doi:10.1111/1475-6765.12235</a> 或奧胡斯大學 Pure 頁面下載接受稿。取得全文後可再補上附頁碼的完整導讀卡。</p></div>
 </section>
 
 <!-- ===================== CH13 ===================== -->
